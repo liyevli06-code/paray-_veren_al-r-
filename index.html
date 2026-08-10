@@ -1,1034 +1,737 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Capes &amp; Gavels — Superhero Auction</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero Draft — The Auction Floor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0c0e13;
-    --bg-2:#12151d;
-    --panel:#171a23;
-    --panel-2:#1d212c;
-    --border:rgba(255,255,255,.08);
-    --border-2:rgba(255,255,255,.14);
-    --gold:#c9a227;
-    --gold-bright:#f0c95e;
-    --marvel:#ed1d24;
-    --marvel-dim:#7a1114;
-    --dc:#2e6ff2;
-    --dc-dim:#173a8a;
-    --text:#edeef2;
-    --text-dim:#9096a6;
-    --text-faint:#5c6274;
-    --success:#3ddc97;
-    --danger:#ff5c5c;
-    --radius:14px;
-    --shadow-lg: 0 20px 60px rgba(0,0,0,.5);
-    --font-display:'Bebas Neue', sans-serif;
-    --font-body:'Inter', sans-serif;
-    --font-mono:'JetBrains Mono', monospace;
+    --bg: #0a0d14;
+    --panel: #121826;
+    --panel-2: #171f30;
+    --line: #263047;
+    --text: #eef1f8;
+    --muted: #8792a8;
+    --marvel: #ff3b52;
+    --dc: #2fb2ff;
+    --gold: #ffc93c;
+    --gold-dim: #6b5a24;
+    --good: #35d488;
+    --bad: #ff5470;
+    --p1: #ff3b52;
+    --p2: #2fb2ff;
+    --radius: 14px;
+    --shadow: 0 20px 50px -20px rgba(0,0,0,.7);
   }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
+
+  *{ box-sizing: border-box; }
+  html,body{ height:100%; }
   body{
+    margin:0;
     background:
-      radial-gradient(1200px 700px at 15% -10%, rgba(201,162,39,.08), transparent 60%),
-      radial-gradient(1000px 600px at 100% 10%, rgba(46,111,242,.07), transparent 55%),
-      radial-gradient(900px 600px at 0% 100%, rgba(237,29,36,.06), transparent 55%),
+      radial-gradient(1100px 600px at 15% -10%, rgba(255,59,82,.10), transparent 60%),
+      radial-gradient(1100px 600px at 85% 110%, rgba(47,178,255,.10), transparent 60%),
       var(--bg);
-    color:var(--text);
-    font-family:var(--font-body);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
     min-height:100vh;
-    -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
   }
-  ::selection{background:var(--gold);color:#1a1200;}
-  a{color:inherit;}
-  button{font-family:inherit;cursor:pointer;}
-  button:disabled{cursor:not-allowed;}
-  :focus-visible{outline:2px solid var(--gold-bright);outline-offset:3px;}
+  ::selection{ background: var(--gold); color:#111; }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  h1,h2,h3, .display{ font-family:'Bebas Neue', sans-serif; letter-spacing: .04em; }
 
-  .screen{display:none;}
-  .screen.active{display:block;}
+  button{ font-family:inherit; cursor:pointer; border:none; }
+  button:disabled{ cursor:not-allowed; opacity:.4; }
 
-  /* ============ SETUP SCREEN ============ */
-  #setup-screen.active{
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    padding:48px 20px;
-    position:relative;
+  /* ---------- Ticker header used on all screens ---------- */
+  .brandbar{
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    padding: 18px 10px 6px;
   }
-  .setup-glow{
-    position:absolute; inset:0; pointer-events:none; z-index:0;
-    background:
-      repeating-linear-gradient(90deg, rgba(255,255,255,.015) 0 1px, transparent 1px 64px),
-      repeating-linear-gradient(0deg, rgba(255,255,255,.015) 0 1px, transparent 1px 64px);
-    mask-image: radial-gradient(circle at 50% 30%, black, transparent 70%);
-  }
-  .setup-wrap{position:relative;z-index:1;max-width:620px;width:100%;text-align:center;
-    animation: rise .8s cubic-bezier(.16,1,.3,1) both;}
-  @keyframes rise{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
-
-  .eyebrow{
-    display:inline-flex;align-items:center;gap:8px;
-    font-family:var(--font-mono);font-size:11px;letter-spacing:.28em;
-    text-transform:uppercase;color:var(--gold-bright);
-    border:1px solid var(--border-2);border-radius:999px;
-    padding:7px 16px;background:rgba(201,162,39,.06);
-    margin-bottom:26px;
-  }
-  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--gold-bright);
-    box-shadow:0 0 8px var(--gold-bright); animation:pulse 1.8s ease-in-out infinite;}
-  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
-
-  .hero-title{
-    font-family:var(--font-display);
-    font-size:clamp(52px,10vw,96px);
-    line-height:.92;
-    letter-spacing:.01em;
-    margin:0 0 10px;
-    background:linear-gradient(180deg,#fff 10%,#c9c9d2 55%, var(--gold-bright) 130%);
+  .brandbar .spark{ width:8px;height:8px;border-radius:50%; background:var(--gold); box-shadow:0 0 12px var(--gold); }
+  .brandbar h1{ font-size: 2.4rem; margin:0; line-height:1;
+    background: linear-gradient(90deg, var(--marvel), var(--gold) 50%, var(--dc));
     -webkit-background-clip:text; background-clip:text; color:transparent;
   }
-  .hero-title small{display:block;font-family:var(--font-body);font-weight:700;font-size:15px;
-    letter-spacing:.3em;color:var(--text-dim);margin-top:10px;text-transform:uppercase;
-    background:none;-webkit-text-fill-color:var(--text-dim);}
+  .brandbar .tag{ color:var(--muted); font-size:.72rem; text-transform:uppercase; letter-spacing:.25em; text-align:center; margin-top:-4px; margin-bottom:14px; }
 
-  .hero-sub{color:var(--text-dim);font-size:15.5px;line-height:1.65;max-width:480px;margin:18px auto 40px;}
-  .hero-sub b{color:var(--text);font-weight:600;}
+  /* ================= SETUP SCREEN ================= */
+  #setup-screen{
+    max-width: 760px; margin: 0 auto; padding: 10px 20px 60px;
+    animation: fadeUp .5s ease both;
+  }
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);} }
 
-  .config-card{
-    background:linear-gradient(180deg,var(--panel-2),var(--panel));
-    border:1px solid var(--border); border-radius:20px;
-    padding:30px 26px 28px; text-align:left;
-    box-shadow:var(--shadow-lg);
+  .setup-card{
+    background: linear-gradient(180deg, var(--panel), var(--panel-2));
+    border:1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 28px;
+    box-shadow: var(--shadow);
   }
-  .config-row{margin-bottom:24px;}
-  .config-row:last-of-type{margin-bottom:0;}
-  .config-label{
-    display:flex; align-items:baseline; justify-content:space-between;
-    font-family:var(--font-mono); font-size:11.5px; letter-spacing:.14em;
-    text-transform:uppercase; color:var(--text-dim); margin-bottom:12px;
+  .field{ margin-bottom: 26px; }
+  .field label{ display:flex; align-items:baseline; justify-content:space-between; font-size:.8rem; text-transform:uppercase; letter-spacing:.14em; color:var(--muted); margin-bottom:10px; }
+  .field label .val{ color: var(--gold); font-family:'JetBrains Mono',monospace; font-size:.95rem; letter-spacing:0; }
+
+  input[type=range]{
+    -webkit-appearance:none; width:100%; height:6px; border-radius:4px;
+    background: linear-gradient(90deg, var(--marvel), var(--gold), var(--dc));
+    outline:none;
   }
-  .config-label .val{color:var(--gold-bright); font-size:15px; font-weight:700;}
-  .chip-row{display:flex;flex-wrap:wrap;gap:8px;}
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:20px; height:20px; border-radius:50%;
+    background:#fff; border:3px solid var(--gold); cursor:pointer;
+    box-shadow: 0 0 0 4px rgba(255,201,60,.18);
+  }
+  input[type=range]::-moz-range-thumb{
+    width:20px; height:20px; border-radius:50%; background:#fff; border:3px solid var(--gold); cursor:pointer;
+  }
+
+  .chip-row{ display:flex; gap:10px; flex-wrap:wrap; }
   .chip{
-    flex:1 1 auto; min-width:64px; text-align:center;
-    background:var(--panel-2); border:1px solid var(--border);
-    color:var(--text-dim); border-radius:9px; padding:10px 8px;
-    font-family:var(--font-mono); font-weight:600; font-size:13px;
-    transition:.15s ease;
+    flex:1; min-width:70px; text-align:center; padding:12px 10px;
+    background: var(--panel-2); border:1px solid var(--line); border-radius:10px;
+    color: var(--text); font-weight:700; transition: all .15s ease;
   }
-  .chip:hover{border-color:var(--border-2); color:var(--text);}
-  .chip.active{
-    background:linear-gradient(160deg,var(--gold-bright),var(--gold));
-    color:#1a1200; border-color:transparent; box-shadow:0 6px 16px rgba(201,162,39,.25);
+  .chip:hover{ border-color: var(--gold); transform: translateY(-2px); }
+  .chip.active{ background: linear-gradient(135deg, var(--gold), #e2a516); color:#1a1305; border-color: var(--gold); box-shadow:0 6px 20px -6px rgba(255,201,60,.5); }
+
+  .custom-wrap{ margin-top:10px; display:flex; align-items:center; gap:10px; }
+  .custom-wrap input[type=number]{
+    flex:1; background: var(--panel-2); border:1px solid var(--line); color:var(--text);
+    padding:11px 12px; border-radius:10px; font-family:'JetBrains Mono',monospace; font-size:.95rem;
   }
-  .custom-input{
-    margin-top:10px; width:100%; background:var(--bg-2); border:1px solid var(--border);
-    border-radius:9px; padding:11px 12px; color:var(--text); font-family:var(--font-mono);
-    font-size:14px;
-  }
-  .custom-input:focus{border-color:var(--gold-bright);}
-  .custom-input::placeholder{color:var(--text-faint);}
+  .custom-wrap input[type=number]:focus{ outline:none; border-color: var(--gold); }
+  .hint{ color:var(--muted); font-size:.75rem; margin-top:8px; }
 
   .start-btn{
-    width:100%; margin-top:28px; border:none; border-radius:12px;
-    padding:17px 20px; font-family:var(--font-display); font-size:22px; letter-spacing:.06em;
-    background:linear-gradient(160deg,var(--gold-bright),var(--gold));
-    color:#1a1200; box-shadow:0 12px 30px rgba(201,162,39,.28);
+    width:100%; padding:16px; margin-top:8px; border-radius:12px; font-size:1.05rem; font-weight:800;
+    letter-spacing:.06em; text-transform:uppercase;
+    background: linear-gradient(90deg, var(--marvel), var(--dc));
+    color:#fff; box-shadow: 0 14px 30px -10px rgba(47,178,255,.4);
     transition: transform .15s ease, box-shadow .15s ease;
-    display:flex; align-items:center; justify-content:center; gap:10px;
   }
-  .start-btn:hover{transform:translateY(-2px); box-shadow:0 16px 36px rgba(201,162,39,.38);}
-  .start-btn:active{transform:translateY(0);}
-  .start-btn svg{width:20px;height:20px;}
+  .start-btn:hover{ transform: translateY(-2px); box-shadow: 0 18px 34px -8px rgba(255,59,82,.45); }
+  .start-btn:active{ transform: translateY(0); }
 
-  .roster-preview{
-    display:flex; justify-content:center; gap:6px; margin-top:34px; flex-wrap:wrap;
+  /* ================= GAME SCREEN ================= */
+  #game-screen{ display:none; padding: 6px 16px 30px; }
+  .arena-wrap{
+    max-width: 1240px; margin: 0 auto;
+    display:grid; grid-template-columns: 250px 1fr 250px; gap: 18px;
+    align-items:start;
   }
-  .roster-preview .swatch{
-    width:30px;height:30px;border-radius:8px; opacity:.8;
-    border:1px solid var(--border-2);
-  }
-
-  /* ============ GAME SCREEN ============ */
-  #game-screen.active{min-height:100vh; display:flex; flex-direction:column;}
-  .game-header{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:16px 26px; border-bottom:1px solid var(--border);
-    background:rgba(12,14,19,.7); backdrop-filter:blur(10px);
-    position:sticky; top:0; z-index:20;
-  }
-  .brand{display:flex; align-items:center; gap:10px;}
-  .brand-mark{
-    width:34px;height:34px;border-radius:9px;
-    background:linear-gradient(160deg,var(--gold-bright),var(--gold));
-    display:flex;align-items:center;justify-content:center;color:#1a1200;
-  }
-  .brand-mark svg{width:18px;height:18px;}
-  .brand-text{font-family:var(--font-display); font-size:22px; letter-spacing:.03em;}
-  .lot-counter{
-    font-family:var(--font-mono); font-size:12.5px; letter-spacing:.12em;
-    color:var(--text-dim); text-transform:uppercase;
-    border:1px solid var(--border-2); border-radius:999px; padding:7px 16px;
-  }
-  .lot-counter b{color:var(--gold-bright); font-size:14px;}
-  .end-early-btn{
-    background:transparent;border:1px solid var(--border-2); color:var(--text-dim);
-    border-radius:8px; padding:8px 14px; font-size:12px; font-family:var(--font-mono);
-    letter-spacing:.08em; transition:.15s;
-  }
-  .end-early-btn:hover{border-color:var(--danger); color:var(--danger);}
-
-  .floor{
-    flex:1; display:grid; gap:18px; padding:22px;
-    grid-template-columns: 280px minmax(0,1fr) 280px;
-    align-items:start; max-width:1360px; margin:0 auto; width:100%;
-  }
-  @media(max-width:980px){
-    .floor{grid-template-columns:1fr; }
-    .podium{order:-1;}
+  @media (max-width: 980px){
+    .arena-wrap{ grid-template-columns: 1fr; }
   }
 
-  /* Paddle panels */
-  .paddle{
-    background:linear-gradient(180deg,var(--panel-2),var(--panel));
-    border:1px solid var(--border); border-radius:16px; padding:18px;
-    position:relative; overflow:hidden;
+  .player-panel{
+    background: linear-gradient(180deg, var(--panel), var(--panel-2));
+    border: 1px solid var(--line); border-radius: var(--radius); padding:16px;
+    box-shadow: var(--shadow);
   }
-  .paddle::before{
-    content:''; position:absolute; top:0; left:0; right:0; height:3px;
-  }
-  .paddle-p1::before{background:linear-gradient(90deg,var(--marvel),transparent);}
-  .paddle-p2::before{background:linear-gradient(90deg,transparent,var(--dc));}
-
-  .paddle-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;}
-  .paddle-name{font-family:var(--font-display); font-size:19px; letter-spacing:.03em; display:flex; align-items:center; gap:8px;}
-  .p-dot{width:9px;height:9px;border-radius:50%;}
-  .paddle-p1 .p-dot{background:var(--marvel);}
-  .paddle-p2 .p-dot{background:var(--dc);}
-  .turn-badge{
-    font-family:var(--font-mono); font-size:9.5px; letter-spacing:.1em; text-transform:uppercase;
-    padding:3px 9px; border-radius:999px; background:var(--success); color:#03291b;
-    opacity:0; transform:scale(.8); transition:.2s;
-  }
-  .turn-badge.show{opacity:1; transform:scale(1);}
-
-  .budget-box{
-    background:var(--bg-2); border:1px solid var(--border); border-radius:11px;
-    padding:12px 14px; margin-bottom:16px;
-  }
-  .budget-label{font-family:var(--font-mono); font-size:10px; letter-spacing:.12em; color:var(--text-faint); text-transform:uppercase;}
-  .budget-value{font-family:var(--font-mono); font-size:26px; font-weight:700; color:var(--gold-bright); margin-top:3px;
-    transition: color .3s;}
-  .budget-value.flash{color:var(--danger);}
-  .budget-bar{height:4px; border-radius:99px; background:rgba(255,255,255,.06); margin-top:9px; overflow:hidden;}
-  .budget-bar-fill{height:100%; background:linear-gradient(90deg,var(--gold),var(--gold-bright)); transition:width .4s ease;}
-
-  .roster-slots{display:flex; flex-direction:column; gap:8px;}
+  .player-panel.turn-active{ border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold), var(--shadow); }
+  .p-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:4px; }
+  .p-head .pname{ font-family:'Bebas Neue'; font-size:1.3rem; letter-spacing:.06em; }
+  .p1 .pname{ color: var(--p1); }
+  .p2 .pname{ color: var(--p2); }
+  .p-budget{ font-family:'JetBrains Mono',monospace; font-size:1.5rem; font-weight:700; margin: 2px 0 14px; }
+  .p-budget .cents{ font-size:.9rem; color:var(--muted); }
+  .slots{ display:flex; flex-direction:column; gap:8px; }
   .slot{
-    display:flex; align-items:center; gap:10px;
-    background:var(--bg-2); border:1px dashed var(--border-2); border-radius:10px;
-    padding:8px 10px; min-height:52px;
+    height:56px; border-radius:10px; border:1.5px dashed var(--line);
+    display:flex; align-items:center; gap:10px; padding:6px 10px;
+    background: rgba(255,255,255,.015); transition: all .2s ease;
   }
-  .slot.filled{border-style:solid; border-color:var(--border);}
-  .slot-num{font-family:var(--font-mono); font-size:10px; color:var(--text-faint); width:14px;}
-  .slot-empty-txt{font-family:var(--font-mono); font-size:10.5px; color:var(--text-faint); letter-spacing:.05em;}
-  .slot-avatar{
-    width:34px;height:34px;border-radius:8px; flex-shrink:0;
-    display:flex;align-items:center;justify-content:center;
-    font-family:var(--font-display); font-size:15px; color:#fff;
+  .slot.filled{ border-style:solid; border-color: var(--line); background: var(--panel-2); }
+  .slot .icon{
+    width:38px; height:38px; border-radius:8px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:1.2rem;
   }
-  .slot-info{min-width:0; flex:1;}
-  .slot-hero-name{font-size:12.5px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
-  .slot-hero-price{font-family:var(--font-mono); font-size:10.5px; color:var(--gold-bright);}
+  .slot .info{ overflow:hidden; }
+  .slot .info .n{ font-size:.82rem; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .slot .info .p{ font-size:.72rem; color:var(--gold); font-family:'JetBrains Mono',monospace; }
+  .slot .empty-label{ color:var(--muted); font-size:.75rem; letter-spacing:.06em; }
 
-  /* Podium / center auction */
-  .podium{
-    background:linear-gradient(180deg,var(--panel-2),var(--panel));
-    border:1px solid var(--border); border-radius:20px;
-    padding:24px; display:flex; flex-direction:column; align-items:center;
-    min-height:560px; position:relative; overflow:hidden;
-  }
-  .podium::after{
-    content:''; position:absolute; inset:0; pointer-events:none;
-    background:radial-gradient(500px 260px at 50% 0%, rgba(201,162,39,.08), transparent 70%);
-  }
-  .status-strip{
-    font-family:var(--font-mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase;
-    color:var(--text-dim); margin-bottom:16px; text-align:center; min-height:16px;
-    position:relative; z-index:1;
-  }
-  .status-strip.urgent{color:var(--danger); animation:blinkText .5s ease-in-out infinite;}
-  @keyframes blinkText{50%{opacity:.35;}}
+  /* Center arena */
+  .center-col{ display:flex; flex-direction:column; align-items:center; gap:16px; }
+  .round-tag{ color:var(--muted); font-size:.75rem; text-transform:uppercase; letter-spacing:.2em; }
 
-  .lot-card{
-    width:100%; max-width:340px; background:var(--bg-2);
-    border:1px solid var(--border-2); border-radius:18px; padding:22px;
-    text-align:center; position:relative; z-index:1;
-    box-shadow:0 18px 40px rgba(0,0,0,.35);
+  .hero-card{
+    width:100%; max-width: 360px;
+    background: linear-gradient(180deg, var(--panel), var(--panel-2));
+    border:1px solid var(--line); border-radius: 20px; overflow:hidden;
+    box-shadow: var(--shadow);
+    animation: cardIn .45s cubic-bezier(.2,.8,.2,1) both;
   }
-  .universe-tag{
-    display:inline-block; font-family:var(--font-mono); font-size:10px; letter-spacing:.18em;
-    text-transform:uppercase; padding:4px 12px; border-radius:999px; margin-bottom:14px;
-  }
-  .universe-tag.marvel{background:rgba(237,29,36,.14); color:#ff7a7e; border:1px solid rgba(237,29,36,.35);}
-  .universe-tag.dc{background:rgba(46,111,242,.14); color:#7fa8ff; border:1px solid rgba(46,111,242,.35);}
+  @keyframes cardIn{ from{ opacity:0; transform: translateY(18px) scale(.96) rotate(-1deg);} to{opacity:1; transform:none;} }
 
-  .avatar-badge{
-    width:120px;height:120px; border-radius:22px; margin:0 auto 16px;
-    display:flex; align-items:center; justify-content:center;
-    font-family:var(--font-display); font-size:52px; color:#fff;
-    position:relative; box-shadow:0 10px 26px rgba(0,0,0,.4);
+  .hero-art{
+    height: 220px; display:flex; align-items:center; justify-content:center; position:relative;
+    font-size: 6.5rem;
   }
-  .avatar-badge::after{
-    content:''; position:absolute; inset:0; border-radius:22px;
-    background:linear-gradient(160deg, rgba(255,255,255,.22), transparent 55%);
+  .hero-art .universe-badge{
+    position:absolute; top:12px; left:12px; padding:4px 10px; border-radius:20px;
+    font-size:.68rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
+    backdrop-filter: blur(4px);
   }
-  .hero-name{font-family:var(--font-display); font-size:32px; letter-spacing:.02em; margin:0;}
-  .hero-alias{color:var(--text-dim); font-size:12.5px; margin:3px 0 16px;}
+  .u-marvel{ background: rgba(255,59,82,.18); color:#ff8595; border:1px solid rgba(255,59,82,.5); }
+  .u-dc{ background: rgba(47,178,255,.18); color:#8fd4ff; border:1px solid rgba(47,178,255,.5); }
 
-  .stat-grid{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:4px;}
-  .stat-pill{background:var(--panel-2); border:1px solid var(--border); border-radius:9px; padding:8px 6px;}
-  .stat-pill-label{font-family:var(--font-mono); font-size:9px; letter-spacing:.1em; color:var(--text-faint); text-transform:uppercase;}
-  .stat-pill-bar{height:5px; border-radius:99px; background:rgba(255,255,255,.07); margin-top:6px; overflow:hidden;}
-  .stat-pill-fill{height:100%; background:linear-gradient(90deg,var(--gold),var(--gold-bright));}
-  .stat-pill-val{font-family:var(--font-mono); font-size:11px; color:var(--text); margin-top:4px; text-align:right;}
+  .hero-body{ padding: 16px 20px 20px; }
+  .hero-body h2{ font-size:1.9rem; margin:0 0 10px; }
+  .stat-row{ display:flex; flex-direction:column; gap:8px; margin-bottom:6px; }
+  .stat{ display:grid; grid-template-columns: 74px 1fr 30px; align-items:center; gap:8px; }
+  .stat .label{ font-size:.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:.1em; }
+  .stat .bar{ height:7px; border-radius:5px; background:var(--panel-2); overflow:hidden; border:1px solid var(--line); }
+  .stat .bar .fill{ height:100%; border-radius:5px; }
+  .stat .num{ font-family:'JetBrains Mono',monospace; font-size:.78rem; text-align:right; color:var(--text); }
+  .fill.strength{ background: linear-gradient(90deg,#ff6b6b,#ff3b52); }
+  .fill.speed{ background: linear-gradient(90deg,#3ee6c4,#2fb2ff); }
+  .fill.intelligence{ background: linear-gradient(90deg,#ffe066,#ffc93c); }
 
-  .sold-stamp{
-    position:absolute; top:44%; left:50%; z-index:5;
-    font-family:var(--font-display); font-size:54px; letter-spacing:.08em;
-    color:var(--danger); border:5px solid var(--danger); border-radius:10px;
-    padding:2px 18px; transform:translate(-50%,-50%) rotate(-14deg) scale(0);
-    opacity:0; pointer-events:none;
+  .bid-tracker{
+    width:100%; max-width:360px; text-align:center;
+    background: var(--panel-2); border:1px solid var(--line); border-radius:16px; padding: 14px 18px;
   }
-  .sold-stamp.show{animation:stampIn .55s cubic-bezier(.2,1.4,.4,1) forwards;}
-  @keyframes stampIn{
-    0%{transform:translate(-50%,-50%) rotate(-14deg) scale(2.4); opacity:0;}
-    60%{opacity:1;}
-    100%{transform:translate(-50%,-50%) rotate(-14deg) scale(1); opacity:1;}
-  }
-  .unsold-stamp{color:var(--text-faint); border-color:var(--text-faint);}
+  .bid-tracker .lbl{ color:var(--muted); font-size:.72rem; text-transform:uppercase; letter-spacing:.2em; margin-bottom:6px; }
+  .bid-tracker .amt{ font-family:'JetBrains Mono',monospace; font-size:2.1rem; font-weight:700; color:var(--gold); text-shadow:0 0 22px rgba(255,201,60,.35); }
+  .bid-tracker .leader{ font-size:.85rem; margin-top:4px; min-height:1.2em; }
+  .bid-tracker .leader.p1{ color:var(--p1); }
+  .bid-tracker .leader.p2{ color:var(--p2); }
 
-  /* bid ticker + timer */
-  .bid-zone{width:100%; max-width:340px; margin-top:18px; position:relative; z-index:1;}
-  .bid-current{
-    display:flex; align-items:center; justify-content:space-between;
-    background:var(--bg-2); border:1px solid var(--border-2); border-radius:12px;
-    padding:14px 16px; margin-bottom:14px;
+  .actions-wrap{ width:100%; max-width:360px; display:flex; flex-direction:column; gap:10px; }
+  .turn-banner{
+    text-align:center; font-size:.8rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted);
+    padding:6px 0;
   }
-  .bid-current-label{font-family:var(--font-mono); font-size:10px; letter-spacing:.12em; color:var(--text-faint); text-transform:uppercase;}
-  .bid-current-val{font-family:var(--font-mono); font-size:28px; font-weight:700; color:var(--gold-bright);}
-  .bid-leader{font-family:var(--font-mono); font-size:11px; padding:4px 10px; border-radius:999px;}
-  .bid-leader.p1{background:rgba(237,29,36,.16); color:#ff7a7e;}
-  .bid-leader.p2{background:rgba(46,111,242,.16); color:#7fa8ff;}
-  .bid-leader.none{background:rgba(255,255,255,.06); color:var(--text-faint);}
-
-  .timer-wrap{display:flex; justify-content:center; margin-bottom:16px;}
-  .timer-ring{width:64px;height:64px; position:relative;}
-  .timer-ring svg{transform:rotate(-90deg); width:64px; height:64px;}
-  .timer-ring circle{fill:none; stroke-width:5;}
-  .timer-track{stroke:rgba(255,255,255,.08);}
-  .timer-fill{stroke:var(--gold-bright); stroke-linecap:round; transition:stroke-dashoffset 1s linear, stroke .3s;}
-  .timer-num{
-    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-    font-family:var(--font-mono); font-weight:700; font-size:18px;
+  .turn-banner b{ color:var(--gold); }
+  .action-btns{ display:flex; gap:10px; }
+  .btn-bid, .btn-pass{
+    flex:1; padding:15px 10px; border-radius:12px; font-weight:800; font-size:.95rem;
+    letter-spacing:.04em; text-transform:uppercase; transition: transform .12s ease, box-shadow .12s ease;
   }
+  .btn-bid{ background: linear-gradient(90deg, var(--good), #1f9f6a); color:#052316; }
+  .btn-bid:hover:not(:disabled){ transform: translateY(-2px); box-shadow:0 10px 24px -8px rgba(53,212,136,.5); }
+  .btn-pass{ background: var(--panel-2); color: var(--bad); border:1.5px solid rgba(255,84,112,.4); }
+  .btn-pass:hover:not(:disabled){ background: rgba(255,84,112,.12); }
 
-  .bid-actions{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
-  .bid-btn{
-    border:none; border-radius:11px; padding:13px 10px;
-    font-family:var(--font-body); font-weight:700; font-size:13.5px;
-    display:flex; flex-direction:column; align-items:center; gap:2px;
-    transition:transform .12s ease, filter .12s ease, opacity .12s;
+  .log-box{
+    width:100%; max-width:360px; height:74px; overflow-y:auto;
+    background: rgba(255,255,255,.02); border:1px solid var(--line); border-radius:10px;
+    padding:8px 12px; font-size:.76rem; color:var(--muted); font-family:'JetBrains Mono',monospace;
   }
-  .bid-btn small{font-family:var(--font-mono); font-weight:600; font-size:10.5px; opacity:.85;}
-  .bid-btn:hover:not(:disabled){transform:translateY(-2px);}
-  .bid-btn:disabled{opacity:.3; filter:grayscale(.4);}
-  .bid-btn.p1{background:linear-gradient(160deg,#ff4d52,var(--marvel));color:#fff;}
-  .bid-btn.p2{background:linear-gradient(160deg,#5c8dff,var(--dc));color:#fff;}
-  .pass-actions{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;}
-  .pass-btn{
-    border-radius:11px; padding:9px 10px; font-size:12px; font-weight:600;
-    background:transparent; border:1px solid var(--border-2); color:var(--text-dim);
-    transition:.15s;
-  }
-  .pass-btn:hover:not(:disabled){border-color:var(--danger); color:var(--danger);}
-  .pass-btn:disabled{opacity:.25;}
+  .log-box div{ margin-bottom:3px; }
+  .log-box::-webkit-scrollbar{ width:6px; }
+  .log-box::-webkit-scrollbar-thumb{ background: var(--line); border-radius:4px; }
 
-  .idle-msg{color:var(--text-dim); font-size:14px; text-align:center; max-width:280px; margin-top:40px;}
-
-  /* ============ END MODAL ============ */
+  /* ================= MODAL ================= */
   .modal-overlay{
-    position:fixed; inset:0; background:rgba(6,7,10,.82); backdrop-filter:blur(6px);
-    display:none; align-items:center; justify-content:center; z-index:100; padding:20px;
+    display:none; position:fixed; inset:0; background: rgba(4,6,10,.82); backdrop-filter: blur(6px);
+    align-items:center; justify-content:center; z-index:100; padding:20px;
+    animation: fadeIn .3s ease both;
   }
-  .modal-overlay.show{display:flex; animation:fadeIn .3s ease;}
-  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+  @keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
   .modal{
-    background:linear-gradient(180deg,var(--panel-2),var(--panel));
-    border:1px solid var(--border-2); border-radius:22px; padding:32px;
-    max-width:760px; width:100%; max-height:88vh; overflow-y:auto;
-    box-shadow:var(--shadow-lg);
-    animation:rise .4s cubic-bezier(.16,1,.3,1) both;
+    width:100%; max-width: 780px; max-height:88vh; overflow-y:auto;
+    background: linear-gradient(180deg, var(--panel), var(--panel-2));
+    border:1px solid var(--line); border-radius: 20px; padding: 30px;
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,.8);
+    animation: cardIn .4s ease both;
   }
-  .winner-banner{
-    text-align:center; font-family:var(--font-display); font-size:38px; letter-spacing:.03em;
-    background:linear-gradient(180deg,#fff,var(--gold-bright));
+  .modal h2{ text-align:center; font-size: 2.3rem; margin:0 0 4px;
+    background: linear-gradient(90deg, var(--marvel), var(--gold), var(--dc));
     -webkit-background-clip:text; background-clip:text; color:transparent;
-    margin-bottom:6px;
   }
-  .winner-sub{text-align:center; color:var(--text-dim); font-size:13px; margin-bottom:26px;}
-  .modal-rosters{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
-  @media(max-width:600px){.modal-rosters{grid-template-columns:1fr;}}
-  .modal-col{background:var(--bg-2); border:1px solid var(--border); border-radius:14px; padding:16px;}
-  .modal-col-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px;}
-  .modal-col-title{font-family:var(--font-display); font-size:19px;}
-  .modal-col-score{font-family:var(--font-mono); font-size:12px; color:var(--gold-bright);}
-  .mini-slot{display:flex; align-items:center; gap:9px; padding:7px 0; border-bottom:1px solid var(--border);}
-  .mini-slot:last-child{border-bottom:none;}
-  .mini-avatar{width:28px;height:28px;border-radius:7px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:12px; color:#fff;}
-  .mini-name{font-size:12.5px; font-weight:600; flex:1;}
-  .mini-price{font-family:var(--font-mono); font-size:11px; color:var(--text-dim);}
-  .modal-stats-row{display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:11px; color:var(--text-faint); margin-top:12px; padding-top:10px; border-top:1px dashed var(--border-2);}
+  .modal .winner-line{ text-align:center; color:var(--muted); margin-bottom:22px; font-size:.9rem; }
+  .modal .winner-line b{ color:var(--gold); }
+  .result-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:600px){ .result-grid{ grid-template-columns:1fr; } }
+  .result-col{ background: var(--panel-2); border:1px solid var(--line); border-radius:14px; padding:16px; }
+  .result-col h3{ margin:0 0 12px; font-size:1.3rem; }
+  .result-col.p1 h3{ color:var(--p1); }
+  .result-col.p2 h3{ color:var(--p2); }
+  .result-item{ display:flex; align-items:center; gap:10px; padding:8px 6px; border-bottom:1px solid var(--line); }
+  .result-item:last-child{ border-bottom:none; }
+  .result-item .ic{ width:34px; height:34px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+  .result-item .rn{ font-size:.85rem; font-weight:700; }
+  .result-item .rp{ margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:.78rem; color:var(--gold); }
+  .result-total{ margin-top:10px; text-align:right; font-size:.8rem; color:var(--muted); }
+  .modal-actions{ margin-top:24px; text-align:center; }
+  .btn-restart{
+    padding: 14px 34px; border-radius:12px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
+    background: linear-gradient(90deg, var(--marvel), var(--dc)); color:#fff;
+  }
+  .btn-restart:hover{ transform: translateY(-2px); }
 
-  .replay-btn{
-    width:100%; margin-top:26px; border:none; border-radius:12px; padding:15px;
-    font-family:var(--font-display); font-size:19px; letter-spacing:.05em;
-    background:linear-gradient(160deg,var(--gold-bright),var(--gold)); color:#1a1200;
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important;}
-  }
-
-  @media(max-width:520px){
-    .hero-title{font-size:15vw;}
-    .config-card{padding:22px 18px;}
-  }
+  .footer-note{ text-align:center; color:var(--muted); font-size:.7rem; margin-top:26px; letter-spacing:.06em; }
 </style>
 </head>
 <body>
 
-<div id="app">
-
-  <!-- ============ SETUP SCREEN ============ -->
-  <section id="setup-screen" class="screen active">
-    <div class="setup-glow"></div>
-    <div class="setup-wrap">
-      <span class="eyebrow"><span class="dot"></span> Local 2-Player Auction</span>
-      <h1 class="hero-title">CAPES &amp; GAVELS<small>Superhero Draft Auction House</small></h1>
-      <p class="hero-sub">Bid head-to-head across <b>30 Marvel &amp; DC legends</b>. Build a five-hero roster before your budget — or your rival — runs out.</p>
-
-      <div class="config-card">
-        <div class="config-row">
-          <div class="config-label"><span>Starting Budget</span><span class="val" id="budget-val">$20</span></div>
-          <div class="chip-row" id="budget-chips">
-            <button class="chip" data-budget="10">$10</button>
-            <button class="chip active" data-budget="20">$20</button>
-            <button class="chip" data-budget="50">$50</button>
-            <button class="chip" data-budget="100">$100</button>
-            <button class="chip" data-budget="1000">$1K</button>
-            <button class="chip" data-budget="10000">$10K</button>
-            <button class="chip" data-budget="100000">$100K</button>
-          </div>
-          <input type="number" id="budget-custom" class="custom-input" placeholder="Custom budget ($10 – $100,000)" min="10" max="100000">
-        </div>
-
-        <div class="config-row">
-          <div class="config-label"><span>Bid Increment</span><span class="val" id="incr-val">$1</span></div>
-          <div class="chip-row" id="incr-chips">
-            <button class="chip active" data-incr="1">$1</button>
-            <button class="chip" data-incr="2">$2</button>
-            <button class="chip" data-incr="5">$5</button>
-            <button class="chip" data-incr="10">$10</button>
-            <button class="chip" data-incr="25">$25</button>
-            <button class="chip" data-incr="100">$100</button>
-          </div>
-          <input type="number" id="incr-custom" class="custom-input" placeholder="Custom increment" min="1">
-        </div>
-
-        <button class="start-btn" id="start-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4l6 6-8.5 8.5a2.1 2.1 0 0 1-3 0l-3-3a2.1 2.1 0 0 1 0-3L14 4z"/><path d="M3 21l4-4"/><path d="M17 8l-9 9"/></svg>
-          ENTER THE AUCTION HOUSE
-        </button>
-      </div>
-
-      <div class="roster-preview" id="roster-preview"></div>
+  <!-- ============= SETUP SCREEN ============= -->
+  <div id="setup-screen">
+    <div class="brandbar">
+      <div class="spark"></div><h1>HERO DRAFT</h1><div class="spark"></div>
     </div>
-  </section>
+    <div class="tag">The Auction Floor · Marvel vs DC</div>
 
-  <!-- ============ GAME SCREEN ============ -->
-  <section id="game-screen" class="screen">
-    <header class="game-header">
-      <div class="brand">
-        <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4l6 6-8.5 8.5a2.1 2.1 0 0 1-3 0l-3-3a2.1 2.1 0 0 1 0-3L14 4z"/></svg></div>
-        <span class="brand-text">CAPES &amp; GAVELS</span>
+    <div class="setup-card">
+      <div class="field">
+        <label>Starting Budget <span class="val" id="budget-val">$20</span></label>
+        <input type="range" id="budget-slider" min="10" max="100000" step="10" value="20">
+        <div class="hint">Drag to set each player's opening war chest ($10 – $100,000).</div>
       </div>
-      <div class="lot-counter">LOT <b id="lot-number">01</b> / <span id="lot-total">30</span></div>
-      <button class="end-early-btn" id="end-early-btn">End Auction</button>
-    </header>
 
-    <main class="floor">
+      <div class="field">
+        <label>Bid Increment</label>
+        <div class="chip-row" id="increment-chips">
+          <div class="chip active" data-val="1">$1</div>
+          <div class="chip" data-val="2">$2</div>
+          <div class="chip" data-val="5">$5</div>
+          <div class="chip" data-val="custom">Custom</div>
+        </div>
+        <div class="custom-wrap" id="custom-wrap" style="display:none;">
+          <input type="number" id="custom-increment" min="1" placeholder="Enter custom step, e.g. 10">
+        </div>
+        <div class="hint">Each Bid click raises the price by this amount.</div>
+      </div>
+
+      <button class="start-btn" id="start-btn">Start the Auction</button>
+    </div>
+    <div class="footer-note">LOCAL 2-PLAYER · 5 HEROES EACH · HIGHEST BID WINS THE CARD</div>
+  </div>
+
+  <!-- ============= GAME SCREEN ============= -->
+  <div id="game-screen">
+    <div class="brandbar" style="padding-top:6px;">
+      <div class="spark"></div><h1 style="font-size:1.9rem;">HERO DRAFT</h1><div class="spark"></div>
+    </div>
+
+    <div class="arena-wrap">
       <!-- Player 1 -->
-      <aside class="paddle paddle-p1" id="panel-p1">
-        <div class="paddle-head">
-          <div class="paddle-name"><span class="p-dot"></span>Player 1</div>
-          <span class="turn-badge" id="lead-badge-p1">LEADING</span>
-        </div>
-        <div class="budget-box">
-          <div class="budget-label">Remaining Budget</div>
-          <div class="budget-value" id="budget-p1">$20</div>
-          <div class="budget-bar"><div class="budget-bar-fill" id="budget-bar-p1" style="width:100%"></div></div>
-        </div>
-        <div class="roster-slots" id="roster-p1"></div>
-      </aside>
+      <div class="player-panel p1" id="panel-p1">
+        <div class="p-head"><span class="pname">Player 1</span></div>
+        <div class="p-budget mono" id="budget-p1">$0</div>
+        <div class="slots" id="slots-p1"></div>
+      </div>
 
-      <!-- Center Podium -->
-      <div class="podium">
-        <div class="status-strip" id="status-strip">Bidding is open</div>
-        <div id="lot-card-wrap">
-          <div class="lot-card" id="lot-card" style="display:none;">
-            <span class="sold-stamp" id="sold-stamp">SOLD</span>
-            <span class="universe-tag" id="uni-tag">MARVEL</span>
-            <div class="avatar-badge" id="avatar-badge">IM</div>
-            <h2 class="hero-name" id="hero-name">—</h2>
-            <p class="hero-alias" id="hero-alias">—</p>
-            <div class="stat-grid" id="stat-grid"></div>
-          </div>
-          <p class="idle-msg" id="idle-msg">Configure the auction and hit "Enter the Auction House" to begin.</p>
+      <!-- Center Arena -->
+      <div class="center-col">
+        <div class="round-tag" id="round-tag">Round 1 of 5</div>
+        <div id="hero-card-mount"></div>
+
+        <div class="bid-tracker">
+          <div class="lbl">Current Bid</div>
+          <div class="amt mono" id="current-bid">$0</div>
+          <div class="leader" id="bid-leader">No bids yet</div>
         </div>
 
-        <div class="bid-zone" id="bid-zone" style="display:none;">
-          <div class="bid-current">
-            <div>
-              <div class="bid-current-label">Current Bid</div>
-              <div class="bid-current-val" id="current-bid">$0</div>
-            </div>
-            <span class="bid-leader none" id="bid-leader-tag">No bids yet</span>
-          </div>
-
-          <div class="timer-wrap">
-            <div class="timer-ring">
-              <svg viewBox="0 0 64 64">
-                <circle class="timer-track" cx="32" cy="32" r="27"></circle>
-                <circle class="timer-fill" id="timer-fill" cx="32" cy="32" r="27"></circle>
-              </svg>
-              <div class="timer-num" id="timer-num">12</div>
-            </div>
-          </div>
-
-          <div class="bid-actions">
-            <button class="bid-btn p1" id="bid-btn-p1">RAISE — P1<small id="bid-btn-p1-amt">to $1</small></button>
-            <button class="bid-btn p2" id="bid-btn-p2">RAISE — P2<small id="bid-btn-p2-amt">to $1</small></button>
-          </div>
-          <div class="pass-actions">
-            <button class="pass-btn" id="pass-btn-p1">Player 1 Pass</button>
-            <button class="pass-btn" id="pass-btn-p2">Player 2 Pass</button>
+        <div class="actions-wrap">
+          <div class="turn-banner" id="turn-banner">Waiting…</div>
+          <div class="action-btns">
+            <button class="btn-pass" id="btn-pass">Pass</button>
+            <button class="btn-bid" id="btn-bid">Bid +$1</button>
           </div>
         </div>
+
+        <div class="log-box" id="log-box"></div>
       </div>
 
       <!-- Player 2 -->
-      <aside class="paddle paddle-p2" id="panel-p2">
-        <div class="paddle-head">
-          <div class="paddle-name"><span class="p-dot"></span>Player 2</div>
-          <span class="turn-badge" id="lead-badge-p2">LEADING</span>
-        </div>
-        <div class="budget-box">
-          <div class="budget-label">Remaining Budget</div>
-          <div class="budget-value" id="budget-p2">$20</div>
-          <div class="budget-bar"><div class="budget-bar-fill" id="budget-bar-p2" style="width:100%"></div></div>
-        </div>
-        <div class="roster-slots" id="roster-p2"></div>
-      </aside>
-    </main>
-  </section>
-
-  <!-- ============ END MODAL ============ -->
-  <div class="modal-overlay" id="end-modal">
-    <div class="modal">
-      <div class="winner-banner" id="winner-banner">PLAYER 1 WINS</div>
-      <div class="winner-sub" id="winner-sub">Highest combined roster power</div>
-      <div class="modal-rosters">
-        <div class="modal-col">
-          <div class="modal-col-head"><span class="modal-col-title">Player 1</span><span class="modal-col-score" id="score-p1">Power 0</span></div>
-          <div id="modal-roster-p1"></div>
-          <div class="modal-stats-row"><span>Spent</span><span id="spent-p1">$0</span></div>
-          <div class="modal-stats-row"><span>Remaining</span><span id="remain-p1">$0</span></div>
-        </div>
-        <div class="modal-col">
-          <div class="modal-col-head"><span class="modal-col-title">Player 2</span><span class="modal-col-score" id="score-p2">Power 0</span></div>
-          <div id="modal-roster-p2"></div>
-          <div class="modal-stats-row"><span>Spent</span><span id="spent-p2">$0</span></div>
-          <div class="modal-stats-row"><span>Remaining</span><span id="remain-p2">$0</span></div>
-        </div>
+      <div class="player-panel p2" id="panel-p2">
+        <div class="p-head"><span class="pname">Player 2</span></div>
+        <div class="p-budget mono" id="budget-p2">$0</div>
+        <div class="slots" id="slots-p2"></div>
       </div>
-      <button class="replay-btn" id="replay-btn">START A NEW AUCTION</button>
     </div>
   </div>
 
-</div>
+  <!-- ============= END MODAL ============= -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <h2>Draft Complete</h2>
+      <div class="winner-line" id="winner-line"></div>
+      <div class="result-grid">
+        <div class="result-col p1">
+          <h3>Player 1</h3>
+          <div id="result-p1"></div>
+          <div class="result-total" id="total-p1"></div>
+        </div>
+        <div class="result-col p2">
+          <h3>Player 2</h3>
+          <div id="result-p2"></div>
+          <div class="result-total" id="total-p2"></div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-restart" id="btn-restart">Draft Again</button>
+      </div>
+    </div>
+  </div>
 
 <script>
 (function(){
+  "use strict";
 
-  /* ============ MOCK HERO DATA ============ */
-  const MARVEL = [
-    {name:"Iron Man", alias:"Genius. Billionaire. Playboy.", power:78, strength:70, speed:65, intel:98, color:["#c62828","#8e0000"]},
-    {name:"Captain America", alias:"The First Avenger", power:72, strength:80, speed:68, intel:80, color:["#3f51b5","#1a237e"]},
-    {name:"Thor", alias:"God of Thunder", power:99, strength:99, speed:87, intel:70, color:["#7986cb","#33417a"]},
-    {name:"Hulk", alias:"The Strongest There Is", power:97, strength:100, speed:55, intel:60, color:["#43a047","#1b5e20"]},
-    {name:"Black Widow", alias:"Master Spy", power:45, strength:48, speed:60, intel:88, color:["#424242","#111"]},
-    {name:"Spider-Man", alias:"Friendly Neighborhood Hero", power:75, strength:74, speed:90, intel:85, color:["#d32f2f","#7b0000"]},
-    {name:"Doctor Strange", alias:"Sorcerer Supreme", power:96, strength:40, speed:55, intel:97, color:["#6a1b9a","#2c0a3e"]},
-    {name:"Black Panther", alias:"King of Wakanda", power:76, strength:78, speed:82, intel:90, color:["#212121","#000"]},
-    {name:"Scarlet Witch", alias:"Reality Warper", power:98, strength:35, speed:50, intel:78, color:["#ad1457","#5c0025"]},
-    {name:"Captain Marvel", alias:"Cosmic Powerhouse", power:99, strength:92, speed:95, intel:75, color:["#f9a825","#a05a00"]},
-    {name:"Wolverine", alias:"The Best There Is", power:70, strength:82, speed:70, intel:65, color:["#f9a825","#37474f"]},
-    {name:"Storm", alias:"Weather Goddess", power:90, strength:45, speed:78, intel:80, color:["#0288d1","#003a5c"]},
-    {name:"Vision", alias:"Synthetic Avenger", power:88, strength:80, speed:76, intel:96, color:["#c62828","#4a0000"]},
-    {name:"Ant-Man", alias:"Size-Shifting Hero", power:60, strength:55, speed:58, intel:82, color:["#c62828","#5d0000"]},
-    {name:"Star-Lord", alias:"Guardian of the Galaxy", power:58, strength:52, speed:65, intel:72, color:["#e64a19","#7c1500"]},
-  ].map(h=>({...h, universe:"marvel"}));
+  /* ---------------- Roster ---------------- */
+  // Card art is rendered as styled emoji glyphs on a gradient field (fast, always
+  // renders, no broken hotlinks) rather than external character photos.
+  const ROSTER = [
+    { name:"Iron Man", universe:"Marvel", icon:"🦾", grad:["#7a1120","#ff3b52"], strength:6, speed:7, intelligence:10 },
+    { name:"Captain America", universe:"Marvel", icon:"🛡️", grad:["#1c2f6b","#3a5bd9"], strength:7, speed:6, intelligence:8 },
+    { name:"Thor", universe:"Marvel", icon:"⚡", grad:["#4a2e7a","#a259ff"], strength:10, speed:8, intelligence:6 },
+    { name:"Hulk", universe:"Marvel", icon:"💚", grad:["#1e5c33","#35d488"], strength:10, speed:4, intelligence:5 },
+    { name:"Spider-Man", universe:"Marvel", icon:"🕸️", grad:["#7a1120","#ff3b52"], strength:6, speed:9, intelligence:8 },
+    { name:"Black Panther", universe:"Marvel", icon:"🐾", grad:["#1a1a2e","#4b4b6b"], strength:7, speed:8, intelligence:9 },
+    { name:"Scarlet Witch", universe:"Marvel", icon:"🔮", grad:["#5c1030","#c9296c"], strength:5, speed:6, intelligence:9 },
+    { name:"Doctor Strange", universe:"Marvel", icon:"🌀", grad:["#3a1a5c","#7a3ee6"], strength:4, speed:6, intelligence:10 },
+    { name:"Batman", universe:"DC", icon:"🦇", grad:["#0d0d0d","#3a3a4a"], strength:6, speed:6, intelligence:10 },
+    { name:"Superman", universe:"DC", icon:"🦸", grad:["#0f2a6b","#2fb2ff"], strength:10, speed:9, intelligence:8 },
+    { name:"Wonder Woman", universe:"DC", icon:"⭐", grad:["#7a1a1a","#e6c229"], strength:9, speed:7, intelligence:8 },
+    { name:"The Flash", universe:"DC", icon:"💨", grad:["#7a1a1a","#ff3b52"], strength:4, speed:10, intelligence:7 },
+    { name:"Aquaman", universe:"DC", icon:"🔱", grad:["#0d3b4a","#2fb2ff"], strength:8, speed:6, intelligence:6 },
+    { name:"Green Lantern", universe:"DC", icon:"💚", grad:["#0d3b1a","#35d488"], strength:7, speed:7, intelligence:7 },
+    { name:"Cyborg", universe:"DC", icon:"🤖", grad:["#1a1a2e","#3a5bd9"], strength:8, speed:6, intelligence:9 },
+    { name:"Green Arrow", universe:"DC", icon:"🏹", grad:["#0d3b1a","#35d488"], strength:5, speed:6, intelligence:7 }
+  ];
 
-  const DC = [
-    {name:"Superman", alias:"The Man of Steel", power:100, strength:100, speed:96, intel:82, color:["#1565c0","#0a2e5c"]},
-    {name:"Batman", alias:"The Dark Knight", power:40, strength:60, speed:55, intel:100, color:["#263238","#000"]},
-    {name:"Wonder Woman", alias:"Amazonian Warrior", power:96, strength:97, speed:85, intel:88, color:["#c62828","#7a0000"]},
-    {name:"The Flash", alias:"The Fastest Man Alive", power:85, strength:50, speed:100, intel:76, color:["#d32f2f","#8c0000"]},
-    {name:"Green Lantern", alias:"Willpower Incarnate", power:92, strength:60, speed:75, intel:78, color:["#2e7d32","#0d3d10"]},
-    {name:"Aquaman", alias:"King of Atlantis", power:82, strength:90, speed:70, intel:68, color:["#00838f","#00363d"]},
-    {name:"Cyborg", alias:"Half Man. Half Machine.", power:80, strength:88, speed:60, intel:92, color:["#455a64","#151f24"]},
-    {name:"Shazam", alias:"The Power of the Gods", power:93, strength:94, speed:80, intel:55, color:["#c62828","#5c0000"]},
-    {name:"Green Arrow", alias:"Emerald Archer", power:38, strength:55, speed:56, intel:74, color:["#2e7d32","#0d3d10"]},
-    {name:"Martian Manhunter", alias:"The Last Son of Mars", power:95, strength:85, speed:78, intel:90, color:["#c62828","#4a0000"]},
-    {name:"Supergirl", alias:"The Girl of Steel", power:97, strength:96, speed:94, intel:78, color:["#1565c0","#0a2e5c"]},
-    {name:"Batgirl", alias:"Guardian of Gotham", power:42, strength:52, speed:58, intel:94, color:["#6a1b9a","#2c0a3e"]},
-    {name:"Nightwing", alias:"First Robin", power:44, strength:58, speed:66, intel:86, color:["#1565c0","#08203f"]},
-    {name:"Zatanna", alias:"Mistress of Magic", power:89, strength:38, speed:52, intel:84, color:["#6a1b9a","#320a45"]},
-    {name:"Blue Beetle", alias:"Scarab-Powered Hero", power:74, strength:72, speed:68, intel:80, color:["#2e7d32","#0a3d10"]},
-  ].map(h=>({...h, universe:"dc"}));
+  /* ---------------- State ---------------- */
+  let state = null;
 
-  const ALL_HEROES = [...MARVEL, ...DC];
-
-  function initials(name){
-    return name.split(" ").filter(w=>w.length>1 || w===w.toUpperCase()).slice(0,2).map(w=>w[0]).join("").toUpperCase() || name.slice(0,2).toUpperCase();
+  function freshState(budget, increment){
+    return {
+      budget: budget,
+      increment: increment,
+      players: {
+        p1: { name:"Player 1", budget: budget, roster: [] },
+        p2: { name:"Player 2", budget: budget, roster: [] }
+      },
+      deck: shuffle(ROSTER.slice()),
+      round: 0,
+      currentHero: null,
+      currentBid: 0,
+      leader: null,        // 'p1' | 'p2' | null
+      turn: 'p1',           // whose action it is now
+      firstMoverThisRound: 'p1',
+      passStreak: 0,        // consecutive passes with no bid this hero
+      gameOver: false
+    };
   }
 
   function shuffle(arr){
-    const a=[...arr];
-    for(let i=a.length-1;i>0;i--){
-      const j=Math.floor(Math.random()*(i+1));
-      [a[i],a[j]]=[a[j],a[i]];
+    for(let i=arr.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [arr[i],arr[j]]=[arr[j],arr[i]];
     }
-    return a;
+    return arr;
+  }
+
+  /* ---------------- Setup screen wiring ---------------- */
+  const budgetSlider = document.getElementById('budget-slider');
+  const budgetVal = document.getElementById('budget-val');
+  const incrementChips = document.getElementById('increment-chips');
+  const customWrap = document.getElementById('custom-wrap');
+  const customIncrement = document.getElementById('custom-increment');
+  let selectedIncrement = 1;
+
+  budgetSlider.addEventListener('input', ()=>{
+    budgetVal.textContent = '$' + Number(budgetSlider.value).toLocaleString();
+  });
+
+  incrementChips.addEventListener('click', (e)=>{
+    const chip = e.target.closest('.chip');
+    if(!chip) return;
+    [...incrementChips.children].forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    if(chip.dataset.val === 'custom'){
+      customWrap.style.display = 'flex';
+      selectedIncrement = Math.max(1, parseInt(customIncrement.value) || 1);
+      customIncrement.focus();
+    } else {
+      customWrap.style.display = 'none';
+      selectedIncrement = parseInt(chip.dataset.val);
+    }
+  });
+
+  customIncrement.addEventListener('input', ()=>{
+    selectedIncrement = Math.max(1, parseInt(customIncrement.value) || 1);
+  });
+
+  document.getElementById('start-btn').addEventListener('click', ()=>{
+    const budget = Math.max(10, parseInt(budgetSlider.value) || 20);
+    const increment = Math.max(1, selectedIncrement || 1);
+    startGame(budget, increment);
+  });
+
+  /* ---------------- Game flow ---------------- */
+  const setupScreen = document.getElementById('setup-screen');
+  const gameScreen = document.getElementById('game-screen');
+
+  function startGame(budget, increment){
+    state = freshState(budget, increment);
+    setupScreen.style.display = 'none';
+    gameScreen.style.display = 'block';
+    document.getElementById('budget-p1').textContent = fmt(budget);
+    document.getElementById('budget-p2').textContent = fmt(budget);
+    renderSlots();
+    log('Auction opens. Budget ' + fmt(budget) + ' each, bid step ' + fmt(increment) + '.');
+    nextHero();
   }
 
   function fmt(n){
-    return "$"+Number(n).toLocaleString("en-US");
+    return '$' + Number(n).toLocaleString(undefined,{maximumFractionDigits:2});
   }
 
-  /* ============ STATE ============ */
-  const state = {
-    budget:20,
-    increment:1,
-    deck:[],
-    lotIndex:0,
-    totalLots:0,
-    current:null,
-    currentBid:0,
-    leader:null,       // 'p1' | 'p2' | null
-    passed:{p1:false,p2:false},
-    timeLeft:12,
-    timerId:null,
-    active:false,
-    players:{
-      p1:{budget:20, roster:[]},
-      p2:{budget:20, roster:[]},
+  function log(msg){
+    const box = document.getElementById('log-box');
+    const line = document.createElement('div');
+    line.textContent = '› ' + msg;
+    box.appendChild(line);
+    box.scrollTop = box.scrollHeight;
+  }
+
+  function otherOf(p){ return p==='p1' ? 'p2' : 'p1'; }
+
+  function canAct(p){
+    const pl = state.players[p];
+    if(pl.roster.length >= 5) return false;
+    const needed = state.currentBid + state.increment;
+    if(pl.budget < needed) return false;
+    return true;
+  }
+
+  function nextHero(){
+    // check end conditions before drawing
+    if(checkGameEnd()) return;
+
+    if(state.deck.length === 0){
+      state.deck = shuffle(ROSTER.slice()); // reshuffle if we run out visually
     }
-  };
-
-  const TIMER_START = 12;
-
-  /* ============ DOM REFS ============ */
-  const $ = id=>document.getElementById(id);
-  const els = {
-    setupScreen:$("setup-screen"), gameScreen:$("game-screen"),
-    budgetChips:$("budget-chips"), incrChips:$("incr-chips"),
-    budgetCustom:$("budget-custom"), incrCustom:$("incr-custom"),
-    budgetVal:$("budget-val"), incrVal:$("incr-val"),
-    startBtn:$("start-btn"),
-    lotNumber:$("lot-number"), lotTotal:$("lot-total"),
-    statusStrip:$("status-strip"),
-    lotCard:$("lot-card"), idleMsg:$("idle-msg"), soldStamp:$("sold-stamp"),
-    uniTag:$("uni-tag"), avatarBadge:$("avatar-badge"), heroName:$("hero-name"),
-    heroAlias:$("hero-alias"), statGrid:$("stat-grid"),
-    bidZone:$("bid-zone"), currentBid:$("current-bid"), bidLeaderTag:$("bid-leader-tag"),
-    timerFill:$("timer-fill"), timerNum:$("timer-num"),
-    bidBtnP1:$("bid-btn-p1"), bidBtnP2:$("bid-btn-p2"),
-    bidBtnP1Amt:$("bid-btn-p1-amt"), bidBtnP2Amt:$("bid-btn-p2-amt"),
-    passBtnP1:$("pass-btn-p1"), passBtnP2:$("pass-btn-p2"),
-    budgetP1:$("budget-p1"), budgetP2:$("budget-p2"),
-    budgetBarP1:$("budget-bar-p1"), budgetBarP2:$("budget-bar-p2"),
-    rosterP1:$("roster-p1"), rosterP2:$("roster-p2"),
-    leadBadgeP1:$("lead-badge-p1"), leadBadgeP2:$("lead-badge-p2"),
-    endEarlyBtn:$("end-early-btn"),
-    endModal:$("end-modal"), winnerBanner:$("winner-banner"), winnerSub:$("winner-sub"),
-    modalRosterP1:$("modal-roster-p1"), modalRosterP2:$("modal-roster-p2"),
-    scoreP1:$("score-p1"), scoreP2:$("score-p2"),
-    spentP1:$("spent-p1"), spentP2:$("spent-p2"),
-    remainP1:$("remain-p1"), remainP2:$("remain-p2"),
-    replayBtn:$("replay-btn"),
-  };
-
-  const TIMER_CIRC = 2*Math.PI*27;
-  els.timerFill.style.strokeDasharray = TIMER_CIRC;
-
-  /* ============ SETUP SCREEN LOGIC ============ */
-  function selectChip(container, attr, value){
-    [...container.children].forEach(c=>{
-      c.classList.toggle("active", Number(c.getAttribute(attr)) === value);
-    });
-  }
-
-  els.budgetChips.addEventListener("click", e=>{
-    const btn = e.target.closest(".chip"); if(!btn) return;
-    state.budget = Number(btn.dataset.budget);
-    els.budgetCustom.value = "";
-    selectChip(els.budgetChips, "data-budget", state.budget);
-    els.budgetVal.textContent = fmt(state.budget);
-  });
-  els.budgetCustom.addEventListener("input", ()=>{
-    const v = Math.min(100000, Math.max(10, Number(els.budgetCustom.value)||0));
-    if(els.budgetCustom.value===""){ return; }
-    state.budget = v || state.budget;
-    selectChip(els.budgetChips, "data-budget", -1);
-    els.budgetVal.textContent = fmt(state.budget);
-  });
-
-  els.incrChips.addEventListener("click", e=>{
-    const btn = e.target.closest(".chip"); if(!btn) return;
-    state.increment = Number(btn.dataset.incr);
-    els.incrCustom.value = "";
-    selectChip(els.incrChips, "data-incr", state.increment);
-    els.incrVal.textContent = fmt(state.increment);
-  });
-  els.incrCustom.addEventListener("input", ()=>{
-    if(els.incrCustom.value===""){ return; }
-    const v = Math.max(1, Number(els.incrCustom.value)||0);
-    state.increment = v || state.increment;
-    selectChip(els.incrChips, "data-incr", -1);
-    els.incrVal.textContent = fmt(state.increment);
-  });
-
-  // roster preview swatches on landing page
-  (function renderPreview(){
-    const wrap = $("roster-preview");
-    shuffle(ALL_HEROES).slice(0,10).forEach(h=>{
-      const d = document.createElement("div");
-      d.className="swatch";
-      d.style.background = `linear-gradient(160deg, ${h.color[0]}, ${h.color[1]})`;
-      d.title = h.name;
-      wrap.appendChild(d);
-    });
-  })();
-
-  els.startBtn.addEventListener("click", startGame);
-
-  /* ============ GAME START ============ */
-  function startGame(){
-    state.players.p1.budget = state.budget;
-    state.players.p2.budget = state.budget;
-    state.players.p1.roster = [];
-    state.players.p2.roster = [];
-    state.deck = shuffle(ALL_HEROES);
-    state.totalLots = state.deck.length;
-    state.lotIndex = 0;
-
-    els.setupScreen.classList.remove("active");
-    els.gameScreen.classList.add("active");
-    els.lotTotal.textContent = String(state.totalLots).padStart(2,"0");
-
-    renderRosters();
-    updateBudgetsUI();
-    nextLot();
-  }
-
-  /* ============ LOT FLOW ============ */
-  function canAfford(playerKey, targetBid){
-    return state.players[playerKey].budget >= targetBid;
-  }
-  function rosterFull(playerKey){
-    return state.players[playerKey].roster.length >= 5;
-  }
-  function playerCanParticipate(playerKey){
-    if(rosterFull(playerKey)) return false;
-    const nextNeeded = state.currentBid===0 ? state.increment : state.currentBid + state.increment;
-    return state.players[playerKey].budget >= nextNeeded;
-  }
-  function bothLockedOut(){
-    // neither player can raise further, and neither has room realistically to start fresh next lot
-    const p1ok = !rosterFull("p1") && state.players.p1.budget >= state.increment;
-    const p2ok = !rosterFull("p2") && state.players.p2.budget >= state.increment;
-    return !p1ok && !p2ok;
-  }
-
-  function nextLot(){
-    clearInterval(state.timerId);
-    els.soldStamp.classList.remove("show");
-
-    const bothFull = rosterFull("p1") && rosterFull("p2");
-    if(bothFull || state.deck.length===0 || bothLockedOut()){
-      return endGame();
-    }
-
-    state.current = state.deck.shift();
-    state.lotIndex++;
+    state.currentHero = state.deck.pop();
     state.currentBid = 0;
     state.leader = null;
-    state.passed = {p1:false,p2:false};
-    state.timeLeft = TIMER_START;
-    state.active = true;
+    state.passStreak = 0;
+    state.round++;
 
-    els.lotNumber.textContent = String(state.lotIndex).padStart(2,"0");
-    els.idleMsg.style.display = "none";
-    els.lotCard.style.display = "block";
-    els.bidZone.style.display = "block";
-    els.statusStrip.textContent = "Bidding is open — place your bid";
-    els.statusStrip.classList.remove("urgent");
-
-    const h = state.current;
-    els.uniTag.textContent = h.universe.toUpperCase();
-    els.uniTag.className = "universe-tag " + h.universe;
-    els.avatarBadge.textContent = initials(h.name);
-    els.avatarBadge.style.background = `linear-gradient(160deg, ${h.color[0]}, ${h.color[1]})`;
-    els.heroName.textContent = h.name;
-    els.heroAlias.textContent = h.alias;
-
-    els.statGrid.innerHTML = "";
-    [["PWR",h.power],["STR",h.strength],["SPD",h.speed],["INT",h.intel]].forEach(([label,val])=>{
-      const cell = document.createElement("div");
-      cell.className="stat-pill";
-      cell.innerHTML = `<div class="stat-pill-label">${label}</div>
-        <div class="stat-pill-bar"><div class="stat-pill-fill" style="width:${val}%"></div></div>
-        <div class="stat-pill-val">${val}</div>`;
-      els.statGrid.appendChild(cell);
-    });
-
-    updateBidUI();
-    startTimer();
-  }
-
-  function startTimer(){
-    tickTimer();
-    state.timerId = setInterval(tickTimer, 1000);
-  }
-  function tickTimer(){
-    if(state.timeLeft<=0){
-      clearInterval(state.timerId);
-      resolveLot();
+    // If neither player can even afford the opening increment or has room, end game.
+    if(!canAct('p1') && !canAct('p2')){
+      endGame();
       return;
     }
-    els.timerNum.textContent = state.timeLeft;
-    const frac = state.timeLeft / TIMER_START;
-    els.timerFill.style.strokeDashoffset = TIMER_CIRC * (1-frac);
-    els.timerFill.style.stroke = frac < 0.25 ? "var(--danger)" : "var(--gold-bright)";
-    if(state.timeLeft<=3){
-      els.statusStrip.classList.add("urgent");
-      els.statusStrip.textContent = state.leader ? "Going... going..." : "Final seconds — place a bid!";
-    }
-    state.timeLeft--;
-  }
-  function resetTimer(){
-    state.timeLeft = TIMER_START;
-    els.statusStrip.classList.remove("urgent");
-    els.statusStrip.textContent = "Bidding is open — place your bid";
-  }
 
-  function placeBid(playerKey){
-    if(!state.active) return;
-    if(state.leader === playerKey) return; // can't outbid yourself
-    if(rosterFull(playerKey)) return;
-    const target = state.currentBid===0 ? state.increment : state.currentBid + state.increment;
-    if(!canAfford(playerKey, target)) return;
+    // decide starting bidder: alternate each hero; skip a player who can't act
+    let starter = state.firstMoverThisRound;
+    if(!canAct(starter)) starter = otherOf(starter);
+    state.turn = starter;
+    state.firstMoverThisRound = otherOf(state.firstMoverThisRound);
 
-    state.currentBid = target;
-    state.leader = playerKey;
-    state.passed = {p1:false, p2:false};
-    resetTimer();
+    renderHeroCard();
     updateBidUI();
+    document.getElementById('round-tag').textContent =
+      'Round ' + Math.min(state.round,10) + ' · P1 slots ' + state.players.p1.roster.length + '/5 · P2 slots ' + state.players.p2.roster.length + '/5';
   }
 
-  function passLot(playerKey){
-    if(!state.active) return;
-    state.passed[playerKey] = true;
-
-    if(state.leader && state.leader !== playerKey){
-      resolveLot();
-      return;
-    }
-    if(!state.leader && state.passed.p1 && state.passed.p2){
-      resolveLot();
-      return;
-    }
-    updateBidUI();
+  function renderHeroCard(){
+    const h = state.currentHero;
+    const mount = document.getElementById('hero-card-mount');
+    const badgeClass = h.universe === 'Marvel' ? 'u-marvel' : 'u-dc';
+    mount.innerHTML = `
+      <div class="hero-card" key="${h.name}">
+        <div class="hero-art" style="background: radial-gradient(circle at 30% 20%, ${h.grad[1]}33, transparent 60%), linear-gradient(160deg, ${h.grad[0]}, ${h.grad[1]});">
+          <span class="universe-badge ${badgeClass}">${h.universe}</span>
+          <span>${h.icon}</span>
+        </div>
+        <div class="hero-body">
+          <h2>${h.name}</h2>
+          <div class="stat-row">
+            ${statBar('Strength', h.strength, 'strength')}
+            ${statBar('Speed', h.speed, 'speed')}
+            ${statBar('Intelligence', h.intelligence, 'intelligence')}
+          </div>
+        </div>
+      </div>`;
   }
 
-  function resolveLot(){
-    clearInterval(state.timerId);
-    state.active = false;
-    updateBidUI();
-
-    if(state.leader){
-      const key = state.leader;
-      state.players[key].budget -= state.currentBid;
-      state.players[key].roster.push({...state.current, pricePaid: state.currentBid});
-      els.soldStamp.textContent = "SOLD";
-      els.soldStamp.classList.remove("unsold-stamp");
-      els.soldStamp.classList.add("show");
-      els.statusStrip.textContent = `${key.toUpperCase()} wins ${state.current.name} for ${fmt(state.currentBid)}`;
-    } else {
-      els.soldStamp.textContent = "PASSED";
-      els.soldStamp.classList.add("unsold-stamp");
-      els.soldStamp.classList.add("show");
-      els.statusStrip.textContent = `${state.current.name} goes unsold`;
-    }
-    els.statusStrip.classList.remove("urgent");
-    renderRosters();
-    updateBudgetsUI();
-
-    setTimeout(nextLot, 1300);
-  }
-
-  /* ============ UI UPDATES ============ */
-  function updateBidUI(){
-    els.currentBid.textContent = fmt(state.currentBid);
-    if(state.leader){
-      els.bidLeaderTag.textContent = state.leader==="p1" ? "Player 1 leading" : "Player 2 leading";
-      els.bidLeaderTag.className = "bid-leader " + state.leader;
-    } else {
-      els.bidLeaderTag.textContent = "No bids yet";
-      els.bidLeaderTag.className = "bid-leader none";
-    }
-    els.leadBadgeP1.classList.toggle("show", state.leader==="p1");
-    els.leadBadgeP2.classList.toggle("show", state.leader==="p2");
-
-    const nextTarget = state.currentBid===0 ? state.increment : state.currentBid + state.increment;
-    els.bidBtnP1Amt.textContent = "to " + fmt(nextTarget);
-    els.bidBtnP2Amt.textContent = "to " + fmt(nextTarget);
-
-    const p1Enabled = state.active && state.leader!=="p1" && !rosterFull("p1") && canAfford("p1", nextTarget);
-    const p2Enabled = state.active && state.leader!=="p2" && !rosterFull("p2") && canAfford("p2", nextTarget);
-    els.bidBtnP1.disabled = !p1Enabled;
-    els.bidBtnP2.disabled = !p2Enabled;
-
-    els.passBtnP1.disabled = !state.active || state.passed.p1;
-    els.passBtnP2.disabled = !state.active || state.passed.p2;
-  }
-
-  function updateBudgetsUI(){
-    els.budgetP1.textContent = fmt(state.players.p1.budget);
-    els.budgetP2.textContent = fmt(state.players.p2.budget);
-    els.budgetBarP1.style.width = Math.max(0, Math.min(100, (state.players.p1.budget/state.budget)*100)) + "%";
-    els.budgetBarP2.style.width = Math.max(0, Math.min(100, (state.players.p2.budget/state.budget)*100)) + "%";
-  }
-
-  function slotHTML(hero, idx){
-    if(!hero){
-      return `<div class="slot"><span class="slot-num">${idx+1}</span><span class="slot-empty-txt">Open lot</span></div>`;
-    }
-    return `<div class="slot filled">
-      <span class="slot-num">${idx+1}</span>
-      <div class="slot-avatar" style="background:linear-gradient(160deg, ${hero.color[0]}, ${hero.color[1]})">${initials(hero.name)}</div>
-      <div class="slot-info">
-        <div class="slot-hero-name">${hero.name}</div>
-        <div class="slot-hero-price">${fmt(hero.pricePaid)}</div>
-      </div>
+  function statBar(label, val, cls){
+    return `<div class="stat">
+      <span class="label">${label}</span>
+      <span class="bar"><span class="fill ${cls}" style="width:${val*10}%"></span></span>
+      <span class="num">${val}/10</span>
     </div>`;
   }
 
-  function renderRosters(){
-    [["p1", els.rosterP1], ["p2", els.rosterP2]].forEach(([key, container])=>{
-      const roster = state.players[key].roster;
-      let html = "";
-      for(let i=0;i<5;i++) html += slotHTML(roster[i], i);
-      container.innerHTML = html;
+  function updateBidUI(){
+    document.getElementById('current-bid').textContent = fmt(state.currentBid);
+    const leaderEl = document.getElementById('bid-leader');
+    if(state.leader){
+      leaderEl.textContent = state.players[state.leader].name + ' is leading';
+      leaderEl.className = 'leader ' + state.leader;
+    } else {
+      leaderEl.textContent = 'No bids yet';
+      leaderEl.className = 'leader';
+    }
+
+    document.getElementById('panel-p1').classList.toggle('turn-active', state.turn==='p1');
+    document.getElementById('panel-p2').classList.toggle('turn-active', state.turn==='p2');
+
+    const turnPlayer = state.players[state.turn];
+    document.getElementById('turn-banner').innerHTML =
+      '<b>' + turnPlayer.name + '</b>\'s move';
+
+    const bidBtn = document.getElementById('btn-bid');
+    const passBtn = document.getElementById('btn-pass');
+    const nextBidAmt = state.currentBid + state.increment;
+    bidBtn.textContent = 'Bid ' + fmt(nextBidAmt);
+
+    const active = canAct(state.turn);
+    bidBtn.disabled = !active;
+    passBtn.disabled = false;
+
+    document.getElementById('budget-p1').textContent = fmt(state.players.p1.budget);
+    document.getElementById('budget-p2').textContent = fmt(state.players.p2.budget);
+  }
+
+  document.getElementById('btn-bid').addEventListener('click', ()=>{
+    if(state.gameOver) return;
+    const p = state.turn;
+    if(!canAct(p)) return;
+    state.currentBid += state.increment;
+    state.leader = p;
+    state.passStreak = 0;
+    log(state.players[p].name + ' bids ' + fmt(state.currentBid) + ' on ' + state.currentHero.name + '.');
+    state.turn = otherOf(p);
+
+    // if the other player literally cannot act, auto-resolve to leader
+    if(!canAct(state.turn)){
+      awardHeroToLeaderOrPass();
+      return;
+    }
+    updateBidUI();
+  });
+
+  document.getElementById('btn-pass').addEventListener('click', ()=>{
+    if(state.gameOver) return;
+    const p = state.turn;
+    log(state.players[p].name + ' passes.');
+
+    if(state.leader && state.leader !== p){
+      // someone already leads the bid -> auction resolves to them
+      awardHeroToLeaderOrPass();
+      return;
+    }
+
+    // no leader yet: give the other player a shot, unless they also can't/won't
+    state.passStreak++;
+    const other = otherOf(p);
+    if(state.passStreak >= 2 || !canAct(other)){
+      // both passed with no bid, or the only eligible player already declined
+      log(state.currentHero.name + ' goes unsold.');
+      setTimeout(nextHero, 500);
+      return;
+    }
+    state.turn = other;
+    updateBidUI();
+  });
+
+  function awardHeroToLeaderOrPass(){
+    if(state.leader){
+      const p = state.leader;
+      const pl = state.players[p];
+      pl.budget -= state.currentBid;
+      pl.roster.push({ name: state.currentHero.name, universe: state.currentHero.universe, icon: state.currentHero.icon, grad: state.currentHero.grad, price: state.currentBid });
+      log(pl.name + ' wins ' + state.currentHero.name + ' for ' + fmt(state.currentBid) + '.');
+      renderSlots();
+    } else {
+      log(state.currentHero.name + ' goes unsold.');
+    }
+    setTimeout(nextHero, 600);
+  }
+
+  function renderSlots(){
+    ['p1','p2'].forEach(p=>{
+      const wrap = document.getElementById('slots-' + p);
+      const pl = state.players[p];
+      let html = '';
+      for(let i=0;i<5;i++){
+        const h = pl.roster[i];
+        if(h){
+          html += `<div class="slot filled">
+            <div class="icon" style="background:linear-gradient(160deg, ${h.grad[0]}, ${h.grad[1]});">${h.icon}</div>
+            <div class="info"><div class="n">${h.name}</div><div class="p">${fmt(h.price)}</div></div>
+          </div>`;
+        } else {
+          html += `<div class="slot"><span class="empty-label">Empty slot ${i+1}</span></div>`;
+        }
+      }
+      wrap.innerHTML = html;
     });
   }
 
-  /* ============ BUTTON BINDINGS ============ */
-  els.bidBtnP1.addEventListener("click", ()=>placeBid("p1"));
-  els.bidBtnP2.addEventListener("click", ()=>placeBid("p2"));
-  els.passBtnP1.addEventListener("click", ()=>passLot("p1"));
-  els.passBtnP2.addEventListener("click", ()=>passLot("p2"));
-  els.endEarlyBtn.addEventListener("click", ()=>{
-    clearInterval(state.timerId);
-    state.active = false;
-    endGame();
-  });
+  function checkGameEnd(){
+    const p1 = state.players.p1, p2 = state.players.p2;
+    const p1Full = p1.roster.length >= 5;
+    const p2Full = p2.roster.length >= 5;
+    const p1Broke = p1.budget < state.increment && !p1Full;
+    const p2Broke = p2.budget < state.increment && !p2Full;
 
-  /* ============ END GAME ============ */
-  function totalPower(roster){
-    return roster.reduce((sum,h)=>sum + h.power + h.strength + h.speed + h.intel, 0);
-  }
-  function totalSpent(playerKey){
-    return state.budget - state.players[playerKey].budget;
+    const bothDone = (p1Full || p1Broke) && (p2Full || p2Broke);
+    if(bothDone){
+      endGame();
+      return true;
+    }
+    return false;
   }
 
   function endGame(){
-    els.bidZone.style.display = "none";
-    const p1Score = totalPower(state.players.p1.roster);
-    const p2Score = totalPower(state.players.p2.roster);
+    state.gameOver = true;
+    document.getElementById('btn-bid').disabled = true;
+    document.getElementById('btn-pass').disabled = true;
 
-    let banner, sub;
-    if(p1Score === p2Score){
-      banner = "IT'S A DRAW";
-      sub = "Both rosters matched in total power";
+    const p1 = state.players.p1, p2 = state.players.p2;
+    const p1Total = p1.roster.reduce((s,h)=>s+h.price,0);
+    const p2Total = p2.roster.reduce((s,h)=>s+h.price,0);
+
+    let winnerText;
+    if(p1.roster.length === p2.roster.length){
+      if(p1Total === p2Total) winnerText = "It's a dead heat — evenly matched rosters.";
+      else winnerText = (p1Total > p2Total ? p1.name : p2.name) + ' spent the most building out their team: <b>' + fmt(Math.max(p1Total,p2Total)) + '</b> total.';
     } else {
-      const winner = p1Score > p2Score ? "PLAYER 1" : "PLAYER 2";
-      banner = winner + " WINS";
-      sub = "Highest combined roster power across all stats";
+      winnerText = (p1.roster.length > p2.roster.length ? p1.name : p2.name) + ' drafted the fuller roster with <b>' + Math.max(p1.roster.length,p2.roster.length) + ' heroes</b>.';
     }
-    els.winnerBanner.textContent = banner;
-    els.winnerSub.textContent = sub;
+    document.getElementById('winner-line').innerHTML = winnerText;
 
-    els.scoreP1.textContent = "Power " + p1Score;
-    els.scoreP2.textContent = "Power " + p2Score;
-    els.spentP1.textContent = fmt(totalSpent("p1"));
-    els.spentP2.textContent = fmt(totalSpent("p2"));
-    els.remainP1.textContent = fmt(state.players.p1.budget);
-    els.remainP2.textContent = fmt(state.players.p2.budget);
+    renderResultCol('result-p1', p1.roster);
+    renderResultCol('result-p2', p2.roster);
+    document.getElementById('total-p1').textContent = p1.roster.length + ' heroes · ' + fmt(p1Total) + ' spent · ' + fmt(p1.budget) + ' remaining';
+    document.getElementById('total-p2').textContent = p2.roster.length + ' heroes · ' + fmt(p2Total) + ' spent · ' + fmt(p2.budget) + ' remaining';
 
-    function modalRosterHTML(roster){
-      if(roster.length===0) return `<p style="color:var(--text-faint);font-size:12.5px;">No heroes drafted.</p>`;
-      return roster.map(h=>`
-        <div class="mini-slot">
-          <div class="mini-avatar" style="background:linear-gradient(160deg, ${h.color[0]}, ${h.color[1]})">${initials(h.name)}</div>
-          <div class="mini-name">${h.name}</div>
-          <div class="mini-price">${fmt(h.pricePaid)}</div>
-        </div>`).join("");
-    }
-    els.modalRosterP1.innerHTML = modalRosterHTML(state.players.p1.roster);
-    els.modalRosterP2.innerHTML = modalRosterHTML(state.players.p2.roster);
-
-    els.endModal.classList.add("show");
+    document.getElementById('modal-overlay').style.display = 'flex';
+    log('Draft complete.');
   }
 
-  els.replayBtn.addEventListener("click", ()=>{
-    els.endModal.classList.remove("show");
-    els.gameScreen.classList.remove("active");
-    els.setupScreen.classList.add("active");
-    els.idleMsg.style.display = "block";
-    els.lotCard.style.display = "none";
+  function renderResultCol(id, roster){
+    const el = document.getElementById(id);
+    if(roster.length === 0){
+      el.innerHTML = '<div style="color:var(--muted); font-size:.85rem;">No heroes acquired.</div>';
+      return;
+    }
+    el.innerHTML = roster.map(h => `
+      <div class="result-item">
+        <div class="ic" style="background:linear-gradient(160deg, ${h.grad[0]}, ${h.grad[1]});">${h.icon}</div>
+        <div class="rn">${h.name}</div>
+        <div class="rp">${fmt(h.price)}</div>
+      </div>`).join('');
+  }
+
+  document.getElementById('btn-restart').addEventListener('click', ()=>{
+    document.getElementById('modal-overlay').style.display = 'none';
+    document.getElementById('log-box').innerHTML = '';
+    gameScreen.style.display = 'none';
+    setupScreen.style.display = 'block';
   });
 
 })();

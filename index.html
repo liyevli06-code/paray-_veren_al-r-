@@ -243,6 +243,12 @@
     font-family:'Bebas Neue'; font-size:14px;
     color:#0B0F1A;
     flex:none;
+    overflow:hidden;
+  }
+  .avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
   }
   .avatar.big{width:96px; height:96px; font-size:34px;}
   .hname{font-size:12.5px; font-weight:600; line-height:1.2;}
@@ -269,7 +275,6 @@
     letter-spacing:0.4em;
   }
   .lot-label{color:var(--text-dim); font-size:11px; letter-spacing:0.2em; text-transform:uppercase; margin-top:26px;}
-  .hero-card{margin:14px auto 6px;}
   .hero-name{font-family:'Bebas Neue'; font-size:38px; margin-top:12px; letter-spacing:0.02em;}
   .hero-franchise-tag{
     display:inline-block;
@@ -363,7 +368,7 @@
 <div id="home">
   <div class="poster">
     <div class="eyebrow">Qapalı zal &middot; 2 oyunçu</div>
-    <h1>QƏHRƏMAN<br><span>SEÇİMİ</span></h1>
+    <h1>QƏHRƏMAN<br><span>HƏRRACI</span></h1>
     <div class="sub">Büdcəni müəyyən et, artım addımını seç, hərracı başlat</div>
 
     <div class="field">
@@ -454,30 +459,30 @@
 <script>
 /* ---------------- DATA ---------------- */
 const HEROES = [
-  {name:"Superman", fr:"DC", init:"SU", color:"#4FA3E3"},
-  {name:"Batman", fr:"DC", init:"BM", color:"#5B6472"},
-  {name:"Wonder Woman", fr:"DC", init:"WW", color:"#E3B23C"},
-  {name:"Flash", fr:"DC", init:"FL", color:"#D64545"},
-  {name:"Aquaman", fr:"DC", init:"AQ", color:"#3CA9A0"},
-  {name:"Green Lantern", fr:"DC", init:"GL", color:"#4CAF6D"},
-  {name:"Cyborg", fr:"DC", init:"CY", color:"#5C6BC0"},
-  {name:"Shazam", fr:"DC", init:"SH", color:"#D9A441"},
-  {name:"Green Arrow", fr:"DC", init:"GA", color:"#4C8C4A"},
-  {name:"Batgirl", fr:"DC", init:"BG", color:"#8E7CC3"},
-  {name:"Nightwing", fr:"DC", init:"NW", color:"#3A4A6B"},
-  {name:"Harley Quinn", fr:"DC", init:"HQ", color:"#C959A0"},
-  {name:"Iron Man", fr:"Avengers", init:"IM", color:"#D9534F"},
-  {name:"Captain America", fr:"Avengers", init:"CA", color:"#4472C4"},
-  {name:"Thor", fr:"Avengers", init:"TH", color:"#7B9FD1"},
-  {name:"Hulk", fr:"Avengers", init:"HU", color:"#5FA352"},
-  {name:"Black Widow", fr:"Avengers", init:"BW", color:"#4A4A52"},
-  {name:"Hawkeye", fr:"Avengers", init:"HE", color:"#7C4A3A"},
-  {name:"Spider-Man", fr:"Avengers", init:"SM", color:"#C0392B"},
-  {name:"Doctor Strange", fr:"Avengers", init:"DS", color:"#C0392B"},
-  {name:"Black Panther", fr:"Avengers", init:"BP", color:"#2E2E38"},
-  {name:"Scarlet Witch", fr:"Avengers", init:"SW", color:"#A6398F"},
-  {name:"Ant-Man", fr:"Avengers", init:"AM", color:"#C0392B"},
-  {name:"Star-Lord", fr:"Avengers", init:"SL", color:"#D98A3D"},
+  {name:"Superman", fr:"DC", init:"SU", color:"#4FA3E3", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgx9BS4HzHuFykljxgnr0rRm82ABPoUE_wdXLkI1V_BQ&s=10"},
+  {name:"Batman", fr:"DC", init:"BM", color:"#5B6472", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwOAYReBEB3NrXg0YpUgFS1hSHHpH5JavPM9hy2qh8Qw&s=10"},
+  {name:"Wonder Woman", fr:"DC", init:"WW", color:"#E3B23C", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZazh5VL-gTgCx75wAYPSr4P31MhjRM7votEzzrz6SUA&s=10"},
+  {name:"Flash", fr:"DC", init:"FL", color:"#D64545", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDz_w-k00JVwtbdPjLvM0kcXlFdU3llIhDXSF7NbshaQ&s=10"},
+  {name:"Aquaman", fr:"DC", init:"AQ", color:"#3CA9A0", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBdRhB-VY5ZlkdWFP8St5S8UweiSo0CqrCxeFfdQipeQ&s=10"},
+  {name:"Green Lantern", fr:"DC", init:"GL", color:"#4CAF6D", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkPXwIu0zE9WAZWCEiZry_FLjcQaNP9rjFQEPGLlQsXQ&s=10"},
+  {name:"Cyborg", fr:"DC", init:"CY", color:"#5C6BC0", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNB99FCMdEQAdWVebYcSg0bJr-6joE-Jd3-Xggr1Tdjw&s=10"},
+  {name:"Shazam", fr:"DC", init:"SH", color:"#D9A441", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp5aALpEqIV2BMKdhQWNzBZBk22ds_9x-cjBgzAo02DQ&s=10"},
+  {name:"Green Arrow", fr:"DC", init:"GA", color:"#4C8C4A", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTANj74o2Jrchx6CT8N0B1a1JjJT2butVl8mCy8CAc87Q&s=10"},
+  {name:"Batgirl", fr:"DC", init:"BG", color:"#8E7CC3", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDD84CLMly9sjO5DmHHoB3u2YIDjifHNKatBhMSZAyKw&s=10"},
+  {name:"Nightwing", fr:"DC", init:"NW", color:"#3A4A6B", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6Im9OADPC7SE_enWXsu773lfopb97etNP92ooKUNdNl6QBVB3Q9iNgW0&s=10"},
+  {name:"Harley Quinn", fr:"DC", init:"HQ", color:"#C959A0", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPkKMOfRolq_UdBtfWoNaIFO8-drB704yILE1pUufw5A&s=10"},
+  {name:"Iron Man", fr:"Avengers", init:"IM", color:"#D9534F", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyB9F4FOOGkZUCe0wOhSr5qskIYHp3VElpmRlqqSxkyA&s=10"},
+  {name:"Captain America", fr:"Avengers", init:"CA", color:"#4472C4", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRr1OnvauFD74Z2pzffNLEUwelPkP_RgUAzLZrSV647YkdksWhnxd6pOaw&s=10"},
+  {name:"Thor", fr:"Avengers", init:"TH", color:"#7B9FD1", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwZ44RpjZ1lUA77uMV-SaAjTklRR0sWr_ySjXPLwa17g&s=10"},
+  {name:"Hulk", fr:"Avengers", init:"HU", color:"#5FA352", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkx26usqd_qKikqtQ1jA5QyiYOFpCj9_S-X4jwca0jGQ&s=10"},
+  {name:"Black Widow", fr:"Avengers", init:"BW", color:"#4A4A52", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHkeD04bczMNNYVKSLdvzD4ZBOQ9FrY4PbSIV4mLW3bw&s=10"},
+  {name:"Hawkeye", fr:"Avengers", init:"HE", color:"#7C4A3A", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxsTNbq3Y0-RQhDUkRxYBPd3mpXDDMn4YnLMbonKdbRQ&s=10"},
+  {name:"Spider-Man", fr:"Avengers", init:"SM", color:"#C0392B", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsVzOcjJB2y9dAENqMikA77aIDUys5QHb3E3Kg0S9mUw&s"},
+  {name:"Doctor Strange", fr:"Avengers", init:"DS", color:"#C0392B", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTop9O7TI2mXvI10Eu-tQiFfD4OosMxV0UrqZD0VU34VQ&s=10"},
+  {name:"Black Panther", fr:"Avengers", init:"BP", color:"#2E2E38", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeUOX60uuwrF56xfjRzbu_eq1lUMD3gQivNW_NZswiSQ&s=10"},
+  {name:"Scarlet Witch", fr:"Avengers", init:"SW", color:"#A6398F", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb-hVZWtHUaqJhjRGyyKk-9qlYOx2oA1HweW0mDqwcuw&s=10"},
+  {name:"Ant-Man", fr:"Avengers", init:"AM", color:"#C0392B", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfUctHBeiV1ZDa1CtZluqZpvW1Ywx4N4SBnvXorbhNEw&s=10"},
+  {name:"Star-Lord", fr:"Avengers", init:"SL", color:"#D98A3D", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZVj0EvAD0LP0CEuX33O6QpFBoUyi2ohkST0LSwX9J8g&s=10"}
 ];
 
 function shuffle(arr){
@@ -641,8 +646,12 @@ function showFlash(title, sub){
 }
 
 function heroCardHTML(h, showPrice){
+  const avatarHTML = h.img
+    ? `<img src="${h.img}" alt="${h.name}">`
+    : h.init;
+
   return `<div class="roster-item">
-    <div class="avatar" style="background:${h.color}">${h.init}</div>
+    <div class="avatar" style="${h.img ? '' : 'background:'+h.color}">${avatarHTML}</div>
     <div>
       <div class="hname">${h.name}</div>
       <div class="hfranchise">${h.fr}</div>
@@ -666,8 +675,14 @@ function renderAll(){
 
   els.lotIndex.textContent = state.lotIdx + 1;
 
-  els.heroAvatar.style.background = hero.color;
-  els.heroAvatar.textContent = hero.init;
+  if(hero.img){
+    els.heroAvatar.style.background = 'transparent';
+    els.heroAvatar.innerHTML = `<img src="${hero.img}" alt="${hero.name}">`;
+  } else {
+    els.heroAvatar.style.background = hero.color;
+    els.heroAvatar.textContent = hero.init;
+  }
+
   els.heroName.textContent = hero.name;
   els.heroFranchise.textContent = hero.fr === 'DC' ? 'DC Universe' : 'Avengers';
   els.heroFranchise.className = 'hero-franchise-tag ' + (hero.fr==='DC' ? 'tag-dc' : 'tag-marvel');
@@ -703,8 +718,6 @@ function endGame(){
   endScreen.style.display = 'block';
 
   const p1 = state.players[1], p2 = state.players[2];
-  const p1Spent = state.budget - p1.budget;
-  const p2Spent = state.budget - p2.budget;
 
   let summary;
   if(p1.heroes.length === p2.heroes.length){

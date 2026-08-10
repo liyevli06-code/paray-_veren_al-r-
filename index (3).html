@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Capes &amp; Gavels — Superhero Auction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0e13;
+    --bg-2:#12151d;
+    --panel:#171a23;
+    --panel-2:#1d212c;
+    --border:rgba(255,255,255,.08);
+    --border-2:rgba(255,255,255,.14);
+    --gold:#c9a227;
+    --gold-bright:#f0c95e;
+    --marvel:#ed1d24;
+    --marvel-dim:#7a1114;
+    --dc:#2e6ff2;
+    --dc-dim:#173a8a;
+    --text:#edeef2;
+    --text-dim:#9096a6;
+    --text-faint:#5c6274;
+    --success:#3ddc97;
+    --danger:#ff5c5c;
+    --radius:14px;
+    --shadow-lg: 0 20px 60px rgba(0,0,0,.5);
+    --font-display:'Bebas Neue', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1200px 700px at 15% -10%, rgba(201,162,39,.08), transparent 60%),
+      radial-gradient(1000px 600px at 100% 10%, rgba(46,111,242,.07), transparent 55%),
+      radial-gradient(900px 600px at 0% 100%, rgba(237,29,36,.06), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--gold);color:#1a1200;}
+  a{color:inherit;}
+  button{font-family:inherit;cursor:pointer;}
+  button:disabled{cursor:not-allowed;}
+  :focus-visible{outline:2px solid var(--gold-bright);outline-offset:3px;}
+
+  .screen{display:none;}
+  .screen.active{display:block;}
+
+  /* ============ SETUP SCREEN ============ */
+  #setup-screen.active{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:48px 20px;
+    position:relative;
+  }
+  .setup-glow{
+    position:absolute; inset:0; pointer-events:none; z-index:0;
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,.015) 0 1px, transparent 1px 64px),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.015) 0 1px, transparent 1px 64px);
+    mask-image: radial-gradient(circle at 50% 30%, black, transparent 70%);
+  }
+  .setup-wrap{position:relative;z-index:1;max-width:620px;width:100%;text-align:center;
+    animation: rise .8s cubic-bezier(.16,1,.3,1) both;}
+  @keyframes rise{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--font-mono);font-size:11px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--gold-bright);
+    border:1px solid var(--border-2);border-radius:999px;
+    padding:7px 16px;background:rgba(201,162,39,.06);
+    margin-bottom:26px;
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--gold-bright);
+    box-shadow:0 0 8px var(--gold-bright); animation:pulse 1.8s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+
+  .hero-title{
+    font-family:var(--font-display);
+    font-size:clamp(52px,10vw,96px);
+    line-height:.92;
+    letter-spacing:.01em;
+    margin:0 0 10px;
+    background:linear-gradient(180deg,#fff 10%,#c9c9d2 55%, var(--gold-bright) 130%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero-title small{display:block;font-family:var(--font-body);font-weight:700;font-size:15px;
+    letter-spacing:.3em;color:var(--text-dim);margin-top:10px;text-transform:uppercase;
+    background:none;-webkit-text-fill-color:var(--text-dim);}
+
+  .hero-sub{color:var(--text-dim);font-size:15.5px;line-height:1.65;max-width:480px;margin:18px auto 40px;}
+  .hero-sub b{color:var(--text);font-weight:600;}
+
+  .config-card{
+    background:linear-gradient(180deg,var(--panel-2),var(--panel));
+    border:1px solid var(--border); border-radius:20px;
+    padding:30px 26px 28px; text-align:left;
+    box-shadow:var(--shadow-lg);
+  }
+  .config-row{margin-bottom:24px;}
+  .config-row:last-of-type{margin-bottom:0;}
+  .config-label{
+    display:flex; align-items:baseline; justify-content:space-between;
+    font-family:var(--font-mono); font-size:11.5px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--text-dim); margin-bottom:12px;
+  }
+  .config-label .val{color:var(--gold-bright); font-size:15px; font-weight:700;}
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{
+    flex:1 1 auto; min-width:64px; text-align:center;
+    background:var(--panel-2); border:1px solid var(--border);
+    color:var(--text-dim); border-radius:9px; padding:10px 8px;
+    font-family:var(--font-mono); font-weight:600; font-size:13px;
+    transition:.15s ease;
+  }
+  .chip:hover{border-color:var(--border-2); color:var(--text);}
+  .chip.active{
+    background:linear-gradient(160deg,var(--gold-bright),var(--gold));
+    color:#1a1200; border-color:transparent; box-shadow:0 6px 16px rgba(201,162,39,.25);
+  }
+  .custom-input{
+    margin-top:10px; width:100%; background:var(--bg-2); border:1px solid var(--border);
+    border-radius:9px; padding:11px 12px; color:var(--text); font-family:var(--font-mono);
+    font-size:14px;
+  }
+  .custom-input:focus{border-color:var(--gold-bright);}
+  .custom-input::placeholder{color:var(--text-faint);}
+
+  .start-btn{
+    width:100%; margin-top:28px; border:none; border-radius:12px;
+    padding:17px 20px; font-family:var(--font-display); font-size:22px; letter-spacing:.06em;
+    background:linear-gradient(160deg,var(--gold-bright),var(--gold));
+    color:#1a1200; box-shadow:0 12px 30px rgba(201,162,39,.28);
+    transition: transform .15s ease, box-shadow .15s ease;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+  }
+  .start-btn:hover{transform:translateY(-2px); box-shadow:0 16px 36px rgba(201,162,39,.38);}
+  .start-btn:active{transform:translateY(0);}
+  .start-btn svg{width:20px;height:20px;}
+
+  .roster-preview{
+    display:flex; justify-content:center; gap:6px; margin-top:34px; flex-wrap:wrap;
+  }
+  .roster-preview .swatch{
+    width:30px;height:30px;border-radius:8px; opacity:.8;
+    border:1px solid var(--border-2);
+  }
+
+  /* ============ GAME SCREEN ============ */
+  #game-screen.active{min-height:100vh; display:flex; flex-direction:column;}
+  .game-header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 26px; border-bottom:1px solid var(--border);
+    background:rgba(12,14,19,.7); backdrop-filter:blur(10px);
+    position:sticky; top:0; z-index:20;
+  }
+  .brand{display:flex; align-items:center; gap:10px;}
+  .brand-mark{
+    width:34px;height:34px;border-radius:9px;
+    background:linear-gradient(160deg,var(--gold-bright),var(--gold));
+    display:flex;align-items:center;justify-content:center;color:#1a1200;
+  }
+  .brand-mark svg{width:18px;height:18px;}
+  .brand-text{font-family:var(--font-display); font-size:22px; letter-spacing:.03em;}
+  .lot-counter{
+    font-family:var(--font-mono); font-size:12.5px; letter-spacing:.12em;
+    color:var(--text-dim); text-transform:uppercase;
+    border:1px solid var(--border-2); border-radius:999px; padding:7px 16px;
+  }
+  .lot-counter b{color:var(--gold-bright); font-size:14px;}
+  .end-early-btn{
+    background:transparent;border:1px solid var(--border-2); color:var(--text-dim);
+    border-radius:8px; padding:8px 14px; font-size:12px; font-family:var(--font-mono);
+    letter-spacing:.08em; transition:.15s;
+  }
+  .end-early-btn:hover{border-color:var(--danger); color:var(--danger);}
+
+  .floor{
+    flex:1; display:grid; gap:18px; padding:22px;
+    grid-template-columns: 280px minmax(0,1fr) 280px;
+    align-items:start; max-width:1360px; margin:0 auto; width:100%;
+  }
+  @media(max-width:980px){
+    .floor{grid-template-columns:1fr; }
+    .podium{order:-1;}
+  }
+
+  /* Paddle panels */
+  .paddle{
+    background:linear-gradient(180deg,var(--panel-2),var(--panel));
+    border:1px solid var(--border); border-radius:16px; padding:18px;
+    position:relative; overflow:hidden;
+  }
+  .paddle::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  }
+  .paddle-p1::before{background:linear-gradient(90deg,var(--marvel),transparent);}
+  .paddle-p2::before{background:linear-gradient(90deg,transparent,var(--dc));}
+
+  .paddle-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;}
+  .paddle-name{font-family:var(--font-display); font-size:19px; letter-spacing:.03em; display:flex; align-items:center; gap:8px;}
+  .p-dot{width:9px;height:9px;border-radius:50%;}
+  .paddle-p1 .p-dot{background:var(--marvel);}
+  .paddle-p2 .p-dot{background:var(--dc);}
+  .turn-badge{
+    font-family:var(--font-mono); font-size:9.5px; letter-spacing:.1em; text-transform:uppercase;
+    padding:3px 9px; border-radius:999px; background:var(--success); color:#03291b;
+    opacity:0; transform:scale(.8); transition:.2s;
+  }
+  .turn-badge.show{opacity:1; transform:scale(1);}
+
+  .budget-box{
+    background:var(--bg-2); border:1px solid var(--border); border-radius:11px;
+    padding:12px 14px; margin-bottom:16px;
+  }
+  .budget-label{font-family:var(--font-mono); font-size:10px; letter-spacing:.12em; color:var(--text-faint); text-transform:uppercase;}
+  .budget-value{font-family:var(--font-mono); font-size:26px; font-weight:700; color:var(--gold-bright); margin-top:3px;
+    transition: color .3s;}
+  .budget-value.flash{color:var(--danger);}
+  .budget-bar{height:4px; border-radius:99px; background:rgba(255,255,255,.06); margin-top:9px; overflow:hidden;}
+  .budget-bar-fill{height:100%; background:linear-gradient(90deg,var(--gold),var(--gold-bright)); transition:width .4s ease;}
+
+  .roster-slots{display:flex; flex-direction:column; gap:8px;}
+  .slot{
+    display:flex; align-items:center; gap:10px;
+    background:var(--bg-2); border:1px dashed var(--border-2); border-radius:10px;
+    padding:8px 10px; min-height:52px;
+  }
+  .slot.filled{border-style:solid; border-color:var(--border);}
+  .slot-num{font-family:var(--font-mono); font-size:10px; color:var(--text-faint); width:14px;}
+  .slot-empty-txt{font-family:var(--font-mono); font-size:10.5px; color:var(--text-faint); letter-spacing:.05em;}
+  .slot-avatar{
+    width:34px;height:34px;border-radius:8px; flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--font-display); font-size:15px; color:#fff;
+  }
+  .slot-info{min-width:0; flex:1;}
+  .slot-hero-name{font-size:12.5px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .slot-hero-price{font-family:var(--font-mono); font-size:10.5px; color:var(--gold-bright);}
+
+  /* Podium / center auction */
+  .podium{
+    background:linear-gradient(180deg,var(--panel-2),var(--panel));
+    border:1px solid var(--border); border-radius:20px;
+    padding:24px; display:flex; flex-direction:column; align-items:center;
+    min-height:560px; position:relative; overflow:hidden;
+  }
+  .podium::after{
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(500px 260px at 50% 0%, rgba(201,162,39,.08), transparent 70%);
+  }
+  .status-strip{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--text-dim); margin-bottom:16px; text-align:center; min-height:16px;
+    position:relative; z-index:1;
+  }
+  .status-strip.urgent{color:var(--danger); animation:blinkText .5s ease-in-out infinite;}
+  @keyframes blinkText{50%{opacity:.35;}}
+
+  .lot-card{
+    width:100%; max-width:340px; background:var(--bg-2);
+    border:1px solid var(--border-2); border-radius:18px; padding:22px;
+    text-align:center; position:relative; z-index:1;
+    box-shadow:0 18px 40px rgba(0,0,0,.35);
+  }
+  .universe-tag{
+    display:inline-block; font-family:var(--font-mono); font-size:10px; letter-spacing:.18em;
+    text-transform:uppercase; padding:4px 12px; border-radius:999px; margin-bottom:14px;
+  }
+  .universe-tag.marvel{background:rgba(237,29,36,.14); color:#ff7a7e; border:1px solid rgba(237,29,36,.35);}
+  .universe-tag.dc{background:rgba(46,111,242,.14); color:#7fa8ff; border:1px solid rgba(46,111,242,.35);}
+
+  .avatar-badge{
+    width:120px;height:120px; border-radius:22px; margin:0 auto 16px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-display); font-size:52px; color:#fff;
+    position:relative; box-shadow:0 10px 26px rgba(0,0,0,.4);
+  }
+  .avatar-badge::after{
+    content:''; position:absolute; inset:0; border-radius:22px;
+    background:linear-gradient(160deg, rgba(255,255,255,.22), transparent 55%);
+  }
+  .hero-name{font-family:var(--font-display); font-size:32px; letter-spacing:.02em; margin:0;}
+  .hero-alias{color:var(--text-dim); font-size:12.5px; margin:3px 0 16px;}
+
+  .stat-grid{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:4px;}
+  .stat-pill{background:var(--panel-2); border:1px solid var(--border); border-radius:9px; padding:8px 6px;}
+  .stat-pill-label{font-family:var(--font-mono); font-size:9px; letter-spacing:.1em; color:var(--text-faint); text-transform:uppercase;}
+  .stat-pill-bar{height:5px; border-radius:99px; background:rgba(255,255,255,.07); margin-top:6px; overflow:hidden;}
+  .stat-pill-fill{height:100%; background:linear-gradient(90deg,var(--gold),var(--gold-bright));}
+  .stat-pill-val{font-family:var(--font-mono); font-size:11px; color:var(--text); margin-top:4px; text-align:right;}
+
+  .sold-stamp{
+    position:absolute; top:44%; left:50%; z-index:5;
+    font-family:var(--font-display); font-size:54px; letter-spacing:.08em;
+    color:var(--danger); border:5px solid var(--danger); border-radius:10px;
+    padding:2px 18px; transform:translate(-50%,-50%) rotate(-14deg) scale(0);
+    opacity:0; pointer-events:none;
+  }
+  .sold-stamp.show{animation:stampIn .55s cubic-bezier(.2,1.4,.4,1) forwards;}
+  @keyframes stampIn{
+    0%{transform:translate(-50%,-50%) rotate(-14deg) scale(2.4); opacity:0;}
+    60%{opacity:1;}
+    100%{transform:translate(-50%,-50%) rotate(-14deg) scale(1); opacity:1;}
+  }
+  .unsold-stamp{color:var(--text-faint); border-color:var(--text-faint);}
+
+  /* bid ticker + timer */
+  .bid-zone{width:100%; max-width:340px; margin-top:18px; position:relative; z-index:1;}
+  .bid-current{
+    display:flex; align-items:center; justify-content:space-between;
+    background:var(--bg-2); border:1px solid var(--border-2); border-radius:12px;
+    padding:14px 16px; margin-bottom:14px;
+  }
+  .bid-current-label{font-family:var(--font-mono); font-size:10px; letter-spacing:.12em; color:var(--text-faint); text-transform:uppercase;}
+  .bid-current-val{font-family:var(--font-mono); font-size:28px; font-weight:700; color:var(--gold-bright);}
+  .bid-leader{font-family:var(--font-mono); font-size:11px; padding:4px 10px; border-radius:999px;}
+  .bid-leader.p1{background:rgba(237,29,36,.16); color:#ff7a7e;}
+  .bid-leader.p2{background:rgba(46,111,242,.16); color:#7fa8ff;}
+  .bid-leader.none{background:rgba(255,255,255,.06); color:var(--text-faint);}
+
+  .timer-wrap{display:flex; justify-content:center; margin-bottom:16px;}
+  .timer-ring{width:64px;height:64px; position:relative;}
+  .timer-ring svg{transform:rotate(-90deg); width:64px; height:64px;}
+  .timer-ring circle{fill:none; stroke-width:5;}
+  .timer-track{stroke:rgba(255,255,255,.08);}
+  .timer-fill{stroke:var(--gold-bright); stroke-linecap:round; transition:stroke-dashoffset 1s linear, stroke .3s;}
+  .timer-num{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-weight:700; font-size:18px;
+  }
+
+  .bid-actions{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .bid-btn{
+    border:none; border-radius:11px; padding:13px 10px;
+    font-family:var(--font-body); font-weight:700; font-size:13.5px;
+    display:flex; flex-direction:column; align-items:center; gap:2px;
+    transition:transform .12s ease, filter .12s ease, opacity .12s;
+  }
+  .bid-btn small{font-family:var(--font-mono); font-weight:600; font-size:10.5px; opacity:.85;}
+  .bid-btn:hover:not(:disabled){transform:translateY(-2px);}
+  .bid-btn:disabled{opacity:.3; filter:grayscale(.4);}
+  .bid-btn.p1{background:linear-gradient(160deg,#ff4d52,var(--marvel));color:#fff;}
+  .bid-btn.p2{background:linear-gradient(160deg,#5c8dff,var(--dc));color:#fff;}
+  .pass-actions{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;}
+  .pass-btn{
+    border-radius:11px; padding:9px 10px; font-size:12px; font-weight:600;
+    background:transparent; border:1px solid var(--border-2); color:var(--text-dim);
+    transition:.15s;
+  }
+  .pass-btn:hover:not(:disabled){border-color:var(--danger); color:var(--danger);}
+  .pass-btn:disabled{opacity:.25;}
+
+  .idle-msg{color:var(--text-dim); font-size:14px; text-align:center; max-width:280px; margin-top:40px;}
+
+  /* ============ END MODAL ============ */
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(6,7,10,.82); backdrop-filter:blur(6px);
+    display:none; align-items:center; justify-content:center; z-index:100; padding:20px;
+  }
+  .modal-overlay.show{display:flex; animation:fadeIn .3s ease;}
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+  .modal{
+    background:linear-gradient(180deg,var(--panel-2),var(--panel));
+    border:1px solid var(--border-2); border-radius:22px; padding:32px;
+    max-width:760px; width:100%; max-height:88vh; overflow-y:auto;
+    box-shadow:var(--shadow-lg);
+    animation:rise .4s cubic-bezier(.16,1,.3,1) both;
+  }
+  .winner-banner{
+    text-align:center; font-family:var(--font-display); font-size:38px; letter-spacing:.03em;
+    background:linear-gradient(180deg,#fff,var(--gold-bright));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    margin-bottom:6px;
+  }
+  .winner-sub{text-align:center; color:var(--text-dim); font-size:13px; margin-bottom:26px;}
+  .modal-rosters{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media(max-width:600px){.modal-rosters{grid-template-columns:1fr;}}
+  .modal-col{background:var(--bg-2); border:1px solid var(--border); border-radius:14px; padding:16px;}
+  .modal-col-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px;}
+  .modal-col-title{font-family:var(--font-display); font-size:19px;}
+  .modal-col-score{font-family:var(--font-mono); font-size:12px; color:var(--gold-bright);}
+  .mini-slot{display:flex; align-items:center; gap:9px; padding:7px 0; border-bottom:1px solid var(--border);}
+  .mini-slot:last-child{border-bottom:none;}
+  .mini-avatar{width:28px;height:28px;border-radius:7px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:12px; color:#fff;}
+  .mini-name{font-size:12.5px; font-weight:600; flex:1;}
+  .mini-price{font-family:var(--font-mono); font-size:11px; color:var(--text-dim);}
+  .modal-stats-row{display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:11px; color:var(--text-faint); margin-top:12px; padding-top:10px; border-top:1px dashed var(--border-2);}
+
+  .replay-btn{
+    width:100%; margin-top:26px; border:none; border-radius:12px; padding:15px;
+    font-family:var(--font-display); font-size:19px; letter-spacing:.05em;
+    background:linear-gradient(160deg,var(--gold-bright),var(--gold)); color:#1a1200;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important;}
+  }
+
+  @media(max-width:520px){
+    .hero-title{font-size:15vw;}
+    .config-card{padding:22px 18px;}
+  }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ============ SETUP SCREEN ============ -->
+  <section id="setup-screen" class="screen active">
+    <div class="setup-glow"></div>
+    <div class="setup-wrap">
+      <span class="eyebrow"><span class="dot"></span> Local 2-Player Auction</span>
+      <h1 class="hero-title">CAPES &amp; GAVELS<small>Superhero Draft Auction House</small></h1>
+      <p class="hero-sub">Bid head-to-head across <b>30 Marvel &amp; DC legends</b>. Build a five-hero roster before your budget — or your rival — runs out.</p>
+
+      <div class="config-card">
+        <div class="config-row">
+          <div class="config-label"><span>Starting Budget</span><span class="val" id="budget-val">$20</span></div>
+          <div class="chip-row" id="budget-chips">
+            <button class="chip" data-budget="10">$10</button>
+            <button class="chip active" data-budget="20">$20</button>
+            <button class="chip" data-budget="50">$50</button>
+            <button class="chip" data-budget="100">$100</button>
+            <button class="chip" data-budget="1000">$1K</button>
+            <button class="chip" data-budget="10000">$10K</button>
+            <button class="chip" data-budget="100000">$100K</button>
+          </div>
+          <input type="number" id="budget-custom" class="custom-input" placeholder="Custom budget ($10 – $100,000)" min="10" max="100000">
+        </div>
+
+        <div class="config-row">
+          <div class="config-label"><span>Bid Increment</span><span class="val" id="incr-val">$1</span></div>
+          <div class="chip-row" id="incr-chips">
+            <button class="chip active" data-incr="1">$1</button>
+            <button class="chip" data-incr="2">$2</button>
+            <button class="chip" data-incr="5">$5</button>
+            <button class="chip" data-incr="10">$10</button>
+            <button class="chip" data-incr="25">$25</button>
+            <button class="chip" data-incr="100">$100</button>
+          </div>
+          <input type="number" id="incr-custom" class="custom-input" placeholder="Custom increment" min="1">
+        </div>
+
+        <button class="start-btn" id="start-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4l6 6-8.5 8.5a2.1 2.1 0 0 1-3 0l-3-3a2.1 2.1 0 0 1 0-3L14 4z"/><path d="M3 21l4-4"/><path d="M17 8l-9 9"/></svg>
+          ENTER THE AUCTION HOUSE
+        </button>
+      </div>
+
+      <div class="roster-preview" id="roster-preview"></div>
+    </div>
+  </section>
+
+  <!-- ============ GAME SCREEN ============ -->
+  <section id="game-screen" class="screen">
+    <header class="game-header">
+      <div class="brand">
+        <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4l6 6-8.5 8.5a2.1 2.1 0 0 1-3 0l-3-3a2.1 2.1 0 0 1 0-3L14 4z"/></svg></div>
+        <span class="brand-text">CAPES &amp; GAVELS</span>
+      </div>
+      <div class="lot-counter">LOT <b id="lot-number">01</b> / <span id="lot-total">30</span></div>
+      <button class="end-early-btn" id="end-early-btn">End Auction</button>
+    </header>
+
+    <main class="floor">
+      <!-- Player 1 -->
+      <aside class="paddle paddle-p1" id="panel-p1">
+        <div class="paddle-head">
+          <div class="paddle-name"><span class="p-dot"></span>Player 1</div>
+          <span class="turn-badge" id="lead-badge-p1">LEADING</span>
+        </div>
+        <div class="budget-box">
+          <div class="budget-label">Remaining Budget</div>
+          <div class="budget-value" id="budget-p1">$20</div>
+          <div class="budget-bar"><div class="budget-bar-fill" id="budget-bar-p1" style="width:100%"></div></div>
+        </div>
+        <div class="roster-slots" id="roster-p1"></div>
+      </aside>
+
+      <!-- Center Podium -->
+      <div class="podium">
+        <div class="status-strip" id="status-strip">Bidding is open</div>
+        <div id="lot-card-wrap">
+          <div class="lot-card" id="lot-card" style="display:none;">
+            <span class="sold-stamp" id="sold-stamp">SOLD</span>
+            <span class="universe-tag" id="uni-tag">MARVEL</span>
+            <div class="avatar-badge" id="avatar-badge">IM</div>
+            <h2 class="hero-name" id="hero-name">—</h2>
+            <p class="hero-alias" id="hero-alias">—</p>
+            <div class="stat-grid" id="stat-grid"></div>
+          </div>
+          <p class="idle-msg" id="idle-msg">Configure the auction and hit "Enter the Auction House" to begin.</p>
+        </div>
+
+        <div class="bid-zone" id="bid-zone" style="display:none;">
+          <div class="bid-current">
+            <div>
+              <div class="bid-current-label">Current Bid</div>
+              <div class="bid-current-val" id="current-bid">$0</div>
+            </div>
+            <span class="bid-leader none" id="bid-leader-tag">No bids yet</span>
+          </div>
+
+          <div class="timer-wrap">
+            <div class="timer-ring">
+              <svg viewBox="0 0 64 64">
+                <circle class="timer-track" cx="32" cy="32" r="27"></circle>
+                <circle class="timer-fill" id="timer-fill" cx="32" cy="32" r="27"></circle>
+              </svg>
+              <div class="timer-num" id="timer-num">12</div>
+            </div>
+          </div>
+
+          <div class="bid-actions">
+            <button class="bid-btn p1" id="bid-btn-p1">RAISE — P1<small id="bid-btn-p1-amt">to $1</small></button>
+            <button class="bid-btn p2" id="bid-btn-p2">RAISE — P2<small id="bid-btn-p2-amt">to $1</small></button>
+          </div>
+          <div class="pass-actions">
+            <button class="pass-btn" id="pass-btn-p1">Player 1 Pass</button>
+            <button class="pass-btn" id="pass-btn-p2">Player 2 Pass</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Player 2 -->
+      <aside class="paddle paddle-p2" id="panel-p2">
+        <div class="paddle-head">
+          <div class="paddle-name"><span class="p-dot"></span>Player 2</div>
+          <span class="turn-badge" id="lead-badge-p2">LEADING</span>
+        </div>
+        <div class="budget-box">
+          <div class="budget-label">Remaining Budget</div>
+          <div class="budget-value" id="budget-p2">$20</div>
+          <div class="budget-bar"><div class="budget-bar-fill" id="budget-bar-p2" style="width:100%"></div></div>
+        </div>
+        <div class="roster-slots" id="roster-p2"></div>
+      </aside>
+    </main>
+  </section>
+
+  <!-- ============ END MODAL ============ -->
+  <div class="modal-overlay" id="end-modal">
+    <div class="modal">
+      <div class="winner-banner" id="winner-banner">PLAYER 1 WINS</div>
+      <div class="winner-sub" id="winner-sub">Highest combined roster power</div>
+      <div class="modal-rosters">
+        <div class="modal-col">
+          <div class="modal-col-head"><span class="modal-col-title">Player 1</span><span class="modal-col-score" id="score-p1">Power 0</span></div>
+          <div id="modal-roster-p1"></div>
+          <div class="modal-stats-row"><span>Spent</span><span id="spent-p1">$0</span></div>
+          <div class="modal-stats-row"><span>Remaining</span><span id="remain-p1">$0</span></div>
+        </div>
+        <div class="modal-col">
+          <div class="modal-col-head"><span class="modal-col-title">Player 2</span><span class="modal-col-score" id="score-p2">Power 0</span></div>
+          <div id="modal-roster-p2"></div>
+          <div class="modal-stats-row"><span>Spent</span><span id="spent-p2">$0</span></div>
+          <div class="modal-stats-row"><span>Remaining</span><span id="remain-p2">$0</span></div>
+        </div>
+      </div>
+      <button class="replay-btn" id="replay-btn">START A NEW AUCTION</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+
+  /* ============ MOCK HERO DATA ============ */
+  const MARVEL = [
+    {name:"Iron Man", alias:"Genius. Billionaire. Playboy.", power:78, strength:70, speed:65, intel:98, color:["#c62828","#8e0000"]},
+    {name:"Captain America", alias:"The First Avenger", power:72, strength:80, speed:68, intel:80, color:["#3f51b5","#1a237e"]},
+    {name:"Thor", alias:"God of Thunder", power:99, strength:99, speed:87, intel:70, color:["#7986cb","#33417a"]},
+    {name:"Hulk", alias:"The Strongest There Is", power:97, strength:100, speed:55, intel:60, color:["#43a047","#1b5e20"]},
+    {name:"Black Widow", alias:"Master Spy", power:45, strength:48, speed:60, intel:88, color:["#424242","#111"]},
+    {name:"Spider-Man", alias:"Friendly Neighborhood Hero", power:75, strength:74, speed:90, intel:85, color:["#d32f2f","#7b0000"]},
+    {name:"Doctor Strange", alias:"Sorcerer Supreme", power:96, strength:40, speed:55, intel:97, color:["#6a1b9a","#2c0a3e"]},
+    {name:"Black Panther", alias:"King of Wakanda", power:76, strength:78, speed:82, intel:90, color:["#212121","#000"]},
+    {name:"Scarlet Witch", alias:"Reality Warper", power:98, strength:35, speed:50, intel:78, color:["#ad1457","#5c0025"]},
+    {name:"Captain Marvel", alias:"Cosmic Powerhouse", power:99, strength:92, speed:95, intel:75, color:["#f9a825","#a05a00"]},
+    {name:"Wolverine", alias:"The Best There Is", power:70, strength:82, speed:70, intel:65, color:["#f9a825","#37474f"]},
+    {name:"Storm", alias:"Weather Goddess", power:90, strength:45, speed:78, intel:80, color:["#0288d1","#003a5c"]},
+    {name:"Vision", alias:"Synthetic Avenger", power:88, strength:80, speed:76, intel:96, color:["#c62828","#4a0000"]},
+    {name:"Ant-Man", alias:"Size-Shifting Hero", power:60, strength:55, speed:58, intel:82, color:["#c62828","#5d0000"]},
+    {name:"Star-Lord", alias:"Guardian of the Galaxy", power:58, strength:52, speed:65, intel:72, color:["#e64a19","#7c1500"]},
+  ].map(h=>({...h, universe:"marvel"}));
+
+  const DC = [
+    {name:"Superman", alias:"The Man of Steel", power:100, strength:100, speed:96, intel:82, color:["#1565c0","#0a2e5c"]},
+    {name:"Batman", alias:"The Dark Knight", power:40, strength:60, speed:55, intel:100, color:["#263238","#000"]},
+    {name:"Wonder Woman", alias:"Amazonian Warrior", power:96, strength:97, speed:85, intel:88, color:["#c62828","#7a0000"]},
+    {name:"The Flash", alias:"The Fastest Man Alive", power:85, strength:50, speed:100, intel:76, color:["#d32f2f","#8c0000"]},
+    {name:"Green Lantern", alias:"Willpower Incarnate", power:92, strength:60, speed:75, intel:78, color:["#2e7d32","#0d3d10"]},
+    {name:"Aquaman", alias:"King of Atlantis", power:82, strength:90, speed:70, intel:68, color:["#00838f","#00363d"]},
+    {name:"Cyborg", alias:"Half Man. Half Machine.", power:80, strength:88, speed:60, intel:92, color:["#455a64","#151f24"]},
+    {name:"Shazam", alias:"The Power of the Gods", power:93, strength:94, speed:80, intel:55, color:["#c62828","#5c0000"]},
+    {name:"Green Arrow", alias:"Emerald Archer", power:38, strength:55, speed:56, intel:74, color:["#2e7d32","#0d3d10"]},
+    {name:"Martian Manhunter", alias:"The Last Son of Mars", power:95, strength:85, speed:78, intel:90, color:["#c62828","#4a0000"]},
+    {name:"Supergirl", alias:"The Girl of Steel", power:97, strength:96, speed:94, intel:78, color:["#1565c0","#0a2e5c"]},
+    {name:"Batgirl", alias:"Guardian of Gotham", power:42, strength:52, speed:58, intel:94, color:["#6a1b9a","#2c0a3e"]},
+    {name:"Nightwing", alias:"First Robin", power:44, strength:58, speed:66, intel:86, color:["#1565c0","#08203f"]},
+    {name:"Zatanna", alias:"Mistress of Magic", power:89, strength:38, speed:52, intel:84, color:["#6a1b9a","#320a45"]},
+    {name:"Blue Beetle", alias:"Scarab-Powered Hero", power:74, strength:72, speed:68, intel:80, color:["#2e7d32","#0a3d10"]},
+  ].map(h=>({...h, universe:"dc"}));
+
+  const ALL_HEROES = [...MARVEL, ...DC];
+
+  function initials(name){
+    return name.split(" ").filter(w=>w.length>1 || w===w.toUpperCase()).slice(0,2).map(w=>w[0]).join("").toUpperCase() || name.slice(0,2).toUpperCase();
+  }
+
+  function shuffle(arr){
+    const a=[...arr];
+    for(let i=a.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [a[i],a[j]]=[a[j],a[i]];
+    }
+    return a;
+  }
+
+  function fmt(n){
+    return "$"+Number(n).toLocaleString("en-US");
+  }
+
+  /* ============ STATE ============ */
+  const state = {
+    budget:20,
+    increment:1,
+    deck:[],
+    lotIndex:0,
+    totalLots:0,
+    current:null,
+    currentBid:0,
+    leader:null,       // 'p1' | 'p2' | null
+    passed:{p1:false,p2:false},
+    timeLeft:12,
+    timerId:null,
+    active:false,
+    players:{
+      p1:{budget:20, roster:[]},
+      p2:{budget:20, roster:[]},
+    }
+  };
+
+  const TIMER_START = 12;
+
+  /* ============ DOM REFS ============ */
+  const $ = id=>document.getElementById(id);
+  const els = {
+    setupScreen:$("setup-screen"), gameScreen:$("game-screen"),
+    budgetChips:$("budget-chips"), incrChips:$("incr-chips"),
+    budgetCustom:$("budget-custom"), incrCustom:$("incr-custom"),
+    budgetVal:$("budget-val"), incrVal:$("incr-val"),
+    startBtn:$("start-btn"),
+    lotNumber:$("lot-number"), lotTotal:$("lot-total"),
+    statusStrip:$("status-strip"),
+    lotCard:$("lot-card"), idleMsg:$("idle-msg"), soldStamp:$("sold-stamp"),
+    uniTag:$("uni-tag"), avatarBadge:$("avatar-badge"), heroName:$("hero-name"),
+    heroAlias:$("hero-alias"), statGrid:$("stat-grid"),
+    bidZone:$("bid-zone"), currentBid:$("current-bid"), bidLeaderTag:$("bid-leader-tag"),
+    timerFill:$("timer-fill"), timerNum:$("timer-num"),
+    bidBtnP1:$("bid-btn-p1"), bidBtnP2:$("bid-btn-p2"),
+    bidBtnP1Amt:$("bid-btn-p1-amt"), bidBtnP2Amt:$("bid-btn-p2-amt"),
+    passBtnP1:$("pass-btn-p1"), passBtnP2:$("pass-btn-p2"),
+    budgetP1:$("budget-p1"), budgetP2:$("budget-p2"),
+    budgetBarP1:$("budget-bar-p1"), budgetBarP2:$("budget-bar-p2"),
+    rosterP1:$("roster-p1"), rosterP2:$("roster-p2"),
+    leadBadgeP1:$("lead-badge-p1"), leadBadgeP2:$("lead-badge-p2"),
+    endEarlyBtn:$("end-early-btn"),
+    endModal:$("end-modal"), winnerBanner:$("winner-banner"), winnerSub:$("winner-sub"),
+    modalRosterP1:$("modal-roster-p1"), modalRosterP2:$("modal-roster-p2"),
+    scoreP1:$("score-p1"), scoreP2:$("score-p2"),
+    spentP1:$("spent-p1"), spentP2:$("spent-p2"),
+    remainP1:$("remain-p1"), remainP2:$("remain-p2"),
+    replayBtn:$("replay-btn"),
+  };
+
+  const TIMER_CIRC = 2*Math.PI*27;
+  els.timerFill.style.strokeDasharray = TIMER_CIRC;
+
+  /* ============ SETUP SCREEN LOGIC ============ */
+  function selectChip(container, attr, value){
+    [...container.children].forEach(c=>{
+      c.classList.toggle("active", Number(c.getAttribute(attr)) === value);
+    });
+  }
+
+  els.budgetChips.addEventListener("click", e=>{
+    const btn = e.target.closest(".chip"); if(!btn) return;
+    state.budget = Number(btn.dataset.budget);
+    els.budgetCustom.value = "";
+    selectChip(els.budgetChips, "data-budget", state.budget);
+    els.budgetVal.textContent = fmt(state.budget);
+  });
+  els.budgetCustom.addEventListener("input", ()=>{
+    const v = Math.min(100000, Math.max(10, Number(els.budgetCustom.value)||0));
+    if(els.budgetCustom.value===""){ return; }
+    state.budget = v || state.budget;
+    selectChip(els.budgetChips, "data-budget", -1);
+    els.budgetVal.textContent = fmt(state.budget);
+  });
+
+  els.incrChips.addEventListener("click", e=>{
+    const btn = e.target.closest(".chip"); if(!btn) return;
+    state.increment = Number(btn.dataset.incr);
+    els.incrCustom.value = "";
+    selectChip(els.incrChips, "data-incr", state.increment);
+    els.incrVal.textContent = fmt(state.increment);
+  });
+  els.incrCustom.addEventListener("input", ()=>{
+    if(els.incrCustom.value===""){ return; }
+    const v = Math.max(1, Number(els.incrCustom.value)||0);
+    state.increment = v || state.increment;
+    selectChip(els.incrChips, "data-incr", -1);
+    els.incrVal.textContent = fmt(state.increment);
+  });
+
+  // roster preview swatches on landing page
+  (function renderPreview(){
+    const wrap = $("roster-preview");
+    shuffle(ALL_HEROES).slice(0,10).forEach(h=>{
+      const d = document.createElement("div");
+      d.className="swatch";
+      d.style.background = `linear-gradient(160deg, ${h.color[0]}, ${h.color[1]})`;
+      d.title = h.name;
+      wrap.appendChild(d);
+    });
+  })();
+
+  els.startBtn.addEventListener("click", startGame);
+
+  /* ============ GAME START ============ */
+  function startGame(){
+    state.players.p1.budget = state.budget;
+    state.players.p2.budget = state.budget;
+    state.players.p1.roster = [];
+    state.players.p2.roster = [];
+    state.deck = shuffle(ALL_HEROES);
+    state.totalLots = state.deck.length;
+    state.lotIndex = 0;
+
+    els.setupScreen.classList.remove("active");
+    els.gameScreen.classList.add("active");
+    els.lotTotal.textContent = String(state.totalLots).padStart(2,"0");
+
+    renderRosters();
+    updateBudgetsUI();
+    nextLot();
+  }
+
+  /* ============ LOT FLOW ============ */
+  function canAfford(playerKey, targetBid){
+    return state.players[playerKey].budget >= targetBid;
+  }
+  function rosterFull(playerKey){
+    return state.players[playerKey].roster.length >= 5;
+  }
+  function playerCanParticipate(playerKey){
+    if(rosterFull(playerKey)) return false;
+    const nextNeeded = state.currentBid===0 ? state.increment : state.currentBid + state.increment;
+    return state.players[playerKey].budget >= nextNeeded;
+  }
+  function bothLockedOut(){
+    // neither player can raise further, and neither has room realistically to start fresh next lot
+    const p1ok = !rosterFull("p1") && state.players.p1.budget >= state.increment;
+    const p2ok = !rosterFull("p2") && state.players.p2.budget >= state.increment;
+    return !p1ok && !p2ok;
+  }
+
+  function nextLot(){
+    clearInterval(state.timerId);
+    els.soldStamp.classList.remove("show");
+
+    const bothFull = rosterFull("p1") && rosterFull("p2");
+    if(bothFull || state.deck.length===0 || bothLockedOut()){
+      return endGame();
+    }
+
+    state.current = state.deck.shift();
+    state.lotIndex++;
+    state.currentBid = 0;
+    state.leader = null;
+    state.passed = {p1:false,p2:false};
+    state.timeLeft = TIMER_START;
+    state.active = true;
+
+    els.lotNumber.textContent = String(state.lotIndex).padStart(2,"0");
+    els.idleMsg.style.display = "none";
+    els.lotCard.style.display = "block";
+    els.bidZone.style.display = "block";
+    els.statusStrip.textContent = "Bidding is open — place your bid";
+    els.statusStrip.classList.remove("urgent");
+
+    const h = state.current;
+    els.uniTag.textContent = h.universe.toUpperCase();
+    els.uniTag.className = "universe-tag " + h.universe;
+    els.avatarBadge.textContent = initials(h.name);
+    els.avatarBadge.style.background = `linear-gradient(160deg, ${h.color[0]}, ${h.color[1]})`;
+    els.heroName.textContent = h.name;
+    els.heroAlias.textContent = h.alias;
+
+    els.statGrid.innerHTML = "";
+    [["PWR",h.power],["STR",h.strength],["SPD",h.speed],["INT",h.intel]].forEach(([label,val])=>{
+      const cell = document.createElement("div");
+      cell.className="stat-pill";
+      cell.innerHTML = `<div class="stat-pill-label">${label}</div>
+        <div class="stat-pill-bar"><div class="stat-pill-fill" style="width:${val}%"></div></div>
+        <div class="stat-pill-val">${val}</div>`;
+      els.statGrid.appendChild(cell);
+    });
+
+    updateBidUI();
+    startTimer();
+  }
+
+  function startTimer(){
+    tickTimer();
+    state.timerId = setInterval(tickTimer, 1000);
+  }
+  function tickTimer(){
+    if(state.timeLeft<=0){
+      clearInterval(state.timerId);
+      resolveLot();
+      return;
+    }
+    els.timerNum.textContent = state.timeLeft;
+    const frac = state.timeLeft / TIMER_START;
+    els.timerFill.style.strokeDashoffset = TIMER_CIRC * (1-frac);
+    els.timerFill.style.stroke = frac < 0.25 ? "var(--danger)" : "var(--gold-bright)";
+    if(state.timeLeft<=3){
+      els.statusStrip.classList.add("urgent");
+      els.statusStrip.textContent = state.leader ? "Going... going..." : "Final seconds — place a bid!";
+    }
+    state.timeLeft--;
+  }
+  function resetTimer(){
+    state.timeLeft = TIMER_START;
+    els.statusStrip.classList.remove("urgent");
+    els.statusStrip.textContent = "Bidding is open — place your bid";
+  }
+
+  function placeBid(playerKey){
+    if(!state.active) return;
+    if(state.leader === playerKey) return; // can't outbid yourself
+    if(rosterFull(playerKey)) return;
+    const target = state.currentBid===0 ? state.increment : state.currentBid + state.increment;
+    if(!canAfford(playerKey, target)) return;
+
+    state.currentBid = target;
+    state.leader = playerKey;
+    state.passed = {p1:false, p2:false};
+    resetTimer();
+    updateBidUI();
+  }
+
+  function passLot(playerKey){
+    if(!state.active) return;
+    state.passed[playerKey] = true;
+
+    if(state.leader && state.leader !== playerKey){
+      resolveLot();
+      return;
+    }
+    if(!state.leader && state.passed.p1 && state.passed.p2){
+      resolveLot();
+      return;
+    }
+    updateBidUI();
+  }
+
+  function resolveLot(){
+    clearInterval(state.timerId);
+    state.active = false;
+    updateBidUI();
+
+    if(state.leader){
+      const key = state.leader;
+      state.players[key].budget -= state.currentBid;
+      state.players[key].roster.push({...state.current, pricePaid: state.currentBid});
+      els.soldStamp.textContent = "SOLD";
+      els.soldStamp.classList.remove("unsold-stamp");
+      els.soldStamp.classList.add("show");
+      els.statusStrip.textContent = `${key.toUpperCase()} wins ${state.current.name} for ${fmt(state.currentBid)}`;
+    } else {
+      els.soldStamp.textContent = "PASSED";
+      els.soldStamp.classList.add("unsold-stamp");
+      els.soldStamp.classList.add("show");
+      els.statusStrip.textContent = `${state.current.name} goes unsold`;
+    }
+    els.statusStrip.classList.remove("urgent");
+    renderRosters();
+    updateBudgetsUI();
+
+    setTimeout(nextLot, 1300);
+  }
+
+  /* ============ UI UPDATES ============ */
+  function updateBidUI(){
+    els.currentBid.textContent = fmt(state.currentBid);
+    if(state.leader){
+      els.bidLeaderTag.textContent = state.leader==="p1" ? "Player 1 leading" : "Player 2 leading";
+      els.bidLeaderTag.className = "bid-leader " + state.leader;
+    } else {
+      els.bidLeaderTag.textContent = "No bids yet";
+      els.bidLeaderTag.className = "bid-leader none";
+    }
+    els.leadBadgeP1.classList.toggle("show", state.leader==="p1");
+    els.leadBadgeP2.classList.toggle("show", state.leader==="p2");
+
+    const nextTarget = state.currentBid===0 ? state.increment : state.currentBid + state.increment;
+    els.bidBtnP1Amt.textContent = "to " + fmt(nextTarget);
+    els.bidBtnP2Amt.textContent = "to " + fmt(nextTarget);
+
+    const p1Enabled = state.active && state.leader!=="p1" && !rosterFull("p1") && canAfford("p1", nextTarget);
+    const p2Enabled = state.active && state.leader!=="p2" && !rosterFull("p2") && canAfford("p2", nextTarget);
+    els.bidBtnP1.disabled = !p1Enabled;
+    els.bidBtnP2.disabled = !p2Enabled;
+
+    els.passBtnP1.disabled = !state.active || state.passed.p1;
+    els.passBtnP2.disabled = !state.active || state.passed.p2;
+  }
+
+  function updateBudgetsUI(){
+    els.budgetP1.textContent = fmt(state.players.p1.budget);
+    els.budgetP2.textContent = fmt(state.players.p2.budget);
+    els.budgetBarP1.style.width = Math.max(0, Math.min(100, (state.players.p1.budget/state.budget)*100)) + "%";
+    els.budgetBarP2.style.width = Math.max(0, Math.min(100, (state.players.p2.budget/state.budget)*100)) + "%";
+  }
+
+  function slotHTML(hero, idx){
+    if(!hero){
+      return `<div class="slot"><span class="slot-num">${idx+1}</span><span class="slot-empty-txt">Open lot</span></div>`;
+    }
+    return `<div class="slot filled">
+      <span class="slot-num">${idx+1}</span>
+      <div class="slot-avatar" style="background:linear-gradient(160deg, ${hero.color[0]}, ${hero.color[1]})">${initials(hero.name)}</div>
+      <div class="slot-info">
+        <div class="slot-hero-name">${hero.name}</div>
+        <div class="slot-hero-price">${fmt(hero.pricePaid)}</div>
+      </div>
+    </div>`;
+  }
+
+  function renderRosters(){
+    [["p1", els.rosterP1], ["p2", els.rosterP2]].forEach(([key, container])=>{
+      const roster = state.players[key].roster;
+      let html = "";
+      for(let i=0;i<5;i++) html += slotHTML(roster[i], i);
+      container.innerHTML = html;
+    });
+  }
+
+  /* ============ BUTTON BINDINGS ============ */
+  els.bidBtnP1.addEventListener("click", ()=>placeBid("p1"));
+  els.bidBtnP2.addEventListener("click", ()=>placeBid("p2"));
+  els.passBtnP1.addEventListener("click", ()=>passLot("p1"));
+  els.passBtnP2.addEventListener("click", ()=>passLot("p2"));
+  els.endEarlyBtn.addEventListener("click", ()=>{
+    clearInterval(state.timerId);
+    state.active = false;
+    endGame();
+  });
+
+  /* ============ END GAME ============ */
+  function totalPower(roster){
+    return roster.reduce((sum,h)=>sum + h.power + h.strength + h.speed + h.intel, 0);
+  }
+  function totalSpent(playerKey){
+    return state.budget - state.players[playerKey].budget;
+  }
+
+  function endGame(){
+    els.bidZone.style.display = "none";
+    const p1Score = totalPower(state.players.p1.roster);
+    const p2Score = totalPower(state.players.p2.roster);
+
+    let banner, sub;
+    if(p1Score === p2Score){
+      banner = "IT'S A DRAW";
+      sub = "Both rosters matched in total power";
+    } else {
+      const winner = p1Score > p2Score ? "PLAYER 1" : "PLAYER 2";
+      banner = winner + " WINS";
+      sub = "Highest combined roster power across all stats";
+    }
+    els.winnerBanner.textContent = banner;
+    els.winnerSub.textContent = sub;
+
+    els.scoreP1.textContent = "Power " + p1Score;
+    els.scoreP2.textContent = "Power " + p2Score;
+    els.spentP1.textContent = fmt(totalSpent("p1"));
+    els.spentP2.textContent = fmt(totalSpent("p2"));
+    els.remainP1.textContent = fmt(state.players.p1.budget);
+    els.remainP2.textContent = fmt(state.players.p2.budget);
+
+    function modalRosterHTML(roster){
+      if(roster.length===0) return `<p style="color:var(--text-faint);font-size:12.5px;">No heroes drafted.</p>`;
+      return roster.map(h=>`
+        <div class="mini-slot">
+          <div class="mini-avatar" style="background:linear-gradient(160deg, ${h.color[0]}, ${h.color[1]})">${initials(h.name)}</div>
+          <div class="mini-name">${h.name}</div>
+          <div class="mini-price">${fmt(h.pricePaid)}</div>
+        </div>`).join("");
+    }
+    els.modalRosterP1.innerHTML = modalRosterHTML(state.players.p1.roster);
+    els.modalRosterP2.innerHTML = modalRosterHTML(state.players.p2.roster);
+
+    els.endModal.classList.add("show");
+  }
+
+  els.replayBtn.addEventListener("click", ()=>{
+    els.endModal.classList.remove("show");
+    els.gameScreen.classList.remove("active");
+    els.setupScreen.classList.add("active");
+    els.idleMsg.style.display = "block";
+    els.lotCard.style.display = "none";
+  });
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qəhrəman Hərracı</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#0B0F1A;
+    --bg-panel:#141A2A;
+    --bg-panel-2:#1B2237;
+    --line:#2A3350;
+    --gold:#D4A544;
+    --gold-bright:#F0C669;
+    --crimson:#C1443C;
+    --azure:#3E6FA8;
+    --text-light:#EDEDE3;
+    --text-dim:#8890A0;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--bg-deep);
+    color:var(--text-light);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(212,165,68,0.07), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(62,111,168,0.08), transparent 40%);
+  }
+  .display{font-family:'Bebas Neue',sans-serif; letter-spacing:0.03em;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  /* ---------- HOME SCREEN ---------- */
+  #home{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+  .poster{
+    width:100%;
+    max-width:520px;
+    background:linear-gradient(180deg, var(--bg-panel), var(--bg-panel-2));
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:44px 40px 36px;
+    position:relative;
+    box-shadow:0 30px 60px rgba(0,0,0,0.5);
+  }
+  .poster::before{
+    content:"";
+    position:absolute;
+    top:14px; left:14px; right:14px; bottom:14px;
+    border:1px solid rgba(212,165,68,0.35);
+    border-radius:2px;
+    pointer-events:none;
+  }
+  .eyebrow{
+    text-align:center;
+    color:var(--gold);
+    font-size:12px;
+    letter-spacing:0.35em;
+    text-transform:uppercase;
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .poster h1{
+    font-size:56px;
+    text-align:center;
+    line-height:0.95;
+    color:var(--text-light);
+    margin-bottom:6px;
+  }
+  .poster h1 span{color:var(--gold-bright);}
+  .poster .sub{
+    text-align:center;
+    color:var(--text-dim);
+    font-size:14px;
+    margin-bottom:34px;
+  }
+  .field{margin-bottom:26px;}
+  .field label{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    margin-bottom:10px;
+    font-weight:600;
+  }
+  .field label .val{
+    font-family:'JetBrains Mono',monospace;
+    color:var(--gold-bright);
+    font-size:15px;
+    letter-spacing:0;
+  }
+  input[type=range]{
+    -webkit-appearance:none;
+    width:100%;
+    height:3px;
+    background:var(--line);
+    border-radius:2px;
+    outline:none;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    width:18px; height:18px;
+    border-radius:50%;
+    background:var(--gold-bright);
+    border:3px solid var(--bg-deep);
+    box-shadow:0 0 0 1px var(--gold);
+    cursor:pointer;
+    margin-top:-8px;
+  }
+  input[type=range]::-webkit-slider-runnable-track{height:3px; background:var(--line); border-radius:2px;}
+
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    flex:1 1 auto;
+    min-width:42px;
+    text-align:center;
+    padding:9px 0;
+    border:1px solid var(--line);
+    border-radius:3px;
+    background:var(--bg-deep);
+    color:var(--text-dim);
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    font-weight:700;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .chip:hover{border-color:var(--gold);}
+  .chip.active{
+    background:var(--gold);
+    border-color:var(--gold);
+    color:var(--bg-deep);
+  }
+
+  .start-btn{
+    width:100%;
+    margin-top:8px;
+    padding:16px;
+    border:none;
+    border-radius:3px;
+    background:var(--gold);
+    color:var(--bg-deep);
+    font-family:'Bebas Neue',sans-serif;
+    font-size:22px;
+    letter-spacing:0.08em;
+    cursor:pointer;
+    transition:transform .12s ease, background .15s ease;
+  }
+  .start-btn:hover{background:var(--gold-bright); transform:translateY(-1px);}
+  .start-btn:active{transform:translateY(0);}
+
+  .foot-note{
+    text-align:center;
+    color:var(--text-dim);
+    font-size:11.5px;
+    margin-top:16px;
+    letter-spacing:0.02em;
+  }
+
+  /* ---------- GAME SCREEN ---------- */
+  #game{display:none; min-height:100vh; padding:20px;}
+  .topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    max-width:1180px;
+    margin:0 auto 18px;
+    padding:0 4px;
+  }
+  .topbar .logo{font-family:'Bebas Neue'; font-size:22px; letter-spacing:0.06em; color:var(--gold-bright);}
+  .topbar .progress{color:var(--text-dim); font-size:12px; letter-spacing:0.08em; text-transform:uppercase;}
+  .topbar .progress b{color:var(--text-light); font-family:'JetBrains Mono'; font-weight:700;}
+
+  .hall{
+    display:grid;
+    grid-template-columns:250px 1fr 250px;
+    gap:16px;
+    max-width:1180px;
+    margin:0 auto;
+    align-items:start;
+  }
+  @media (max-width:880px){
+    .hall{grid-template-columns:1fr; }
+    .roster{order:3;}
+  }
+
+  .roster{
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:16px;
+  }
+  .roster.p2{border-top:3px solid var(--crimson);}
+  .roster.p1{border-top:3px solid var(--azure);}
+  .roster-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:12px;
+  }
+  .roster-head .pname{font-family:'Bebas Neue'; font-size:19px; letter-spacing:0.03em;}
+  .roster.p1 .pname{color:var(--azure);}
+  .roster.p2 .pname{color:var(--crimson);}
+  .budget{
+    font-family:'JetBrains Mono';
+    font-size:15px;
+    font-weight:700;
+    color:var(--gold-bright);
+  }
+  .roster-list{display:flex; flex-direction:column; gap:8px; min-height:60px;}
+  .roster-empty{color:var(--text-dim); font-size:12px; padding:14px 0; text-align:center; border:1px dashed var(--line); border-radius:3px;}
+  .roster-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:var(--bg-deep);
+    border:1px solid var(--line);
+    border-radius:3px;
+    padding:7px 9px;
+  }
+  .roster-item .price{
+    margin-left:auto;
+    font-family:'JetBrains Mono';
+    font-size:12px;
+    color:var(--gold);
+    font-weight:700;
+  }
+
+  .avatar{
+    width:34px; height:34px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Bebas Neue'; font-size:14px;
+    color:#0B0F1A;
+    flex:none;
+  }
+  .avatar.big{width:96px; height:96px; font-size:34px;}
+  .hname{font-size:12.5px; font-weight:600; line-height:1.2;}
+  .hfranchise{font-size:9.5px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.06em;}
+
+  .stage{
+    background:linear-gradient(180deg, var(--bg-panel), var(--bg-panel-2));
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:28px;
+    text-align:center;
+    position:relative;
+    min-height:420px;
+    display:flex;
+    flex-direction:column;
+  }
+  .stage::before{
+    content:"HƏRRAC";
+    position:absolute;
+    top:14px; left:0; right:0;
+    text-align:center;
+    color:var(--text-dim);
+    font-size:10px;
+    letter-spacing:0.4em;
+  }
+  .lot-label{color:var(--text-dim); font-size:11px; letter-spacing:0.2em; text-transform:uppercase; margin-top:26px;}
+  .hero-card{margin:14px auto 6px;}
+  .hero-name{font-family:'Bebas Neue'; font-size:38px; margin-top:12px; letter-spacing:0.02em;}
+  .hero-franchise-tag{
+    display:inline-block;
+    margin-top:4px;
+    padding:3px 10px;
+    border-radius:20px;
+    font-size:10.5px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    font-weight:700;
+  }
+  .tag-dc{background:rgba(62,111,168,0.18); color:#7FB1E6; border:1px solid rgba(62,111,168,0.4);}
+  .tag-marvel{background:rgba(193,68,60,0.18); color:#E68680; border:1px solid rgba(193,68,60,0.4);}
+
+  .price-board{
+    margin:22px auto 8px;
+    display:inline-flex;
+    align-items:baseline;
+    gap:8px;
+    padding:10px 26px;
+    border:1px solid var(--gold);
+    border-radius:4px;
+    background:rgba(212,165,68,0.06);
+  }
+  .price-board .cur-label{font-size:11px; color:var(--text-dim); letter-spacing:0.15em; text-transform:uppercase;}
+  .price-board .cur-amount{font-family:'JetBrains Mono'; font-size:30px; font-weight:700; color:var(--gold-bright);}
+
+  .leader-note{font-size:13px; color:var(--text-dim); min-height:20px; margin-bottom:8px;}
+  .leader-note b{color:var(--text-light);}
+  .leader-note.p1 b{color:var(--azure);}
+  .leader-note.p2 b{color:var(--crimson);}
+
+  .bid-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin-top:auto;
+    padding-top:22px;
+  }
+  .bid-col{display:flex; flex-direction:column; gap:8px;}
+  .bid-col .who{font-family:'Bebas Neue'; font-size:15px; letter-spacing:0.05em;}
+  .bid-col.p1 .who{color:var(--azure);}
+  .bid-col.p2 .who{color:var(--crimson);}
+  .btn{
+    padding:12px 8px;
+    border-radius:3px;
+    border:1px solid var(--line);
+    background:var(--bg-deep);
+    color:var(--text-light);
+    font-family:'Inter'; font-weight:700; font-size:13.5px;
+    cursor:pointer;
+    transition:all .12s ease;
+  }
+  .btn.bid.p1{border-color:var(--azure); color:var(--azure);}
+  .btn.bid.p1:hover:not(:disabled){background:var(--azure); color:#fff;}
+  .btn.bid.p2{border-color:var(--crimson); color:var(--crimson);}
+  .btn.bid.p2:hover:not(:disabled){background:var(--crimson); color:#fff;}
+  .btn.pass{color:var(--text-dim); font-weight:600; font-size:12.5px;}
+  .btn.pass:hover:not(:disabled){border-color:var(--text-dim); color:var(--text-light);}
+  .btn:disabled{opacity:0.3; cursor:not-allowed;}
+
+  .flash{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(11,15,26,0.92);
+    border-radius:6px;
+    opacity:0; pointer-events:none;
+    transition:opacity .25s ease;
+  }
+  .flash.show{opacity:1; pointer-events:auto;}
+  .flash-text{font-family:'Bebas Neue'; font-size:30px; color:var(--gold-bright); text-align:center; line-height:1.3;}
+  .flash-text .small{display:block; font-family:'Inter'; font-size:13px; color:var(--text-dim); margin-top:8px; font-weight:600; letter-spacing:0.05em;}
+
+  .end-screen{display:none; max-width:640px; margin:60px auto; text-align:center; padding:0 16px;}
+  .end-screen h2{font-family:'Bebas Neue'; font-size:44px; color:var(--gold-bright); margin-bottom:6px;}
+  .end-screen p{color:var(--text-dim); margin-bottom:30px;}
+  .end-cols{display:grid; grid-template-columns:1fr 1fr; gap:18px; text-align:left; margin-bottom:28px;}
+  .restart-btn{
+    padding:14px 32px;
+    border:none; border-radius:3px;
+    background:var(--gold); color:var(--bg-deep);
+    font-family:'Bebas Neue'; font-size:18px; letter-spacing:0.06em;
+    cursor:pointer;
+  }
+  .restart-btn:hover{background:var(--gold-bright);}
+</style>
+</head>
+<body>
+
+<!-- ===================== HOME SCREEN ===================== -->
+<div id="home">
+  <div class="poster">
+    <div class="eyebrow">Qapalı zal &middot; 2 oyunçu</div>
+    <h1>QƏHRƏMAN<br><span>HƏRRACI</span></h1>
+    <div class="sub">Büdcəni müəyyən et, artım addımını seç, hərracı başlat</div>
+
+    <div class="field">
+      <label>Başlanğıc büdcə <span class="val mono" id="budgetVal">$50</span></label>
+      <input type="range" id="budgetRange" min="10" max="100" step="10" value="50">
+    </div>
+
+    <div class="field">
+      <label>Təklif artım addımı</label>
+      <div class="chip-row" id="incRow"></div>
+    </div>
+
+    <button class="start-btn" id="startBtn">OYUNA BAŞLA</button>
+    <div class="foot-note">Hər oyunçu maksimum 5 qəhrəman ala bilər &middot; ən yüksək təklif qalibdir</div>
+  </div>
+</div>
+
+<!-- ===================== GAME SCREEN ===================== -->
+<div id="game">
+  <div class="topbar">
+    <div class="logo">QƏHRƏMAN HƏRRACI</div>
+    <div class="progress">LOT <b id="lotIndex">1</b> / <b id="lotTotal">10</b></div>
+  </div>
+
+  <div class="hall">
+    <div class="roster p1">
+      <div class="roster-head">
+        <div class="pname">OYUNÇU 1</div>
+        <div class="budget" id="p1Budget">$50</div>
+      </div>
+      <div class="roster-list" id="p1List"><div class="roster-empty">Hələ qəhrəman alınmayıb</div></div>
+    </div>
+
+    <div class="stage" id="stage">
+      <div class="lot-label" id="lotLabel">İndiki lot</div>
+      <div class="avatar big" id="heroAvatar" style="align-self:center;">?</div>
+      <div class="hero-name" id="heroName">—</div>
+      <div><span class="hero-franchise-tag" id="heroFranchise">—</span></div>
+
+      <div class="price-board">
+        <span class="cur-label">Cari qiymət</span>
+        <span class="cur-amount mono" id="curPrice">$0</span>
+      </div>
+      <div class="leader-note" id="leaderNote">Hərraca başlamaq üçün təklif verin</div>
+
+      <div class="bid-row">
+        <div class="bid-col p1">
+          <div class="who">OYUNÇU 1</div>
+          <button class="btn bid p1" id="p1BidBtn">Təklif ver</button>
+          <button class="btn pass" id="p1PassBtn">Keç</button>
+        </div>
+        <div class="bid-col p2">
+          <div class="who">OYUNÇU 2</div>
+          <button class="btn bid p2" id="p2BidBtn">Təklif ver</button>
+          <button class="btn pass" id="p2PassBtn">Keç</button>
+        </div>
+      </div>
+
+      <div class="flash" id="flash"><div class="flash-text" id="flashText"></div></div>
+    </div>
+
+    <div class="roster p2">
+      <div class="roster-head">
+        <div class="pname">OYUNÇU 2</div>
+        <div class="budget" id="p2Budget">$50</div>
+      </div>
+      <div class="roster-list" id="p2List"><div class="roster-empty">Hələ qəhrəman alınmayıb</div></div>
+    </div>
+  </div>
+
+  <div class="end-screen" id="endScreen">
+    <h2>HƏRRAC BİTDİ</h2>
+    <p id="endSummary"></p>
+    <div class="end-cols">
+      <div class="roster p1" style="border-top:3px solid var(--azure);">
+        <div class="roster-head"><div class="pname">OYUNÇU 1</div><div class="budget" id="p1BudgetFinal">$0</div></div>
+        <div class="roster-list" id="p1ListFinal"></div>
+      </div>
+      <div class="roster p2" style="border-top:3px solid var(--crimson);">
+        <div class="roster-head"><div class="pname">OYUNÇU 2</div><div class="budget" id="p2BudgetFinal">$0</div></div>
+        <div class="roster-list" id="p2ListFinal"></div>
+      </div>
+    </div>
+    <button class="restart-btn" id="restartBtn">YENİDƏN OYNA</button>
+  </div>
+</div>
+
+<script>
+/* ---------------- DATA ---------------- */
+const HEROES = [
+  {name:"Superman", fr:"DC", init:"SU", color:"#4FA3E3"},
+  {name:"Batman", fr:"DC", init:"BM", color:"#5B6472"},
+  {name:"Wonder Woman", fr:"DC", init:"WW", color:"#E3B23C"},
+  {name:"Flash", fr:"DC", init:"FL", color:"#D64545"},
+  {name:"Aquaman", fr:"DC", init:"AQ", color:"#3CA9A0"},
+  {name:"Green Lantern", fr:"DC", init:"GL", color:"#4CAF6D"},
+  {name:"Cyborg", fr:"DC", init:"CY", color:"#5C6BC0"},
+  {name:"Shazam", fr:"DC", init:"SH", color:"#D9A441"},
+  {name:"Green Arrow", fr:"DC", init:"GA", color:"#4C8C4A"},
+  {name:"Batgirl", fr:"DC", init:"BG", color:"#8E7CC3"},
+  {name:"Nightwing", fr:"DC", init:"NW", color:"#3A4A6B"},
+  {name:"Harley Quinn", fr:"DC", init:"HQ", color:"#C959A0"},
+  {name:"Iron Man", fr:"Avengers", init:"IM", color:"#D9534F"},
+  {name:"Captain America", fr:"Avengers", init:"CA", color:"#4472C4"},
+  {name:"Thor", fr:"Avengers", init:"TH", color:"#7B9FD1"},
+  {name:"Hulk", fr:"Avengers", init:"HU", color:"#5FA352"},
+  {name:"Black Widow", fr:"Avengers", init:"BW", color:"#4A4A52"},
+  {name:"Hawkeye", fr:"Avengers", init:"HE", color:"#7C4A3A"},
+  {name:"Spider-Man", fr:"Avengers", init:"SM", color:"#C0392B"},
+  {name:"Doctor Strange", fr:"Avengers", init:"DS", color:"#C0392B"},
+  {name:"Black Panther", fr:"Avengers", init:"BP", color:"#2E2E38"},
+  {name:"Scarlet Witch", fr:"Avengers", init:"SW", color:"#A6398F"},
+  {name:"Ant-Man", fr:"Avengers", init:"AM", color:"#C0392B"},
+  {name:"Star-Lord", fr:"Avengers", init:"SL", color:"#D98A3D"},
+];
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+/* ---------------- STATE ---------------- */
+let state = null;
+
+/* ---------------- HOME SCREEN LOGIC ---------------- */
+const budgetRange = document.getElementById('budgetRange');
+const budgetVal = document.getElementById('budgetVal');
+budgetRange.addEventListener('input', ()=>{ budgetVal.textContent = '$'+budgetRange.value; });
+
+const incRow = document.getElementById('incRow');
+let selectedInc = 1;
+for(let i=1;i<=10;i++){
+  const c = document.createElement('div');
+  c.className = 'chip' + (i===1 ? ' active' : '');
+  c.textContent = '$'+i;
+  c.addEventListener('click', ()=>{
+    document.querySelectorAll('.chip').forEach(el=>el.classList.remove('active'));
+    c.classList.add('active');
+    selectedInc = i;
+  });
+  incRow.appendChild(c);
+}
+
+document.getElementById('startBtn').addEventListener('click', startGame);
+
+function startGame(){
+  const budget = parseInt(budgetRange.value, 10);
+  const inc = selectedInc;
+  const lots = shuffle(HEROES).slice(0, 10);
+
+  state = {
+    budget, inc, lots,
+    lotIdx: 0,
+    price: 0,
+    leader: null, // 1 or 2
+    p1Passed:false, p2Passed:false,
+    players: {
+      1: {budget: budget, heroes: []},
+      2: {budget: budget, heroes: []}
+    }
+  };
+
+  document.getElementById('home').style.display = 'none';
+  document.getElementById('game').style.display = 'block';
+  document.getElementById('lotTotal').textContent = lots.length;
+  renderAll();
+}
+
+/* ---------------- GAME LOGIC ---------------- */
+const els = {
+  lotIndex: document.getElementById('lotIndex'),
+  heroAvatar: document.getElementById('heroAvatar'),
+  heroName: document.getElementById('heroName'),
+  heroFranchise: document.getElementById('heroFranchise'),
+  curPrice: document.getElementById('curPrice'),
+  leaderNote: document.getElementById('leaderNote'),
+  p1Budget: document.getElementById('p1Budget'),
+  p2Budget: document.getElementById('p2Budget'),
+  p1List: document.getElementById('p1List'),
+  p2List: document.getElementById('p2List'),
+  p1BidBtn: document.getElementById('p1BidBtn'),
+  p2BidBtn: document.getElementById('p2BidBtn'),
+  p1PassBtn: document.getElementById('p1PassBtn'),
+  p2PassBtn: document.getElementById('p2PassBtn'),
+  flash: document.getElementById('flash'),
+  flashText: document.getElementById('flashText'),
+};
+
+els.p1BidBtn.addEventListener('click', ()=>placeBid(1));
+els.p2BidBtn.addEventListener('click', ()=>placeBid(2));
+els.p1PassBtn.addEventListener('click', ()=>doPass(1));
+els.p2PassBtn.addEventListener('click', ()=>doPass(2));
+document.getElementById('restartBtn').addEventListener('click', ()=>{
+  document.getElementById('endScreen').style.display = 'none';
+  document.getElementById('game').style.display = 'none';
+  document.getElementById('home').style.display = 'flex';
+});
+
+function currentHero(){ return state.lots[state.lotIdx]; }
+
+function nextBidAmount(){
+  return state.price === 0 ? state.inc : state.price + state.inc;
+}
+
+function placeBid(p){
+  if(!state || state.leader === p) return;
+  const amount = nextBidAmount();
+  const player = state.players[p];
+  if(amount > player.budget || player.heroes.length >= 5) return;
+
+  state.price = amount;
+  state.leader = p;
+  state.p1Passed = false;
+  state.p2Passed = false;
+  renderAll();
+}
+
+function doPass(p){
+  if(!state) return;
+  if(state.leader === p) return; // leader can't pass on themselves
+
+  if(state.leader && state.leader !== p){
+    // other player concedes -> leader wins the lot
+    finalizeLot(state.leader);
+    return;
+  }
+
+  // no leader yet: mark this player as passed
+  if(p===1) state.p1Passed = true; else state.p2Passed = true;
+
+  if(state.p1Passed && state.p2Passed){
+    // nobody wants this hero, skip unsold
+    advanceLot();
+  } else {
+    renderAll();
+  }
+}
+
+function finalizeLot(winner){
+  const hero = currentHero();
+  const player = state.players[winner];
+  player.budget -= state.price;
+  player.heroes.push({...hero, price: state.price});
+
+  showFlash(`${hero.name} — OYUNÇU ${winner}-ə satıldı`, `$${state.price}`);
+
+  setTimeout(()=>{ advanceLot(); }, 1100);
+}
+
+function advanceLot(){
+  state.lotIdx++;
+  state.price = 0;
+  state.leader = null;
+  state.p1Passed = false;
+  state.p2Passed = false;
+
+  const bothFull = state.players[1].heroes.length>=5 && state.players[2].heroes.length>=5;
+  const outOfLots = state.lotIdx >= state.lots.length;
+
+  if(bothFull || outOfLots){
+    endGame();
+    return;
+  }
+  renderAll();
+}
+
+function showFlash(title, sub){
+  els.flashText.innerHTML = title + `<span class="small">${sub}</span>`;
+  els.flash.classList.add('show');
+  setTimeout(()=>els.flash.classList.remove('show'), 1000);
+}
+
+function heroCardHTML(h, showPrice){
+  return `<div class="roster-item">
+    <div class="avatar" style="background:${h.color}">${h.init}</div>
+    <div>
+      <div class="hname">${h.name}</div>
+      <div class="hfranchise">${h.fr}</div>
+    </div>
+    ${showPrice ? `<div class="price">$${h.price}</div>` : ''}
+  </div>`;
+}
+
+function renderRoster(listEl, heroes){
+  if(heroes.length === 0){
+    listEl.innerHTML = '<div class="roster-empty">Hələ qəhrəman alınmayıb</div>';
+    return;
+  }
+  listEl.innerHTML = heroes.map(h=>heroCardHTML(h,true)).join('');
+}
+
+function renderAll(){
+  if(!state) return;
+  const hero = currentHero();
+  if(!hero) return;
+
+  els.lotIndex.textContent = state.lotIdx + 1;
+
+  els.heroAvatar.style.background = hero.color;
+  els.heroAvatar.textContent = hero.init;
+  els.heroName.textContent = hero.name;
+  els.heroFranchise.textContent = hero.fr === 'DC' ? 'DC Universe' : 'Avengers';
+  els.heroFranchise.className = 'hero-franchise-tag ' + (hero.fr==='DC' ? 'tag-dc' : 'tag-marvel');
+
+  els.curPrice.textContent = '$' + state.price;
+
+  if(state.leader){
+    els.leaderNote.className = 'leader-note p'+state.leader;
+    els.leaderNote.innerHTML = `Öndə: <b>Oyunçu ${state.leader}</b> — digər oyunçu təklif versin ya da keçsin`;
+  } else {
+    els.leaderNote.className = 'leader-note';
+    els.leaderNote.textContent = 'Hərraca başlamaq üçün təklif verin';
+  }
+
+  els.p1Budget.textContent = '$' + state.players[1].budget;
+  els.p2Budget.textContent = '$' + state.players[2].budget;
+  renderRoster(els.p1List, state.players[1].heroes);
+  renderRoster(els.p2List, state.players[2].heroes);
+
+  const nextAmt = nextBidAmount();
+  els.p1BidBtn.disabled = state.leader===1 || nextAmt > state.players[1].budget || state.players[1].heroes.length>=5;
+  els.p2BidBtn.disabled = state.leader===2 || nextAmt > state.players[2].budget || state.players[2].heroes.length>=5;
+  els.p1BidBtn.textContent = 'Təklif ver ($'+nextAmt+')';
+  els.p2BidBtn.textContent = 'Təklif ver ($'+nextAmt+')';
+
+  els.p1PassBtn.disabled = state.leader===1;
+  els.p2PassBtn.disabled = state.leader===2;
+}
+
+function endGame(){
+  document.getElementById('game').style.display = 'none';
+  const endScreen = document.getElementById('endScreen');
+  endScreen.style.display = 'block';
+
+  const p1 = state.players[1], p2 = state.players[2];
+  const p1Spent = state.budget - p1.budget;
+  const p2Spent = state.budget - p2.budget;
+
+  let summary;
+  if(p1.heroes.length === p2.heroes.length){
+    summary = `Hər iki oyunçu ${p1.heroes.length} qəhrəman topladı.`;
+  } else if(p1.heroes.length > p2.heroes.length){
+    summary = `Oyunçu 1 daha çox qəhrəman topladı: ${p1.heroes.length} — ${p2.heroes.length}.`;
+  } else {
+    summary = `Oyunçu 2 daha çox qəhrəman topladı: ${p2.heroes.length} — ${p1.heroes.length}.`;
+  }
+  document.getElementById('endSummary').textContent = summary;
+
+  document.getElementById('p1BudgetFinal').textContent = '$'+p1.budget+' qalıq';
+  document.getElementById('p2BudgetFinal').textContent = '$'+p2.budget+' qalıq';
+  renderRoster(document.getElementById('p1ListFinal'), p1.heroes);
+  renderRoster(document.getElementById('p2ListFinal'), p2.heroes);
+}
+</script>
+</body>
+</html>

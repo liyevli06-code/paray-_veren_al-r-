@@ -228,11 +228,19 @@
     border-radius:3px;
     padding:7px 9px;
   }
+  .roster-item.eliminated{opacity:0.35; filter:grayscale(1);}
   .roster-item .price{
     margin-left:auto;
     font-family:'JetBrains Mono';
     font-size:12px;
     color:var(--gold);
+    font-weight:700;
+  }
+  .roster-item .win-count{
+    margin-left:auto;
+    font-family:'JetBrains Mono';
+    font-size:12px;
+    color:var(--gold-bright);
     font-weight:700;
   }
 
@@ -251,8 +259,45 @@
     object-fit:cover;
   }
   .avatar.big{width:96px; height:96px; font-size:34px;}
+  .avatar.mid{width:64px; height:64px; font-size:22px;}
   .hname{font-size:12.5px; font-weight:600; line-height:1.2;}
   .hfranchise{font-size:9.5px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.06em;}
+
+  /* stat bars */
+  .stat-block{margin-top:2px;}
+  .stat-line{
+    display:grid;
+    grid-template-columns:16px 1fr 26px;
+    align-items:center;
+    gap:6px;
+    font-size:9.5px;
+    color:var(--text-dim);
+    margin-bottom:2px;
+  }
+  .stat-line .bar-track{
+    height:4px;
+    background:var(--line);
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .stat-line .bar-fill{height:100%; border-radius:2px;}
+  .bar-fill.power{background:var(--crimson);}
+  .bar-fill.speed{background:#4CAF6D;}
+  .bar-fill.def{background:var(--azure);}
+  .stat-line .sval{font-family:'JetBrains Mono'; text-align:right;}
+
+  .mini-stats{display:flex; gap:6px; margin-top:4px;}
+  .mini-stat{
+    font-family:'JetBrains Mono';
+    font-size:9.5px;
+    padding:1px 5px;
+    border-radius:2px;
+    background:var(--bg-panel-2);
+    border:1px solid var(--line);
+  }
+  .mini-stat.g{color:var(--crimson);}
+  .mini-stat.s{color:#6FCB8E;}
+  .mini-stat.m{color:#7FB1E6;}
 
   .stage{
     background:linear-gradient(180deg, var(--bg-panel), var(--bg-panel-2));
@@ -289,8 +334,15 @@
   .tag-dc{background:rgba(62,111,168,0.18); color:#7FB1E6; border:1px solid rgba(62,111,168,0.4);}
   .tag-marvel{background:rgba(193,68,60,0.18); color:#E68680; border:1px solid rgba(193,68,60,0.4);}
 
+  .hero-stats-row{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-top:14px;
+  }
+
   .price-board{
-    margin:22px auto 8px;
+    margin:18px auto 8px;
     display:inline-flex;
     align-items:baseline;
     gap:8px;
@@ -360,6 +412,95 @@
     cursor:pointer;
   }
   .restart-btn:hover{background:var(--gold-bright);}
+
+  /* ---------- BATTLE SCREEN ---------- */
+  #battle{display:none; min-height:100vh; padding:20px;}
+  .battle-wrap{max-width:1000px; margin:0 auto;}
+  .battle-head{text-align:center; margin-bottom:8px;}
+  .battle-head .eyebrow2{
+    color:var(--gold); font-size:12px; letter-spacing:0.35em; text-transform:uppercase; font-weight:700;
+  }
+  .battle-head h1{font-family:'Bebas Neue'; font-size:44px; margin-top:6px;}
+  .team-tally{
+    display:flex; justify-content:center; gap:26px; margin:10px 0 26px;
+    font-family:'JetBrains Mono'; font-size:14px;
+  }
+  .team-tally .t1{color:var(--azure); font-weight:700;}
+  .team-tally .t2{color:var(--crimson); font-weight:700;}
+
+  .arena{
+    background:linear-gradient(180deg, var(--bg-panel), var(--bg-panel-2));
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:32px 24px;
+    position:relative;
+    min-height:340px;
+  }
+  .fighters-row{
+    display:grid;
+    grid-template-columns:1fr 90px 1fr;
+    align-items:center;
+    gap:10px;
+  }
+  .fighter{text-align:center;}
+  .fighter .fname{font-family:'Bebas Neue'; font-size:24px; margin-top:10px;}
+  .fighter.left .fname{color:var(--azure);}
+  .fighter.right .fname{color:var(--crimson);}
+  .fighter .ffranchise{font-size:10px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.08em; margin-top:2px;}
+  .fighter .fstats{max-width:170px; margin:14px auto 0;}
+  .vs-mark{
+    font-family:'Bebas Neue'; font-size:30px; color:var(--gold); text-align:center;
+  }
+  .vs-mark .vscore{
+    display:block; font-family:'JetBrains Mono'; font-size:11px; color:var(--text-dim); margin-top:6px;
+  }
+  .fighter .fscore{
+    margin-top:12px;
+    font-family:'JetBrains Mono';
+    font-size:20px;
+    font-weight:700;
+    color:var(--gold-bright);
+    min-height:26px;
+  }
+  .fighter.knocked{opacity:0.35; filter:grayscale(1);}
+
+  .battle-log{
+    margin-top:20px;
+    max-height:130px;
+    overflow-y:auto;
+    border-top:1px solid var(--line);
+    padding-top:12px;
+  }
+  .log-item{
+    display:flex; justify-content:space-between;
+    font-size:12px; color:var(--text-dim);
+    padding:4px 2px;
+    font-family:'JetBrains Mono';
+  }
+  .log-item b{color:var(--text-light); font-weight:700;}
+  .next-fight-btn{
+    display:block; margin:22px auto 0;
+    padding:13px 30px;
+    border:none; border-radius:3px;
+    background:var(--gold); color:var(--bg-deep);
+    font-family:'Bebas Neue'; font-size:18px; letter-spacing:0.06em;
+    cursor:pointer;
+  }
+  .next-fight-btn:hover{background:var(--gold-bright);}
+  .next-fight-btn:disabled{opacity:0.4; cursor:not-allowed;}
+
+  .champion-banner{
+    display:none;
+    text-align:center;
+    margin-top:14px;
+  }
+  .champion-banner .cb-label{
+    color:var(--gold); font-size:12px; letter-spacing:0.3em; text-transform:uppercase; font-weight:700;
+  }
+  .champion-banner h2{
+    font-family:'Bebas Neue'; font-size:40px; margin-top:6px; color:var(--gold-bright);
+  }
+  .champion-banner p{color:var(--text-dim); margin-top:6px; font-size:13px;}
 </style>
 </head>
 <body>
@@ -382,7 +523,7 @@
     </div>
 
     <button class="start-btn" id="startBtn">OYUNA BAŞLA</button>
-    <div class="foot-note">Hər oyunçu maksimum 5 qəhrəman ala bilər &middot; ən yüksək təklif qalibdir</div>
+    <div class="foot-note">Hər oyunçu maksimum 5 qəhrəman ala bilər &middot; ən yüksək təklif qalibdir &middot; sonda komandalar döyüşür</div>
   </div>
 </div>
 
@@ -407,6 +548,8 @@
       <div class="avatar big" id="heroAvatar" style="align-self:center;">?</div>
       <div class="hero-name" id="heroName">—</div>
       <div><span class="hero-franchise-tag" id="heroFranchise">—</span></div>
+
+      <div class="hero-stats-row" id="heroStatsRow"></div>
 
       <div class="price-board">
         <span class="cur-label">Cari qiymət</span>
@@ -438,22 +581,69 @@
       <div class="roster-list" id="p2List"><div class="roster-empty">Hələ qəhrəman alınmayıb</div></div>
     </div>
   </div>
+</div>
 
-  <div class="end-screen" id="endScreen">
-    <h2>HƏRRAC BİTDİ</h2>
-    <p id="endSummary"></p>
-    <div class="end-cols">
-      <div class="roster p1" style="border-top:3px solid var(--azure);">
-        <div class="roster-head"><div class="pname">OYUNÇU 1</div><div class="budget" id="p1BudgetFinal">$0</div></div>
-        <div class="roster-list" id="p1ListFinal"></div>
-      </div>
-      <div class="roster p2" style="border-top:3px solid var(--crimson);">
-        <div class="roster-head"><div class="pname">OYUNÇU 2</div><div class="budget" id="p2BudgetFinal">$0</div></div>
-        <div class="roster-list" id="p2ListFinal"></div>
-      </div>
+<!-- ===================== BATTLE SCREEN ===================== -->
+<div id="battle">
+  <div class="battle-wrap">
+    <div class="battle-head">
+      <div class="eyebrow2">Bütün qəhramanlar meydanda</div>
+      <h1>DÖYÜŞ ARENASI</h1>
     </div>
-    <button class="restart-btn" id="restartBtn">YENİDƏN OYNA</button>
+    <div class="team-tally">
+      <span class="t1" id="t1Tally">Oyunçu 1: 5 qəhraman</span>
+      <span class="t2" id="t2Tally">Oyunçu 2: 5 qəhraman</span>
+    </div>
+
+    <div class="arena" id="arena">
+      <div class="fighters-row">
+        <div class="fighter left" id="fighterLeft">
+          <div class="avatar mid" id="leftAvatar" style="margin:0 auto;">?</div>
+          <div class="fname" id="leftName">—</div>
+          <div class="ffranchise" id="leftFranchise">—</div>
+          <div class="fstats" id="leftStats"></div>
+          <div class="fscore" id="leftScore"></div>
+        </div>
+        <div class="vs-mark">VS<span class="vscore" id="fightStatus">Növbəti döyüşə hazır</span></div>
+        <div class="fighter right" id="fighterRight">
+          <div class="avatar mid" id="rightAvatar" style="margin:0 auto;">?</div>
+          <div class="fname" id="rightName">—</div>
+          <div class="ffranchise" id="rightFranchise">—</div>
+          <div class="fstats" id="rightStats"></div>
+          <div class="fscore" id="rightScore"></div>
+        </div>
+      </div>
+
+      <button class="next-fight-btn" id="nextFightBtn">DÖYÜŞÜ BAŞLAT</button>
+
+      <div class="champion-banner" id="championBanner">
+        <div class="cb-label">Meydanın Qalibi</div>
+        <h2 id="championText">—</h2>
+        <p id="championSub"></p>
+      </div>
+
+      <div class="battle-log" id="battleLog"></div>
+    </div>
+
+    <button class="restart-btn" id="toResultsBtn" style="display:none; margin:22px auto 0;">NƏTİCƏLƏRƏ BAX</button>
   </div>
+</div>
+
+<!-- ===================== END SCREEN ===================== -->
+<div class="end-screen" id="endScreen">
+  <h2 id="endTitle">HƏRRAC BİTDİ</h2>
+  <p id="endSummary"></p>
+  <div class="end-cols">
+    <div class="roster p1" style="border-top:3px solid var(--azure);">
+      <div class="roster-head"><div class="pname">OYUNÇU 1</div><div class="budget" id="p1BudgetFinal">$0</div></div>
+      <div class="roster-list" id="p1ListFinal"></div>
+    </div>
+    <div class="roster p2" style="border-top:3px solid var(--crimson);">
+      <div class="roster-head"><div class="pname">OYUNÇU 2</div><div class="budget" id="p2BudgetFinal">$0</div></div>
+      <div class="roster-list" id="p2ListFinal"></div>
+    </div>
+  </div>
+  <button class="restart-btn" id="restartBtn">YENİDƏN OYNA</button>
 </div>
 
 <script>
@@ -497,8 +687,21 @@ function shuffle(arr){
   return a;
 }
 
+function rand(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+
+/* Assign random-but-balanced stats to a hero (60-99 range each) */
+function assignStats(hero){
+  return {
+    ...hero,
+    power: rand(60,99),
+    speed: rand(60,99),
+    defense: rand(60,99)
+  };
+}
+
 /* ---------------- STATE ---------------- */
 let state = null;
+let battleState = null;
 
 /* ---------------- HOME SCREEN LOGIC ---------------- */
 const budgetRange = document.getElementById('budgetRange');
@@ -524,7 +727,7 @@ document.getElementById('startBtn').addEventListener('click', startGame);
 function startGame(){
   const budget = parseInt(budgetRange.value, 10);
   const inc = selectedInc;
-  const lots = shuffle(HEROES).slice(0, 10);
+  const lots = shuffle(HEROES).slice(0, 10).map(assignStats);
 
   state = {
     budget, inc, lots,
@@ -550,6 +753,7 @@ const els = {
   heroAvatar: document.getElementById('heroAvatar'),
   heroName: document.getElementById('heroName'),
   heroFranchise: document.getElementById('heroFranchise'),
+  heroStatsRow: document.getElementById('heroStatsRow'),
   curPrice: document.getElementById('curPrice'),
   leaderNote: document.getElementById('leaderNote'),
   p1Budget: document.getElementById('p1Budget'),
@@ -571,6 +775,7 @@ els.p2PassBtn.addEventListener('click', ()=>doPass(2));
 document.getElementById('restartBtn').addEventListener('click', ()=>{
   document.getElementById('endScreen').style.display = 'none';
   document.getElementById('game').style.display = 'none';
+  document.getElementById('battle').style.display = 'none';
   document.getElementById('home').style.display = 'flex';
 });
 
@@ -636,7 +841,7 @@ function advanceLot(){
   const outOfLots = state.lotIdx >= state.lots.length;
 
   if(bothFull || outOfLots){
-    endGame();
+    goToBattle();
     return;
   }
   renderAll();
@@ -648,6 +853,14 @@ function showFlash(title, sub){
   setTimeout(()=>els.flash.classList.remove('show'), 1000);
 }
 
+function statBarsHTML(h){
+  return `<div class="stat-block">
+    <div class="stat-line"><span>G</span><div class="bar-track"><div class="bar-fill power" style="width:${h.power}%"></div></div><span class="sval">${h.power}</span></div>
+    <div class="stat-line"><span>S</span><div class="bar-track"><div class="bar-fill speed" style="width:${h.speed}%"></div></div><span class="sval">${h.speed}</span></div>
+    <div class="stat-line"><span>M</span><div class="bar-track"><div class="bar-fill def" style="width:${h.defense}%"></div></div><span class="sval">${h.defense}</span></div>
+  </div>`;
+}
+
 function heroCardHTML(h, showPrice){
   const avatarHTML = h.img
     ? `<img src="${h.img}" alt="${h.name}">`
@@ -655,9 +868,14 @@ function heroCardHTML(h, showPrice){
 
   return `<div class="roster-item">
     <div class="avatar" style="${h.img ? '' : 'background:'+h.color}">${avatarHTML}</div>
-    <div>
+    <div style="flex:1">
       <div class="hname">${h.name}</div>
       <div class="hfranchise">${h.fr}</div>
+      <div class="mini-stats">
+        <span class="mini-stat g">G ${h.power}</span>
+        <span class="mini-stat s">S ${h.speed}</span>
+        <span class="mini-stat m">M ${h.defense}</span>
+      </div>
     </div>
     ${showPrice ? `<div class="price">$${h.price}</div>` : ''}
   </div>`;
@@ -690,6 +908,8 @@ function renderAll(){
   els.heroFranchise.textContent = hero.fr === 'DC' ? 'DC Universe' : 'Avengers';
   els.heroFranchise.className = 'hero-franchise-tag ' + (hero.fr==='DC' ? 'tag-dc' : 'tag-marvel');
 
+  els.heroStatsRow.innerHTML = `<div style="width:220px">${statBarsHTML(hero)}</div>`;
+
   els.curPrice.textContent = '$' + state.price;
 
   if(state.leader){
@@ -715,22 +935,160 @@ function renderAll(){
   els.p2PassBtn.disabled = state.leader===2;
 }
 
-function endGame(){
+/* ================== BATTLE PHASE ================== */
+const bEls = {
+  t1Tally: document.getElementById('t1Tally'),
+  t2Tally: document.getElementById('t2Tally'),
+  leftAvatar: document.getElementById('leftAvatar'),
+  leftName: document.getElementById('leftName'),
+  leftFranchise: document.getElementById('leftFranchise'),
+  leftStats: document.getElementById('leftStats'),
+  leftScore: document.getElementById('leftScore'),
+  rightAvatar: document.getElementById('rightAvatar'),
+  rightName: document.getElementById('rightName'),
+  rightFranchise: document.getElementById('rightFranchise'),
+  rightStats: document.getElementById('rightStats'),
+  rightScore: document.getElementById('rightScore'),
+  fighterLeft: document.getElementById('fighterLeft'),
+  fighterRight: document.getElementById('fighterRight'),
+  fightStatus: document.getElementById('fightStatus'),
+  nextFightBtn: document.getElementById('nextFightBtn'),
+  battleLog: document.getElementById('battleLog'),
+  championBanner: document.getElementById('championBanner'),
+  championText: document.getElementById('championText'),
+  championSub: document.getElementById('championSub'),
+  toResultsBtn: document.getElementById('toResultsBtn'),
+};
+
+function goToBattle(){
   document.getElementById('game').style.display = 'none';
+  document.getElementById('battle').style.display = 'block';
+
+  battleState = {
+    q1: state.players[1].heroes.map(h=>({...h, wins:0})),
+    q2: state.players[2].heroes.map(h=>({...h, wins:0})),
+    log: [],
+    resolved: true // ready for next fight
+  };
+
+  bEls.championBanner.style.display = 'none';
+  bEls.toResultsBtn.style.display = 'none';
+  bEls.battleLog.innerHTML = '';
+  bEls.nextFightBtn.style.display = 'inline-block';
+  bEls.nextFightBtn.textContent = 'DÖYÜŞÜ BAŞLAT';
+  bEls.nextFightBtn.disabled = false;
+  bEls.nextFightBtn.onclick = runNextFight;
+
+  updateTally();
+  showUpcomingFighters();
+}
+
+function updateTally(){
+  bEls.t1Tally.textContent = `Oyunçu 1: ${battleState.q1.length} qəhrəman qalıb`;
+  bEls.t2Tally.textContent = `Oyunçu 2: ${battleState.q2.length} qəhrəman qalıb`;
+}
+
+function fighterCardFill(sideAvatar, sideName, sideFranchise, sideStats, hero){
+  if(hero.img){
+    sideAvatar.style.background = 'transparent';
+    sideAvatar.innerHTML = `<img src="${hero.img}" alt="${hero.name}">`;
+  } else {
+    sideAvatar.style.background = hero.color;
+    sideAvatar.textContent = hero.init;
+  }
+  sideName.textContent = hero.name;
+  sideFranchise.textContent = hero.fr;
+  sideStats.innerHTML = statBarsHTML(hero);
+}
+
+function showUpcomingFighters(){
+  bEls.fighterLeft.classList.remove('knocked');
+  bEls.fighterRight.classList.remove('knocked');
+  bEls.leftScore.textContent = '';
+  bEls.rightScore.textContent = '';
+  bEls.fightStatus.textContent = 'Növbəti döyüşə hazır';
+
+  const h1 = battleState.q1[0];
+  const h2 = battleState.q2[0];
+  fighterCardFill(bEls.leftAvatar, bEls.leftName, bEls.leftFranchise, bEls.leftStats, h1);
+  fighterCardFill(bEls.rightAvatar, bEls.rightName, bEls.rightFranchise, bEls.rightStats, h2);
+}
+
+function runNextFight(){
+  if(!battleState.q1.length || !battleState.q2.length) return;
+
+  bEls.nextFightBtn.disabled = true;
+  bEls.fightStatus.textContent = 'Döyüşür...';
+
+  const h1 = battleState.q1[0];
+  const h2 = battleState.q2[0];
+
+  setTimeout(()=>{
+    const score1 = h1.power*0.5 + h1.speed*0.3 + h1.defense*0.2 + rand(0,20);
+    const score2 = h2.power*0.5 + h2.speed*0.3 + h2.defense*0.2 + rand(0,20);
+
+    bEls.leftScore.textContent = score1.toFixed(1);
+    bEls.rightScore.textContent = score2.toFixed(1);
+
+    let winnerSide, winnerHero, loserSide;
+    if(score1 >= score2){
+      winnerSide='left'; winnerHero=h1; loserSide='right';
+      bEls.fighterRight.classList.add('knocked');
+      bEls.fightStatus.textContent = `${h1.name} qalib gəldi!`;
+      h1.wins++;
+      battleState.q2.shift();
+    } else {
+      winnerSide='right'; winnerHero=h2; loserSide='left';
+      bEls.fighterLeft.classList.add('knocked');
+      bEls.fightStatus.textContent = `${h2.name} qalib gəldi!`;
+      h2.wins++;
+      battleState.q1.shift();
+    }
+
+    battleState.log.unshift({winner:winnerHero.name, loser: (winnerSide==='left'?h2.name:h1.name), s1:score1.toFixed(1), s2:score2.toFixed(1)});
+    renderBattleLog();
+    updateTally();
+
+    if(!battleState.q1.length || !battleState.q2.length){
+      const championPlayer = battleState.q1.length ? 1 : 2;
+      const championTeam = battleState.q1.length ? battleState.q1 : battleState.q2;
+      const mvp = championTeam.reduce((a,b)=> b.wins>a.wins ? b : a, championTeam[0]);
+
+      setTimeout(()=>{
+        bEls.championBanner.style.display = 'block';
+        bEls.championText.textContent = `OYUNÇU ${championPlayer} QALİB GƏLDİ`;
+        bEls.championSub.textContent = `Ən çox qələbə: ${mvp.name} (${mvp.wins} qələbə) — ${championTeam.length} qəhrəman ayaqda qaldı`;
+        bEls.nextFightBtn.style.display = 'none';
+        bEls.toResultsBtn.style.display = 'block';
+        bEls.toResultsBtn.onclick = ()=> showEndScreen(championPlayer);
+      }, 900);
+      return;
+    }
+
+    setTimeout(()=>{
+      showUpcomingFighters();
+      bEls.nextFightBtn.disabled = false;
+    }, 1300);
+
+  }, 900);
+}
+
+function renderBattleLog(){
+  bEls.battleLog.innerHTML = battleState.log.map(l=>
+    `<div class="log-item"><span><b>${l.winner}</b> məğlub etdi: ${l.loser}</span><span>${l.s1} — ${l.s2}</span></div>`
+  ).join('');
+}
+
+function showEndScreen(championPlayer){
+  document.getElementById('battle').style.display = 'none';
   const endScreen = document.getElementById('endScreen');
   endScreen.style.display = 'block';
 
   const p1 = state.players[1], p2 = state.players[2];
 
-  let summary;
-  if(p1.heroes.length === p2.heroes.length){
-    summary = `Hər iki oyunçu ${p1.heroes.length} qəhrəman topladı.`;
-  } else if(p1.heroes.length > p2.heroes.length){
-    summary = `Oyunçu 1 daha çox qəhrəman topladı: ${p1.heroes.length} — ${p2.heroes.length}.`;
-  } else {
-    summary = `Oyunçu 2 daha çox qəhrəman topladı: ${p2.heroes.length} — ${p1.heroes.length}.`;
-  }
-  document.getElementById('endSummary').textContent = summary;
+  document.getElementById('endTitle').textContent = `OYUNÇU ${championPlayer} DÖYÜŞ QALİBİDİR`;
+  document.getElementById('endSummary').textContent =
+    `Hərracda Oyunçu 1 — ${p1.heroes.length} qəhrəman, Oyunçu 2 — ${p2.heroes.length} qəhrəman topladı. Arenada Oyunçu ${championPlayer}-in komandası son ayaqda qaldı.`;
 
   document.getElementById('p1BudgetFinal').textContent = '$'+p1.budget+' qalıq';
   document.getElementById('p2BudgetFinal').textContent = '$'+p2.budget+' qalıq';

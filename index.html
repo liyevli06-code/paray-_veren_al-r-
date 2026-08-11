@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="az">
+<html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Qəhrəman Hərracı</title>
+<title>Kahraman Müzayedesi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
@@ -306,7 +306,7 @@
     flex-direction:column;
   }
   .stage::before{
-    content:"HƏRRAC";
+    content:"MÜZAYEDE";
     position:absolute;
     top:14px; left:0; right:0;
     text-align:center;
@@ -510,43 +510,48 @@
 <!-- ===================== HOME SCREEN ===================== -->
 <div id="home">
   <div class="poster">
-    <div class="eyebrow">Qapalı zal &middot; 2 oyunçu</div>
-    <h1>QƏHRƏMAN<br><span>Savaşı</span></h1>
-    <div class="sub">Büdcəni müəyyən et, artım addımını seç, seçimini başlat</div>
+    <div class="eyebrow">Kapalı salon &middot; 2 oyuncu</div>
+    <h1>KAHRAMAN<br><span>Savaşı</span></h1>
+    <div class="sub">Bütçeni belirle, artış adımını ve oyuncu başı kahraman sayısını seç, başlat</div>
 
     <div class="field">
-      <label>Başlanğıc büdcə <span class="val mono" id="budgetVal">$50</span></label>
+      <label>Başlangıç bütçesi <span class="val mono" id="budgetVal">$50</span></label>
       <input type="range" id="budgetRange" min="10" max="100" step="10" value="50">
     </div>
 
     <div class="field">
-      <label>Təklif artım addımı</label>
+      <label>Teklif artış adımı</label>
       <div class="chip-row" id="incRow"></div>
     </div>
 
+    <div class="field">
+      <label>Oyuncu başına maksimum kahraman <span class="val mono" id="maxHeroesVal">5</span></label>
+      <div class="chip-row" id="maxHeroesRow"></div>
+    </div>
+
     <button class="start-btn" id="startBtn">OYUNA BAŞLA</button>
-    <div class="foot-note">Hər oyunçu maksimum 5 qəhrəman ala bilər &middot; ən yüksək təklif qalibdir &middot; güc, sürət, müdafiə və can real gücə əsaslanır</div>
+    <div class="foot-note" id="footNote">Her oyuncu maksimum 5 kahraman alabilir &middot; en yüksek teklif kazanır &middot; güç, hız, savunma ve can gerçek güce dayanır</div>
   </div>
 </div>
 
 <!-- ===================== GAME SCREEN ===================== -->
 <div id="game">
   <div class="topbar">
-    <div class="logo">QƏHRƏMAN Savaşı</div>
+    <div class="logo">KAHRAMAN Savaşı</div>
     <div class="progress">LOT <b id="lotIndex">1</b> / <b id="lotTotal">10</b></div>
   </div>
 
   <div class="hall">
     <div class="roster p1">
       <div class="roster-head">
-        <div class="pname">OYUNÇU 1</div>
+        <div class="pname">OYUNCU 1</div>
         <div class="budget" id="p1Budget">$50</div>
       </div>
-      <div class="roster-list" id="p1List"><div class="roster-empty">Hələ qəhrəman alınmayıb</div></div>
+      <div class="roster-list" id="p1List"><div class="roster-empty">Henüz kahraman alınmadı</div></div>
     </div>
 
     <div class="stage" id="stage">
-      <div class="lot-label" id="lotLabel">İndiki lot</div>
+      <div class="lot-label" id="lotLabel">Şu anki lot</div>
       <div class="avatar big" id="heroAvatar" style="align-self:center;">?</div>
       <div class="hero-name" id="heroName">— <span class="tier-badge" id="heroTier"></span></div>
       <div><span class="hero-franchise-tag" id="heroFranchise">—</span></div>
@@ -554,21 +559,21 @@
       <div class="hero-stats-row" id="heroStatsRow"></div>
 
       <div class="price-board">
-        <span class="cur-label">Cari qiymət</span>
+        <span class="cur-label">Güncel fiyat</span>
         <span class="cur-amount mono" id="curPrice">$0</span>
       </div>
-      <div class="leader-note" id="leaderNote">Hərraca başlamaq üçün təklif verin</div>
+      <div class="leader-note" id="leaderNote">Müzayedeye başlamak için teklif verin</div>
 
       <div class="bid-row">
         <div class="bid-col p1">
-          <div class="who">OYUNÇU 1</div>
-          <button class="btn bid p1" id="p1BidBtn">Təklif ver</button>
-          <button class="btn pass" id="p1PassBtn">Keç</button>
+          <div class="who">OYUNCU 1</div>
+          <button class="btn bid p1" id="p1BidBtn">Teklif ver</button>
+          <button class="btn pass" id="p1PassBtn">Pas geç</button>
         </div>
         <div class="bid-col p2">
-          <div class="who">OYUNÇU 2</div>
-          <button class="btn bid p2" id="p2BidBtn">Təklif ver</button>
-          <button class="btn pass" id="p2PassBtn">Keç</button>
+          <div class="who">OYUNCU 2</div>
+          <button class="btn bid p2" id="p2BidBtn">Teklif ver</button>
+          <button class="btn pass" id="p2PassBtn">Pas geç</button>
         </div>
       </div>
 
@@ -577,10 +582,10 @@
 
     <div class="roster p2">
       <div class="roster-head">
-        <div class="pname">OYUNÇU 2</div>
+        <div class="pname">OYUNCU 2</div>
         <div class="budget" id="p2Budget">$50</div>
       </div>
-      <div class="roster-list" id="p2List"><div class="roster-empty">Hələ qəhrəman alınmayıb</div></div>
+      <div class="roster-list" id="p2List"><div class="roster-empty">Henüz kahraman alınmadı</div></div>
     </div>
   </div>
 </div>
@@ -589,12 +594,12 @@
 <div id="battle">
   <div class="battle-wrap">
     <div class="battle-head">
-      <div class="eyebrow2">Bütün qəhramanlar meydanda</div>
-      <h1>DÖYÜŞ ARENASI</h1>
+      <div class="eyebrow2">Tüm kahramanlar meydanda</div>
+      <h1>DÖVÜŞ ARENASI</h1>
     </div>
     <div class="team-tally">
-      <span class="t1" id="t1Tally">Oyunçu 1: 5 qəhraman</span>
-      <span class="t2" id="t2Tally">Oyunçu 2: 5 qəhraman</span>
+      <span class="t1" id="t1Tally">Oyuncu 1: 5 kahraman</span>
+      <span class="t2" id="t2Tally">Oyuncu 2: 5 kahraman</span>
     </div>
 
     <div class="arena" id="arena">
@@ -608,7 +613,7 @@
           <div class="fhp-label" id="leftHpLabel">CAN: 100%</div>
           <div class="fscore" id="leftScore"></div>
         </div>
-        <div class="vs-mark">VS<span class="vscore" id="fightStatus">Növbəti döyüşə hazır</span></div>
+        <div class="vs-mark">VS<span class="vscore" id="fightStatus">Sıradaki dövüşe hazır</span></div>
         <div class="fighter right" id="fighterRight">
           <div class="avatar mid" id="rightAvatar" style="margin:0 auto;">?</div>
           <div class="fname" id="rightName">—</div>
@@ -620,10 +625,10 @@
         </div>
       </div>
 
-      <button class="next-fight-btn" id="nextFightBtn">DÖYÜŞÜ BAŞLAT</button>
+      <button class="next-fight-btn" id="nextFightBtn">DÖVÜŞÜ BAŞLAT</button>
 
       <div class="champion-banner" id="championBanner">
-        <div class="cb-label">Meydanın Qalibi</div>
+        <div class="cb-label">Meydanın Galibi</div>
         <h2 id="championText">—</h2>
         <p id="championSub"></p>
       </div>
@@ -631,25 +636,25 @@
       <div class="battle-log" id="battleLog"></div>
     </div>
 
-    <button class="restart-btn" id="toResultsBtn" style="display:none; margin:22px auto 0;">NƏTİCƏLƏRƏ BAX</button>
+    <button class="restart-btn" id="toResultsBtn" style="display:none; margin:22px auto 0;">SONUÇLARA BAK</button>
   </div>
 </div>
 
 <!-- ===================== END SCREEN ===================== -->
 <div class="end-screen" id="endScreen">
-  <h2 id="endTitle">HƏRRAC BİTDİ</h2>
+  <h2 id="endTitle">MÜZAYEDE BİTTİ</h2>
   <p id="endSummary"></p>
   <div class="end-cols">
     <div class="roster p1" style="border-top:3px solid var(--azure);">
-      <div class="roster-head"><div class="pname">OYUNÇU 1</div><div class="budget" id="p1BudgetFinal">$0</div></div>
+      <div class="roster-head"><div class="pname">OYUNCU 1</div><div class="budget" id="p1BudgetFinal">$0</div></div>
       <div class="roster-list" id="p1ListFinal"></div>
     </div>
     <div class="roster p2" style="border-top:3px solid var(--crimson);">
-      <div class="roster-head"><div class="pname">OYUNÇU 2</div><div class="budget" id="p2BudgetFinal">$0</div></div>
+      <div class="roster-head"><div class="pname">OYUNCU 2</div><div class="budget" id="p2BudgetFinal">$0</div></div>
       <div class="roster-list" id="p2ListFinal"></div>
     </div>
   </div>
-  <button class="restart-btn" id="restartBtn">YENİDƏN OYNA</button>
+  <button class="restart-btn" id="restartBtn">YENİDEN OYNA</button>
 </div>
 
 <script>
@@ -658,60 +663,60 @@ const HEROES = [
   {name:"Hades", fr:"Mythology", init:"HD", color:"#4A148C", tier:"S", power:97, speed:80, defense:95, health:98, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvBRSD4vBwIhu6sAYBQpgH57g2ur_TiPgci_q4lKGpfA&s=10"},
 
   // ---- DC ----
-  {name:"Superman", fr:"DC", init:"SU", color:"#4FA3E3", tier:"S", power:98, speed:90, defense:97, health:97, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgx9BS4HzHuFykljxgnr0rRm82ABPoUE_wdXLkI1V_BQ&s=10"},
-  {name:"Wonder Woman", fr:"DC", init:"WW", color:"#E3B23C", tier:"S", power:92, speed:82, defense:90, health:93, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZazh5VL-gTgCx75wAYPSr4P31MhjRM7votEzzrz6SUA&s=10"},
-  {name:"Shazam", fr:"DC", init:"SH", color:"#D9A441", tier:"S", power:90, speed:85, defense:85, health:88, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp5aALpEqIV2BMKdhQWNzBZBk22ds_9x-cjBgzAo02DQ&s=10"},
+  {name:"Superman", fr:"DC", init:"SU", color:"#4FA3E3", tier:"S", power:99, speed:92, defense:98, health:98, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgx9BS4HzHuFykljxgnr0rRm82ABPoUE_wdXLkI1V_BQ&s=10"},
+  {name:"Wonder Woman", fr:"DC", init:"WW", color:"#E3B23C", tier:"S", power:94, speed:83, defense:92, health:93, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZazh5VL-gTgCx75wAYPSr4P31MhjRM7votEzzrz6SUA&s=10"},
+  {name:"Shazam", fr:"DC", init:"SH", color:"#D9A441", tier:"S", power:91, speed:85, defense:86, health:88, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp5aALpEqIV2BMKdhQWNzBZBk22ds_9x-cjBgzAo02DQ&s=10"},
   {name:"Green Lantern", fr:"DC", init:"GL", color:"#4CAF6D", tier:"A", power:87, speed:76, defense:80, health:78, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkPXwIu0zE9WAZWCEiZry_FLjcQaNP9rjFQEPGLlQsXQ&s=10"},
-  {name:"Aquaman", fr:"DC", init:"AQ", color:"#3CA9A0", tier:"A", power:80, speed:65, defense:76, health:82, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBdRhB-VY5ZlkdWFP8St5S8UweiSo0CqrCxeFfdQipeQ&s=10"},
-  {name:"Flash", fr:"DC", init:"FL", color:"#D64545", tier:"A", power:58, speed:99, defense:52, health:68, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDz_w-k00JVwtbdPjLvM0kcXlFdU3llIhDXSF7NbshaQ&s=10"},
+  {name:"Aquaman", fr:"DC", init:"AQ", color:"#3CA9A0", tier:"A", power:81, speed:66, defense:77, health:83, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBdRhB-VY5ZlkdWFP8St5S8UweiSo0CqrCxeFfdQipeQ&s=10"},
+  {name:"Flash", fr:"DC", init:"FL", color:"#D64545", tier:"A", power:60, speed:99, defense:52, health:68, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDz_w-k00JVwtbdPjLvM0kcXlFdU3llIhDXSF7NbshaQ&s=10"},
   {name:"Cyborg", fr:"DC", init:"CY", color:"#5C6BC0", tier:"B", power:70, speed:56, defense:76, health:80, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNB99FCMdEQAdWVebYcSg0bJr-6joE-Jd3-Xggr1Tdjw&s=10"},
-  {name:"Batman", fr:"DC", init:"BM", color:"#5B6472", tier:"B", power:46, speed:62, defense:58, health:62, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwOAYReBEB3NrXg0YpUgFS1hSHHpH5JavPM9hy2qh8Qw&s=10"},
-  {name:"Nightwing", fr:"DC", init:"NW", color:"#3A4A6B", tier:"C", power:44, speed:66, defense:50, health:58, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6Im9OADPC7SE_enWXsu773lfopb97etNP92ooKUNdNl6QBVB3Q9iNgW0&s=10"},
-  {name:"Batgirl", fr:"DC", init:"BG", color:"#8E7CC3", tier:"C", power:40, speed:60, defense:47, health:54, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDD84CLMly9sjO5DmHHoB3u2YIDjifHNKatBhMSZAyKw&s=10"},
-  {name:"Green Arrow", fr:"DC", init:"GA", color:"#4C8C4A", tier:"C", power:38, speed:56, defense:44, health:52, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTANj74o2Jrchx6CT8N0B1a1JjJT2butVl8mCy8CAc87Q&s=10"},
-  {name:"Harley Quinn", fr:"DC", init:"HQ", color:"#C959A0", tier:"C", power:42, speed:60, defense:42, health:56, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPkKMOfRolq_UdBtfWoNaIFO8-drB704yILE1pUufw5A&s=10"},
-  {name:"Joker", fr:"DC", init:"JK", color:"#7B1FA2", tier:"C", power:40, speed:58, defense:45, health:55, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlo06mcv4VMZLJ-f9timpKGOaFlsOSebispZZ1_JbgjA&s=10"},
-  {name:"Supergirl", fr:"DC", init:"SG", color:"#1976D2", tier:"S", power:96, speed:88, defense:95, health:95, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHO0mIcVSPlLmxQjCnzdvsIggPvXrCnIp3uLw8u6A5Lw&s=10"},
-  {name:"Black Adam", fr:"DC", init:"BA", color:"#FBC02D", tier:"S", power:95, speed:84, defense:92, health:92, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsKncTNtKh_DPLzPv9xiuIC1hHGvpOr3OZRqSgfjyj3A&s"},
-  {name:"Red Hood", fr:"DC", init:"RH", color:"#C62828", tier:"C", power:45, speed:64, defense:52, health:60, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHzKjwAbu396jAV6nU1AEF4lNJJeSgXhCUGJCBhQaxkA&s=10"},
+  {name:"Batman", fr:"DC", init:"BM", color:"#5B6472", tier:"C", power:38, speed:60, defense:60, health:58, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwOAYReBEB3NrXg0YpUgFS1hSHHpH5JavPM9hy2qh8Qw&s=10"},
+  {name:"Nightwing", fr:"DC", init:"NW", color:"#3A4A6B", tier:"C", power:40, speed:66, defense:48, health:54, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6Im9OADPC7SE_enWXsu773lfopb97etNP92ooKUNdNl6QBVB3Q9iNgW0&s=10"},
+  {name:"Batgirl", fr:"DC", init:"BG", color:"#8E7CC3", tier:"C", power:36, speed:60, defense:44, health:50, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDD84CLMly9sjO5DmHHoB3u2YIDjifHNKatBhMSZAyKw&s=10"},
+  {name:"Green Arrow", fr:"DC", init:"GA", color:"#4C8C4A", tier:"C", power:34, speed:56, defense:42, health:50, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTANj74o2Jrchx6CT8N0B1a1JjJT2butVl8mCy8CAc87Q&s=10"},
+  {name:"Harley Quinn", fr:"DC", init:"HQ", color:"#C959A0", tier:"C", power:40, speed:62, defense:40, health:54, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPkKMOfRolq_UdBtfWoNaIFO8-drB704yILE1pUufw5A&s=10"},
+  {name:"Joker", fr:"DC", init:"JK", color:"#7B1FA2", tier:"C", power:32, speed:56, defense:40, health:50, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlo06mcv4VMZLJ-f9timpKGOaFlsOSebispZZ1_JbgjA&s=10"},
+  {name:"Supergirl", fr:"DC", init:"SG", color:"#1976D2", tier:"S", power:96, speed:89, defense:95, health:95, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHO0mIcVSPlLmxQjCnzdvsIggPvXrCnIp3uLw8u6A5Lw&s=10"},
+  {name:"Black Adam", fr:"DC", init:"BA", color:"#FBC02D", tier:"S", power:96, speed:85, defense:93, health:93, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsKncTNtKh_DPLzPv9xiuIC1hHGvpOr3OZRqSgfjyj3A&s"},
+  {name:"Red Hood", fr:"DC", init:"RH", color:"#C62828", tier:"C", power:42, speed:64, defense:50, health:58, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHzKjwAbu396jAV6nU1AEF4lNJJeSgXhCUGJCBhQaxkA&s=10"},
 
   // ---- Avengers / Marvel ----
   {name:"Doctor Doom", fr:"Avengers", init:"DD", color:"#2E7D32", tier:"S", power:96, speed:75, defense:94, health:93, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn8L55m3D6UKmwYybQYXJApJwmLLd-bSKWzIA2lyqgJg&s=10"},
   {name:"Odin", fr:"Avengers", init:"OD", color:"#D4A544", tier:"S", power:99, speed:80, defense:98, health:98, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR13qDmnzU3y8mOI5EoCez8LLsOQhWg-6SIwq7Xf9Nu3w&s=10"},
-  {name:"Thanos", fr:"Avengers", init:"TH", color:"#4A148C", tier:"S", power:98, speed:75, defense:96, health:98, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ayYxoYOizQVfpT1aQGGpkd_cBzK9ogXW4uN7kVCJZg&s"},
+  {name:"Thanos", fr:"Avengers", init:"TH", color:"#4A148C", tier:"S", power:99, speed:76, defense:97, health:99, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ayYxoYOizQVfpT1aQGGpkd_cBzK9ogXW4uN7kVCJZg&s"},
   {name:"Silver Surfer", fr:"Avengers", init:"SS", color:"#78909C", tier:"S", power:97, speed:98, defense:94, health:95, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHICrVbH1SZERkLrnBaOC539cVnPrI48HuAQ5aOQ0CNA&s=10"},
-  {name:"Hulk", fr:"Avengers", init:"HU", color:"#5FA352", tier:"S", power:99, speed:52, defense:92, health:96, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkx26usqd_qKikqtQ1jA5QyiYOFpCj9_S-X4jwca0jGQ&s=10"},
-  {name:"Thor", fr:"Avengers", init:"TH", color:"#7B9FD1", tier:"S", power:97, speed:83, defense:93, health:94, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwZ44RpjZ1lUA77uMV-SaAjTklRR0sWr_ySjXPLwa17g&s=10"},
-  {name:"Scarlet Witch", fr:"Avengers", init:"SW", color:"#A6398F", tier:"S", power:94, speed:56, defense:66, health:70, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb-hVZWtHUaqJhjRGyyKk-9qlYOx2oA1HweW0mDqwcuw&s=10"},
+  {name:"Hulk", fr:"Avengers", init:"HU", color:"#5FA352", tier:"S", power:99, speed:52, defense:92, health:97, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkx26usqd_qKikqtQ1jA5QyiYOFpCj9_S-X4jwca0jGQ&s=10"},
+  {name:"Thor", fr:"Avengers", init:"TH", color:"#7B9FD1", tier:"S", power:97, speed:84, defense:93, health:94, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwZ44RpjZ1lUA77uMV-SaAjTklRR0sWr_ySjXPLwa17g&s=10"},
+  {name:"Scarlet Witch", fr:"Avengers", init:"SW", color:"#A6398F", tier:"S", power:97, speed:56, defense:66, health:70, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb-hVZWtHUaqJhjRGyyKk-9qlYOx2oA1HweW0mDqwcuw&s=10"},
   {name:"Doctor Strange", fr:"Avengers", init:"DS", color:"#C0392B", tier:"A", power:86, speed:60, defense:70, health:72, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTop9O7TI2mXvI10Eu-tQiFfD4OosMxV0UrqZD0VU34VQ&s=10"},
-  {name:"Iron Man", fr:"Avengers", init:"IM", color:"#D9534F", tier:"A", power:83, speed:78, defense:81, health:76, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyB9F4FOOGkZUCe0wOhSr5qskIYHp3VElpmRlqqSxkyA&s=10"},
-  {name:"Wolverine", fr:"Avengers", init:"WV", color:"#E5B82A", tier:"A", power:72, speed:68, defense:82, health:90, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUNyAfpNXzngj2J5z7nLctDHMcrqkHbZHibsUb_AT7Gg&s=10"},
-  {name:"Black Panther", fr:"Avengers", init:"BP", color:"#2E2E38", tier:"B", power:68, speed:74, defense:71, health:70, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeUOX60uuwrF56xfjRzbu_eq1lUMD3gQivNW_NZswiSQ&s=10"},
-  {name:"Captain America", fr:"Avengers", init:"CA", color:"#4472C4", tier:"B", power:62, speed:66, defense:68, health:76, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRr1OnvauFD74Z2pzffNLEUwelPkP_RgUAzLZrSV647YkdksWhnxd6pOaw&s=10"},
-  {name:"Spider-Man", fr:"Avengers", init:"SM", color:"#C0392B", tier:"B", power:64, speed:81, defense:60, health:68, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsVzOcjJB2y9dAENqMikA77aIDUys5QHb3E3Kg0S9mUw&s"},
-  {name:"Deadpool", fr:"Avengers", init:"DP", color:"#B82626", tier:"B", power:66, speed:62, defense:78, health:95, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzEj3Ox7nzPzr89ThPTWLDb7pp-ycyxRwzosiHR0LWiQ&s"},
+  {name:"Iron Man", fr:"Avengers", init:"IM", color:"#D9534F", tier:"A", power:85, speed:80, defense:83, health:76, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyB9F4FOOGkZUCe0wOhSr5qskIYHp3VElpmRlqqSxkyA&s=10"},
+  {name:"Wolverine", fr:"Avengers", init:"WV", color:"#E5B82A", tier:"A", power:74, speed:70, defense:83, health:91, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUNyAfpNXzngj2J5z7nLctDHMcrqkHbZHibsUb_AT7Gg&s=10"},
+  {name:"Black Panther", fr:"Avengers", init:"BP", color:"#2E2E38", tier:"B", power:68, speed:76, defense:73, health:70, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeUOX60uuwrF56xfjRzbu_eq1lUMD3gQivNW_NZswiSQ&s=10"},
+  {name:"Captain America", fr:"Avengers", init:"CA", color:"#4472C4", tier:"B", power:64, speed:68, defense:70, health:78, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRr1OnvauFD74Z2pzffNLEUwelPkP_RgUAzLZrSV647YkdksWhnxd6pOaw&s=10"},
+  {name:"Spider-Man", fr:"Avengers", init:"SM", color:"#C0392B", tier:"B", power:66, speed:84, defense:60, health:68, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsVzOcjJB2y9dAENqMikA77aIDUys5QHb3E3Kg0S9mUw&s"},
+  {name:"Deadpool", fr:"Avengers", init:"DP", color:"#B82626", tier:"B", power:66, speed:64, defense:78, health:96, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzEj3Ox7nzPzr89ThPTWLDb7pp-ycyxRwzosiHR0LWiQ&s"},
   {name:"Loki", fr:"Avengers", init:"LK", color:"#2E7D32", tier:"A", power:78, speed:75, defense:70, health:80, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbM2sSCWz9rAEQ0HrxiuMkbHbMXjdqZBjWnDvUogy0mw&s=10"},
-  {name:"Hela", fr:"Avengers", init:"HL", color:"#1B5E20", tier:"S", power:95, speed:82, defense:90, health:94, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJeXMId5SF6X5nyBzH2C30_5ZG5FaTgplfEqs0N08dlw&s=10"},
-  {name:"Venom", fr:"Avengers", init:"VN", color:"#212121", tier:"A", power:82, speed:70, defense:80, health:88, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-ljEKUP1ZSlq6F2gSeYxt4TFFPBnLbvJcyXyr0YzjuA&s=10"},
-  {name:"Carnage", fr:"Avengers", init:"CN", color:"#B71C1C", tier:"A", power:84, speed:75, defense:78, health:85, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_9NC2BymUH4wD9D_Owoz9Gx2HYpvH-L4Sisc2YFcaRw&s=10"},
-  {name:"Vision", fr:"Avengers", init:"VS", color:"#00695C", tier:"A", power:88, speed:78, defense:88, health:85, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPxOUBnny3WpLocOHzqURM7iEiZAVBHWJJQkIaDymN1g&s"},
-  {name:"Ultron", fr:"Avengers", init:"UL", color:"#37474F", tier:"A", power:89, speed:72, defense:91, health:86, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiJmpsKmODsT4haccfCtkx1t4UnZlfkVSv7j72BCyKfg&s=10"},
-  {name:"Captain Marvel", fr:"Avengers", init:"CM", color:"#1565C0", tier:"S", power:96, speed:92, defense:92, health:94, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTQssTn-LFqnLv9H8Q_HJzfY06SfobpWocUler9Wy-cw&s=10"},
+  {name:"Hela", fr:"Avengers", init:"HL", color:"#1B5E20", tier:"S", power:96, speed:83, defense:91, health:94, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJeXMId5SF6X5nyBzH2C30_5ZG5FaTgplfEqs0N08dlw&s=10"},
+  {name:"Venom", fr:"Avengers", init:"VN", color:"#212121", tier:"A", power:83, speed:71, defense:81, health:89, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-ljEKUP1ZSlq6F2gSeYxt4TFFPBnLbvJcyXyr0YzjuA&s=10"},
+  {name:"Carnage", fr:"Avengers", init:"CN", color:"#B71C1C", tier:"A", power:85, speed:77, defense:79, health:86, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_9NC2BymUH4wD9D_Owoz9Gx2HYpvH-L4Sisc2YFcaRw&s=10"},
+  {name:"Vision", fr:"Avengers", init:"VS", color:"#00695C", tier:"A", power:89, speed:79, defense:89, health:85, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPxOUBnny3WpLocOHzqURM7iEiZAVBHWJJQkIaDymN1g&s"},
+  {name:"Ultron", fr:"Avengers", init:"UL", color:"#37474F", tier:"A", power:90, speed:73, defense:92, health:87, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiJmpsKmODsT4haccfCtkx1t4UnZlfkVSv7j72BCyKfg&s=10"},
+  {name:"Captain Marvel", fr:"Avengers", init:"CM", color:"#1565C0", tier:"S", power:98, speed:93, defense:93, health:95, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTQssTn-LFqnLv9H8Q_HJzfY06SfobpWocUler9Wy-cw&s=10"},
   {name:"Winter Soldier", fr:"Avengers", init:"WS", color:"#424242", tier:"B", power:65, speed:68, defense:66, health:72, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqFI52ZzX_BxqSzvOzJ6INFuTXcXDBAkYuOr7NcDnLw&s=10"},
-  {name:"Shang-Chi", fr:"Avengers", init:"SC", color:"#C62828", tier:"B", power:62, speed:80, defense:62, health:68, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxuncmmuo2oiwPsD-SZYQCwx0CiRdPnFcMcA2KQYzjlw&s=10"},
-  {name:"Ghost Rider", fr:"Avengers", init:"GR", color:"#E65100", tier:"S", power:92, speed:78, defense:88, health:95, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQypGMGp7P8pJPixP-2dIutS4d8TfBgODZyKv8KFNKpFg&s=10"},
+  {name:"Shang-Chi", fr:"Avengers", init:"SC", color:"#C62828", tier:"B", power:64, speed:82, defense:64, health:68, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxuncmmuo2oiwPsD-SZYQCwx0CiRdPnFcMcA2KQYzjlw&s=10"},
+  {name:"Ghost Rider", fr:"Avengers", init:"GR", color:"#E65100", tier:"S", power:93, speed:79, defense:89, health:96, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQypGMGp7P8pJPixP-2dIutS4d8TfBgODZyKv8KFNKpFg&s=10"},
   {name:"Blade", fr:"Avengers", init:"BL", color:"#212121", tier:"B", power:60, speed:70, defense:62, health:74, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtsYF5do6oclwduEzNeNJa6XOSjJXYfHADmnGDPrneZA&s=10"},
-  {name:"She-Hulk", fr:"Avengers", init:"SH", color:"#2E7D32", tier:"A", power:88, speed:60, defense:85, health:90, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiaQ-Rzk0PKFLlKa8kkEt8hw1xJVeOPR6P7RJmu-Kyzg&s=10"},
-  {name:"Jean Grey", fr:"Avengers", init:"JG", color:"#D84315", tier:"S", power:98, speed:76, defense:80, health:85, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpVDw2ntBd7k4kn1YbOnWW6_0xfpM9k11hxlK82idpZw&s"},
-  {name:"Magneto", fr:"Avengers", init:"MG", color:"#6A1B9A", tier:"A", power:90, speed:65, defense:85, health:80, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlFcxyp2nV-TPRE3ZY6_Vk_ER7_0HQUmGEdaCVL-kkVQ&s=10"},
-  {name:"Professor X", fr:"Avengers", init:"PX", color:"#283593", tier:"A", power:85, speed:50, defense:60, health:65, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJRU1dtsJBWsb-LHajcaoB4ROpG0ev444TgefoCwrr7g&s=10"},
+  {name:"She-Hulk", fr:"Avengers", init:"SH", color:"#2E7D32", tier:"A", power:88, speed:62, defense:85, health:91, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiaQ-Rzk0PKFLlKa8kkEt8hw1xJVeOPR6P7RJmu-Kyzg&s=10"},
+  {name:"Jean Grey", fr:"Avengers", init:"JG", color:"#D84315", tier:"S", power:99, speed:76, defense:80, health:85, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpVDw2ntBd7k4kn1YbOnWW6_0xfpM9k11hxlK82idpZw&s"},
+  {name:"Magneto", fr:"Avengers", init:"MG", color:"#6A1B9A", tier:"A", power:91, speed:65, defense:87, health:80, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlFcxyp2nV-TPRE3ZY6_Vk_ER7_0HQUmGEdaCVL-kkVQ&s=10"},
+  {name:"Professor X", fr:"Avengers", init:"PX", color:"#283593", tier:"A", power:87, speed:50, defense:60, health:65, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJRU1dtsJBWsb-LHajcaoB4ROpG0ev444TgefoCwrr7g&s=10"},
   {name:"Iceman", fr:"Avengers", init:"IM", color:"#0288D1", tier:"A", power:82, speed:72, defense:80, health:80, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8qNKebrxIr5UuQwkzpM0ARwyk_K8_-c8DoC2WT3Juqw&s=10"},
   {name:"Doctor Octopus", fr:"Avengers", init:"DO", color:"#558B2F", tier:"B", power:64, speed:60, defense:68, health:70, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTajx99dBjKuXCx0awccK1Ox5JWNZL3X7HWHrcr5brliQ&s=10"},
 
   // ---- The Boys ----
   {name:"Homelander", fr:"The Boys", init:"HL", color:"#0D47A1", tier:"S", power:95, speed:88, defense:92, health:92, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-_M5puEr7jvDEIMuZ_xAjzwxRdVVvQkXbHb5MpHnOoA&s=10"},
   {name:"Queen Maeve", fr:"The Boys", init:"QM", color:"#8D6E63", tier:"A", power:80, speed:70, defense:78, health:82, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDjcvMUjGrc4AeSrwxTyCJHfJekLOzx3XjB3NKwo7bfLkQY-P_byagNsI&s=10"},
-  {name:"Soldier Boy", fr:"The Boys", init:"SB", color:"#33691E", tier:"A", power:85, speed:68, defense:86, health:88, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRaFlEQNVMrh4aBLjtxCAF6XbiqtnyvrPPMH2oaqs0Rw&s=10"}
+  {name:"Soldier Boy", fr:"The Boys", init:"SB", color:"#33691E", tier:"A", power:86, speed:68, defense:87, health:88, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRaFlEQNVMrh4aBLjtxCAF6XbiqtnyvrPPMH2oaqs0Rw&s=10"}
 ];
 
 function shuffle(arr){
@@ -753,22 +758,46 @@ for(let i=1;i<=10;i++){
   c.className = 'chip' + (i===1 ? ' active' : '');
   c.textContent = '$'+i;
   c.addEventListener('click', ()=>{
-    document.querySelectorAll('.chip').forEach(el=>el.classList.remove('active'));
+    document.querySelectorAll('#incRow .chip').forEach(el=>el.classList.remove('active'));
     c.classList.add('active');
     selectedInc = i;
   });
   incRow.appendChild(c);
 }
 
+const maxHeroesRow = document.getElementById('maxHeroesRow');
+const maxHeroesVal = document.getElementById('maxHeroesVal');
+let selectedMaxHeroes = 5;
+function updateFootNote(){
+  document.getElementById('footNote').textContent =
+    `Her oyuncu maksimum ${selectedMaxHeroes} kahraman alabilir · en yüksek teklif kazanır · güç, hız, savunma ve can gerçek güce dayanır`;
+}
+for(let i=3;i<=10;i++){
+  const c = document.createElement('div');
+  c.className = 'chip' + (i===5 ? ' active' : '');
+  c.textContent = i;
+  c.addEventListener('click', ()=>{
+    document.querySelectorAll('#maxHeroesRow .chip').forEach(el=>el.classList.remove('active'));
+    c.classList.add('active');
+    selectedMaxHeroes = i;
+    maxHeroesVal.textContent = i;
+    updateFootNote();
+  });
+  maxHeroesRow.appendChild(c);
+}
+updateFootNote();
+
 document.getElementById('startBtn').addEventListener('click', startGame);
 
 function startGame(){
   const budget = parseInt(budgetRange.value, 10);
   const inc = selectedInc;
-  const lots = shuffle(HEROES).slice(0, 10).map(assignStats);
+  const maxHeroes = selectedMaxHeroes;
+  const lotCount = Math.min(HEROES.length, maxHeroes * 2);
+  const lots = shuffle(HEROES).slice(0, lotCount).map(assignStats);
 
   state = {
-    budget, inc, lots,
+    budget, inc, maxHeroes, lots,
     lotIdx: 0,
     price: 0,
     leader: null,
@@ -797,7 +826,7 @@ function renderAuction(){
 
   const hero = state.lots[state.lotIdx];
   document.getElementById('lotIndex').textContent = state.lotIdx + 1;
-  document.getElementById('lotLabel').textContent = `İndiki lot (${state.lotIdx + 1}/${state.lots.length})`;
+  document.getElementById('lotLabel').textContent = `Şu anki lot (${state.lotIdx + 1}/${state.lots.length})`;
 
   // Avatar
   const avatar = document.getElementById('heroAvatar');
@@ -823,9 +852,9 @@ function renderAuction(){
 
   // Stats
   document.getElementById('heroStatsRow').innerHTML = `
-    <div class="mini-stat g">GÜC: ${hero.power}</div>
-    <div class="mini-stat s">SÜRƏT: ${hero.speed}</div>
-    <div class="mini-stat m">MÜDAFİƏ: ${hero.defense}</div>
+    <div class="mini-stat g">GÜÇ: ${hero.power}</div>
+    <div class="mini-stat s">HIZ: ${hero.speed}</div>
+    <div class="mini-stat m">SAVUNMA: ${hero.defense}</div>
     <div class="mini-stat c">CAN: ${hero.health}</div>
   `;
 
@@ -833,10 +862,10 @@ function renderAuction(){
 
   const note = document.getElementById('leaderNote');
   if(!state.leader){
-    note.innerHTML = "Hərraca başlamaq üçün təklif verin";
+    note.innerHTML = "Müzayedeye başlamak için teklif verin";
     note.className = "leader-note";
   } else {
-    note.innerHTML = `Ən yüksək təklif: <b>OYUNÇU ${state.leader}</b> ($${state.price})`;
+    note.innerHTML = `En yüksek teklif: <b>OYUNCU ${state.leader}</b> ($${state.price})`;
     note.className = `leader-note p${state.leader}`;
   }
 
@@ -847,8 +876,8 @@ function renderAuction(){
   renderRosterList(2, 'p2List');
 
   // Buttons
-  const p1CanBid = !state.p1Passed && (state.players[1].heroes.length < 5) && (state.players[1].budget >= state.price + state.inc);
-  const p2CanBid = !state.p2Passed && (state.players[2].heroes.length < 5) && (state.players[2].budget >= state.price + state.inc);
+  const p1CanBid = !state.p1Passed && (state.players[1].heroes.length < state.maxHeroes) && (state.players[1].budget >= state.price + state.inc);
+  const p2CanBid = !state.p2Passed && (state.players[2].heroes.length < state.maxHeroes) && (state.players[2].budget >= state.price + state.inc);
 
   document.getElementById('p1BidBtn').disabled = !p1CanBid;
   document.getElementById('p1PassBtn').disabled = state.p1Passed;
@@ -864,7 +893,7 @@ function renderRosterList(pId, containerId){
   const container = document.getElementById(containerId);
   const heroes = state.players[pId].heroes;
   if(heroes.length === 0){
-    container.innerHTML = `<div class="roster-empty">Hələ qəhrəman alınmayıb</div>`;
+    container.innerHTML = `<div class="roster-empty">Henüz kahraman alınmadı</div>`;
     return;
   }
   container.innerHTML = heroes.map(h => `
@@ -912,9 +941,9 @@ function resolveLot(){
     const winner = state.leader;
     state.players[winner].budget -= state.price;
     state.players[winner].heroes.push({...hero, boughtPrice: state.price});
-    flashText.innerHTML = `${hero.name}<br>SATILDI! <span class="small">OYUNÇU ${winner} — $${state.price}</span>`;
+    flashText.innerHTML = `${hero.name}<br>SATILDI! <span class="small">OYUNCU ${winner} — $${state.price}</span>`;
   } else {
-    flashText.innerHTML = `${hero.name}<br>SATILMADI <span class="small">Heç kim təklif vermədi</span>`;
+    flashText.innerHTML = `${hero.name}<br>SATILMADI <span class="small">Kimse teklif vermedi</span>`;
   }
 
   flash.classList.add('show');
@@ -968,8 +997,8 @@ function startBattle(){
 function updateBattleTally(){
   const alive1 = battleState.t1.filter(h => !h.eliminated).length;
   const alive2 = battleState.t2.filter(h => !h.eliminated).length;
-  document.getElementById('t1Tally').textContent = `Oyunçu 1: ${alive1} qəhrəman qalıb`;
-  document.getElementById('t2Tally').textContent = `Oyunçu 2: ${alive2} qəhrəman qalıb`;
+  document.getElementById('t1Tally').textContent = `Oyuncu 1: ${alive1} kahraman kaldı`;
+  document.getElementById('t2Tally').textContent = `Oyuncu 2: ${alive2} kahraman kaldı`;
 }
 
 function setupBattlePair(){
@@ -984,7 +1013,7 @@ function setupBattlePair(){
   renderFighter('left', h1);
   renderFighter('right', h2);
 
-  document.getElementById('fightStatus').textContent = "Növbəti döyüşə hazır";
+  document.getElementById('fightStatus').textContent = "Sıradaki dövüşe hazır";
   document.getElementById('nextFightBtn').disabled = false;
   document.getElementById('nextFightBtn').style.display = 'block';
 }
@@ -1000,15 +1029,15 @@ function renderFighter(side, h){
   document.getElementById(prefix + 'Stats').innerHTML = `
     <div class="mini-stats" style="justify-content:center;">
       <span class="mini-stat g">G:${h.power}</span>
-      <span class="mini-stat s">S:${h.speed}</span>
-      <span class="mini-stat m">M:${h.defense}</span>
+      <span class="mini-stat s">H:${h.speed}</span>
+      <span class="mini-stat m">S:${h.defense}</span>
     </div>
   `;
 
   const hpPct = Math.max(0, Math.round((h.curHp / h.maxHp) * 100));
   document.getElementById(prefix + 'HpFill').style.width = hpPct + '%';
   document.getElementById(prefix + 'HpLabel').textContent = `CAN: ${hpPct}%`;
-  document.getElementById(prefix + 'Score').textContent = h.wins > 0 ? `Qələbə: ${h.wins}` : '';
+  document.getElementById(prefix + 'Score').textContent = h.wins > 0 ? `Galibiyet: ${h.wins}` : '';
 }
 
 document.getElementById('nextFightBtn').addEventListener('click', runFightRound);
@@ -1049,18 +1078,18 @@ function resolveFightWinner(h1, h2){
   const status = document.getElementById('fightStatus');
 
   if(h1.curHp <= 0 && h2.curHp <= 0){
-    status.textContent = "BƏRABƏRƏ!";
+    status.textContent = "BERABERE!";
     h1.eliminated = true;
     h2.eliminated = true;
     battleState.idx1++;
     battleState.idx2++;
   } else if(h1.curHp <= 0){
-    status.textContent = `${h2.name} QALİB GƏLDİ!`;
+    status.textContent = `${h2.name} GALİP GELDİ!`;
     h1.eliminated = true;
     h2.wins++;
     battleState.idx1++;
   } else {
-    status.textContent = `${h1.name} QALİB GƏLDİ!`;
+    status.textContent = `${h1.name} GALİP GELDİ!`;
     h2.eliminated = true;
     h1.wins++;
     battleState.idx2++;
@@ -1088,16 +1117,16 @@ function endBattle(){
   banner.style.display = 'block';
 
   if(alive1 > alive2){
-    championText.textContent = "OYUNÇU 1 QALİB GƏLDİ!";
+    championText.textContent = "OYUNCU 1 GALİP GELDİ!";
     championText.style.color = "var(--azure)";
-    championSub.textContent = "Oyunçu 1-in komandası arenada dominantlıq etdi!";
+    championSub.textContent = "Oyuncu 1'in takımı arenada üstünlük sağladı!";
   } else if(alive2 > alive1){
-    championText.textContent = "OYUNÇU 2 QALİB GƏLDİ!";
+    championText.textContent = "OYUNCU 2 GALİP GELDİ!";
     championText.style.color = "var(--crimson)";
-    championSub.textContent = "Oyunçu 2-nin komandası raundları zəfərlə başa vurdu!";
+    championSub.textContent = "Oyuncu 2'nin takımı raundları zaferle tamamladı!";
   } else {
-    championText.textContent = "BƏRABƏRLİK!";
-    championSub.textContent = "Hər iki tərəf cəsurca döyüşdü!";
+    championText.textContent = "BERABERLİK!";
+    championSub.textContent = "Her iki taraf cesurca dövüştü!";
   }
 
   document.getElementById('toResultsBtn').style.display = 'block';
@@ -1124,7 +1153,7 @@ function renderFinalList(pId, containerId){
   const container = document.getElementById(containerId);
   const heroes = state.players[pId].heroes;
   if(heroes.length === 0){
-    container.innerHTML = `<div class="roster-empty">Qəhrəman yoxdur</div>`;
+    container.innerHTML = `<div class="roster-empty">Kahraman yok</div>`;
     return;
   }
 

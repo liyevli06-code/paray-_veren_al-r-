@@ -74,6 +74,7 @@
     line-height:0.95;
     color:var(--text-light);
     margin-bottom:6px;
+    font-family: 'Bebas Neue', sans-serif;
   }
   .poster h1 span{color:var(--gold-bright);}
   .poster .sub{
@@ -237,13 +238,6 @@
     color:var(--gold);
     font-weight:700;
   }
-  .roster-item .win-count{
-    margin-left:auto;
-    font-family:'JetBrains Mono';
-    font-size:12px;
-    color:var(--gold-bright);
-    font-weight:700;
-  }
 
   .avatar{
     width:34px; height:34px;
@@ -253,6 +247,7 @@
     color:#0B0F1A;
     flex:none;
     overflow:hidden;
+    background:#2A3350;
   }
   .avatar img{
     width:100%;
@@ -264,8 +259,7 @@
   .hname{font-size:12.5px; font-weight:600; line-height:1.2;}
   .hfranchise{font-size:9.5px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.06em;}
 
-  /* stat bars */
-  .stat-block{margin-top:2px;}
+  .stat-block{margin-top:2px; width:100%;}
   .stat-line{
     display:grid;
     grid-template-columns:16px 1fr 26px;
@@ -287,20 +281,6 @@
   .bar-fill.def{background:var(--azure);}
   .bar-fill.health{background:var(--violet);}
   .stat-line .sval{font-family:'JetBrains Mono'; text-align:right;}
-
-  .mini-stats{display:flex; gap:5px; margin-top:4px; flex-wrap:wrap;}
-  .mini-stat{
-    font-family:'JetBrains Mono';
-    font-size:9.5px;
-    padding:1px 5px;
-    border-radius:2px;
-    background:var(--bg-panel-2);
-    border:1px solid var(--line);
-  }
-  .mini-stat.g{color:var(--crimson);}
-  .mini-stat.s{color:#6FCB8E;}
-  .mini-stat.m{color:#7FB1E6;}
-  .mini-stat.c{color:var(--violet);}
 
   .tier-badge{
     display:inline-block;
@@ -358,6 +338,9 @@
     justify-content:center;
     gap:10px;
     margin-top:14px;
+    width:100%;
+    max-width:360px;
+    align-self:center;
   }
 
   .price-board{
@@ -414,6 +397,7 @@
     border-radius:6px;
     opacity:0; pointer-events:none;
     transition:opacity .25s ease;
+    z-index:10;
   }
   .flash.show{opacity:1; pointer-events:auto;}
   .flash-text{font-family:'Bebas Neue'; font-size:30px; color:var(--gold-bright); text-align:center; line-height:1.3;}
@@ -485,7 +469,7 @@
     max-width:170px; margin:8px auto 0;
     height:6px; background:var(--line); border-radius:3px; overflow:hidden;
   }
-  .fighter .fhp-fill{height:100%; background:var(--violet); border-radius:3px; transition:width .5s ease;}
+  .fighter .fhp-fill{height:100%; background:var(--violet); border-radius:3px; transition:width .3s ease;}
   .fighter .fhp-label{font-family:'JetBrains Mono'; font-size:9.5px; color:var(--text-dim); margin-top:3px;}
   .fighter.knocked{opacity:0.35; filter:grayscale(1);}
 
@@ -616,8 +600,8 @@
       <h1>DÖYÜŞ ARENASI</h1>
     </div>
     <div class="team-tally">
-      <span class="t1" id="t1Tally">Oyunçu 1: 5 qəhraman</span>
-      <span class="t2" id="t2Tally">Oyunçu 2: 5 qəhraman</span>
+      <span class="t1" id="t1Tally">Oyunçu 1: 0 qəhraman</span>
+      <span class="t2" id="t2Tally">Oyunçu 2: 0 qəhraman</span>
     </div>
 
     <div class="arena" id="arena">
@@ -676,14 +660,7 @@
 </div>
 
 <script>
-/* ---------------- DATA ----------------
-   Statlar komik-kitab güc səviyyələrinə (power-tier) əsaslanır:
-   power    = xam güc / zərbə qüvvəsi
-   speed    = sürət / reaksiya
-   defense  = müdafiə / davamlılıq (zərbəyə tab gətirmə)
-   health   = CAN — döyüşdə itirilən "həyat xalı" (sağalma qabiliyyəti, dözüm)
-   tier     = ümumi güc dərəcəsi (S/A/B/C) — sadəcə vizual etiket
------------------------------------------------------------------- */
+/* ---------------- DATA ---------------- */
 const HEROES = [
   // ---- DC ----
   {name:"Superman", fr:"DC", init:"SU", color:"#4FA3E3", tier:"S", power:98, speed:90, defense:97, health:97, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgx9BS4HzHuFykljxgnr0rRm82ABPoUE_wdXLkI1V_BQ&s=10"},
@@ -729,8 +706,6 @@ function shuffle(arr){
 function rand(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
 function clamp(v,min,max){ return Math.max(min, Math.min(max, v)); }
 
-/* Hər qəhramanın öz real bazasına kiçik (±3) təsadüfi rəngarənglik verir,
-   ancaq güc səviyyələri arasındakı ierarxiyanı pozmur */
 function assignStats(hero){
   return {
     ...hero,
@@ -738,7 +713,8 @@ function assignStats(hero){
     speed: clamp(hero.speed + rand(-3,3), 1, 99),
     defense: clamp(hero.defense + rand(-3,3), 1, 99),
     health: clamp(hero.health + rand(-3,3), 1, 99),
-    maxHealth: 0 // battle zamanı təyin olunacaq
+    currentHp: 0,
+    maxHp: 0
   };
 }
 
@@ -777,7 +753,7 @@ function startGame(){
     lotIdx: 0,
     price: 0,
     leader: null, // 1 or 2
-    p1Passed:false, p2Passed:false,
+    p1Passed: false, p2Passed: false,
     players: {
       1: {budget: budget, heroes: []},
       2: {budget: budget, heroes: []}
@@ -790,7 +766,7 @@ function startGame(){
   renderAll();
 }
 
-/* ---------------- GAME LOGIC ---------------- */
+/* ---------------- GAME ELEMENTS ---------------- */
 const els = {
   lotIndex: document.getElementById('lotIndex'),
   heroAvatar: document.getElementById('heroAvatar'),
@@ -809,423 +785,341 @@ const els = {
   p1PassBtn: document.getElementById('p1PassBtn'),
   p2PassBtn: document.getElementById('p2PassBtn'),
   flash: document.getElementById('flash'),
-  flashText: document.getElementById('flashText'),
+  flashText: document.getElementById('flashText')
 };
 
-els.p1BidBtn.addEventListener('click', ()=>placeBid(1));
-els.p2BidBtn.addEventListener('click', ()=>placeBid(2));
-els.p1PassBtn.addEventListener('click', ()=>doPass(1));
-els.p2PassBtn.addEventListener('click', ()=>doPass(2));
-document.getElementById('restartBtn').addEventListener('click', ()=>{
-  document.getElementById('endScreen').style.display = 'none';
-  document.getElementById('game').style.display = 'none';
-  document.getElementById('battle').style.display = 'none';
-  document.getElementById('home').style.display = 'flex';
-});
-
-function currentHero(){ return state.lots[state.lotIdx]; }
-
-function nextBidAmount(){
-  return state.price === 0 ? state.inc : state.price + state.inc;
-}
-
-function placeBid(p){
-  if(!state || state.leader === p) return;
-  const amount = nextBidAmount();
-  const player = state.players[p];
-  if(amount > player.budget || player.heroes.length >= 5) return;
-
-  state.price = amount;
-  state.leader = p;
-  state.p1Passed = false;
-  state.p2Passed = false;
-  renderAll();
-}
-
-function doPass(p){
-  if(!state) return;
-  if(state.leader === p) return; // leader can't pass on themselves
-
-  if(state.leader && state.leader !== p){
-    // other player concedes -> leader wins the lot
-    finalizeLot(state.leader);
-    return;
-  }
-
-  // no leader yet: mark this player as passed
-  if(p===1) state.p1Passed = true; else state.p2Passed = true;
-
-  if(state.p1Passed && state.p2Passed){
-    // nobody wants this hero, skip unsold
-    advanceLot();
-  } else {
-    renderAll();
-  }
-}
-
-function finalizeLot(winner){
-  const hero = currentHero();
-  const player = state.players[winner];
-  player.budget -= state.price;
-  player.heroes.push({...hero, price: state.price});
-
-  showFlash(`${hero.name} — OYUNÇU ${winner}-ə satıldı`, `$${state.price}`);
-
-  setTimeout(()=>{ advanceLot(); }, 1100);
-}
-
-function advanceLot(){
-  state.lotIdx++;
-  state.price = 0;
-  state.leader = null;
-  state.p1Passed = false;
-  state.p2Passed = false;
-
-  const bothFull = state.players[1].heroes.length>=5 && state.players[2].heroes.length>=5;
-  const outOfLots = state.lotIdx >= state.lots.length;
-
-  if(bothFull || outOfLots){
-    goToBattle();
-    return;
-  }
-  renderAll();
-}
-
-function showFlash(title, sub){
-  els.flashText.innerHTML = title + `<span class="small">${sub}</span>`;
-  els.flash.classList.add('show');
-  setTimeout(()=>els.flash.classList.remove('show'), 1000);
-}
-
-function statBarsHTML(h){
-  return `<div class="stat-block">
-    <div class="stat-line"><span>G</span><div class="bar-track"><div class="bar-fill power" style="width:${h.power}%"></div></div><span class="sval">${h.power}</span></div>
-    <div class="stat-line"><span>S</span><div class="bar-track"><div class="bar-fill speed" style="width:${h.speed}%"></div></div><span class="sval">${h.speed}</span></div>
-    <div class="stat-line"><span>M</span><div class="bar-track"><div class="bar-fill def" style="width:${h.defense}%"></div></div><span class="sval">${h.defense}</span></div>
-    <div class="stat-line"><span>C</span><div class="bar-track"><div class="bar-fill health" style="width:${h.health}%"></div></div><span class="sval">${h.health}</span></div>
-  </div>`;
-}
-
-function heroCardHTML(h, showPrice){
-  const avatarHTML = h.img
-    ? `<img src="${h.img}" alt="${h.name}">`
-    : h.init;
-
-  return `<div class="roster-item">
-    <div class="avatar" style="${h.img ? '' : 'background:'+h.color}">${avatarHTML}</div>
-    <div style="flex:1">
-      <div class="hname">${h.name} <span class="tier-badge tier-${h.tier}">${h.tier}</span></div>
-      <div class="hfranchise">${h.fr}</div>
-      <div class="mini-stats">
-        <span class="mini-stat g">G ${h.power}</span>
-        <span class="mini-stat s">S ${h.speed}</span>
-        <span class="mini-stat m">M ${h.defense}</span>
-        <span class="mini-stat c">C ${h.health}</span>
-      </div>
-    </div>
-    ${showPrice ? `<div class="price">$${h.price}</div>` : ''}
-  </div>`;
-}
-
-function renderRoster(listEl, heroes){
-  if(heroes.length === 0){
-    listEl.innerHTML = '<div class="roster-empty">Hələ qəhrəman alınmayıb</div>';
-    return;
-  }
-  listEl.innerHTML = heroes.map(h=>heroCardHTML(h,true)).join('');
-}
+els.p1BidBtn.addEventListener('click', () => handleBid(1));
+els.p2BidBtn.addEventListener('click', () => handleBid(2));
+els.p1PassBtn.addEventListener('click', () => handlePass(1));
+els.p2PassBtn.addEventListener('click', () => handlePass(2));
 
 function renderAll(){
   if(!state) return;
-  const hero = currentHero();
-  if(!hero) return;
 
   els.lotIndex.textContent = state.lotIdx + 1;
+  const curHero = state.lots[state.lotIdx];
 
-  if(hero.img){
-    els.heroAvatar.style.background = 'transparent';
-    els.heroAvatar.innerHTML = `<img src="${hero.img}" alt="${hero.name}">`;
-  } else {
-    els.heroAvatar.style.background = hero.color;
-    els.heroAvatar.textContent = hero.init;
-  }
+  // Render Hero Stage
+  els.heroAvatar.style.backgroundColor = curHero.color;
+  els.heroAvatar.innerHTML = curHero.img ? `<img src="${curHero.img}" alt="${curHero.name}">` : curHero.init;
+  els.heroName.childNodes[0].nodeValue = curHero.name + " ";
+  els.heroTier.textContent = curHero.tier;
+  els.heroTier.className = `tier-badge tier-${curHero.tier}`;
+  els.heroFranchise.textContent = curHero.fr;
+  els.heroFranchise.className = `hero-franchise-tag ${curHero.fr === 'DC' ? 'tag-dc' : 'tag-marvel'}`;
 
-  els.heroName.innerHTML = hero.name + ` <span class="tier-badge tier-${hero.tier}">${hero.tier} SƏVİYYƏ</span>`;
-  els.heroFranchise.textContent = hero.fr === 'DC' ? 'DC Universe' : 'Avengers';
-  els.heroFranchise.className = 'hero-franchise-tag ' + (hero.fr==='DC' ? 'tag-dc' : 'tag-marvel');
+  // Stat Bars
+  els.heroStatsRow.innerHTML = `
+    <div class="stat-block">
+      <div class="stat-line"><span>GÜC</span><div class="bar-track"><div class="bar-fill power" style="width:${curHero.power}%"></div></div><span class="sval">${curHero.power}</span></div>
+      <div class="stat-line"><span>SÜR</span><div class="bar-track"><div class="bar-fill speed" style="width:${curHero.speed}%"></div></div><span class="sval">${curHero.speed}</span></div>
+      <div class="stat-line"><span>MÜD</span><div class="bar-track"><div class="bar-fill def" style="width:${curHero.defense}%"></div></div><span class="sval">${curHero.defense}</span></div>
+      <div class="stat-line"><span>CAN</span><div class="bar-track"><div class="bar-fill health" style="width:${curHero.health}%"></div></div><span class="sval">${curHero.health}</span></div>
+    </div>
+  `;
 
-  els.heroStatsRow.innerHTML = `<div style="width:220px">${statBarsHTML(hero)}</div>`;
-
+  // Price & Leader
   els.curPrice.textContent = '$' + state.price;
-
   if(state.leader){
-    els.leaderNote.className = 'leader-note p'+state.leader;
-    els.leaderNote.innerHTML = `Öndə: <b>Oyunçu ${state.leader}</b> — digər oyunçu təklif versin ya da keçsin`;
+    els.leaderNote.className = `leader-note p${state.leader}`;
+    els.leaderNote.innerHTML = `Lider: <b>OYUNÇU ${state.leader}</b>`;
   } else {
     els.leaderNote.className = 'leader-note';
     els.leaderNote.textContent = 'Hərraca başlamaq üçün təklif verin';
   }
 
+  // Budgets & Rosters
   els.p1Budget.textContent = '$' + state.players[1].budget;
   els.p2Budget.textContent = '$' + state.players[2].budget;
-  renderRoster(els.p1List, state.players[1].heroes);
-  renderRoster(els.p2List, state.players[2].heroes);
 
-  const nextAmt = nextBidAmount();
-  els.p1BidBtn.disabled = state.leader===1 || nextAmt > state.players[1].budget || state.players[1].heroes.length>=5;
-  els.p2BidBtn.disabled = state.leader===2 || nextAmt > state.players[2].budget || state.players[2].heroes.length>=5;
-  els.p1BidBtn.textContent = 'Təklif ver ($'+nextAmt+')';
-  els.p2BidBtn.textContent = 'Təklif ver ($'+nextAmt+')';
+  renderRoster(1, els.p1List);
+  renderRoster(2, els.p2List);
 
-  els.p1PassBtn.disabled = state.leader===1;
-  els.p2PassBtn.disabled = state.leader===2;
+  // Buttons Logic
+  const p1CanBid = canPlayerBid(1);
+  const p2CanBid = canPlayerBid(2);
+
+  els.p1BidBtn.disabled = !p1CanBid || state.p1Passed;
+  els.p2BidBtn.disabled = !p2CanBid || state.p2Passed;
+  els.p1PassBtn.disabled = state.p1Passed;
+  els.p2PassBtn.disabled = state.p2Passed;
 }
 
-/* ================== BATTLE PHASE ==================
-   Hər döyüşçünün öz "Can" statından gələn bir HP-hovuzu var.
-   Hər raundda hücum edən tərəf Güc+Sürət əsaslı zərbə vurur,
-   müdafiə edən tərəfin Müdafiə statı zərbəni azaldır.
-   HP sıfıra düşənə qədər raundlar davam edir — beləliklə güclü,
-   davamlı qəhrəman zəif rəqibi demək olar həmişə məğlub edir,
-   amma kritik zərbə şansı arabir sürprizlərə yer qoyur. */
-const bEls = {
-  t1Tally: document.getElementById('t1Tally'),
-  t2Tally: document.getElementById('t2Tally'),
-  leftAvatar: document.getElementById('leftAvatar'),
-  leftName: document.getElementById('leftName'),
-  leftFranchise: document.getElementById('leftFranchise'),
-  leftStats: document.getElementById('leftStats'),
-  leftScore: document.getElementById('leftScore'),
-  leftHpFill: document.getElementById('leftHpFill'),
-  leftHpLabel: document.getElementById('leftHpLabel'),
-  rightAvatar: document.getElementById('rightAvatar'),
-  rightName: document.getElementById('rightName'),
-  rightFranchise: document.getElementById('rightFranchise'),
-  rightStats: document.getElementById('rightStats'),
-  rightScore: document.getElementById('rightScore'),
-  rightHpFill: document.getElementById('rightHpFill'),
-  rightHpLabel: document.getElementById('rightHpLabel'),
-  fighterLeft: document.getElementById('fighterLeft'),
-  fighterRight: document.getElementById('fighterRight'),
-  fightStatus: document.getElementById('fightStatus'),
-  nextFightBtn: document.getElementById('nextFightBtn'),
-  battleLog: document.getElementById('battleLog'),
-  championBanner: document.getElementById('championBanner'),
-  championText: document.getElementById('championText'),
-  championSub: document.getElementById('championSub'),
-  toResultsBtn: document.getElementById('toResultsBtn'),
-};
+function renderRoster(pId, container){
+  const heroes = state.players[pId].heroes;
+  if(heroes.length === 0){
+    container.innerHTML = `<div class="roster-empty">Hələ qəhrəman alınmayıb</div>`;
+    return;
+  }
+  container.innerHTML = heroes.map(h => `
+    <div class="roster-item">
+      <div class="avatar" style="background:${h.color}">
+        ${h.img ? `<img src="${h.img}" alt="${h.name}">` : h.init}
+      </div>
+      <div>
+        <div class="hname">${h.name} <span class="tier-badge tier-${h.tier}">${h.tier}</span></div>
+        <div class="hfranchise">${h.fr}</div>
+      </div>
+      <div class="price">$${h.cost}</div>
+    </div>
+  `).join('');
+}
 
-function goToBattle(){
+function canPlayerBid(pId){
+  const p = state.players[pId];
+  if(p.heroes.length >= 5) return false;
+  const nextPrice = state.leader === null ? (state.price === 0 ? state.inc : state.price) : state.price + state.inc;
+  if(p.budget < nextPrice) return false;
+  if(state.leader === pId) return false;
+  return true;
+}
+
+function handleBid(pId){
+  if(state.leader === null){
+    state.price = state.inc;
+  } else {
+    state.price += state.inc;
+  }
+  state.leader = pId;
+  // If the other player had passed previously, bidding can reset or maintain choice
+  renderAll();
+}
+
+function handlePass(pId){
+  if(pId === 1) state.p1Passed = true;
+  if(pId === 2) state.p2Passed = true;
+
+  renderAll();
+
+  // Resolution triggers
+  if((state.p1Passed && state.p2Passed) || 
+     (state.leader === 1 && state.p2Passed) || 
+     (state.leader === 2 && state.p1Passed)){
+    resolveLot();
+  }
+}
+
+function resolveLot(){
+  const hero = state.lots[state.lotIdx];
+  let msg = '';
+
+  if(state.leader !== null){
+    const winner = state.leader;
+    const cost = state.price;
+    state.players[winner].budget -= cost;
+    state.players[winner].heroes.push({...hero, cost});
+    msg = `SATIŞ OLDU!<br><span style="color:${hero.color}">${hero.name}</span> &rarr; OYUNÇU ${winner}<br><span class="small">$${cost} xərcləndi</span>`;
+  } else {
+    msg = `SATILMADI!<br><span style="color:var(--text-dim)">${hero.name} keçildi</span>`;
+  }
+
+  showFlash(msg, () => {
+    state.lotIdx++;
+    state.price = 0;
+    state.leader = null;
+    state.p1Passed = false;
+    state.p2Passed = false;
+
+    const p1Full = state.players[1].heroes.length >= 5;
+    const p2Full = state.players[2].heroes.length >= 5;
+
+    if(state.lotIdx >= state.lots.length || (p1Full && p2Full)){
+      finishAuction();
+    } else {
+      renderAll();
+    }
+  });
+}
+
+function showFlash(htmlText, cb){
+  els.flashText.innerHTML = htmlText;
+  els.flash.classList.add('show');
+  setTimeout(()=>{
+    els.flash.classList.remove('show');
+    if(cb) cb();
+  }, 1400);
+}
+
+function finishAuction(){
+  const p1Count = state.players[1].heroes.length;
+  const p2Count = state.players[2].heroes.length;
+
+  if(p1Count === 0 && p2Count === 0){
+    document.getElementById('game').style.display = 'none';
+    document.getElementById('endScreen').style.display = 'block';
+    document.getElementById('endSummary').textContent = "Hər iki oyunçu da qəhrəman almadı.";
+    renderEndLists();
+    return;
+  }
+
+  // Switch to Battle Arena
   document.getElementById('game').style.display = 'none';
   document.getElementById('battle').style.display = 'block';
+  initBattle();
+}
+
+/* ---------------- BATTLE LOGIC ---------------- */
+function initBattle(){
+  const p1Team = state.players[1].heroes.map(h => ({...h, maxHp: h.health * 10, currentHp: h.health * 10}));
+  const p2Team = state.players[2].heroes.map(h => ({...h, maxHp: h.health * 10, currentHp: h.health * 10}));
 
   battleState = {
-    q1: state.players[1].heroes.map(h=>({...h, wins:0})),
-    q2: state.players[2].heroes.map(h=>({...h, wins:0})),
-    log: [],
-    resolved: true // ready for next fight
+    p1Team,
+    p2Team,
+    p1Idx: 0,
+    p2Idx: 0,
+    p1Wins: 0,
+    p2Wins: 0,
+    inFight: false
   };
 
-  bEls.championBanner.style.display = 'none';
-  bEls.toResultsBtn.style.display = 'none';
-  bEls.battleLog.innerHTML = '';
-  bEls.nextFightBtn.style.display = 'inline-block';
-  bEls.nextFightBtn.textContent = 'DÖYÜŞÜ BAŞLAT';
-  bEls.nextFightBtn.disabled = false;
-  bEls.nextFightBtn.onclick = runNextFight;
-
-  updateTally();
-  showUpcomingFighters();
+  updateBattleUI();
 }
 
-function updateTally(){
-  bEls.t1Tally.textContent = `Oyunçu 1: ${battleState.q1.length} qəhrəman qalıb`;
-  bEls.t2Tally.textContent = `Oyunçu 2: ${battleState.q2.length} qəhrəman qalıb`;
-}
+function updateBattleUI(){
+  document.getElementById('t1Tally').textContent = `Oyunçu 1: ${battleState.p1Team.length - battleState.p1Idx} qəhrəman qaldı`;
+  document.getElementById('t2Tally').textContent = `Oyunçu 2: ${battleState.p2Team.length - battleState.p2Idx} qəhrəman qaldı`;
 
-function fighterCardFill(sideAvatar, sideName, sideFranchise, sideStats, hero){
-  if(hero.img){
-    sideAvatar.style.background = 'transparent';
-    sideAvatar.innerHTML = `<img src="${hero.img}" alt="${hero.name}">`;
+  const h1 = battleState.p1Team[battleState.p1Idx];
+  const h2 = battleState.p2Team[battleState.p2Idx];
+
+  if(h1){
+    document.getElementById('leftAvatar').style.backgroundColor = h1.color;
+    document.getElementById('leftAvatar').innerHTML = h1.img ? `<img src="${h1.img}">` : h1.init;
+    document.getElementById('leftName').textContent = h1.name;
+    document.getElementById('leftFranchise').textContent = h1.fr;
+    document.getElementById('leftHpFill').style.width = Math.max(0, (h1.currentHp / h1.maxHp)*100) + '%';
+    document.getElementById('leftHpLabel').textContent = `CAN: ${Math.max(0, Math.ceil((h1.currentHp / h1.maxHp)*100))}%`;
   } else {
-    sideAvatar.style.background = hero.color;
-    sideAvatar.textContent = hero.init;
-  }
-  sideName.textContent = hero.name;
-  sideFranchise.textContent = hero.fr;
-  sideStats.innerHTML = statBarsHTML(hero);
-}
-
-function showUpcomingFighters(){
-  bEls.fighterLeft.classList.remove('knocked');
-  bEls.fighterRight.classList.remove('knocked');
-  bEls.leftScore.textContent = '';
-  bEls.rightScore.textContent = '';
-  bEls.fightStatus.textContent = 'Növbəti döyüşə hazır';
-
-  const h1 = battleState.q1[0];
-  const h2 = battleState.q2[0];
-
-  // Hər döyüşçü öz Can statına bərabər tam HP ilə meydana çıxır
-  h1.curHp = h1.health; h1.maxHp = h1.health;
-  h2.curHp = h2.health; h2.maxHp = h2.health;
-
-  fighterCardFill(bEls.leftAvatar, bEls.leftName, bEls.leftFranchise, bEls.leftStats, h1);
-  fighterCardFill(bEls.rightAvatar, bEls.rightName, bEls.rightFranchise, bEls.rightStats, h2);
-  updateHpBars(h1, h2);
-}
-
-function updateHpBars(h1, h2){
-  const p1 = clamp(Math.round(h1.curHp / h1.maxHp * 100), 0, 100);
-  const p2 = clamp(Math.round(h2.curHp / h2.maxHp * 100), 0, 100);
-  bEls.leftHpFill.style.width = p1 + '%';
-  bEls.rightHpFill.style.width = p2 + '%';
-  bEls.leftHpLabel.textContent = `CAN: ${p1}%`;
-  bEls.rightHpLabel.textContent = `CAN: ${p2}%`;
-}
-
-/* Bir zərbə hesabla: hücumçunun Güc+Sürət-i vs müdafiəçinin Müdafiəsi.
-   Nəticə real güc fərqini əks etdirir — güclü qəhrəman az zərər alır,
-   zəif qəhrəman böyük zərər alır, amma kiçik təsadüfi amplitüd
-   ("kritik zərbə" şansı) hər döyüşü eyni etmir. */
-function computeDamage(attacker, defender){
-  const raw = attacker.power * 0.65 + attacker.speed * 0.35;
-  const mitigation = defender.defense * 0.45;
-  let dmg = raw - mitigation;
-  dmg = Math.max(dmg, raw * 0.15); // ən azı bir qədər zərər hər zaman keçir
-  const critRoll = Math.random();
-  if(critRoll > 0.92){ dmg *= 1.6; } // ~8% kritik zərbə
-  dmg *= (0.85 + Math.random()*0.3); // ±15% təbii dəyişkənlik
-  return Math.max(1, Math.round(dmg));
-}
-
-function runNextFight(){
-  if(!battleState.q1.length || !battleState.q2.length) return;
-
-  bEls.nextFightBtn.disabled = true;
-
-  const h1 = battleState.q1[0];
-  const h2 = battleState.q2[0];
-
-  let round = 0;
-  const maxRounds = 40; // təhlükəsizlik limiti
-
-  function step(){
-    round++;
-    // sürəti daha yüksək olan tez-tez əvvəl vurur (kiçik ehtimal payı ilə)
-    const h1First = Math.random() < (h1.speed / (h1.speed + h2.speed));
-    const order = h1First ? [h1,h2] : [h2,h1];
-
-    const first = order[0], second = order[1];
-    const dmgToSecond = computeDamage(first, second);
-    (second === h1 ? h1 : h2).curHp -= dmgToSecond;
-
-    let logLine = `${first.name} zərbə endirdi: -${dmgToSecond} CAN (${second.name})`;
-
-    if((second===h1 ? h1.curHp : h2.curHp) > 0){
-      const dmgToFirst = computeDamage(second, first);
-      (first === h1 ? h1 : h2).curHp -= dmgToFirst;
-      logLine += ` · ${second.name} cavab verdi: -${dmgToFirst} CAN (${first.name})`;
-    }
-
-    h1.curHp = clamp(h1.curHp, 0, h1.maxHp);
-    h2.curHp = clamp(h2.curHp, 0, h2.maxHp);
-    updateHpBars(h1, h2);
-
-    bEls.fightStatus.textContent = `Raund ${round}...`;
-    bEls.leftScore.textContent = Math.max(0, Math.round(h1.curHp));
-    bEls.rightScore.textContent = Math.max(0, Math.round(h2.curHp));
-
-    if(h1.curHp <= 0 || h2.curHp <= 0 || round >= maxRounds){
-      finishFight(h1, h2, round, logLine);
-      return;
-    }
-    setTimeout(step, 260);
+    document.getElementById('leftName').textContent = "MƏĞLUB OLDULAR";
   }
 
-  bEls.fightStatus.textContent = 'Döyüşür...';
-  setTimeout(step, 500);
-
-  function finishFight(h1, h2, round, lastLog){
-    let winnerHero, loserHero;
-    if(h1.curHp <= 0 && h2.curHp <= 0){
-      // hər ikisi eyni anda düşərsə, çox CAN qalanı (nisbətən) qalib elan olunur
-      winnerHero = h1.curHp >= h2.curHp ? h1 : h2;
-      loserHero = winnerHero === h1 ? h2 : h1;
-    } else if(h2.curHp <= 0){
-      winnerHero = h1; loserHero = h2;
-    } else {
-      winnerHero = h2; loserHero = h1;
-    }
-
-    if(winnerHero === h1){
-      bEls.fighterRight.classList.add('knocked');
-      bEls.fightStatus.textContent = `${h1.name} qalib gəldi!`;
-      h1.wins++;
-      battleState.q2.shift();
-    } else {
-      bEls.fighterLeft.classList.add('knocked');
-      bEls.fightStatus.textContent = `${h2.name} qalib gəldi!`;
-      h2.wins++;
-      battleState.q1.shift();
-    }
-
-    battleState.log.unshift({
-      winner: winnerHero.name,
-      loser: loserHero.name,
-      s1: Math.max(0, Math.round(h1.curHp)),
-      s2: Math.max(0, Math.round(h2.curHp)),
-      rounds: round
-    });
-    renderBattleLog();
-    updateTally();
-
-    if(!battleState.q1.length || !battleState.q2.length){
-      const championPlayer = battleState.q1.length ? 1 : 2;
-      const championTeam = battleState.q1.length ? battleState.q1 : battleState.q2;
-      const mvp = championTeam.reduce((a,b)=> b.wins>a.wins ? b : a, championTeam[0]);
-
-      setTimeout(()=>{
-        bEls.championBanner.style.display = 'block';
-        bEls.championText.textContent = `OYUNÇU ${championPlayer} QALİB GƏLDİ`;
-        bEls.championSub.textContent = `Ən çox qələbə: ${mvp.name} (${mvp.wins} qələbə) — ${championTeam.length} qəhrəman ayaqda qaldı`;
-        bEls.nextFightBtn.style.display = 'none';
-        bEls.toResultsBtn.style.display = 'block';
-        bEls.toResultsBtn.onclick = ()=> showEndScreen(championPlayer);
-      }, 900);
-      return;
-    }
-
-    setTimeout(()=>{
-      showUpcomingFighters();
-      bEls.nextFightBtn.disabled = false;
-    }, 1300);
+  if(h2){
+    document.getElementById('rightAvatar').style.backgroundColor = h2.color;
+    document.getElementById('rightAvatar').innerHTML = h2.img ? `<img src="${h2.img}">` : h2.init;
+    document.getElementById('rightName').textContent = h2.name;
+    document.getElementById('rightFranchise').textContent = h2.fr;
+    document.getElementById('rightHpFill').style.width = Math.max(0, (h2.currentHp / h2.maxHp)*100) + '%';
+    document.getElementById('rightHpLabel').textContent = `CAN: ${Math.max(0, Math.ceil((h2.currentHp / h2.maxHp)*100))}%`;
+  } else {
+    document.getElementById('rightName').textContent = "MƏĞLUB OLDULAR";
   }
 }
 
-function renderBattleLog(){
-  bEls.battleLog.innerHTML = battleState.log.map(l=>
-    `<div class="log-item"><span><b>${l.winner}</b> məğlub etdi: ${l.loser} (${l.rounds} raund)</span><span>${l.s1} — ${l.s2} CAN</span></div>`
-  ).join('');
+document.getElementById('nextFightBtn').addEventListener('click', runFightTurn);
+
+function runFightTurn(){
+  const btn = document.getElementById('nextFightBtn');
+  btn.disabled = true;
+
+  const h1 = battleState.p1Team[battleState.p1Idx];
+  const h2 = battleState.p2Team[battleState.p2Idx];
+
+  if(!h1 || !h2){
+    endBattle();
+    return;
+  }
+
+  const log = document.getElementById('battleLog');
+  
+  // Speed determines turn priority
+  const h1First = h1.speed >= h2.speed;
+  const attacker1 = h1First ? h1 : h2;
+  const defender1 = h1First ? h2 : h1;
+
+  // Attack 1
+  let dmg1 = Math.max(12, Math.floor(attacker1.power * 1.2 - defender1.defense * 0.5 + rand(-5, 8)));
+  defender1.currentHp -= dmg1;
+
+  addLog(`${attacker1.name} zərbə endirdi: <b>-${dmg1} CAN</b>`);
+
+  updateBattleUI();
+
+  if(defender1.currentHp <= 0){
+    addLog(`<b>${defender1.name}</b> sıradan çıxdı!`);
+    if(h1First) battleState.p2Idx++; else battleState.p1Idx++;
+    finishFightTurn();
+    return;
+  }
+
+  // Counter Attack
+  setTimeout(() => {
+    let dmg2 = Math.max(12, Math.floor(defender1.power * 1.2 - attacker1.defense * 0.5 + rand(-5, 8)));
+    attacker1.currentHp -= dmg2;
+    addLog(`${defender1.name} cavab zərbəsi vurdu: <b>-${dmg2} CAN</b>`);
+
+    updateBattleUI();
+
+    if(attacker1.currentHp <= 0){
+      addLog(`<b>${attacker1.name}</b> sıradan çıxdı!`);
+      if(h1First) battleState.p1Idx++; else battleState.p2Idx++;
+    }
+    finishFightTurn();
+  }, 600);
 }
 
-function showEndScreen(championPlayer){
-  document.getElementById('battle').style.display = 'none';
-  const endScreen = document.getElementById('endScreen');
-  endScreen.style.display = 'block';
-
-  const p1 = state.players[1], p2 = state.players[2];
-
-  document.getElementById('endTitle').textContent = `OYUNÇU ${championPlayer} DÖYÜŞ QALİBİDİR`;
-  document.getElementById('endSummary').textContent =
-    `Hərracda Oyunçu 1 — ${p1.heroes.length} qəhrəman, Oyunçu 2 — ${p2.heroes.length} qəhrəman topladı. Arenada Oyunçu ${championPlayer}-in komandası son ayaqda qaldı.`;
-
-  document.getElementById('p1BudgetFinal').textContent = '$'+p1.budget+' qalıq';
-  document.getElementById('p2BudgetFinal').textContent = '$'+p2.budget+' qalıq';
-  renderRoster(document.getElementById('p1ListFinal'), p1.heroes);
-  renderRoster(document.getElementById('p2ListFinal'), p2.heroes);
+function finishFightTurn(){
+  updateBattleUI();
+  const btn = document.getElementById('nextFightBtn');
+  
+  if(battleState.p1Idx >= battleState.p1Team.length || battleState.p2Idx >= battleState.p2Team.length){
+    endBattle();
+  } else {
+    btn.disabled = false;
+  }
 }
+
+function addLog(text){
+  const log = document.getElementById('battleLog');
+  const item = document.createElement('div');
+  item.className = 'log-item';
+  item.innerHTML = `<span>${text}</span>`;
+  log.prepend(item);
+}
+
+function endBattle(){
+  document.getElementById('nextFightBtn').style.display = 'none';
+  const banner = document.getElementById('championBanner');
+  banner.style.display = 'block';
+
+  let winnerText = '';
+  let winnerSub = '';
+
+  if(battleState.p1Idx < battleState.p1Team.length && battleState.p2Idx >= battleState.p2Team.length){
+    winnerText = 'OYUNÇU 1 QALİB GƏLDİ!';
+    winnerSub = 'Oyunçu 1-in komandası rəqibin bütün qəhrəmanlarını məğlub etdi.';
+  } else if(battleState.p2Idx < battleState.p2Team.length && battleState.p1Idx >= battleState.p1Team.length){
+    winnerText = 'OYUNÇU 2 QALİB GƏLDİ!';
+    winnerSub = 'Oyunçu 2-nin komandası rəqibin bütün qəhrəmanlarını məğlub etdi.';
+  } else {
+    winnerText = 'BƏRABƏRLİK!';
+    winnerSub = 'Hər iki komandanın bütün qəhrəmanları eyni vaxtda sıradan çıxdı.';
+  }
+
+  document.getElementById('championText').textContent = winnerText;
+  document.getElementById('championSub').textContent = winnerSub;
+
+  const resultsBtn = document.getElementById('toResultsBtn');
+  resultsBtn.style.display = 'block';
+  resultsBtn.addEventListener('click', () => {
+    document.getElementById('battle').style.display = 'none';
+    document.getElementById('endScreen').style.display = 'block';
+    document.getElementById('endSummary').textContent = `${winnerText} — ${winnerSub}`;
+    renderEndLists();
+  });
+}
+
+function renderEndLists(){
+  document.getElementById('p1BudgetFinal').textContent = '$' + state.players[1].budget;
+  document.getElementById('p2BudgetFinal').textContent = '$' + state.players[2].budget;
+
+  renderRoster(1, document.getElementById('p1ListFinal'));
+  renderRoster(2, document.getElementById('p2ListFinal'));
+}
+
+document.getElementById('restartBtn').addEventListener('click', ()=>{
+  location.reload();
+});
 </script>
 </body>
 </html>

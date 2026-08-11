@@ -276,10 +276,10 @@
   }
 
   .avatar{
-    width:34px; height:34px;
+    width:42px; height:42px;
     border-radius:50%;
     display:flex; align-items:center; justify-content:center;
-    font-family:'Bebas Neue'; font-size:14px;
+    font-family:'Bebas Neue'; font-size:16px;
     color:#0B0F1A;
     flex:none;
     overflow:hidden;
@@ -289,8 +289,8 @@
     height:100%;
     object-fit:cover;
   }
-  .avatar.big{width:96px; height:96px; font-size:34px;}
-  .avatar.mid{width:64px; height:64px; font-size:22px;}
+  .avatar.big{width:116px; height:116px; font-size:38px;}
+  .avatar.mid{width:78px; height:78px; font-size:26px;}
   .hname{font-size:12.5px; font-weight:600; line-height:1.2;}
   .hfranchise{font-size:9.5px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.06em;}
 
@@ -1363,9 +1363,11 @@ function makePass(pId){
   if(pId === 1) state.p1Passed = true;
   if(pId === 2) state.p2Passed = true;
 
-  if(state.p1Passed && state.p2Passed){
+  const otherId = pId === 1 ? 2 : 1;
+
+  if(state.leader === otherId){
     resolveLot();
-  } else if(state.leader !== null && ((pId === 1 && state.p2Passed) || (pId === 2 && state.p1Passed))){
+  } else if(state.p1Passed && state.p2Passed){
     resolveLot();
   } else {
     renderAuction();

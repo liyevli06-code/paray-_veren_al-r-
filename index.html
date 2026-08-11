@@ -533,11 +533,51 @@
     font-family:'Bebas Neue'; font-size:40px; margin-top:6px; color:var(--gold-bright);
   }
   .champion-banner p{color:var(--text-dim); margin-top:6px; font-size:13px;}
+
+  /* ---------- CHAT ---------- */
+  .chat-toggle{
+    position:fixed; bottom:20px; right:20px; width:52px; height:52px; border-radius:50%;
+    background:var(--gold); color:var(--bg-deep); display:none; align-items:center; justify-content:center;
+    font-size:22px; cursor:pointer; z-index:90; box-shadow:0 6px 18px rgba(0,0,0,0.45);
+  }
+  .chat-toggle.unread::after{
+    content:""; position:absolute; top:0px; right:0px; width:13px; height:13px; border-radius:50%;
+    background:var(--crimson); border:2px solid var(--bg-deep);
+  }
+  .chat-panel{
+    position:fixed; bottom:84px; right:20px; width:290px; max-height:380px;
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:8px;
+    display:none; flex-direction:column; z-index:90; box-shadow:0 10px 30px rgba(0,0,0,0.5); overflow:hidden;
+  }
+  .chat-panel.open{display:flex;}
+  .chat-header{
+    padding:10px 12px; background:var(--bg-panel-2); font-family:'Bebas Neue',sans-serif; font-size:16px;
+    letter-spacing:0.04em; display:flex; justify-content:space-between; align-items:center; color:var(--gold-bright);
+  }
+  .chat-close{cursor:pointer; color:var(--text-dim); font-size:14px; padding:2px 6px;}
+  .chat-messages{flex:1; overflow-y:auto; padding:10px; display:flex; flex-direction:column; gap:6px; max-height:260px;}
+  .chat-msg{max-width:82%; padding:7px 10px; border-radius:10px; font-size:12.5px; line-height:1.35; word-break:break-word;}
+  .chat-msg.mine{align-self:flex-end; background:var(--azure); color:#fff; border-bottom-right-radius:2px;}
+  .chat-msg.theirs{align-self:flex-start; background:var(--bg-deep); border:1px solid var(--line); color:var(--text-light); border-bottom-left-radius:2px;}
+  .chat-input-row{display:flex; border-top:1px solid var(--line);}
+  .chat-input-row input{flex:1; min-width:0; padding:10px; background:transparent; border:none; color:var(--text-light); font-size:12.5px; outline:none; font-family:'Inter',sans-serif;}
+  .chat-input-row button{padding:0 14px; border:none; background:var(--gold); color:var(--bg-deep); font-weight:700; font-size:12px; cursor:pointer;}
+  .chat-input-row button:hover{background:var(--gold-bright);}
 </style>
 </head>
 <body>
 
 <div class="online-pill" id="onlinePill">🟢 <span id="onlinePillText">Onlayn</span></div>
+
+<div class="chat-toggle" id="chatToggle">💬</div>
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-header">Söhbət <span class="chat-close" id="chatClose">✕</span></div>
+  <div class="chat-messages" id="chatMessages"></div>
+  <div class="chat-input-row">
+    <input type="text" id="chatInput" placeholder="Mesaj yaz..." maxlength="300">
+    <button id="chatSendBtn">Göndər</button>
+  </div>
+</div>
 
 <!-- ===================== LOBBY ===================== -->
 <div id="lobby">
@@ -968,8 +1008,13 @@ function showOnlinePill(text){
 }
 
 function setupConn(){
+  initChatUI();
   conn.on('data', data=>{
     if(!data || !data.type) return;
+    if(data.type === 'chat'){
+      appendChatMessage(data.text, false);
+      return;
+    }
     if(isHost && data.type === 'action'){
       handleGuestAction(data);
     } else if(!isHost && data.type === 'sync'){
@@ -986,6 +1031,45 @@ function setupConn(){
     guestConnected = false;
     alert('Bağlantı kəsildi. Səhifəni yeniləyib yenidən qoşulun.');
   });
+}
+
+/* ---------------- CHAT ---------------- */
+function initChatUI(){
+  document.getElementById('chatToggle').style.display = 'flex';
+}
+
+document.getElementById('chatToggle').addEventListener('click', ()=>{
+  document.getElementById('chatPanel').classList.toggle('open');
+  document.getElementById('chatToggle').classList.remove('unread');
+  document.getElementById('chatInput').focus();
+});
+document.getElementById('chatClose').addEventListener('click', ()=>{
+  document.getElementById('chatPanel').classList.remove('open');
+});
+document.getElementById('chatSendBtn').addEventListener('click', sendChat);
+document.getElementById('chatInput').addEventListener('keydown', e=>{
+  if(e.key === 'Enter') sendChat();
+});
+
+function sendChat(){
+  const inp = document.getElementById('chatInput');
+  const text = inp.value.trim();
+  if(!text) return;
+  appendChatMessage(text, true);
+  if(conn && conn.open) conn.send({type:'chat', text});
+  inp.value = '';
+}
+
+function appendChatMessage(text, mine){
+  const wrap = document.getElementById('chatMessages');
+  const el = document.createElement('div');
+  el.className = 'chat-msg ' + (mine ? 'mine' : 'theirs');
+  el.textContent = text;
+  wrap.appendChild(el);
+  wrap.scrollTop = wrap.scrollHeight;
+  if(!mine && !document.getElementById('chatPanel').classList.contains('open')){
+    document.getElementById('chatToggle').classList.add('unread');
+  }
 }
 
 function sendAction(payload){
@@ -1414,9 +1498,15 @@ document.getElementById('nextFightBtn').addEventListener('click', ()=>{
 function runFightRound(){
   const btn = document.getElementById('nextFightBtn');
   btn.disabled = true;
+  document.getElementById('fightStatus').textContent = 'Döyüşür...';
+  battleState.status = 'Döyüşür...';
+  simulateFightStep();
+}
 
+function simulateFightStep(){
   const h1 = battleState.t1[battleState.idx1];
   const h2 = battleState.t2[battleState.idx2];
+  if(!h1 || !h2) return;
 
   const p1SpdBonus = h1.speed >= h2.speed ? 1.1 : 0.9;
   const p2SpdBonus = h2.speed >= h1.speed ? 1.1 : 0.9;
@@ -1440,12 +1530,9 @@ function runFightRound(){
   if(onlineMode && isHost) syncGuest();
 
   if(h1.curHp <= 0 || h2.curHp <= 0){
-    setTimeout(()=> resolveFightWinner(h1, h2), 600);
+    setTimeout(()=> resolveFightWinner(h1, h2), 700);
   } else {
-    setTimeout(()=>{
-      btn.disabled = false;
-      if(onlineMode && isHost) syncGuest();
-    }, 400);
+    setTimeout(simulateFightStep, 700);
   }
 }
 

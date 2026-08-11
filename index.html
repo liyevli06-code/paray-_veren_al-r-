@@ -264,30 +264,6 @@
   .hname{font-size:12.5px; font-weight:600; line-height:1.2;}
   .hfranchise{font-size:9.5px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.06em;}
 
-  /* stat bars */
-  .stat-block{margin-top:2px;}
-  .stat-line{
-    display:grid;
-    grid-template-columns:16px 1fr 26px;
-    align-items:center;
-    gap:6px;
-    font-size:9.5px;
-    color:var(--text-dim);
-    margin-bottom:2px;
-  }
-  .stat-line .bar-track{
-    height:4px;
-    background:var(--line);
-    border-radius:2px;
-    overflow:hidden;
-  }
-  .stat-line .bar-fill{height:100%; border-radius:2px;}
-  .bar-fill.power{background:var(--crimson);}
-  .bar-fill.speed{background:#4CAF6D;}
-  .bar-fill.def{background:var(--azure);}
-  .bar-fill.health{background:var(--violet);}
-  .stat-line .sval{font-family:'JetBrains Mono'; text-align:right;}
-
   .mini-stats{display:flex; gap:5px; margin-top:4px; flex-wrap:wrap;}
   .mini-stat{
     font-family:'JetBrains Mono';
@@ -353,6 +329,7 @@
   .tag-dc{background:rgba(62,111,168,0.18); color:#7FB1E6; border:1px solid rgba(62,111,168,0.4);}
   .tag-marvel{background:rgba(193,68,60,0.18); color:#E68680; border:1px solid rgba(193,68,60,0.4);}
   .tag-boys{background:rgba(140,180,140,0.18); color:#8FCB9E; border:1px solid rgba(140,180,140,0.4);}
+  .tag-myth{background:rgba(142,124,195,0.18); color:#B39DDB; border:1px solid rgba(142,124,195,0.4);}
 
   .hero-stats-row{
     display:flex;
@@ -488,7 +465,6 @@
   }
   .fighter .fhp-fill{height:100%; background:var(--violet); border-radius:3px; transition:width .5s ease;}
   .fighter .fhp-label{font-family:'JetBrains Mono'; font-size:9.5px; color:var(--text-dim); margin-top:3px;}
-  .fighter.knocked{opacity:0.35; filter:grayscale(1);}
 
   .battle-log{
     margin-top:20px;
@@ -677,12 +653,10 @@
 </div>
 
 <script>
-/*
----------------- DATA ----------------
-   Statlar komik-kitab güc səviyyələrinə əsaslanır.
-   Əlavə edilmiş bütün xarakterlər uyğun xassələrlə inteqrasiya edilib.
-*/
 const HEROES = [
+  // ---- Mythology / Universal ----
+  {name:"Hades", fr:"Mythology", init:"HD", color:"#4A148C", tier:"S", power:97, speed:80, defense:95, health:98, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvBRSD4vBwIhu6sAYBQpgH57g2ur_TiPgci_q4lKGpfA&s=10"},
+
   // ---- DC ----
   {name:"Superman", fr:"DC", init:"SU", color:"#4FA3E3", tier:"S", power:98, speed:90, defense:97, health:97, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgx9BS4HzHuFykljxgnr0rRm82ABPoUE_wdXLkI1V_BQ&s=10"},
   {name:"Wonder Woman", fr:"DC", init:"WW", color:"#E3B23C", tier:"S", power:92, speed:82, defense:90, health:93, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZazh5VL-gTgCx75wAYPSr4P31MhjRM7votEzzrz6SUA&s=10"},
@@ -702,6 +676,10 @@ const HEROES = [
   {name:"Red Hood", fr:"DC", init:"RH", color:"#C62828", tier:"C", power:45, speed:64, defense:52, health:60, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHzKjwAbu396jAV6nU1AEF4lNJJeSgXhCUGJCBhQaxkA&s=10"},
 
   // ---- Avengers / Marvel ----
+  {name:"Doctor Doom", fr:"Avengers", init:"DD", color:"#2E7D32", tier:"S", power:96, speed:75, defense:94, health:93, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn8L55m3D6UKmwYybQYXJApJwmLLd-bSKWzIA2lyqgJg&s=10"},
+  {name:"Odin", fr:"Avengers", init:"OD", color:"#D4A544", tier:"S", power:99, speed:80, defense:98, health:98, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR13qDmnzU3y8mOI5EoCez8LLsOQhWg-6SIwq7Xf9Nu3w&s=10"},
+  {name:"Thanos", fr:"Avengers", init:"TH", color:"#4A148C", tier:"S", power:98, speed:75, defense:96, health:98, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ayYxoYOizQVfpT1aQGGpkd_cBzK9ogXW4uN7kVCJZg&s"},
+  {name:"Silver Surfer", fr:"Avengers", init:"SS", color:"#78909C", tier:"S", power:97, speed:98, defense:94, health:95, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHICrVbH1SZERkLrnBaOC539cVnPrI48HuAQ5aOQ0CNA&s=10"},
   {name:"Hulk", fr:"Avengers", init:"HU", color:"#5FA352", tier:"S", power:99, speed:52, defense:92, health:96, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkx26usqd_qKikqtQ1jA5QyiYOFpCj9_S-X4jwca0jGQ&s=10"},
   {name:"Thor", fr:"Avengers", init:"TH", color:"#7B9FD1", tier:"S", power:97, speed:83, defense:93, health:94, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwZ44RpjZ1lUA77uMV-SaAjTklRR0sWr_ySjXPLwa17g&s=10"},
   {name:"Scarlet Witch", fr:"Avengers", init:"SW", color:"#A6398F", tier:"S", power:94, speed:56, defense:66, health:70, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb-hVZWtHUaqJhjRGyyKk-9qlYOx2oA1HweW0mDqwcuw&s=10"},
@@ -712,17 +690,10 @@ const HEROES = [
   {name:"Captain America", fr:"Avengers", init:"CA", color:"#4472C4", tier:"B", power:62, speed:66, defense:68, health:76, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRr1OnvauFD74Z2pzffNLEUwelPkP_RgUAzLZrSV647YkdksWhnxd6pOaw&s=10"},
   {name:"Spider-Man", fr:"Avengers", init:"SM", color:"#C0392B", tier:"B", power:64, speed:81, defense:60, health:68, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsVzOcjJB2y9dAENqMikA77aIDUys5QHb3E3Kg0S9mUw&s"},
   {name:"Deadpool", fr:"Avengers", init:"DP", color:"#B82626", tier:"B", power:66, speed:62, defense:78, health:95, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzEj3Ox7nzPzr89ThPTWLDb7pp-ycyxRwzosiHR0LWiQ&s"},
-  {name:"Moon Knight", fr:"Avengers", init:"MK", color:"#E0E0E0", tier:"C", power:54, speed:60, defense:58, health:64, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShuPdhe-0gDhZgA7IMKFN26xhsRAHkv5Y1vV_UtgJvAQ&s=10"},
-  {name:"Star-Lord", fr:"Avengers", init:"SL", color:"#D98A3D", tier:"C", power:46, speed:60, defense:46, health:56, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZVj0EvAD0LP0CEuX33O6QpFBoUyi2ohkST0LSwX9J8g&s=10"},
-  {name:"Hawkeye", fr:"Avengers", init:"HE", color:"#7C4A3A", tier:"C", power:38, speed:58, defense:42, health:52, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxsTNbq3Y0-RQhDUkRxYBPd3mpXDDMn4YnLMbonKdbRQ&s=10"},
-  {name:"Black Widow", fr:"Avengers", init:"BW", color:"#4A4A52", tier:"C", power:36, speed:60, defense:40, health:50, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHkeD04bczMNNYVKSLdvzD4ZBOQ9FrY4PbSIV4mLW3bw&s=10"},
-  {name:"Ant-Man", fr:"Avengers", init:"AM", color:"#C0392B", tier:"C", power:50, speed:55, defense:50, health:54, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfUctHBeiV1ZDa1CtZluqZpvW1Ywx4N4SBnvXorbhNEw&s=10"},
-  {name:"Odin", fr:"Avengers", init:"OD", color:"#D4A544", tier:"S", power:99, speed:80, defense:98, health:98, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR13qDmnzU3y8mOI5EoCez8LLsOQhWg-6SIwq7Xf9Nu3w&s=10"},
   {name:"Loki", fr:"Avengers", init:"LK", color:"#2E7D32", tier:"A", power:78, speed:75, defense:70, health:80, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbM2sSCWz9rAEQ0HrxiuMkbHbMXjdqZBjWnDvUogy0mw&s=10"},
   {name:"Hela", fr:"Avengers", init:"HL", color:"#1B5E20", tier:"S", power:95, speed:82, defense:90, health:94, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJeXMId5SF6X5nyBzH2C30_5ZG5FaTgplfEqs0N08dlw&s=10"},
   {name:"Venom", fr:"Avengers", init:"VN", color:"#212121", tier:"A", power:82, speed:70, defense:80, health:88, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-ljEKUP1ZSlq6F2gSeYxt4TFFPBnLbvJcyXyr0YzjuA&s=10"},
   {name:"Carnage", fr:"Avengers", init:"CN", color:"#B71C1C", tier:"A", power:84, speed:75, defense:78, health:85, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_9NC2BymUH4wD9D_Owoz9Gx2HYpvH-L4Sisc2YFcaRw&s=10"},
-  {name:"Thanos", fr:"Avengers", init:"TH", color:"#4A148C", tier:"S", power:98, speed:75, defense:96, health:98, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ayYxoYOizQVfpT1aQGGpkd_cBzK9ogXW4uN7kVCJZg&s"},
   {name:"Vision", fr:"Avengers", init:"VS", color:"#00695C", tier:"A", power:88, speed:78, defense:88, health:85, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPxOUBnny3WpLocOHzqURM7iEiZAVBHWJJQkIaDymN1g&s"},
   {name:"Ultron", fr:"Avengers", init:"UL", color:"#37474F", tier:"A", power:89, speed:72, defense:91, health:86, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiJmpsKmODsT4haccfCtkx1t4UnZlfkVSv7j72BCyKfg&s=10"},
   {name:"Captain Marvel", fr:"Avengers", init:"CM", color:"#1565C0", tier:"S", power:96, speed:92, defense:92, health:94, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTQssTn-LFqnLv9H8Q_HJzfY06SfobpWocUler9Wy-cw&s=10"},
@@ -731,7 +702,6 @@ const HEROES = [
   {name:"Ghost Rider", fr:"Avengers", init:"GR", color:"#E65100", tier:"S", power:92, speed:78, defense:88, health:95, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQypGMGp7P8pJPixP-2dIutS4d8TfBgODZyKv8KFNKpFg&s=10"},
   {name:"Blade", fr:"Avengers", init:"BL", color:"#212121", tier:"B", power:60, speed:70, defense:62, health:74, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtsYF5do6oclwduEzNeNJa6XOSjJXYfHADmnGDPrneZA&s=10"},
   {name:"She-Hulk", fr:"Avengers", init:"SH", color:"#2E7D32", tier:"A", power:88, speed:60, defense:85, health:90, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiaQ-Rzk0PKFLlKa8kkEt8hw1xJVeOPR6P7RJmu-Kyzg&s=10"},
-  {name:"Silver Surfer", fr:"Avengers", init:"SS", color:"#78909C", tier:"S", power:97, speed:98, defense:94, health:95, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHICrVbH1SZERkLrnBaOC539cVnPrI48HuAQ5aOQ0CNA&s=10"},
   {name:"Jean Grey", fr:"Avengers", init:"JG", color:"#D84315", tier:"S", power:98, speed:76, defense:80, health:85, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpVDw2ntBd7k4kn1YbOnWW6_0xfpM9k11hxlK82idpZw&s"},
   {name:"Magneto", fr:"Avengers", init:"MG", color:"#6A1B9A", tier:"A", power:90, speed:65, defense:85, health:80, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlFcxyp2nV-TPRE3ZY6_Vk_ER7_0HQUmGEdaCVL-kkVQ&s=10"},
   {name:"Professor X", fr:"Avengers", init:"PX", color:"#283593", tier:"A", power:85, speed:50, defense:60, health:65, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJRU1dtsJBWsb-LHajcaoB4ROpG0ev444TgefoCwrr7g&s=10"},
@@ -801,7 +771,7 @@ function startGame(){
     budget, inc, lots,
     lotIdx: 0,
     price: 0,
-    leader: null, // 1 or 2
+    leader: null,
     p1Passed:false, p2Passed:false,
     players: {
       1: {budget: budget, heroes: []},
@@ -848,6 +818,7 @@ function renderAuction(){
   tagEl.textContent = hero.fr;
   if(hero.fr === 'DC') tagEl.className = 'hero-franchise-tag tag-dc';
   else if(hero.fr === 'The Boys') tagEl.className = 'hero-franchise-tag tag-boys';
+  else if(hero.fr === 'Mythology') tagEl.className = 'hero-franchise-tag tag-myth';
   else tagEl.className = 'hero-franchise-tag tag-marvel';
 
   // Stats
@@ -869,13 +840,13 @@ function renderAuction(){
     note.className = `leader-note p${state.leader}`;
   }
 
-  // Update Budgets & Rosters
+  // Budgets
   document.getElementById('p1Budget').textContent = '$' + state.players[1].budget;
   document.getElementById('p2Budget').textContent = '$' + state.players[2].budget;
   renderRosterList(1, 'p1List');
   renderRosterList(2, 'p2List');
 
-  // Update Buttons
+  // Buttons
   const p1CanBid = !state.p1Passed && (state.players[1].heroes.length < 5) && (state.players[1].budget >= state.price + state.inc);
   const p2CanBid = !state.p2Passed && (state.players[2].heroes.length < 5) && (state.players[2].budget >= state.price + state.inc);
 
@@ -884,7 +855,6 @@ function renderAuction(){
   document.getElementById('p2BidBtn').disabled = !p2CanBid;
   document.getElementById('p2PassBtn').disabled = state.p2Passed;
 
-  // Auto-finish lot if both passed or one is active with bid and other passed
   if(state.p1Passed && state.p2Passed){
     resolveLot();
   }
@@ -961,8 +931,6 @@ function resolveLot(){
 
 function finishAuction(){
   document.getElementById('game').style.display = 'none';
-  
-  // Check if both players have heroes for battle
   const p1H = state.players[1].heroes.length;
   const p2H = state.players[2].heroes.length;
 
@@ -977,7 +945,6 @@ function finishAuction(){
 function startBattle(){
   document.getElementById('battle').style.display = 'block';
 
-  // Deep copy heroes & set health
   const prepareTeam = (team) => team.map(h => ({
     ...h,
     curHp: h.health * 10,
@@ -1053,7 +1020,6 @@ function runFightRound(){
   const h1 = battleState.t1[battleState.idx1];
   const h2 = battleState.t2[battleState.idx2];
 
-  // Combat Formula
   const p1SpdBonus = h1.speed >= h2.speed ? 1.1 : 0.9;
   const p2SpdBonus = h2.speed >= h1.speed ? 1.1 : 0.9;
 

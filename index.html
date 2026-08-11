@@ -6,6 +6,7 @@
 <title>Kahraman Müzayedesi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <style>
   :root{
     --bg-deep:#0B0F1A;
@@ -33,10 +34,38 @@
   .display{font-family:'Bebas Neue',sans-serif; letter-spacing:0.03em;}
   .mono{font-family:'JetBrains Mono',monospace;}
 
+  /* ---------- LOBBY / ONLINE UI ---------- */
+  #lobby{min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px;}
+  #lobby .poster{max-width:480px;}
+  .mode-row{display:flex; flex-direction:column; gap:12px; margin-top:18px;}
+  .mode-btn{padding:16px; border:1px solid var(--line); border-radius:4px; background:var(--bg-deep); color:var(--text-light); text-align:left; cursor:pointer; transition:all .15s ease;}
+  .mode-btn:hover{border-color:var(--gold);}
+  .mode-btn .mt-title{font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.04em; color:var(--gold-bright);}
+  .mode-btn .mt-sub{font-size:12px; color:var(--text-dim); margin-top:3px;}
+  .panel{margin-top:22px; display:none;}
+  .panel.show{display:block;}
+  .room-box{display:flex; gap:8px; align-items:center; background:var(--bg-deep); border:1px solid var(--line); border-radius:4px; padding:12px; margin-top:10px;}
+  .room-box input{flex:1; min-width:0; background:transparent; border:none; color:var(--gold-bright); font-family:'JetBrains Mono',monospace; font-size:13px; outline:none;}
+  .copy-btn{padding:9px 14px; border:1px solid var(--gold); border-radius:3px; background:transparent; color:var(--gold-bright); font-family:'Inter',sans-serif; font-weight:700; font-size:12px; cursor:pointer; white-space:nowrap;}
+  .copy-btn:hover{background:var(--gold); color:var(--bg-deep);}
+  .status-line{display:flex; align-items:center; gap:8px; margin-top:14px; font-size:12.5px; color:var(--text-dim);}
+  .status-dot{width:8px; height:8px; border-radius:50%; background:var(--crimson); flex:none;}
+  .status-dot.on{background:#6FCB8E;}
+  .back-link{margin-top:16px; text-align:center; font-size:12px; color:var(--text-dim); cursor:pointer; text-decoration:underline;}
+  .join-code-input{width:100%; padding:12px; background:var(--bg-deep); border:1px solid var(--line); border-radius:4px; color:var(--text-light); font-family:'JetBrains Mono',monospace; font-size:13px; margin-top:4px; outline:none;}
+  .join-code-input:focus{border-color:var(--gold);}
+  #waitScreen{display:none; min-height:100vh; align-items:center; justify-content:center; padding:24px; text-align:center;}
+  #waitScreen .poster{max-width:440px;}
+  .spinner{width:34px; height:34px; border:3px solid var(--line); border-top-color:var(--gold); border-radius:50%; margin:22px auto; animation:spin .9s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .online-pill{position:fixed; top:14px; right:14px; background:var(--bg-panel); border:1px solid var(--gold); border-radius:20px; padding:6px 14px; font-size:11px; font-family:'JetBrains Mono',monospace; color:var(--gold-bright); z-index:80; display:none; align-items:center; gap:6px;}
+  .online-pill.show{display:flex;}
+  #hostStatusBar{display:none; background:var(--bg-deep); border:1px solid var(--line); border-radius:4px; padding:12px; margin-bottom:22px;}
+
   /* ---------- HOME SCREEN ---------- */
   #home{
     min-height:100vh;
-    display:flex;
+    display:none;
     align-items:center;
     justify-content:center;
     padding:24px;
@@ -159,6 +188,7 @@
   }
   .start-btn:hover{background:var(--gold-bright); transform:translateY(-1px);}
   .start-btn:active{transform:translateY(0);}
+  .start-btn:disabled{opacity:0.35; cursor:not-allowed; transform:none;}
 
   .foot-note{
     text-align:center;
@@ -507,12 +537,67 @@
 </head>
 <body>
 
+<div class="online-pill" id="onlinePill">🟢 <span id="onlinePillText">Onlayn</span></div>
+
+<!-- ===================== LOBBY ===================== -->
+<div id="lobby">
+  <div class="poster">
+    <div class="eyebrow">Kapalı salon</div>
+    <h1 style="font-size:44px;">Necə <span>oynayaq?</span></h1>
+    <div class="sub">Eyni cihazda oynayın, ya da otaq yaradıb linki dostunuza göndərin</div>
+
+    <div class="mode-row" id="modeRow">
+      <div class="mode-btn" id="localModeBtn">
+        <div class="mt-title">EYNİ CİHAZ</div>
+        <div class="mt-sub">İki oyuncu eyni ekranda növbə ilə oynayır</div>
+      </div>
+      <div class="mode-btn" id="createModeBtn">
+        <div class="mt-title">OTAQ YARAT</div>
+        <div class="mt-sub">Sən Oyuncu 1 olursan, link yaradıb göndər</div>
+      </div>
+      <div class="mode-btn" id="joinModeBtn">
+        <div class="mt-title">OTAĞA QOŞUL</div>
+        <div class="mt-sub">Sənə göndərilən link və ya koddan qoşul</div>
+      </div>
+    </div>
+
+    <div class="panel" id="createPanel">
+      <div class="status-line"><span class="status-dot" id="createDot"></span><span id="createStatusText">Otaq yaradılır...</span></div>
+      <div class="room-box"><input type="text" id="roomLinkInput" readonly value=""><button class="copy-btn" id="copyLinkBtn">Linki kopyala</button></div>
+      <div class="back-link" id="backFromCreate">‹ Geri</div>
+    </div>
+
+    <div class="panel" id="joinPanel">
+      <label style="font-size:12px; color:var(--text-dim); letter-spacing:0.1em; text-transform:uppercase;">Otaq kodu / linki</label>
+      <input type="text" class="join-code-input" id="joinCodeInput" placeholder="Bura yapışdır">
+      <button class="start-btn" id="joinConnectBtn" style="margin-top:12px;">QOŞUL</button>
+      <div class="status-line"><span class="status-dot" id="joinDot"></span><span id="joinStatusText">Kod daxil edin</span></div>
+      <div class="back-link" id="backFromJoin">‹ Geri</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== WAIT SCREEN (guest bekleme) ===================== -->
+<div id="waitScreen">
+  <div class="poster">
+    <div class="eyebrow">Qoşuldun</div>
+    <h1 style="font-size:38px;">Oyuncu <span>2</span></h1>
+    <div class="spinner"></div>
+    <div class="sub" id="waitText">Otaq sahibinin oyunu qurmasını gözləyin...</div>
+  </div>
+</div>
+
 <!-- ===================== HOME SCREEN ===================== -->
 <div id="home">
   <div class="poster">
     <div class="eyebrow">Kapalı salon &middot; 2 oyuncu</div>
     <h1>KAHRAMAN<br><span>Savaşı</span></h1>
     <div class="sub">Bütçeni belirle, artış adımını ve oyuncu başı kahraman sayısını seç, başlat</div>
+
+    <div id="hostStatusBar">
+      <div class="status-line" style="margin-top:0;"><span class="status-dot" id="hostDot"></span><span id="hostStatusText">Oyuncu 2 gözlənilir...</span></div>
+      <div class="room-box" style="margin-top:8px;"><input type="text" id="hostLinkInput" readonly value=""><button class="copy-btn" id="hostCopyBtn">Kopyala</button></div>
+    </div>
 
     <div class="field">
       <label>Başlangıç bütçesi <span class="val mono" id="budgetVal">$50</span></label>
@@ -746,6 +831,249 @@ function assignStats(hero){
 let state = null;
 let battleState = null;
 
+/* =================================================================
+   ONLINE / PEER-TO-PEER (WebRTC via PeerJS)
+   - "onlineMode" true if playing across two devices
+   - "isHost" true for the player who created the room (always Player 1)
+   - Data goes directly device-to-device; only the initial handshake
+     uses PeerJS's free public broker, no game data passes through it.
+================================================================= */
+let onlineMode = false;
+let isHost = false;
+let peer = null;
+let conn = null;
+let guestConnected = false;
+
+function showOnlyLobbyPanel(which){
+  document.getElementById('createPanel').classList.remove('show');
+  document.getElementById('joinPanel').classList.remove('show');
+  document.getElementById('modeRow').style.display = which ? 'none' : 'flex';
+  if(which) document.getElementById(which).classList.add('show');
+}
+
+document.getElementById('localModeBtn').addEventListener('click', ()=>{
+  onlineMode = false;
+  document.getElementById('lobby').style.display = 'none';
+  document.getElementById('home').style.display = 'flex';
+});
+
+document.getElementById('createModeBtn').addEventListener('click', ()=>{
+  showOnlyLobbyPanel('createPanel');
+  startHostPeer();
+});
+
+document.getElementById('joinModeBtn').addEventListener('click', ()=>{
+  showOnlyLobbyPanel('joinPanel');
+  const params = new URLSearchParams(location.search);
+  const pre = params.get('room');
+  if(pre) document.getElementById('joinCodeInput').value = pre;
+});
+
+document.getElementById('backFromCreate').addEventListener('click', ()=>{
+  showOnlyLobbyPanel(null);
+  if(peer){ peer.destroy(); peer = null; }
+  onlineMode = false;
+});
+document.getElementById('backFromJoin').addEventListener('click', ()=>{
+  showOnlyLobbyPanel(null);
+  if(peer){ peer.destroy(); peer = null; }
+  onlineMode = false;
+});
+
+function startHostPeer(){
+  onlineMode = true;
+  isHost = true;
+  peer = new Peer();
+  peer.on('open', id=>{
+    const link = location.origin + location.pathname + '?room=' + id;
+    document.getElementById('roomLinkInput').value = link;
+    document.getElementById('hostLinkInput').value = link;
+    document.getElementById('createStatusText').textContent = 'Otaq hazır — linki göndər';
+  });
+  peer.on('connection', c=>{
+    conn = c;
+    guestConnected = true;
+    setupConn();
+    document.getElementById('createDot').classList.add('on');
+    document.getElementById('createStatusText').textContent = 'Oyuncu 2 qoşuldu!';
+    setTimeout(()=>{
+      document.getElementById('lobby').style.display = 'none';
+      document.getElementById('home').style.display = 'flex';
+      document.getElementById('hostStatusBar').style.display = 'block';
+      document.getElementById('hostDot').classList.add('on');
+      document.getElementById('hostStatusText').textContent = 'Oyuncu 2 qoşuldu — başlaya bilərsən';
+      document.getElementById('hostLinkInput').value = document.getElementById('roomLinkInput').value;
+      showOnlinePill('Sən Oyuncu 1-sən');
+    }, 500);
+  });
+  peer.on('error', err=>{
+    document.getElementById('createStatusText').textContent = 'Xəta: ' + (err && err.type ? err.type : 'bağlantı problemi');
+  });
+}
+
+document.getElementById('copyLinkBtn').addEventListener('click', ()=>{
+  const inp = document.getElementById('roomLinkInput');
+  inp.select();
+  if(navigator.clipboard){ navigator.clipboard.writeText(inp.value).catch(()=>{}); }
+  document.getElementById('copyLinkBtn').textContent = 'Kopyalandı!';
+  setTimeout(()=>{ document.getElementById('copyLinkBtn').textContent = 'Linki kopyala'; }, 1400);
+});
+document.getElementById('hostCopyBtn').addEventListener('click', ()=>{
+  const inp = document.getElementById('hostLinkInput');
+  inp.select();
+  if(navigator.clipboard){ navigator.clipboard.writeText(inp.value).catch(()=>{}); }
+  document.getElementById('hostCopyBtn').textContent = 'Kopyalandı!';
+  setTimeout(()=>{ document.getElementById('hostCopyBtn').textContent = 'Kopyala'; }, 1400);
+});
+
+document.getElementById('joinConnectBtn').addEventListener('click', ()=>{
+  const raw = document.getElementById('joinCodeInput').value.trim();
+  if(!raw){ document.getElementById('joinStatusText').textContent = 'Kod boş ola bilməz'; return; }
+  let roomId = raw;
+  try{
+    if(raw.includes('room=')){
+      const u = new URL(raw);
+      roomId = u.searchParams.get('room') || raw;
+    }
+  }catch(e){ /* plain code, use as-is */ }
+
+  onlineMode = true;
+  isHost = false;
+  document.getElementById('joinStatusText').textContent = 'Qoşulur...';
+  peer = new Peer();
+  peer.on('open', ()=>{
+    conn = peer.connect(roomId, {reliable:true});
+    conn.on('open', ()=>{
+      setupConn();
+      document.getElementById('joinDot').classList.add('on');
+      document.getElementById('joinStatusText').textContent = 'Qoşuldu!';
+      showOnlinePill('Sən Oyuncu 2-sən');
+      setTimeout(()=>{
+        document.getElementById('lobby').style.display = 'none';
+        document.getElementById('waitScreen').style.display = 'flex';
+      }, 400);
+    });
+    conn.on('error', ()=>{
+      document.getElementById('joinStatusText').textContent = 'Otağa qoşulmaq mümkün olmadı';
+    });
+  });
+  peer.on('error', ()=>{
+    document.getElementById('joinStatusText').textContent = 'Xəta: otaq tapılmadı';
+  });
+});
+
+function showOnlinePill(text){
+  document.getElementById('onlinePillText').textContent = text;
+  document.getElementById('onlinePill').classList.add('show');
+}
+
+function setupConn(){
+  conn.on('data', data=>{
+    if(!data || !data.type) return;
+    if(isHost && data.type === 'action'){
+      handleGuestAction(data);
+    } else if(!isHost && data.type === 'sync'){
+      applySync(data);
+    } else if(!isHost && data.type === 'reset'){
+      document.getElementById('endScreen').style.display = 'none';
+      document.getElementById('battle').style.display = 'none';
+      document.getElementById('game').style.display = 'none';
+      document.getElementById('waitScreen').style.display = 'flex';
+      document.getElementById('waitText').textContent = 'Otaq sahibi yeni oyun hazırlayır...';
+    }
+  });
+  conn.on('close', ()=>{
+    guestConnected = false;
+    alert('Bağlantı kəsildi. Səhifəni yeniləyib yenidən qoşulun.');
+  });
+}
+
+function sendAction(payload){
+  if(conn && conn.open) conn.send(Object.assign({type:'action'}, payload));
+}
+
+function handleGuestAction(data){
+  if(data.action === 'bid') makeBid(2);
+  else if(data.action === 'pass') makePass(2);
+}
+
+function currentScreenName(){
+  if(document.getElementById('game').style.display === 'block') return 'game';
+  if(document.getElementById('battle').style.display === 'block') return 'battle';
+  if(document.getElementById('endScreen').style.display === 'block') return 'end';
+  return 'home';
+}
+
+function syncGuest(){
+  if(!(onlineMode && isHost && conn && conn.open)) return;
+  const flash = document.getElementById('flash');
+  conn.send({
+    type:'sync',
+    screen: currentScreenName(),
+    state: state,
+    battleState: battleState,
+    flashShow: flash.classList.contains('show'),
+    flashText: document.getElementById('flashText').innerHTML
+  });
+}
+
+function applySync(payload){
+  state = payload.state;
+  battleState = payload.battleState;
+
+  document.getElementById('waitScreen').style.display = 'none';
+  document.getElementById('home').style.display = 'none';
+  document.getElementById('game').style.display = payload.screen === 'game' ? 'block' : 'none';
+  document.getElementById('battle').style.display = payload.screen === 'battle' ? 'block' : 'none';
+  document.getElementById('endScreen').style.display = payload.screen === 'end' ? 'block' : 'none';
+
+  if(payload.screen === 'game'){
+    document.getElementById('lotTotal').textContent = state.lots.length;
+    renderAuction();
+    const flash = document.getElementById('flash');
+    document.getElementById('flashText').innerHTML = payload.flashText || '';
+    flash.classList.toggle('show', !!payload.flashShow);
+  } else if(payload.screen === 'battle'){
+    renderBattleFromState();
+  } else if(payload.screen === 'end'){
+    showFinalResults();
+    document.getElementById('restartBtn').textContent = 'Otaq sahibi yenidən başlada bilər';
+    document.getElementById('restartBtn').disabled = true;
+    document.getElementById('restartBtn').style.opacity = '0.5';
+    document.getElementById('restartBtn').style.cursor = 'default';
+  }
+}
+
+function renderBattleFromState(){
+  updateBattleTally();
+  document.getElementById('nextFightBtn').style.display = 'none';
+  document.getElementById('fightStatus').textContent = (battleState && battleState.status) || '';
+
+  const log = document.getElementById('battleLog');
+  log.innerHTML = '';
+  ((battleState && battleState.history) || []).slice().reverse().forEach(item=>{
+    const el = document.createElement('div');
+    el.className = 'log-item';
+    el.innerHTML = `<span><b>${item.n1}</b> (-${item.d1} HP)</span> <span><b>${item.n2}</b> (-${item.d2} HP)</span>`;
+    log.appendChild(el);
+  });
+
+  const banner = document.getElementById('championBanner');
+  if(battleState && battleState.championDone){
+    banner.style.display = 'block';
+    document.getElementById('championText').textContent = battleState.championText;
+    document.getElementById('championText').style.color = battleState.championColor || '';
+    document.getElementById('championSub').textContent = battleState.championSub;
+    document.getElementById('toResultsBtn').style.display = 'none';
+  } else {
+    banner.style.display = 'none';
+    const h1 = battleState.t1[battleState.idx1];
+    const h2 = battleState.t2[battleState.idx2];
+    if(h1) renderFighter('left', h1);
+    if(h2) renderFighter('right', h2);
+  }
+}
+
 /* ---------------- HOME SCREEN LOGIC ---------------- */
 const budgetRange = document.getElementById('budgetRange');
 const budgetVal = document.getElementById('budgetVal');
@@ -790,6 +1118,11 @@ updateFootNote();
 document.getElementById('startBtn').addEventListener('click', startGame);
 
 function startGame(){
+  if(onlineMode && isHost && !guestConnected){
+    alert('Oyuncu 2 hələ qoşulmayıb. Linki göndər və gözlə.');
+    return;
+  }
+
   const budget = parseInt(budgetRange.value, 10);
   const inc = selectedInc;
   const maxHeroes = selectedMaxHeroes;
@@ -884,9 +1217,21 @@ function renderAuction(){
   document.getElementById('p2BidBtn').disabled = !p2CanBid;
   document.getElementById('p2PassBtn').disabled = state.p2Passed;
 
+  if(onlineMode){
+    if(isHost){
+      document.getElementById('p2BidBtn').disabled = true;
+      document.getElementById('p2PassBtn').disabled = true;
+    } else {
+      document.getElementById('p1BidBtn').disabled = true;
+      document.getElementById('p1PassBtn').disabled = true;
+    }
+  }
+
   if(state.p1Passed && state.p2Passed){
     resolveLot();
   }
+
+  if(onlineMode && isHost) syncGuest();
 }
 
 function renderRosterList(pId, containerId){
@@ -908,10 +1253,21 @@ function renderRosterList(pId, containerId){
   `).join('');
 }
 
-document.getElementById('p1BidBtn').addEventListener('click', ()=> makeBid(1));
-document.getElementById('p2BidBtn').addEventListener('click', ()=> makeBid(2));
-document.getElementById('p1PassBtn').addEventListener('click', ()=> makePass(1));
-document.getElementById('p2PassBtn').addEventListener('click', ()=> makePass(2));
+document.getElementById('p1BidBtn').addEventListener('click', ()=> triggerBid(1));
+document.getElementById('p2BidBtn').addEventListener('click', ()=> triggerBid(2));
+document.getElementById('p1PassBtn').addEventListener('click', ()=> triggerPass(1));
+document.getElementById('p2PassBtn').addEventListener('click', ()=> triggerPass(2));
+
+function triggerBid(pId){
+  if(!onlineMode){ makeBid(pId); return; }
+  if(isHost && pId === 1){ makeBid(1); }
+  else if(!isHost && pId === 2){ sendAction({action:'bid'}); }
+}
+function triggerPass(pId){
+  if(!onlineMode){ makePass(pId); return; }
+  if(isHost && pId === 1){ makePass(1); }
+  else if(!isHost && pId === 2){ sendAction({action:'pass'}); }
+}
 
 function makeBid(pId){
   state.price += state.inc;
@@ -947,6 +1303,8 @@ function resolveLot(){
   }
 
   flash.classList.add('show');
+  if(onlineMode && isHost) syncGuest();
+
   setTimeout(()=>{
     flash.classList.remove('show');
     state.lotIdx++;
@@ -987,7 +1345,12 @@ function startBattle(){
     t2: prepareTeam(state.players[2].heroes),
     idx1: 0,
     idx2: 0,
-    history: []
+    history: [],
+    status: '',
+    championDone: false,
+    championText: '',
+    championSub: '',
+    championColor: ''
   };
 
   updateBattleTally();
@@ -1013,9 +1376,12 @@ function setupBattlePair(){
   renderFighter('left', h1);
   renderFighter('right', h2);
 
-  document.getElementById('fightStatus').textContent = "Sıradaki dövüşe hazır";
+  battleState.status = "Sıradaki dövüşe hazır";
+  document.getElementById('fightStatus').textContent = battleState.status;
   document.getElementById('nextFightBtn').disabled = false;
   document.getElementById('nextFightBtn').style.display = 'block';
+
+  if(onlineMode && isHost) syncGuest();
 }
 
 function renderFighter(side, h){
@@ -1040,7 +1406,10 @@ function renderFighter(side, h){
   document.getElementById(prefix + 'Score').textContent = h.wins > 0 ? `Galibiyet: ${h.wins}` : '';
 }
 
-document.getElementById('nextFightBtn').addEventListener('click', runFightRound);
+document.getElementById('nextFightBtn').addEventListener('click', ()=>{
+  if(onlineMode && !isHost) return;
+  runFightRound();
+});
 
 function runFightRound(){
   const btn = document.getElementById('nextFightBtn');
@@ -1066,11 +1435,17 @@ function runFightRound(){
   logEntry.className = 'log-item';
   logEntry.innerHTML = `<span><b>${h1.name}</b> (-${dmgTo1} HP)</span> <span><b>${h2.name}</b> (-${dmgTo2} HP)</span>`;
   log.prepend(logEntry);
+  battleState.history.push({n1:h1.name, n2:h2.name, d1:dmgTo1, d2:dmgTo2});
+
+  if(onlineMode && isHost) syncGuest();
 
   if(h1.curHp <= 0 || h2.curHp <= 0){
     setTimeout(()=> resolveFightWinner(h1, h2), 600);
   } else {
-    setTimeout(()=>{ btn.disabled = false; }, 400);
+    setTimeout(()=>{
+      btn.disabled = false;
+      if(onlineMode && isHost) syncGuest();
+    }, 400);
   }
 }
 
@@ -1078,24 +1453,26 @@ function resolveFightWinner(h1, h2){
   const status = document.getElementById('fightStatus');
 
   if(h1.curHp <= 0 && h2.curHp <= 0){
-    status.textContent = "BERABERE!";
+    battleState.status = "BERABERE!";
     h1.eliminated = true;
     h2.eliminated = true;
     battleState.idx1++;
     battleState.idx2++;
   } else if(h1.curHp <= 0){
-    status.textContent = `${h2.name} GALİP GELDİ!`;
+    battleState.status = `${h2.name} GALİP GELDİ!`;
     h1.eliminated = true;
     h2.wins++;
     battleState.idx1++;
   } else {
-    status.textContent = `${h1.name} GALİP GELDİ!`;
+    battleState.status = `${h1.name} GALİP GELDİ!`;
     h2.eliminated = true;
     h1.wins++;
     battleState.idx2++;
   }
+  status.textContent = battleState.status;
 
   updateBattleTally();
+  if(onlineMode && isHost) syncGuest();
 
   setTimeout(()=>{
     if(battleState.idx1 < battleState.t1.length && battleState.idx2 < battleState.t2.length){
@@ -1116,20 +1493,28 @@ function endBattle(){
   const championSub = document.getElementById('championSub');
   banner.style.display = 'block';
 
+  battleState.championDone = true;
   if(alive1 > alive2){
-    championText.textContent = "OYUNCU 1 GALİP GELDİ!";
-    championText.style.color = "var(--azure)";
-    championSub.textContent = "Oyuncu 1'in takımı arenada üstünlük sağladı!";
+    battleState.championText = "OYUNCU 1 GALİP GELDİ!";
+    battleState.championColor = "var(--azure)";
+    battleState.championSub = "Oyuncu 1'in takımı arenada üstünlük sağladı!";
   } else if(alive2 > alive1){
-    championText.textContent = "OYUNCU 2 GALİP GELDİ!";
-    championText.style.color = "var(--crimson)";
-    championSub.textContent = "Oyuncu 2'nin takımı raundları zaferle tamamladı!";
+    battleState.championText = "OYUNCU 2 GALİP GELDİ!";
+    battleState.championColor = "var(--crimson)";
+    battleState.championSub = "Oyuncu 2'nin takımı raundları zaferle tamamladı!";
   } else {
-    championText.textContent = "BERABERLİK!";
-    championSub.textContent = "Her iki taraf cesurca dövüştü!";
+    battleState.championText = "BERABERLİK!";
+    battleState.championColor = "";
+    battleState.championSub = "Her iki taraf cesurca dövüştü!";
   }
 
-  document.getElementById('toResultsBtn').style.display = 'block';
+  championText.textContent = battleState.championText;
+  championText.style.color = battleState.championColor;
+  championSub.textContent = battleState.championSub;
+
+  document.getElementById('toResultsBtn').style.display = (!onlineMode || isHost) ? 'block' : 'none';
+
+  if(onlineMode && isHost) syncGuest();
 }
 
 document.getElementById('toResultsBtn').addEventListener('click', ()=>{
@@ -1147,6 +1532,8 @@ function showFinalResults(){
 
   renderFinalList(1, 'p1ListFinal');
   renderFinalList(2, 'p2ListFinal');
+
+  if(onlineMode && isHost) syncGuest();
 }
 
 function renderFinalList(pId, containerId){
@@ -1174,8 +1561,20 @@ function renderFinalList(pId, containerId){
 }
 
 document.getElementById('restartBtn').addEventListener('click', ()=>{
+  if(onlineMode && !isHost) return;
   document.getElementById('endScreen').style.display = 'none';
   document.getElementById('home').style.display = 'flex';
+  if(onlineMode && isHost && conn && conn.open){
+    conn.send({type:'reset'});
+  }
+});
+
+/* ---------------- AUTO-JOIN FROM LINK ---------------- */
+window.addEventListener('DOMContentLoaded', ()=>{
+  const params = new URLSearchParams(location.search);
+  if(params.get('room')){
+    document.getElementById('joinModeBtn').click();
+  }
 });
 </script>
 </body>

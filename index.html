@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="az">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,6 +33,20 @@
   }
   .display{font-family:'Bebas Neue',sans-serif; letter-spacing:0.03em;}
   .mono{font-family:'JetBrains Mono',monospace;}
+
+  /* ---------- LANGUAGE SWITCHER ---------- */
+  .lang-switch{
+    position:fixed; top:14px; left:14px; z-index:95;
+    display:flex; gap:4px; background:var(--bg-panel); border:1px solid var(--line);
+    border-radius:20px; padding:4px;
+  }
+  .lang-btn{
+    padding:5px 11px; border-radius:16px; border:none; background:transparent;
+    color:var(--text-dim); font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700;
+    cursor:pointer; letter-spacing:0.03em;
+  }
+  .lang-btn:hover{color:var(--text-light);}
+  .lang-btn.active{background:var(--gold); color:var(--bg-deep);}
 
   /* ---------- LOBBY / ONLINE UI ---------- */
   #lobby{min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px;}
@@ -474,6 +488,7 @@
   .fighter.left .fname{color:var(--azure);}
   .fighter.right .fname{color:var(--crimson);}
   .fighter .ffranchise{font-size:10px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.08em; margin-top:2px;}
+  .fighter .fbio{font-size:11px; color:var(--text-dim); margin-top:8px; line-height:1.4; max-width:190px; margin-left:auto; margin-right:auto; font-style:italic;}
   .fighter .fstats{max-width:170px; margin:14px auto 0;}
   .vs-mark{
     font-family:'Bebas Neue'; font-size:30px; color:var(--gold); text-align:center;
@@ -493,7 +508,7 @@
     max-width:170px; margin:8px auto 0;
     height:6px; background:var(--line); border-radius:3px; overflow:hidden;
   }
-  .fighter .fhp-fill{height:100%; background:var(--violet); border-radius:3px; transition:width .5s ease;}
+  .fighter .fhp-fill{height:100%; background:var(--crimson); border-radius:3px; transition:width .5s ease;}
   .fighter .fhp-label{font-family:'JetBrains Mono'; font-size:9.5px; color:var(--text-dim); margin-top:3px;}
 
   .battle-log{
@@ -567,52 +582,58 @@
 </head>
 <body>
 
+<div class="lang-switch" id="langSwitch">
+  <button class="lang-btn" data-lang="az">AZ</button>
+  <button class="lang-btn" data-lang="tr">TR</button>
+  <button class="lang-btn" data-lang="en">EN</button>
+</div>
+
 <div class="online-pill" id="onlinePill">🟢 <span id="onlinePillText">Onlayn</span></div>
 
 <div class="chat-toggle" id="chatToggle">💬</div>
 <div class="chat-panel" id="chatPanel">
-  <div class="chat-header">Söhbət <span class="chat-close" id="chatClose">✕</span></div>
+  <div class="chat-header"><span data-i18n="chat_title">Söhbət</span> <span class="chat-close" id="chatClose">✕</span></div>
   <div class="chat-messages" id="chatMessages"></div>
   <div class="chat-input-row">
-    <input type="text" id="chatInput" placeholder="Mesaj yaz..." maxlength="300">
-    <button id="chatSendBtn">Göndər</button>
+    <input type="text" id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="Mesaj yaz..." maxlength="300">
+    <button id="chatSendBtn" data-i18n="chat_send">Göndər</button>
   </div>
 </div>
 
 <!-- ===================== LOBBY ===================== -->
 <div id="lobby">
   <div class="poster">
-    <div class="eyebrow">Kapalı salon</div>
-    <h1 style="font-size:44px;">Necə <span>oynayaq?</span></h1>
-    <div class="sub">Eyni cihazda oynayın, ya da otaq yaradıb linki dostunuza göndərin</div>
+    <div class="eyebrow" data-i18n="lobby_eyebrow">Kapalı salon</div>
+    <h1 style="font-size:44px;"><span data-i18n="lobby_h1_1">Necə </span><span data-i18n="lobby_h1_2">oynayaq?</span></h1>
+    <div class="sub" data-i18n="lobby_sub">Eyni cihazda oynayın, ya da otaq yaradıb linki dostunuza göndərin</div>
 
     <div class="mode-row" id="modeRow">
       <div class="mode-btn" id="localModeBtn">
-        <div class="mt-title">EYNİ CİHAZ</div>
-        <div class="mt-sub">İki oyuncu eyni ekranda növbə ilə oynayır</div>
+        <div class="mt-title" data-i18n="mode_local_title">EYNİ CİHAZ</div>
+        <div class="mt-sub" data-i18n="mode_local_sub">İki oyuncu eyni ekranda növbə ilə oynayır</div>
       </div>
       <div class="mode-btn" id="createModeBtn">
-        <div class="mt-title">OTAQ YARAT</div>
-        <div class="mt-sub">Sən Oyuncu 1 olursan, link yaradıb göndər</div>
+        <div class="mt-title" data-i18n="mode_create_title">OTAQ YARAT</div>
+        <div class="mt-sub" data-i18n="mode_create_sub">Sən Oyuncu 1 olursan, link yaradıb göndər</div>
       </div>
       <div class="mode-btn" id="joinModeBtn">
-        <div class="mt-title">OTAĞA QOŞUL</div>
-        <div class="mt-sub">Sənə göndərilən link və ya koddan qoşul</div>
+        <div class="mt-title" data-i18n="mode_join_title">OTAĞA QOŞUL</div>
+        <div class="mt-sub" data-i18n="mode_join_sub">Sənə göndərilən link və ya koddan qoşul</div>
       </div>
     </div>
 
     <div class="panel" id="createPanel">
-      <div class="status-line"><span class="status-dot" id="createDot"></span><span id="createStatusText">Otaq yaradılır...</span></div>
-      <div class="room-box"><input type="text" id="roomLinkInput" readonly value=""><button class="copy-btn" id="copyLinkBtn">Linki kopyala</button></div>
-      <div class="back-link" id="backFromCreate">‹ Geri</div>
+      <div class="status-line"><span class="status-dot" id="createDot"></span><span id="createStatusText" data-i18n="create_status_creating">Otaq yaradılır...</span></div>
+      <div class="room-box"><input type="text" id="roomLinkInput" readonly value=""><button class="copy-btn" id="copyLinkBtn" data-i18n="copy_link_btn">Linki kopyala</button></div>
+      <div class="back-link" id="backFromCreate" data-i18n="back_link">‹ Geri</div>
     </div>
 
     <div class="panel" id="joinPanel">
-      <label style="font-size:12px; color:var(--text-dim); letter-spacing:0.1em; text-transform:uppercase;">Otaq kodu / linki</label>
-      <input type="text" class="join-code-input" id="joinCodeInput" placeholder="Bura yapışdır">
-      <button class="start-btn" id="joinConnectBtn" style="margin-top:12px;">QOŞUL</button>
-      <div class="status-line"><span class="status-dot" id="joinDot"></span><span id="joinStatusText">Kod daxil edin</span></div>
-      <div class="back-link" id="backFromJoin">‹ Geri</div>
+      <label style="font-size:12px; color:var(--text-dim); letter-spacing:0.1em; text-transform:uppercase;" data-i18n="join_label">Otaq kodu / linki</label>
+      <input type="text" class="join-code-input" id="joinCodeInput" data-i18n-placeholder="join_placeholder" placeholder="Bura yapışdır">
+      <button class="start-btn" id="joinConnectBtn" style="margin-top:12px;" data-i18n="join_btn">QOŞUL</button>
+      <div class="status-line"><span class="status-dot" id="joinDot"></span><span id="joinStatusText" data-i18n="join_status_default">Kod daxil edin</span></div>
+      <div class="back-link" id="backFromJoin" data-i18n="back_link">‹ Geri</div>
     </div>
   </div>
 </div>
@@ -620,41 +641,41 @@
 <!-- ===================== WAIT SCREEN (guest bekleme) ===================== -->
 <div id="waitScreen">
   <div class="poster">
-    <div class="eyebrow">Qoşuldun</div>
-    <h1 style="font-size:38px;">Oyuncu <span>2</span></h1>
+    <div class="eyebrow" data-i18n="wait_eyebrow">Qoşuldun</div>
+    <h1 style="font-size:38px;"><span data-i18n="wait_h1_1">Oyuncu </span><span>2</span></h1>
     <div class="spinner"></div>
-    <div class="sub" id="waitText">Otaq sahibinin oyunu qurmasını gözləyin...</div>
+    <div class="sub" id="waitText" data-i18n="wait_text">Otaq sahibinin oyunu qurmasını gözləyin...</div>
   </div>
 </div>
 
 <!-- ===================== HOME SCREEN ===================== -->
 <div id="home">
   <div class="poster">
-    <div class="eyebrow">Kapalı salon &middot; 2 oyuncu</div>
-    <h1>KAHRAMAN<br><span>Savaşı</span></h1>
-    <div class="sub">Bütçeni belirle, artış adımını ve oyuncu başı kahraman sayısını seç, başlat</div>
+    <div class="eyebrow" data-i18n="home_eyebrow">Kapalı salon &middot; 2 oyuncu</div>
+    <h1><span data-i18n="home_h1_1">KAHRAMAN</span><br><span data-i18n="home_h1_2">Savaşı</span></h1>
+    <div class="sub" data-i18n="home_sub">Bütçeni belirle, artış adımını ve oyuncu başı kahraman sayısını seç, başlat</div>
 
     <div id="hostStatusBar">
-      <div class="status-line" style="margin-top:0;"><span class="status-dot" id="hostDot"></span><span id="hostStatusText">Oyuncu 2 gözlənilir...</span></div>
-      <div class="room-box" style="margin-top:8px;"><input type="text" id="hostLinkInput" readonly value=""><button class="copy-btn" id="hostCopyBtn">Kopyala</button></div>
+      <div class="status-line" style="margin-top:0;"><span class="status-dot" id="hostDot"></span><span id="hostStatusText" data-i18n="host_status_waiting">Oyuncu 2 gözlənilir...</span></div>
+      <div class="room-box" style="margin-top:8px;"><input type="text" id="hostLinkInput" readonly value=""><button class="copy-btn" id="hostCopyBtn" data-i18n="host_copy_btn">Kopyala</button></div>
     </div>
 
     <div class="field">
-      <label>Başlangıç bütçesi <span class="val mono" id="budgetVal">$50</span></label>
+      <label><span data-i18n="budget_label">Başlangıç bütçesi</span> <span class="val mono" id="budgetVal">$50</span></label>
       <input type="range" id="budgetRange" min="10" max="100" step="10" value="50">
     </div>
 
     <div class="field">
-      <label>Teklif artış adımı</label>
+      <label data-i18n="inc_label">Teklif artış adımı</label>
       <div class="chip-row" id="incRow"></div>
     </div>
 
     <div class="field">
-      <label>Oyuncu başına maksimum kahraman <span class="val mono" id="maxHeroesVal">5</span></label>
+      <label><span data-i18n="maxheroes_label">Oyuncu başına maksimum kahraman</span> <span class="val mono" id="maxHeroesVal">5</span></label>
       <div class="chip-row" id="maxHeroesRow"></div>
     </div>
 
-    <button class="start-btn" id="startBtn">OYUNA BAŞLA</button>
+    <button class="start-btn" id="startBtn" data-i18n="start_btn">OYUNA BAŞLA</button>
     <div class="foot-note" id="footNote">Her oyuncu maksimum 5 kahraman alabilir &middot; en yüksek teklif kazanır &middot; güç, hız, savunma ve can gerçek güce dayanır</div>
   </div>
 </div>
@@ -662,21 +683,21 @@
 <!-- ===================== GAME SCREEN ===================== -->
 <div id="game">
   <div class="topbar">
-    <div class="logo">KAHRAMAN Savaşı</div>
-    <div class="progress">LOT <b id="lotIndex">1</b> / <b id="lotTotal">10</b></div>
+    <div class="logo" data-i18n="game_logo">KAHRAMAN Savaşı</div>
+    <div class="progress"><span data-i18n="game_lot">LOT</span> <b id="lotIndex">1</b> / <b id="lotTotal">10</b></div>
   </div>
 
   <div class="hall">
     <div class="roster p1">
       <div class="roster-head">
-        <div class="pname">OYUNCU 1</div>
+        <div class="pname" data-i18n="player1">OYUNCU 1</div>
         <div class="budget" id="p1Budget">$50</div>
       </div>
-      <div class="roster-list" id="p1List"><div class="roster-empty">Henüz kahraman alınmadı</div></div>
+      <div class="roster-list" id="p1List"><div class="roster-empty" data-i18n="roster_empty">Henüz kahraman alınmadı</div></div>
     </div>
 
     <div class="stage" id="stage">
-      <div class="lot-label" id="lotLabel">Şu anki lot</div>
+      <div class="lot-label" id="lotLabel" data-i18n="lot_label">Şu anki lot</div>
       <div class="avatar big" id="heroAvatar" style="align-self:center;">?</div>
       <div class="hero-name" id="heroName">— <span class="tier-badge" id="heroTier"></span></div>
       <div><span class="hero-franchise-tag" id="heroFranchise">—</span></div>
@@ -684,21 +705,21 @@
       <div class="hero-stats-row" id="heroStatsRow"></div>
 
       <div class="price-board">
-        <span class="cur-label">Güncel fiyat</span>
+        <span class="cur-label" data-i18n="current_price">Güncel fiyat</span>
         <span class="cur-amount mono" id="curPrice">$0</span>
       </div>
-      <div class="leader-note" id="leaderNote">Müzayedeye başlamak için teklif verin</div>
+      <div class="leader-note" id="leaderNote" data-i18n="leader_note_default">Müzayedeye başlamak için teklif verin</div>
 
       <div class="bid-row">
         <div class="bid-col p1">
-          <div class="who">OYUNCU 1</div>
-          <button class="btn bid p1" id="p1BidBtn">Teklif ver</button>
-          <button class="btn pass" id="p1PassBtn">Pas geç</button>
+          <div class="who" data-i18n="player1">OYUNCU 1</div>
+          <button class="btn bid p1" id="p1BidBtn" data-i18n="bid_btn">Teklif ver</button>
+          <button class="btn pass" id="p1PassBtn" data-i18n="pass_btn">Pas geç</button>
         </div>
         <div class="bid-col p2">
-          <div class="who">OYUNCU 2</div>
-          <button class="btn bid p2" id="p2BidBtn">Teklif ver</button>
-          <button class="btn pass" id="p2PassBtn">Pas geç</button>
+          <div class="who" data-i18n="player2">OYUNCU 2</div>
+          <button class="btn bid p2" id="p2BidBtn" data-i18n="bid_btn">Teklif ver</button>
+          <button class="btn pass" id="p2PassBtn" data-i18n="pass_btn">Pas geç</button>
         </div>
       </div>
 
@@ -707,10 +728,10 @@
 
     <div class="roster p2">
       <div class="roster-head">
-        <div class="pname">OYUNCU 2</div>
+        <div class="pname" data-i18n="player2">OYUNCU 2</div>
         <div class="budget" id="p2Budget">$50</div>
       </div>
-      <div class="roster-list" id="p2List"><div class="roster-empty">Henüz kahraman alınmadı</div></div>
+      <div class="roster-list" id="p2List"><div class="roster-empty" data-i18n="roster_empty">Henüz kahraman alınmadı</div></div>
     </div>
   </div>
 </div>
@@ -719,8 +740,8 @@
 <div id="battle">
   <div class="battle-wrap">
     <div class="battle-head">
-      <div class="eyebrow2">Tüm kahramanlar meydanda</div>
-      <h1>DÖVÜŞ ARENASI</h1>
+      <div class="eyebrow2" data-i18n="battle_eyebrow">Tüm kahramanlar meydanda</div>
+      <h1 data-i18n="battle_h1">DÖVÜŞ ARENASI</h1>
     </div>
     <div class="team-tally">
       <span class="t1" id="t1Tally">Oyuncu 1: 5 kahraman</span>
@@ -733,16 +754,18 @@
           <div class="avatar mid" id="leftAvatar" style="margin:0 auto;">?</div>
           <div class="fname" id="leftName">—</div>
           <div class="ffranchise" id="leftFranchise">—</div>
+          <div class="fbio" id="leftBio"></div>
           <div class="fstats" id="leftStats"></div>
           <div class="fhp-track"><div class="fhp-fill" id="leftHpFill" style="width:100%"></div></div>
           <div class="fhp-label" id="leftHpLabel">CAN: 100%</div>
           <div class="fscore" id="leftScore"></div>
         </div>
-        <div class="vs-mark">VS<span class="vscore" id="fightStatus">Sıradaki dövüşe hazır</span></div>
+        <div class="vs-mark">VS<span class="vscore" id="fightStatus" data-i18n="fight_ready">Sıradaki dövüşe hazır</span></div>
         <div class="fighter right" id="fighterRight">
           <div class="avatar mid" id="rightAvatar" style="margin:0 auto;">?</div>
           <div class="fname" id="rightName">—</div>
           <div class="ffranchise" id="rightFranchise">—</div>
+          <div class="fbio" id="rightBio"></div>
           <div class="fstats" id="rightStats"></div>
           <div class="fhp-track"><div class="fhp-fill" id="rightHpFill" style="width:100%"></div></div>
           <div class="fhp-label" id="rightHpLabel">CAN: 100%</div>
@@ -750,10 +773,10 @@
         </div>
       </div>
 
-      <button class="next-fight-btn" id="nextFightBtn">DÖVÜŞÜ BAŞLAT</button>
+      <button class="next-fight-btn" id="nextFightBtn" data-i18n="next_fight_btn">DÖVÜŞÜ BAŞLAT</button>
 
       <div class="champion-banner" id="championBanner">
-        <div class="cb-label">Meydanın Galibi</div>
+        <div class="cb-label" data-i18n="champion_label">Meydanın Galibi</div>
         <h2 id="championText">—</h2>
         <p id="championSub"></p>
       </div>
@@ -761,28 +784,272 @@
       <div class="battle-log" id="battleLog"></div>
     </div>
 
-    <button class="restart-btn" id="toResultsBtn" style="display:none; margin:22px auto 0;">SONUÇLARA BAK</button>
+    <button class="restart-btn" id="toResultsBtn" style="display:none; margin:22px auto 0;" data-i18n="to_results_btn">SONUÇLARA BAK</button>
   </div>
 </div>
 
 <!-- ===================== END SCREEN ===================== -->
 <div class="end-screen" id="endScreen">
-  <h2 id="endTitle">MÜZAYEDE BİTTİ</h2>
+  <h2 id="endTitle" data-i18n="end_title">MÜZAYEDE BİTTİ</h2>
   <p id="endSummary"></p>
   <div class="end-cols">
     <div class="roster p1" style="border-top:3px solid var(--azure);">
-      <div class="roster-head"><div class="pname">OYUNCU 1</div><div class="budget" id="p1BudgetFinal">$0</div></div>
+      <div class="roster-head"><div class="pname" data-i18n="player1">OYUNCU 1</div><div class="budget" id="p1BudgetFinal">$0</div></div>
       <div class="roster-list" id="p1ListFinal"></div>
     </div>
     <div class="roster p2" style="border-top:3px solid var(--crimson);">
-      <div class="roster-head"><div class="pname">OYUNCU 2</div><div class="budget" id="p2BudgetFinal">$0</div></div>
+      <div class="roster-head"><div class="pname" data-i18n="player2">OYUNCU 2</div><div class="budget" id="p2BudgetFinal">$0</div></div>
       <div class="roster-list" id="p2ListFinal"></div>
     </div>
   </div>
-  <button class="restart-btn" id="restartBtn">YENİDEN OYNA</button>
+  <button class="restart-btn" id="restartBtn" data-i18n="restart_btn">YENİDEN OYNA</button>
 </div>
 
 <script>
+/* ==================================================================
+   I18N — dil seçimi (AZ / TR / EN)
+================================================================== */
+const I18N = {
+  az: {
+    chat_title:"Söhbət", chat_placeholder:"Mesaj yaz...", chat_send:"Göndər",
+    lobby_eyebrow:"Qapalı salon", lobby_h1_1:"Necə ", lobby_h1_2:"oynayaq?",
+    lobby_sub:"Eyni cihazda oynayın, ya da otaq yaradıb linki dostunuza göndərin",
+    mode_local_title:"EYNİ CİHAZ", mode_local_sub:"İki oyuncu eyni ekranda növbə ilə oynayır",
+    mode_create_title:"OTAQ YARAT", mode_create_sub:"Sən Oyuncu 1 olursan, link yaradıb göndər",
+    mode_join_title:"OTAĞA QOŞUL", mode_join_sub:"Sənə göndərilən link və ya koddan qoşul",
+    create_status_creating:"Otaq yaradılır...", create_status_ready:"Otaq hazır — linki göndər",
+    create_status_joined:"Oyuncu 2 qoşuldu!", create_status_error:"Xəta: ",
+    copy_link_btn:"Linki kopyala", copy_link_copied:"Kopyalandı!", back_link:"‹ Geri",
+    join_label:"Otaq kodu / linki", join_placeholder:"Bura yapışdır", join_btn:"QOŞUL",
+    join_status_default:"Kod daxil edin", join_status_empty:"Kod boş ola bilməz",
+    join_status_connecting:"Qoşulur...", join_status_connected:"Qoşuldu!",
+    join_status_fail:"Otağa qoşulmaq mümkün olmadı", join_status_notfound:"Xəta: otaq tapılmadı",
+    wait_eyebrow:"Qoşuldun", wait_h1_1:"Oyuncu ", wait_text:"Otaq sahibinin oyunu qurmasını gözləyin...",
+    wait_text_reset:"Otaq sahibi yeni oyun hazırlayır...",
+    pill_p1:"Sən Oyuncu 1-sən", pill_p2:"Sən Oyuncu 2-sən", pill_online:"Onlayn",
+    home_eyebrow:"Qapalı salon · 2 oyuncu", home_h1_1:"KAHRAMAN", home_h1_2:"Savaşı",
+    home_sub:"Büdcəni müəyyən et, artım addımını və oyuncu başına kahraman sayını seç, başlat",
+    host_status_waiting:"Oyuncu 2 gözlənilir...", host_status_ready:"Oyuncu 2 qoşuldu — başlaya bilərsən",
+    host_copy_btn:"Kopyala", budget_label:"Başlanğıc büdcə", inc_label:"Təklif artım addımı",
+    maxheroes_label:"Oyuncu başına maksimum kahraman", start_btn:"OYUNA BAŞLA",
+    foot_note:"Hər oyuncu maksimum {n} kahraman ala bilər · ən yüksək təklif qazanır · güc, sürət, müdafiə və can real gücə əsaslanır",
+    no_player2_alert:"Oyuncu 2 hələ qoşulmayıb. Linki göndər və gözlə.",
+    conn_lost_alert:"Bağlantı kəsildi. Səhifəni yeniləyib yenidən qoşulun.",
+    game_logo:"KAHRAMAN Savaşı", game_lot:"LOT", player1:"OYUNCU 1", player2:"OYUNCU 2",
+    roster_empty:"Hələ kahraman alınmayıb", lot_label:"Hazırkı lot", lot_label_progress:"Hazırkı lot ({i}/{n})",
+    current_price:"Hazırkı qiymət", leader_note_default:"Müzayidəyə başlamaq üçün təklif verin",
+    leader_note_leading:"Ən yüksək təklif: {PLAYER} (${x})", bid_btn:"Təklif ver", pass_btn:"Pas keç",
+    stat_power:"GÜC", stat_speed:"SÜRƏT", stat_defense:"MÜDAFİƏ", stat_health:"CAN",
+    stat_power_s:"G", stat_speed_s:"S", stat_defense_s:"M",
+    tier_suffix:"-SƏVİYYƏ", sold_text:"SATILDI!", unsold_text:"SATILMADI", unsold_sub:"Heç kim təklif vermədi",
+    battle_eyebrow:"Bütün kahramanlar meydanda", battle_h1:"DÖYÜŞ ARENASI",
+    tally_p1:"Oyuncu 1: {n} kahraman qaldı", tally_p2:"Oyuncu 2: {n} kahraman qaldı",
+    next_fight_btn:"DÖYÜŞÜ BAŞLAT", champion_label:"Meydanın Qalibi",
+    fight_ready:"Növbəti döyüşə hazır", fight_fighting:"Döyüşür...", fight_draw:"BƏRABƏRƏ!",
+    fight_win:"{n} QALİB GƏLDİ!", to_results_btn:"NƏTİCƏLƏRƏ BAX", win_count:"Qələbə",
+    p1_win_banner:"OYUNCU 1 QALİB GƏLDİ!", p1_win_sub:"Oyuncu 1-in komandası arenada üstünlük əldə etdi!",
+    p2_win_banner:"OYUNCU 2 QALİB GƏLDİ!", p2_win_sub:"Oyuncu 2-nin komandası döyüşü qələbə ilə başa vurdu!",
+    tie_banner:"BƏRABƏRLİK!", tie_sub:"Hər iki tərəf cəsarətlə döyüşdü!",
+    restart_locked:"Otaq sahibi yenidən başlada bilər",
+    end_title:"MÜZAYİDƏ BİTDİ", final_no_heroes:"Kahraman yoxdur", restart_btn:"YENİDƏN OYNA"
+  },
+  tr: {
+    chat_title:"Sohbet", chat_placeholder:"Mesaj yaz...", chat_send:"Gönder",
+    lobby_eyebrow:"Kapalı salon", lobby_h1_1:"Nasıl ", lobby_h1_2:"oynayalım?",
+    lobby_sub:"Aynı cihazda oynayın ya da oda kurup linki arkadaşınıza gönderin",
+    mode_local_title:"AYNI CİHAZ", mode_local_sub:"İki oyuncu aynı ekranda sırayla oynar",
+    mode_create_title:"ODA KUR", mode_create_sub:"Sen Oyuncu 1 olursun, link oluşturup gönder",
+    mode_join_title:"ODAYA KATIL", mode_join_sub:"Sana gönderilen link ya da koddan katıl",
+    create_status_creating:"Oda oluşturuluyor...", create_status_ready:"Oda hazır — linki gönder",
+    create_status_joined:"Oyuncu 2 katıldı!", create_status_error:"Hata: ",
+    copy_link_btn:"Linki kopyala", copy_link_copied:"Kopyalandı!", back_link:"‹ Geri",
+    join_label:"Oda kodu / linki", join_placeholder:"Buraya yapıştır", join_btn:"KATIL",
+    join_status_default:"Kod girin", join_status_empty:"Kod boş olamaz",
+    join_status_connecting:"Katılınıyor...", join_status_connected:"Katıldı!",
+    join_status_fail:"Odaya katılmak mümkün olmadı", join_status_notfound:"Hata: oda bulunamadı",
+    wait_eyebrow:"Katıldın", wait_h1_1:"Oyuncu ", wait_text:"Oda sahibinin oyunu kurmasını bekleyin...",
+    wait_text_reset:"Oda sahibi yeni oyun hazırlıyor...",
+    pill_p1:"Sen Oyuncu 1'sin", pill_p2:"Sen Oyuncu 2'sin", pill_online:"Çevrimiçi",
+    home_eyebrow:"Kapalı salon · 2 oyuncu", home_h1_1:"KAHRAMAN", home_h1_2:"Savaşı",
+    home_sub:"Bütçeni belirle, artış adımını ve oyuncu başı kahraman sayısını seç, başlat",
+    host_status_waiting:"Oyuncu 2 bekleniyor...", host_status_ready:"Oyuncu 2 katıldı — başlayabilirsin",
+    host_copy_btn:"Kopyala", budget_label:"Başlangıç bütçesi", inc_label:"Teklif artış adımı",
+    maxheroes_label:"Oyuncu başına maksimum kahraman", start_btn:"OYUNA BAŞLA",
+    foot_note:"Her oyuncu maksimum {n} kahraman alabilir · en yüksek teklif kazanır · güç, hız, savunma ve can gerçek güce dayanır",
+    no_player2_alert:"Oyuncu 2 henüz katılmadı. Linki gönder ve bekle.",
+    conn_lost_alert:"Bağlantı kesildi. Sayfayı yenileyip yeniden katılın.",
+    game_logo:"KAHRAMAN Savaşı", game_lot:"LOT", player1:"OYUNCU 1", player2:"OYUNCU 2",
+    roster_empty:"Henüz kahraman alınmadı", lot_label:"Şu anki lot", lot_label_progress:"Şu anki lot ({i}/{n})",
+    current_price:"Güncel fiyat", leader_note_default:"Müzayedeye başlamak için teklif verin",
+    leader_note_leading:"En yüksek teklif: OYUNCU {p} (${x})", bid_btn:"Teklif ver", pass_btn:"Pas geç",
+    stat_power:"GÜÇ", stat_speed:"HIZ", stat_defense:"SAVUNMA", stat_health:"CAN",
+    stat_power_s:"G", stat_speed_s:"H", stat_defense_s:"S",
+    tier_suffix:"-SEVİYE", sold_text:"SATILDI!", unsold_text:"SATILMADI", unsold_sub:"Kimse teklif vermedi",
+    battle_eyebrow:"Tüm kahramanlar meydanda", battle_h1:"DÖVÜŞ ARENASI",
+    tally_p1:"Oyuncu 1: {n} kahraman kaldı", tally_p2:"Oyuncu 2: {n} kahraman kaldı",
+    next_fight_btn:"DÖVÜŞÜ BAŞLAT", champion_label:"Meydanın Galibi",
+    fight_ready:"Sıradaki dövüşe hazır", fight_fighting:"Dövüşüyor...", fight_draw:"BERABERE!",
+    fight_win:"{n} GALİP GELDİ!", to_results_btn:"SONUÇLARA BAK", win_count:"Galibiyet",
+    p1_win_banner:"OYUNCU 1 GALİP GELDİ!", p1_win_sub:"Oyuncu 1'in takımı arenada üstünlük sağladı!",
+    p2_win_banner:"OYUNCU 2 GALİP GELDİ!", p2_win_sub:"Oyuncu 2'nin takımı raundları zaferle tamamladı!",
+    tie_banner:"BERABERLİK!", tie_sub:"Her iki taraf cesurca dövüştü!",
+    restart_locked:"Oda sahibi yeniden başlatabilir",
+    end_title:"MÜZAYEDE BİTTİ", final_no_heroes:"Kahraman yok", restart_btn:"YENİDEN OYNA"
+  },
+  en: {
+    chat_title:"Chat", chat_placeholder:"Type a message...", chat_send:"Send",
+    lobby_eyebrow:"Private lobby", lobby_h1_1:"How ", lobby_h1_2:"shall we play?",
+    lobby_sub:"Play on the same device, or create a room and send the link to a friend",
+    mode_local_title:"SAME DEVICE", mode_local_sub:"Two players take turns on the same screen",
+    mode_create_title:"CREATE ROOM", mode_create_sub:"You'll be Player 1 — create a link and send it",
+    mode_join_title:"JOIN ROOM", mode_join_sub:"Join using the link or code sent to you",
+    create_status_creating:"Creating room...", create_status_ready:"Room ready — send the link",
+    create_status_joined:"Player 2 joined!", create_status_error:"Error: ",
+    copy_link_btn:"Copy link", copy_link_copied:"Copied!", back_link:"‹ Back",
+    join_label:"Room code / link", join_placeholder:"Paste here", join_btn:"JOIN",
+    join_status_default:"Enter a code", join_status_empty:"Code cannot be empty",
+    join_status_connecting:"Connecting...", join_status_connected:"Connected!",
+    join_status_fail:"Could not join the room", join_status_notfound:"Error: room not found",
+    wait_eyebrow:"Joined", wait_h1_1:"Player ", wait_text:"Waiting for the host to set up the game...",
+    wait_text_reset:"The host is setting up a new game...",
+    pill_p1:"You are Player 1", pill_p2:"You are Player 2", pill_online:"Online",
+    home_eyebrow:"Private lobby · 2 players", home_h1_1:"HERO", home_h1_2:"Wars",
+    home_sub:"Set the budget, bid increment, and heroes per player, then start",
+    host_status_waiting:"Waiting for Player 2...", host_status_ready:"Player 2 joined — you can start",
+    host_copy_btn:"Copy", budget_label:"Starting budget", inc_label:"Bid increment",
+    maxheroes_label:"Max heroes per player", start_btn:"START GAME",
+    foot_note:"Each player can buy up to {n} heroes · highest bid wins · power, speed, defense and health are based on real strength",
+    no_player2_alert:"Player 2 hasn't joined yet. Send the link and wait.",
+    conn_lost_alert:"Connection lost. Refresh the page and rejoin.",
+    game_logo:"HERO Wars", game_lot:"LOT", player1:"PLAYER 1", player2:"PLAYER 2",
+    roster_empty:"No heroes yet", lot_label:"Current lot", lot_label_progress:"Current lot ({i}/{n})",
+    current_price:"Current price", leader_note_default:"Place a bid to start the auction",
+    leader_note_leading:"Highest bid: PLAYER {p} (${x})", bid_btn:"Place bid", pass_btn:"Pass",
+    stat_power:"POWER", stat_speed:"SPEED", stat_defense:"DEFENSE", stat_health:"HEALTH",
+    stat_power_s:"P", stat_speed_s:"S", stat_defense_s:"D",
+    tier_suffix:"-TIER", sold_text:"SOLD!", unsold_text:"UNSOLD", unsold_sub:"Nobody placed a bid",
+    battle_eyebrow:"All heroes take the field", battle_h1:"BATTLE ARENA",
+    tally_p1:"Player 1: {n} heroes left", tally_p2:"Player 2: {n} heroes left",
+    next_fight_btn:"START FIGHT", champion_label:"Champion of the Arena",
+    fight_ready:"Ready for the next fight", fight_fighting:"Fighting...", fight_draw:"DRAW!",
+    fight_win:"{n} WINS!", to_results_btn:"VIEW RESULTS", win_count:"Wins",
+    p1_win_banner:"PLAYER 1 WINS!", p1_win_sub:"Player 1's team dominated the arena!",
+    p2_win_banner:"PLAYER 2 WINS!", p2_win_sub:"Player 2's team won the battle!",
+    tie_banner:"IT'S A TIE!", tie_sub:"Both sides fought bravely!",
+    restart_locked:"Only the host can restart",
+    end_title:"AUCTION OVER", final_no_heroes:"No heroes", restart_btn:"PLAY AGAIN"
+  }
+};
+
+let currentLang = 'az';
+
+function t(key){
+  const dict = I18N[currentLang] || I18N.az;
+  return dict[key] !== undefined ? dict[key] : key;
+}
+
+function applyStaticTranslations(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    el.textContent = t(el.getAttribute('data-i18n'));
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    el.setAttribute('placeholder', t(el.getAttribute('data-i18n-placeholder')));
+  });
+}
+
+function setLanguage(lang){
+  if(!I18N[lang]) return;
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b=>{
+    b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+  });
+  applyStaticTranslations();
+  updateFootNote();
+  refreshDynamicScreens();
+}
+
+function refreshDynamicScreens(){
+  // Re-render whatever screen is currently visible so dynamic text updates too
+  if(document.getElementById('game').style.display === 'block' && state){
+    renderAuction();
+  }
+  if(document.getElementById('battle').style.display === 'block' && battleState){
+    renderBattleFromState();
+  }
+  if(document.getElementById('endScreen').style.display === 'block' && state){
+    showFinalResults(true);
+  }
+}
+
+document.getElementById('langSwitch').addEventListener('click', (e)=>{
+  const btn = e.target.closest('.lang-btn');
+  if(!btn) return;
+  setLanguage(btn.getAttribute('data-lang'));
+});
+
+/* ==================================================================
+   HERO BIOS — kahramanın kim olduğu haqda qısa məlumat (savaş ekranı)
+================================================================== */
+const BIOS = {
+  "Hades":{az:"Yeraltı dünyanın hökmdarı, ölülərin tanrısı", tr:"Yeraltı dünyanın hükümdarı, ölüler tanrısı", en:"Ruler of the underworld, god of the dead"},
+  "Superman":{az:"Kriptonun son oğlu, inanılmaz gücə sahibdir", tr:"Kripton'un son oğlu, olağanüstü güce sahiptir", en:"Last son of Krypton with god-like power"},
+  "Wonder Woman":{az:"Amazon prinsesi, döyüş və ədalət tanrıçası", tr:"Amazon prensesi, savaş ve adalet tanrıçası", en:"Amazon princess, goddess of war and justice"},
+  "Shazam":{az:"Sadə bir uşaq, sehrli sözlə qəhrəmana çevrilir", tr:"Sıradan bir çocuk, sihirli sözle kahramana dönüşür", en:"An ordinary boy who transforms with a magic word"},
+  "Green Lantern":{az:"Enerji üzüyü ilə istənilən şeyi yarada bilən mühafizəçi", tr:"Enerji yüzüğüyle istediğini yaratabilen galaksi muhafızı", en:"Galactic guardian who creates anything with his power ring"},
+  "Aquaman":{az:"Atlantisin kralı, okeanların hökmdarı", tr:"Atlantis'in kralı, okyanusların hükümdarı", en:"King of Atlantis, ruler of the seas"},
+  "Flash":{az:"İşıq sürətindən sürətli qaçan qəhrəman", tr:"Işık hızından hızlı koşan kahraman", en:"Hero who runs faster than the speed of light"},
+  "Cyborg":{az:"Yarı insan, yarı maşın texnoloji döyüşçü", tr:"Yarı insan, yarı makine teknolojik savaşçı", en:"Half-man, half-machine technological warrior"},
+  "Batman":{az:"Gecə qəhrəmanı, zəka və texnologiya ilə döyüşür", tr:"Gece kahramanı, zeka ve teknolojiyle savaşır", en:"The night's hero, fighting crime with wit and gadgets"},
+  "Nightwing":{az:"Batmanın ilk köməkçisi, cəld akrobat döyüşçü", tr:"Batman'ın ilk yardımcısı, çevik akrobat savaşçı", en:"Batman's first sidekick, an agile acrobatic fighter"},
+  "Batgirl":{az:"Gothamı qoruyan cəsur qadın döyüşçü", tr:"Gotham'ı koruyan cesur kadın savaşçı", en:"Brave crimefighter protecting the streets of Gotham"},
+  "Green Arrow":{az:"Kaman ustası, ədalət uğrunda döyüşən milyarder", tr:"Ok atma ustası, adalet için savaşan milyarder", en:"Master archer, billionaire fighting for justice"},
+  "Harley Quinn":{az:"Dəli və gözlənilməz keçmiş psixiatr", tr:"Çılgın ve öngörülemez eski psikiyatrist", en:"Chaotic, unpredictable former psychiatrist turned anti-hero"},
+  "Joker":{az:"Gothamın ən təhlükəli, ağıllı cinayətkarı", tr:"Gotham'ın en tehlikeli, akıllı suçlusu", en:"Gotham's most dangerous, unpredictable criminal mastermind"},
+  "Supergirl":{az:"Supermanın kuzini, Kriptondan gələn güclü qəhrəman", tr:"Superman'in kuzeni, Kripton'dan gelen güçlü kahraman", en:"Superman's cousin, a powerful hero from Krypton"},
+  "Black Adam":{az:"Qədim Misirdən gələn qüdrətli, amansız qəhrəman", tr:"Antik Mısır'dan gelen güçlü, acımasız kahraman", en:"Ancient Egyptian anti-hero with god-like power"},
+  "Red Hood":{az:"Keçmiş Robin, sərt üsullarla ədalət axtaran", tr:"Eski Robin, sert yöntemlerle adalet arayan", en:"Former Robin who seeks justice through harsher methods"},
+  "Doctor Doom":{az:"Latverianın hökmdarı, dahi elm adamı-sehrbaz", tr:"Latveria'nın hükümdarı, dahi bilim adamı-büyücü", en:"Ruler of Latveria, genius scientist and sorcerer"},
+  "Odin":{az:"Asqardın hökmdarı, tanrıların atası", tr:"Asgard'ın hükümdarı, tanrıların babası", en:"All-Father and ruler of Asgard"},
+  "Thanos":{az:"Titan planetindən olan, kainatı təhdid edən nəhəng", tr:"Titan gezegeninden gelen, evreni tehdit eden dev", en:"Titan warlord who seeks to reshape the universe"},
+  "Silver Surfer":{az:"Kosmik gücə sahib, qalaktikalar arasında süzülən qasid", tr:"Kozmik güce sahip, galaksiler arasında süzülen haberci", en:"Cosmic herald who surfs the universe on a silver board"},
+  "Hulk":{az:"Qəzəbləndikcə gücü artan yaşıl nəhəng", tr:"Öfkelendikçe gücü artan yeşil dev", en:"Green giant whose strength grows with his rage"},
+  "Thor":{az:"Asqard tanrısı, ildırım çəkici Mjölnirin sahibi", tr:"Asgard tanrısı, gök gürültüsü çekici Mjölnir'in sahibi", en:"Asgardian god of thunder, wielder of Mjölnir"},
+  "Scarlet Witch":{az:"Xaos sehri ilə reallığı dəyişə bilən qüdrətli mutant", tr:"Kaos büyüsüyle gerçekliği değiştirebilen güçlü mutant", en:"Powerful mutant who can reshape reality with chaos magic"},
+  "Doctor Strange":{az:"Ali Sehrbaz, mistik sənətlərin qoruyucusu", tr:"Yüce Büyücü, mistik sanatların koruyucusu", en:"Sorcerer Supreme, guardian of the mystic arts"},
+  "Iron Man":{az:"Dahi mühəndis, texnoloji zirehli qəhrəman", tr:"Dahi mühendis, teknolojik zırhlı kahraman", en:"Genius engineer in a high-tech suit of armor"},
+  "Wolverine":{az:"Adamantium caynaqlı, tez sağalan mutant döyüşçü", tr:"Adamantiyum pençeli, hızlı iyileşen mutant savaşçı", en:"Adamantium-clawed mutant with a powerful healing factor"},
+  "Black Panther":{az:"Wakandanın kralı, vibranium zirehli mühafizəçi", tr:"Wakanda'nın kralı, vibranyum zırhlı koruyucu", en:"King of Wakanda, protector clad in vibranium"},
+  "Captain America":{az:"II Dünya müharibəsi qəhrəmanı, super əsgər", tr:"II. Dünya Savaşı kahramanı, süper asker", en:"World War II super-soldier and symbol of courage"},
+  "Spider-Man":{az:"Hörümçək gücünə sahib gənc məhəllə qəhrəmanı", tr:"Örümcek gücüne sahip genç mahalle kahramanı", en:"Young hero with spider-like powers and agility"},
+  "Deadpool":{az:"Ağzı bişməmiş, ölümsüz muzdlu döyüşçü", tr:"Ağzı bozuk, ölümsüz paralı asker", en:"Wisecracking mercenary with an unstoppable healing factor"},
+  "Loki":{az:"Fitnə-fəsad tanrısı, hiyləgər manipulyator", tr:"Hile tanrısı, kurnaz manipülatör", en:"God of mischief, master manipulator and trickster"},
+  "Hela":{az:"Ölüm tanrıçası, Asqard taxtının varisi", tr:"Ölüm tanrıçası, Asgard tahtının varisi", en:"Goddess of death and heir to the Asgardian throne"},
+  "Venom":{az:"Yad simbiyotla birləşmiş qaranlıq anti-qəhrəman", tr:"Uzaylı simbiyotla birleşmiş karanlık anti-kahraman", en:"Dark anti-hero bonded with an alien symbiote"},
+  "Carnage":{az:"Qırmızı simbiyotlu, amansız kütləvi qatil", tr:"Kırmızı simbiyotlu, acımasız seri katil", en:"Red symbiote-fused, brutally violent killer"},
+  "Vision":{az:"Süni intellektlə yaradılmış sintetik qəhrəman", tr:"Yapay zeka ile yaratılmış sentetik kahraman", en:"Synthetic android hero powered by artificial intelligence"},
+  "Ultron":{az:"Süni intellektli, bəşəriyyəti təhdid edən robot", tr:"Yapay zekalı, insanlığı tehdit eden robot", en:"Rogue AI robot that threatens humanity"},
+  "Captain Marvel":{az:"Kosmik enerji ilə güclənən Hava Qüvvələri piloti", tr:"Kozmik enerjiyle güçlenen Hava Kuvvetleri pilotu", en:"Air Force pilot empowered by cosmic energy"},
+  "Winter Soldier":{az:"Kiber qol taxılmış, təlim keçmiş sabiq casus əsgər", tr:"Sibernetik kollu, eğitimli eski suikastçı asker", en:"Cybernetic-armed, highly trained former assassin soldier"},
+  "Shang-Chi":{az:"Döyüş sənətləri ustası, On Üzüyün sahibi", tr:"Dövüş sanatları ustası, On Yüzük'ün sahibi", en:"Master martial artist and wielder of the Ten Rings"},
+  "Ghost Rider":{az:"Cəhənnəm ruhu daşıyan, alovlu intiqam mələyi", tr:"Cehennem ruhu taşıyan, alevli intikam meleği", en:"Vengeance spirit whose skull burns with hellfire"},
+  "Blade":{az:"Yarı vampir, vampir ovçusu qılınc ustası", tr:"Yarı vampir, vampir avcısı kılıç ustası", en:"Half-vampire hunter wielding blades against the undead"},
+  "She-Hulk":{az:"Hüquqşünas, qəzəblənəndə nəhəng gücə çevrilir", tr:"Avukat, öfkelenince deve dönüşen kahraman", en:"Lawyer who transforms into a powerful green giant"},
+  "Jean Grey":{az:"Telepatik və telekinetik gücə malik qüdrətli mutant", tr:"Telepatik ve telekinetik güce sahip güçlü mutant", en:"Mutant with immense telepathic and telekinetic power"},
+  "Magneto":{az:"Metalları idarə edən mutant lider", tr:"Metalleri kontrol eden mutant lider", en:"Mutant leader who commands magnetic forces"},
+  "Professor X":{az:"Dünyanın ən güclü telepatı, mutant məktəbinin qurucusu", tr:"Dünyanın en güçlü telepatı, mutant okulunun kurucusu", en:"World's most powerful telepath, founder of the mutant school"},
+  "Iceman":{az:"Bədənini buza çevirə bilən soyuq gücə sahib mutant", tr:"Vücudunu buza çevirebilen soğuk güçlü mutant", en:"Mutant who can turn his body to ice"},
+  "Doctor Octopus":{az:"Dörd mexaniki qolla döyüşən dahi alim", tr:"Dört mekanik kolla savaşan dahi bilim insanı", en:"Brilliant scientist who fights with four mechanical arms"},
+  "Homelander":{az:"Ən güclü, lakin qorxulu dərəcədə qeyri-sabit qəhrəman", tr:"En güçlü, ama tehlikeli derecede dengesiz kahraman", en:"The most powerful, but dangerously unstable hero"},
+  "Queen Maeve":{az:"Güclü, sürətli və möhkəm super-qəhrəman", tr:"Güçlü, hızlı ve dayanıklı süper kahraman", en:"Powerful, fast, and nearly indestructible superhero"},
+  "Soldier Boy":{az:"II Dünya müharibəsindən qalma köhnə nəsil super-əsgər", tr:"II. Dünya Savaşı'ndan kalma eski nesil süper asker", en:"World War II-era super-soldier from a bygone generation"}
+};
+
+function getBio(name){
+  const b = BIOS[name];
+  if(!b) return '';
+  return b[currentLang] || b.az || '';
+}
+
 const HEROES = [
   // ---- Mythology / Universal ----
   {name:"Hades", fr:"Mythology", init:"HD", color:"#4A148C", tier:"S", power:97, speed:80, defense:95, health:98, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvBRSD4vBwIhu6sAYBQpgH57g2ur_TiPgci_q4lKGpfA&s=10"},
@@ -928,26 +1195,26 @@ function startHostPeer(){
     const link = location.origin + location.pathname + '?room=' + id;
     document.getElementById('roomLinkInput').value = link;
     document.getElementById('hostLinkInput').value = link;
-    document.getElementById('createStatusText').textContent = 'Otaq hazır — linki göndər';
+    document.getElementById('createStatusText').textContent = t('create_status_ready');
   });
   peer.on('connection', c=>{
     conn = c;
     guestConnected = true;
     setupConn();
     document.getElementById('createDot').classList.add('on');
-    document.getElementById('createStatusText').textContent = 'Oyuncu 2 qoşuldu!';
+    document.getElementById('createStatusText').textContent = t('create_status_joined');
     setTimeout(()=>{
       document.getElementById('lobby').style.display = 'none';
       document.getElementById('home').style.display = 'flex';
       document.getElementById('hostStatusBar').style.display = 'block';
       document.getElementById('hostDot').classList.add('on');
-      document.getElementById('hostStatusText').textContent = 'Oyuncu 2 qoşuldu — başlaya bilərsən';
+      document.getElementById('hostStatusText').textContent = t('host_status_ready');
       document.getElementById('hostLinkInput').value = document.getElementById('roomLinkInput').value;
-      showOnlinePill('Sən Oyuncu 1-sən');
+      showOnlinePill(t('pill_p1'));
     }, 500);
   });
   peer.on('error', err=>{
-    document.getElementById('createStatusText').textContent = 'Xəta: ' + (err && err.type ? err.type : 'bağlantı problemi');
+    document.getElementById('createStatusText').textContent = t('create_status_error') + (err && err.type ? err.type : '');
   });
 }
 
@@ -955,20 +1222,20 @@ document.getElementById('copyLinkBtn').addEventListener('click', ()=>{
   const inp = document.getElementById('roomLinkInput');
   inp.select();
   if(navigator.clipboard){ navigator.clipboard.writeText(inp.value).catch(()=>{}); }
-  document.getElementById('copyLinkBtn').textContent = 'Kopyalandı!';
-  setTimeout(()=>{ document.getElementById('copyLinkBtn').textContent = 'Linki kopyala'; }, 1400);
+  document.getElementById('copyLinkBtn').textContent = t('copy_link_copied');
+  setTimeout(()=>{ document.getElementById('copyLinkBtn').textContent = t('copy_link_btn'); }, 1400);
 });
 document.getElementById('hostCopyBtn').addEventListener('click', ()=>{
   const inp = document.getElementById('hostLinkInput');
   inp.select();
   if(navigator.clipboard){ navigator.clipboard.writeText(inp.value).catch(()=>{}); }
-  document.getElementById('hostCopyBtn').textContent = 'Kopyalandı!';
-  setTimeout(()=>{ document.getElementById('hostCopyBtn').textContent = 'Kopyala'; }, 1400);
+  document.getElementById('hostCopyBtn').textContent = t('copy_link_copied');
+  setTimeout(()=>{ document.getElementById('hostCopyBtn').textContent = t('host_copy_btn'); }, 1400);
 });
 
 document.getElementById('joinConnectBtn').addEventListener('click', ()=>{
   const raw = document.getElementById('joinCodeInput').value.trim();
-  if(!raw){ document.getElementById('joinStatusText').textContent = 'Kod boş ola bilməz'; return; }
+  if(!raw){ document.getElementById('joinStatusText').textContent = t('join_status_empty'); return; }
   let roomId = raw;
   try{
     if(raw.includes('room=')){
@@ -979,26 +1246,26 @@ document.getElementById('joinConnectBtn').addEventListener('click', ()=>{
 
   onlineMode = true;
   isHost = false;
-  document.getElementById('joinStatusText').textContent = 'Qoşulur...';
+  document.getElementById('joinStatusText').textContent = t('join_status_connecting');
   peer = new Peer();
   peer.on('open', ()=>{
     conn = peer.connect(roomId, {reliable:true});
     conn.on('open', ()=>{
       setupConn();
       document.getElementById('joinDot').classList.add('on');
-      document.getElementById('joinStatusText').textContent = 'Qoşuldu!';
-      showOnlinePill('Sən Oyuncu 2-sən');
+      document.getElementById('joinStatusText').textContent = t('join_status_connected');
+      showOnlinePill(t('pill_p2'));
       setTimeout(()=>{
         document.getElementById('lobby').style.display = 'none';
         document.getElementById('waitScreen').style.display = 'flex';
       }, 400);
     });
     conn.on('error', ()=>{
-      document.getElementById('joinStatusText').textContent = 'Otağa qoşulmaq mümkün olmadı';
+      document.getElementById('joinStatusText').textContent = t('join_status_fail');
     });
   });
   peer.on('error', ()=>{
-    document.getElementById('joinStatusText').textContent = 'Xəta: otaq tapılmadı';
+    document.getElementById('joinStatusText').textContent = t('join_status_notfound');
   });
 });
 
@@ -1024,12 +1291,12 @@ function setupConn(){
       document.getElementById('battle').style.display = 'none';
       document.getElementById('game').style.display = 'none';
       document.getElementById('waitScreen').style.display = 'flex';
-      document.getElementById('waitText').textContent = 'Otaq sahibi yeni oyun hazırlayır...';
+      document.getElementById('waitText').textContent = t('wait_text_reset');
     }
   });
   conn.on('close', ()=>{
     guestConnected = false;
-    alert('Bağlantı kəsildi. Səhifəni yeniləyib yenidən qoşulun.');
+    alert(t('conn_lost_alert'));
   });
 }
 
@@ -1121,7 +1388,7 @@ function applySync(payload){
     renderBattleFromState();
   } else if(payload.screen === 'end'){
     showFinalResults();
-    document.getElementById('restartBtn').textContent = 'Otaq sahibi yenidən başlada bilər';
+    document.getElementById('restartBtn').textContent = t('restart_locked');
     document.getElementById('restartBtn').disabled = true;
     document.getElementById('restartBtn').style.opacity = '0.5';
     document.getElementById('restartBtn').style.cursor = 'default';
@@ -1181,8 +1448,7 @@ const maxHeroesRow = document.getElementById('maxHeroesRow');
 const maxHeroesVal = document.getElementById('maxHeroesVal');
 let selectedMaxHeroes = 5;
 function updateFootNote(){
-  document.getElementById('footNote').textContent =
-    `Her oyuncu maksimum ${selectedMaxHeroes} kahraman alabilir · en yüksek teklif kazanır · güç, hız, savunma ve can gerçek güce dayanır`;
+  document.getElementById('footNote').textContent = t('foot_note').replace('{n}', selectedMaxHeroes);
 }
 for(let i=3;i<=10;i++){
   const c = document.createElement('div');
@@ -1203,7 +1469,7 @@ document.getElementById('startBtn').addEventListener('click', startGame);
 
 function startGame(){
   if(onlineMode && isHost && !guestConnected){
-    alert('Oyuncu 2 hələ qoşulmayıb. Linki göndər və gözlə.');
+    alert(t('no_player2_alert'));
     return;
   }
 
@@ -1243,7 +1509,8 @@ function renderAuction(){
 
   const hero = state.lots[state.lotIdx];
   document.getElementById('lotIndex').textContent = state.lotIdx + 1;
-  document.getElementById('lotLabel').textContent = `Şu anki lot (${state.lotIdx + 1}/${state.lots.length})`;
+  document.getElementById('lotLabel').textContent = t('lot_label_progress')
+    .replace('{i}', state.lotIdx + 1).replace('{n}', state.lots.length);
 
   // Avatar
   const avatar = document.getElementById('heroAvatar');
@@ -1255,9 +1522,9 @@ function renderAuction(){
   }
 
   document.getElementById('heroName').childNodes[0].nodeValue = hero.name + " ";
-  
+
   const tierEl = document.getElementById('heroTier');
-  tierEl.textContent = hero.tier + "-TIER";
+  tierEl.textContent = hero.tier + t('tier_suffix');
   tierEl.className = 'tier-badge tier-' + hero.tier;
 
   const tagEl = document.getElementById('heroFranchise');
@@ -1269,20 +1536,20 @@ function renderAuction(){
 
   // Stats
   document.getElementById('heroStatsRow').innerHTML = `
-    <div class="mini-stat g">GÜÇ: ${hero.power}</div>
-    <div class="mini-stat s">HIZ: ${hero.speed}</div>
-    <div class="mini-stat m">SAVUNMA: ${hero.defense}</div>
-    <div class="mini-stat c">CAN: ${hero.health}</div>
+    <div class="mini-stat g">${t('stat_power')}: ${hero.power}</div>
+    <div class="mini-stat s">${t('stat_speed')}: ${hero.speed}</div>
+    <div class="mini-stat m">${t('stat_defense')}: ${hero.defense}</div>
+    <div class="mini-stat c">${t('stat_health')}: ${hero.health}</div>
   `;
 
   document.getElementById('curPrice').textContent = '$' + state.price;
 
   const note = document.getElementById('leaderNote');
   if(!state.leader){
-    note.innerHTML = "Müzayedeye başlamak için teklif verin";
+    note.innerHTML = t('leader_note_default');
     note.className = "leader-note";
   } else {
-    note.innerHTML = `En yüksek teklif: <b>OYUNCU ${state.leader}</b> ($${state.price})`;
+    note.innerHTML = buildLeaderNote(state.leader, state.price);
     note.className = `leader-note p${state.leader}`;
   }
 
@@ -1318,11 +1585,17 @@ function renderAuction(){
   if(onlineMode && isHost) syncGuest();
 }
 
+function buildLeaderNote(leaderId, price){
+  const template = t('leader_note_leading'); // "En yüksek teklif: OYUNCU {p} (${x})" style
+  const playerLabel = leaderId === 1 ? t('player1') : t('player2');
+  return template.replace('OYUNCU {p}', `<b>${playerLabel}</b>`).replace('{x}', price);
+}
+
 function renderRosterList(pId, containerId){
   const container = document.getElementById(containerId);
   const heroes = state.players[pId].heroes;
   if(heroes.length === 0){
-    container.innerHTML = `<div class="roster-empty">Henüz kahraman alınmadı</div>`;
+    container.innerHTML = `<div class="roster-empty">${t('roster_empty')}</div>`;
     return;
   }
   container.innerHTML = heroes.map(h => `
@@ -1359,13 +1632,16 @@ function makeBid(pId){
   renderAuction();
 }
 
+/* Fix: if a player is leading and the OTHER player passes, the lot
+   resolves immediately in favor of the leader — both sides no longer
+   need to pass for the hero to be awarded. */
 function makePass(pId){
   if(pId === 1) state.p1Passed = true;
   if(pId === 2) state.p2Passed = true;
 
   if(state.p1Passed && state.p2Passed){
     resolveLot();
-  } else if(state.leader !== null && ((pId === 1 && state.p2Passed) || (pId === 2 && state.p1Passed))){
+  } else if(state.leader && ((state.leader === 1 && state.p2Passed) || (state.leader === 2 && state.p1Passed))){
     resolveLot();
   } else {
     renderAuction();
@@ -1379,11 +1655,12 @@ function resolveLot(){
 
   if(state.leader){
     const winner = state.leader;
+    const winnerLabel = winner === 1 ? t('player1') : t('player2');
     state.players[winner].budget -= state.price;
     state.players[winner].heroes.push({...hero, boughtPrice: state.price});
-    flashText.innerHTML = `${hero.name}<br>SATILDI! <span class="small">OYUNCU ${winner} — $${state.price}</span>`;
+    flashText.innerHTML = `${hero.name}<br>${t('sold_text')} <span class="small">${winnerLabel} — $${state.price}</span>`;
   } else {
-    flashText.innerHTML = `${hero.name}<br>SATILMADI <span class="small">Kimse teklif vermedi</span>`;
+    flashText.innerHTML = `${hero.name}<br>${t('unsold_text')} <span class="small">${t('unsold_sub')}</span>`;
   }
 
   flash.classList.add('show');
@@ -1444,8 +1721,8 @@ function startBattle(){
 function updateBattleTally(){
   const alive1 = battleState.t1.filter(h => !h.eliminated).length;
   const alive2 = battleState.t2.filter(h => !h.eliminated).length;
-  document.getElementById('t1Tally').textContent = `Oyuncu 1: ${alive1} kahraman kaldı`;
-  document.getElementById('t2Tally').textContent = `Oyuncu 2: ${alive2} kahraman kaldı`;
+  document.getElementById('t1Tally').textContent = t('tally_p1').replace('{n}', alive1);
+  document.getElementById('t2Tally').textContent = t('tally_p2').replace('{n}', alive2);
 }
 
 function setupBattlePair(){
@@ -1460,7 +1737,7 @@ function setupBattlePair(){
   renderFighter('left', h1);
   renderFighter('right', h2);
 
-  battleState.status = "Sıradaki dövüşe hazır";
+  battleState.status = t('fight_ready');
   document.getElementById('fightStatus').textContent = battleState.status;
   document.getElementById('nextFightBtn').disabled = false;
   document.getElementById('nextFightBtn').style.display = 'block';
@@ -1476,18 +1753,19 @@ function renderFighter(side, h){
 
   document.getElementById(prefix + 'Name').textContent = h.name;
   document.getElementById(prefix + 'Franchise').textContent = h.fr;
+  document.getElementById(prefix + 'Bio').textContent = getBio(h.name);
   document.getElementById(prefix + 'Stats').innerHTML = `
     <div class="mini-stats" style="justify-content:center;">
-      <span class="mini-stat g">G:${h.power}</span>
-      <span class="mini-stat s">H:${h.speed}</span>
-      <span class="mini-stat m">S:${h.defense}</span>
+      <span class="mini-stat g">${t('stat_power_s')}:${h.power}</span>
+      <span class="mini-stat s">${t('stat_speed_s')}:${h.speed}</span>
+      <span class="mini-stat m">${t('stat_defense_s')}:${h.defense}</span>
     </div>
   `;
 
   const hpPct = Math.max(0, Math.round((h.curHp / h.maxHp) * 100));
   document.getElementById(prefix + 'HpFill').style.width = hpPct + '%';
-  document.getElementById(prefix + 'HpLabel').textContent = `CAN: ${hpPct}%`;
-  document.getElementById(prefix + 'Score').textContent = h.wins > 0 ? `Galibiyet: ${h.wins}` : '';
+  document.getElementById(prefix + 'HpLabel').textContent = `${t('stat_health')}: ${hpPct}%`;
+  document.getElementById(prefix + 'Score').textContent = h.wins > 0 ? `${t('win_count')}: ${h.wins}` : '';
 }
 
 document.getElementById('nextFightBtn').addEventListener('click', ()=>{
@@ -1498,8 +1776,8 @@ document.getElementById('nextFightBtn').addEventListener('click', ()=>{
 function runFightRound(){
   const btn = document.getElementById('nextFightBtn');
   btn.disabled = true;
-  document.getElementById('fightStatus').textContent = 'Döyüşür...';
-  battleState.status = 'Döyüşür...';
+  document.getElementById('fightStatus').textContent = t('fight_fighting');
+  battleState.status = t('fight_fighting');
   simulateFightStep();
 }
 
@@ -1540,18 +1818,18 @@ function resolveFightWinner(h1, h2){
   const status = document.getElementById('fightStatus');
 
   if(h1.curHp <= 0 && h2.curHp <= 0){
-    battleState.status = "BERABERE!";
+    battleState.status = t('fight_draw');
     h1.eliminated = true;
     h2.eliminated = true;
     battleState.idx1++;
     battleState.idx2++;
   } else if(h1.curHp <= 0){
-    battleState.status = `${h2.name} GALİP GELDİ!`;
+    battleState.status = t('fight_win').replace('{n}', h2.name);
     h1.eliminated = true;
     h2.wins++;
     battleState.idx1++;
   } else {
-    battleState.status = `${h1.name} GALİP GELDİ!`;
+    battleState.status = t('fight_win').replace('{n}', h1.name);
     h2.eliminated = true;
     h1.wins++;
     battleState.idx2++;
@@ -1582,17 +1860,17 @@ function endBattle(){
 
   battleState.championDone = true;
   if(alive1 > alive2){
-    battleState.championText = "OYUNCU 1 GALİP GELDİ!";
+    battleState.championText = t('p1_win_banner');
     battleState.championColor = "var(--azure)";
-    battleState.championSub = "Oyuncu 1'in takımı arenada üstünlük sağladı!";
+    battleState.championSub = t('p1_win_sub');
   } else if(alive2 > alive1){
-    battleState.championText = "OYUNCU 2 GALİP GELDİ!";
+    battleState.championText = t('p2_win_banner');
     battleState.championColor = "var(--crimson)";
-    battleState.championSub = "Oyuncu 2'nin takımı raundları zaferle tamamladı!";
+    battleState.championSub = t('p2_win_sub');
   } else {
-    battleState.championText = "BERABERLİK!";
+    battleState.championText = t('tie_banner');
     battleState.championColor = "";
-    battleState.championSub = "Her iki taraf cesurca dövüştü!";
+    battleState.championSub = t('tie_sub');
   }
 
   championText.textContent = battleState.championText;
@@ -1627,7 +1905,7 @@ function renderFinalList(pId, containerId){
   const container = document.getElementById(containerId);
   const heroes = state.players[pId].heroes;
   if(heroes.length === 0){
-    container.innerHTML = `<div class="roster-empty">Kahraman yok</div>`;
+    container.innerHTML = `<div class="roster-empty">${t('final_no_heroes')}</div>`;
     return;
   }
 
@@ -1662,6 +1940,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
   if(params.get('room')){
     document.getElementById('joinModeBtn').click();
   }
+  setLanguage('az');
 });
 </script>
 </body>

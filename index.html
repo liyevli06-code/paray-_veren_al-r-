@@ -212,6 +212,102 @@
     letter-spacing:0.02em;
   }
 
+  /* ---------- GAME MODE SELECTOR (home) ---------- */
+  .gm-row{display:flex; gap:10px;}
+  .gm-btn{
+    flex:1; padding:14px 10px; border:1px solid var(--line); border-radius:4px;
+    background:var(--bg-deep); color:var(--text-light); text-align:center; cursor:pointer;
+    transition:all .15s ease;
+  }
+  .gm-btn:hover{border-color:var(--gold);}
+  .gm-btn.active{border-color:var(--gold); background:rgba(212,165,68,0.08);}
+  .gm-btn .gm-title{font-family:'Bebas Neue',sans-serif; font-size:17px; letter-spacing:0.04em; color:var(--gold-bright);}
+  .gm-btn .gm-sub{font-size:10.5px; color:var(--text-dim); margin-top:3px; line-height:1.3;}
+
+  /* ---------- WHEEL SCREEN ---------- */
+  #wheelGame{display:none; min-height:100vh; padding:20px;}
+  .wheel-stage{
+    background:linear-gradient(180deg, var(--bg-panel), var(--bg-panel-2));
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:28px;
+    text-align:center;
+    position:relative;
+    min-height:420px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .wheel-stage::before{
+    content:"ÇARX";
+    position:absolute;
+    top:14px; left:0; right:0;
+    text-align:center;
+    color:var(--text-dim);
+    font-size:10px;
+    letter-spacing:0.4em;
+  }
+  .wheel-turn{
+    margin-top:26px;
+    font-family:'Bebas Neue',sans-serif;
+    font-size:24px;
+    letter-spacing:0.03em;
+  }
+  .wheel-turn.p1{color:var(--azure);}
+  .wheel-turn.p2{color:var(--crimson);}
+  .wheel-progress{color:var(--text-dim); font-size:11px; letter-spacing:0.15em; text-transform:uppercase; margin-top:4px;}
+  .wheel-outer{
+    position:relative;
+    width:300px; height:300px;
+    margin:22px auto 18px;
+  }
+  .wheel-pointer{
+    position:absolute;
+    top:-8px; left:50%;
+    transform:translateX(-50%);
+    width:0; height:0;
+    border-left:12px solid transparent;
+    border-right:12px solid transparent;
+    border-top:20px solid var(--gold-bright);
+    z-index:5;
+    filter:drop-shadow(0 2px 3px rgba(0,0,0,0.5));
+  }
+  .wheel-hub{
+    position:absolute;
+    top:50%; left:50%;
+    width:26px; height:26px;
+    transform:translate(-50%,-50%);
+    background:var(--gold-bright);
+    border:3px solid var(--bg-deep);
+    border-radius:50%;
+    z-index:4;
+    box-shadow:0 0 0 2px var(--gold);
+  }
+  .wheel-spinner{
+    width:100%; height:100%;
+    border-radius:50%;
+    transform:rotate(0deg);
+    box-shadow:0 0 0 4px var(--bg-deep), 0 0 0 6px var(--line), 0 20px 40px rgba(0,0,0,0.5);
+  }
+  .wheel-spinner svg{display:block; width:100%; height:100%;}
+  .wheel-spin-btn{
+    padding:14px 40px;
+    border:none; border-radius:3px;
+    background:var(--gold); color:var(--bg-deep);
+    font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.08em;
+    cursor:pointer;
+    margin-top:6px;
+  }
+  .wheel-spin-btn:hover:not(:disabled){background:var(--gold-bright);}
+  .wheel-spin-btn:disabled{opacity:0.35; cursor:not-allowed;}
+  .wheel-result{
+    margin-top:16px;
+    min-height:20px;
+    font-size:13px;
+    color:var(--text-dim);
+  }
+  .wheel-result b{color:var(--gold-bright);}
+
   /* ---------- GAME SCREEN ---------- */
   #game{display:none; min-height:100vh; padding:20px;}
   .topbar{
@@ -661,13 +757,29 @@
     </div>
 
     <div class="field">
-      <label><span data-i18n="budget_label">Başlangıç bütçesi</span> <span class="val mono" id="budgetVal">$50</span></label>
-      <input type="range" id="budgetRange" min="10" max="100" step="10" value="50">
+      <label data-i18n="mode_field_label">Oyun rejimi</label>
+      <div class="gm-row">
+        <div class="gm-btn active" id="gmAuctionBtn">
+          <div class="gm-title" data-i18n="mode_auction_title">AÇIQ ARTIRMA</div>
+          <div class="gm-sub" data-i18n="mode_auction_sub">Büdcə ilə təklif verib kahraman al</div>
+        </div>
+        <div class="gm-btn" id="gmWheelBtn">
+          <div class="gm-title" data-i18n="mode_wheel_title">ÇARX</div>
+          <div class="gm-sub" data-i18n="mode_wheel_sub">Çarxı fırlat, çıxan kahraman sənə qalsın</div>
+        </div>
+      </div>
     </div>
 
-    <div class="field">
-      <label data-i18n="inc_label">Teklif artış adımı</label>
-      <div class="chip-row" id="incRow"></div>
+    <div id="budgetField">
+      <div class="field">
+        <label><span data-i18n="budget_label">Başlangıç bütçesi</span> <span class="val mono" id="budgetVal">$50</span></label>
+        <input type="range" id="budgetRange" min="10" max="100" step="10" value="50">
+      </div>
+
+      <div class="field">
+        <label data-i18n="inc_label">Teklif artış adımı</label>
+        <div class="chip-row" id="incRow"></div>
+      </div>
     </div>
 
     <div class="field">
@@ -732,6 +844,48 @@
         <div class="budget" id="p2Budget">$50</div>
       </div>
       <div class="roster-list" id="p2List"><div class="roster-empty" data-i18n="roster_empty">Henüz kahraman alınmadı</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== WHEEL GAME SCREEN ===================== -->
+<div id="wheelGame">
+  <div class="topbar">
+    <div class="logo" data-i18n="wheel_game_logo">KAHRAMAN Çarxı</div>
+    <div class="progress"><span data-i18n="game_lot">LOT</span> <b id="wheelLotIndex">1</b> / <b id="wheelLotTotal">10</b></div>
+  </div>
+
+  <div class="hall">
+    <div class="roster p1">
+      <div class="roster-head">
+        <div class="pname" data-i18n="player1">OYUNCU 1</div>
+        <div class="budget" id="wheelP1Count">0/5</div>
+      </div>
+      <div class="roster-list" id="wheelP1List"><div class="roster-empty" data-i18n="roster_empty">Henüz kahraman alınmadı</div></div>
+    </div>
+
+    <div class="wheel-stage" id="wheelStage">
+      <div class="wheel-turn" id="wheelTurnLabel">—</div>
+      <div class="wheel-progress" id="wheelProgress"></div>
+
+      <div class="wheel-outer">
+        <div class="wheel-pointer"></div>
+        <div class="wheel-hub"></div>
+        <div class="wheel-spinner" id="wheelSpinner"></div>
+      </div>
+
+      <button class="wheel-spin-btn" id="wheelSpinBtn" data-i18n="spin_btn">ÇEVİR</button>
+      <div class="wheel-result" id="wheelResult"></div>
+
+      <div class="flash" id="wheelFlash"><div class="flash-text" id="wheelFlashText"></div></div>
+    </div>
+
+    <div class="roster p2">
+      <div class="roster-head">
+        <div class="pname" data-i18n="player2">OYUNCU 2</div>
+        <div class="budget" id="wheelP2Count">0/5</div>
+      </div>
+      <div class="roster-list" id="wheelP2List"><div class="roster-empty" data-i18n="roster_empty">Henüz kahraman alınmadı</div></div>
     </div>
   </div>
 </div>
@@ -851,7 +1005,12 @@ const I18N = {
     p2_win_banner:"OYUNCU 2 QALİB GƏLDİ!", p2_win_sub:"Oyuncu 2-nin komandası döyüşü qələbə ilə başa vurdu!",
     tie_banner:"BƏRABƏRLİK!", tie_sub:"Hər iki tərəf cəsarətlə döyüşdü!",
     restart_locked:"Otaq sahibi yenidən başlada bilər",
-    end_title:"MÜZAYİDƏ BİTDİ", final_no_heroes:"Kahraman yoxdur", restart_btn:"YENİDƏN OYNA"
+    end_title:"MÜZAYİDƏ BİTDİ", final_no_heroes:"Kahraman yoxdur", restart_btn:"YENİDƏN OYNA",
+    mode_field_label:"Oyun rejimi", mode_auction_title:"AÇIQ ARTIRMA", mode_auction_sub:"Büdcə ilə təklif verib kahraman al",
+    mode_wheel_title:"ÇARX", mode_wheel_sub:"Çarxı fırlat, çıxan kahraman sənə qalsın",
+    wheel_game_logo:"KAHRAMAN Çarxı", wheel_turn_label:"{PLAYER}-un növbəsi",
+    wheel_progress:"{i} / {n} kahraman bölüşdürüldü", spin_btn:"ÇEVİR",
+    wheel_assigned:"{hero} → {PLAYER}-a qismət oldu!", wheel_count:"{c}/{m}"
   },
   tr: {
     chat_title:"Sohbet", chat_placeholder:"Mesaj yaz...", chat_send:"Gönder",
@@ -894,7 +1053,12 @@ const I18N = {
     p2_win_banner:"OYUNCU 2 GALİP GELDİ!", p2_win_sub:"Oyuncu 2'nin takımı raundları zaferle tamamladı!",
     tie_banner:"BERABERLİK!", tie_sub:"Her iki taraf cesurca dövüştü!",
     restart_locked:"Oda sahibi yeniden başlatabilir",
-    end_title:"MÜZAYEDE BİTTİ", final_no_heroes:"Kahraman yok", restart_btn:"YENİDEN OYNA"
+    end_title:"MÜZAYEDE BİTTİ", final_no_heroes:"Kahraman yok", restart_btn:"YENİDEN OYNA",
+    mode_field_label:"Oyun modu", mode_auction_title:"AÇIK ARTIRMA", mode_auction_sub:"Bütçeyle teklif verip kahraman al",
+    mode_wheel_title:"ÇARK", mode_wheel_sub:"Çarkı çevir, çıkan kahraman sana kalsın",
+    wheel_game_logo:"KAHRAMAN Çarkı", wheel_turn_label:"{PLAYER}'in sırası",
+    wheel_progress:"{i} / {n} kahraman dağıtıldı", spin_btn:"ÇEVİR",
+    wheel_assigned:"{hero} → {PLAYER}'e düştü!", wheel_count:"{c}/{m}"
   },
   en: {
     chat_title:"Chat", chat_placeholder:"Type a message...", chat_send:"Send",
@@ -937,7 +1101,12 @@ const I18N = {
     p2_win_banner:"PLAYER 2 WINS!", p2_win_sub:"Player 2's team won the battle!",
     tie_banner:"IT'S A TIE!", tie_sub:"Both sides fought bravely!",
     restart_locked:"Only the host can restart",
-    end_title:"AUCTION OVER", final_no_heroes:"No heroes", restart_btn:"PLAY AGAIN"
+    end_title:"AUCTION OVER", final_no_heroes:"No heroes", restart_btn:"PLAY AGAIN",
+    mode_field_label:"Game mode", mode_auction_title:"AUCTION", mode_auction_sub:"Bid with your budget to win heroes",
+    mode_wheel_title:"WHEEL", mode_wheel_sub:"Spin the wheel — whoever it lands on is yours",
+    wheel_game_logo:"HERO Wheel", wheel_turn_label:"{PLAYER}'s turn",
+    wheel_progress:"{i} / {n} heroes assigned", spin_btn:"SPIN",
+    wheel_assigned:"{hero} goes to {PLAYER}!", wheel_count:"{c}/{m}"
   }
 };
 
@@ -972,6 +1141,9 @@ function refreshDynamicScreens(){
   // Re-render whatever screen is currently visible so dynamic text updates too
   if(document.getElementById('game').style.display === 'block' && state){
     renderAuction();
+  }
+  if(document.getElementById('wheelGame').style.display === 'block' && wheelState){
+    renderWheelScreen(false);
   }
   if(document.getElementById('battle').style.display === 'block' && battleState){
     renderBattleFromState();
@@ -1346,10 +1518,12 @@ function sendAction(payload){
 function handleGuestAction(data){
   if(data.action === 'bid') makeBid(2);
   else if(data.action === 'pass') makePass(2);
+  else if(data.action === 'spin') spinWheel();
 }
 
 function currentScreenName(){
   if(document.getElementById('game').style.display === 'block') return 'game';
+  if(document.getElementById('wheelGame').style.display === 'block') return 'wheel';
   if(document.getElementById('battle').style.display === 'block') return 'battle';
   if(document.getElementById('endScreen').style.display === 'block') return 'end';
   return 'home';
@@ -1358,23 +1532,29 @@ function currentScreenName(){
 function syncGuest(){
   if(!(onlineMode && isHost && conn && conn.open)) return;
   const flash = document.getElementById('flash');
+  const wheelFlash = document.getElementById('wheelFlash');
   conn.send({
     type:'sync',
     screen: currentScreenName(),
     state: state,
     battleState: battleState,
+    wheelState: wheelState,
     flashShow: flash.classList.contains('show'),
-    flashText: document.getElementById('flashText').innerHTML
+    flashText: document.getElementById('flashText').innerHTML,
+    wheelFlashShow: wheelFlash.classList.contains('show'),
+    wheelFlashText: document.getElementById('wheelFlashText').innerHTML
   });
 }
 
 function applySync(payload){
   state = payload.state;
   battleState = payload.battleState;
+  wheelState = payload.wheelState;
 
   document.getElementById('waitScreen').style.display = 'none';
   document.getElementById('home').style.display = 'none';
   document.getElementById('game').style.display = payload.screen === 'game' ? 'block' : 'none';
+  document.getElementById('wheelGame').style.display = payload.screen === 'wheel' ? 'block' : 'none';
   document.getElementById('battle').style.display = payload.screen === 'battle' ? 'block' : 'none';
   document.getElementById('endScreen').style.display = payload.screen === 'end' ? 'block' : 'none';
 
@@ -1384,6 +1564,12 @@ function applySync(payload){
     const flash = document.getElementById('flash');
     document.getElementById('flashText').innerHTML = payload.flashText || '';
     flash.classList.toggle('show', !!payload.flashShow);
+  } else if(payload.screen === 'wheel'){
+    document.getElementById('wheelLotTotal').textContent = wheelState.lots.length;
+    renderWheelScreen(true);
+    const wheelFlash = document.getElementById('wheelFlash');
+    document.getElementById('wheelFlashText').innerHTML = payload.wheelFlashText || '';
+    wheelFlash.classList.toggle('show', !!payload.wheelFlashShow);
   } else if(payload.screen === 'battle'){
     renderBattleFromState();
   } else if(payload.screen === 'end'){
@@ -1465,6 +1651,25 @@ for(let i=3;i<=10;i++){
 }
 updateFootNote();
 
+/* ---------------- GAME MODE TOGGLE (auction / wheel) ---------------- */
+let selectedGameMode = 'auction';
+const gmAuctionBtn = document.getElementById('gmAuctionBtn');
+const gmWheelBtn = document.getElementById('gmWheelBtn');
+const budgetField = document.getElementById('budgetField');
+
+gmAuctionBtn.addEventListener('click', ()=>{
+  selectedGameMode = 'auction';
+  gmAuctionBtn.classList.add('active');
+  gmWheelBtn.classList.remove('active');
+  budgetField.style.display = '';
+});
+gmWheelBtn.addEventListener('click', ()=>{
+  selectedGameMode = 'wheel';
+  gmWheelBtn.classList.add('active');
+  gmAuctionBtn.classList.remove('active');
+  budgetField.style.display = 'none';
+});
+
 document.getElementById('startBtn').addEventListener('click', startGame);
 
 function startGame(){
@@ -1473,13 +1678,20 @@ function startGame(){
     return;
   }
 
+  const maxHeroes = selectedMaxHeroes;
+
+  if(selectedGameMode === 'wheel'){
+    startWheelGame(maxHeroes);
+    return;
+  }
+
   const budget = parseInt(budgetRange.value, 10);
   const inc = selectedInc;
-  const maxHeroes = selectedMaxHeroes;
   const lotCount = Math.min(HEROES.length, maxHeroes * 2);
   const lots = shuffle(HEROES).slice(0, lotCount).map(assignStats);
 
   state = {
+    mode:'auction',
     budget, inc, maxHeroes, lots,
     lotIdx: 0,
     price: 0,
@@ -1493,6 +1705,7 @@ function startGame(){
 
   document.getElementById('home').style.display = 'none';
   document.getElementById('game').style.display = 'block';
+  document.getElementById('wheelGame').style.display = 'none';
   document.getElementById('battle').style.display = 'none';
   document.getElementById('endScreen').style.display = 'none';
 
@@ -1679,6 +1892,236 @@ function resolveLot(){
 
 function finishAuction(){
   document.getElementById('game').style.display = 'none';
+  const p1H = state.players[1].heroes.length;
+  const p2H = state.players[2].heroes.length;
+
+  if(p1H > 0 && p2H > 0){
+    startBattle();
+  } else {
+    showFinalResults();
+  }
+}
+
+/* ---------------- WHEEL MODE LOGIC ---------------- */
+let wheelState = null;
+
+function startWheelGame(maxHeroes){
+  const lotCount = Math.min(HEROES.length, maxHeroes * 2);
+  const lots = shuffle(HEROES).slice(0, lotCount).map(assignStats);
+
+  wheelState = {
+    lots,
+    remaining: lots.slice(),
+    turn: 1,
+    maxHeroes,
+    spinning: false,
+    lastAssigned: ''
+  };
+
+  state = {
+    mode: 'wheel',
+    maxHeroes,
+    players: {
+      1: {budget: 0, heroes: []},
+      2: {budget: 0, heroes: []}
+    }
+  };
+
+  document.getElementById('home').style.display = 'none';
+  document.getElementById('game').style.display = 'none';
+  document.getElementById('wheelGame').style.display = 'block';
+  document.getElementById('battle').style.display = 'none';
+  document.getElementById('endScreen').style.display = 'none';
+
+  document.getElementById('wheelLotTotal').textContent = lots.length;
+  renderWheelScreen(true);
+}
+
+function escapeHtml(str){
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function buildWheelSVG(items){
+  const size = 300;
+  const r = size / 2;
+  const cx = r, cy = r;
+  const n = items.length;
+  if(n === 0) return '';
+  const anglePer = 360 / n;
+  let svg = `<svg viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">`;
+
+  items.forEach((hero, i)=>{
+    const startAngle = i * anglePer;
+    const endAngle = startAngle + anglePer;
+    const midAngle = startAngle + anglePer / 2;
+    const fillColor = hero.color || '#2A3350';
+
+    if(n === 1){
+      svg += `<circle cx="${cx}" cy="${cy}" r="${r-2}" fill="${fillColor}" stroke="#0B0F1A" stroke-width="1"/>`;
+    } else {
+      const largeArc = anglePer > 180 ? 1 : 0;
+      const sx = cx + r * Math.cos(startAngle * Math.PI / 180);
+      const sy = cy + r * Math.sin(startAngle * Math.PI / 180);
+      const ex = cx + r * Math.cos(endAngle * Math.PI / 180);
+      const ey = cy + r * Math.sin(endAngle * Math.PI / 180);
+      svg += `<path d="M${cx},${cy} L${sx},${sy} A${r},${r} 0 ${largeArc} 1 ${ex},${ey} Z" fill="${fillColor}" stroke="#0B0F1A" stroke-width="1"/>`;
+    }
+
+    const labelR = r * 0.62;
+    const tx = cx + labelR * Math.cos(midAngle * Math.PI / 180);
+    const ty = cy + labelR * Math.sin(midAngle * Math.PI / 180);
+    let labelAngle = midAngle + 90;
+    if(midAngle > 90 && midAngle < 270) labelAngle += 180;
+    const fontSize = n > 16 ? 8 : (n > 10 ? 9.5 : 11);
+    const label = hero.name.length > 12 ? hero.name.slice(0, 11) + '…' : hero.name;
+    svg += `<text x="${tx}" y="${ty}" fill="#fff" font-size="${fontSize}" font-family="Inter, sans-serif" font-weight="700" text-anchor="middle" dominant-baseline="middle" transform="rotate(${labelAngle}, ${tx}, ${ty})">${escapeHtml(label)}</text>`;
+  });
+
+  svg += `</svg>`;
+  return svg;
+}
+
+function renderWheelScreen(rebuildSvg){
+  if(!wheelState) return;
+  const total = wheelState.lots.length;
+  const done = total - wheelState.remaining.length;
+  document.getElementById('wheelLotIndex').textContent = Math.min(done + 1, total);
+  document.getElementById('wheelProgress').textContent = t('wheel_progress').replace('{i}', done).replace('{n}', total);
+
+  const turnLabel = wheelState.turn === 1 ? t('player1') : t('player2');
+  const turnEl = document.getElementById('wheelTurnLabel');
+  turnEl.textContent = t('wheel_turn_label').replace('{PLAYER}', turnLabel);
+  turnEl.className = 'wheel-turn p' + wheelState.turn;
+
+  document.getElementById('wheelP1Count').textContent = t('wheel_count').replace('{c}', state.players[1].heroes.length).replace('{m}', wheelState.maxHeroes);
+  document.getElementById('wheelP2Count').textContent = t('wheel_count').replace('{c}', state.players[2].heroes.length).replace('{m}', wheelState.maxHeroes);
+  renderWheelRosterList(1, 'wheelP1List');
+  renderWheelRosterList(2, 'wheelP2List');
+
+  if(rebuildSvg){
+    const spinner = document.getElementById('wheelSpinner');
+    spinner.style.transition = 'none';
+    spinner.innerHTML = buildWheelSVG(wheelState.remaining);
+    spinner.style.transform = 'rotate(0deg)';
+    void spinner.offsetWidth;
+    spinner.style.transition = '';
+  }
+
+  let canSpin = !wheelState.spinning && wheelState.remaining.length > 0;
+  if(onlineMode){
+    canSpin = canSpin && (isHost ? wheelState.turn === 1 : wheelState.turn === 2);
+  }
+  document.getElementById('wheelSpinBtn').disabled = !canSpin;
+  document.getElementById('wheelResult').innerHTML = wheelState.lastAssigned || '';
+
+  if(onlineMode && isHost) syncGuest();
+}
+
+function renderWheelRosterList(pId, containerId){
+  const container = document.getElementById(containerId);
+  const heroes = state.players[pId].heroes;
+  if(heroes.length === 0){
+    container.innerHTML = `<div class="roster-empty">${t('roster_empty')}</div>`;
+    return;
+  }
+  container.innerHTML = heroes.map(h => `
+    <div class="roster-item">
+      <div class="avatar" style="background:${h.color}">${h.img ? `<img src="${h.img}">` : h.init}</div>
+      <div>
+        <div class="hname">${h.name}</div>
+        <div class="hfranchise">${h.fr}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+document.getElementById('wheelSpinBtn').addEventListener('click', spinWheel);
+
+function spinWheel(){
+  if(!wheelState || wheelState.spinning || wheelState.remaining.length === 0) return;
+
+  if(onlineMode){
+    if(isHost){
+      if(wheelState.turn !== 1) return;
+    } else {
+      if(wheelState.turn !== 2) return;
+      sendAction({action:'spin'});
+      return;
+    }
+  }
+
+  triggerWheelSpin();
+}
+
+function triggerWheelSpin(){
+  const remaining = wheelState.remaining;
+  if(remaining.length === 0) return;
+
+  wheelState.spinning = true;
+  document.getElementById('wheelSpinBtn').disabled = true;
+  document.getElementById('wheelResult').textContent = '';
+
+  const n = remaining.length;
+  const winIdx = rand(0, n - 1);
+  const anglePer = 360 / n;
+  const midAngle = winIdx * anglePer + anglePer / 2;
+  const fullSpins = 5;
+  const targetDeg = fullSpins * 360 + (((270 - midAngle) % 360) + 360) % 360;
+
+  const spinner = document.getElementById('wheelSpinner');
+  spinner.style.transition = 'transform 3.2s cubic-bezier(0.15,0.85,0.25,1)';
+  void spinner.offsetWidth;
+  spinner.style.transform = 'rotate(' + targetDeg + 'deg)';
+
+  if(onlineMode && isHost) syncGuest();
+
+  setTimeout(()=>{
+    assignWheelHero(winIdx);
+  }, 3300);
+}
+
+function computeNextWheelTurn(justPlayer){
+  const other = justPlayer === 1 ? 2 : 1;
+  const otherMaxed = state.players[other].heroes.length >= wheelState.maxHeroes;
+  const selfMaxed = state.players[justPlayer].heroes.length >= wheelState.maxHeroes;
+  if(otherMaxed && selfMaxed) return null;
+  if(otherMaxed) return justPlayer;
+  return other;
+}
+
+function assignWheelHero(winIdx){
+  const hero = wheelState.remaining[winIdx];
+  wheelState.remaining.splice(winIdx, 1);
+
+  const player = wheelState.turn;
+  state.players[player].heroes.push({...hero});
+
+  const playerLabel = player === 1 ? t('player1') : t('player2');
+  const flash = document.getElementById('wheelFlash');
+  const flashText = document.getElementById('wheelFlashText');
+  flashText.innerHTML = `${hero.name}<br><span class="small">${playerLabel}</span>`;
+  flash.classList.add('show');
+
+  wheelState.lastAssigned = t('wheel_assigned').replace('{hero}', hero.name).replace('{PLAYER}', playerLabel);
+  wheelState.spinning = false;
+
+  const nextTurn = computeNextWheelTurn(player);
+  if(nextTurn) wheelState.turn = nextTurn;
+
+  if(onlineMode && isHost) syncGuest();
+
+  setTimeout(()=>{
+    flash.classList.remove('show');
+    if(!nextTurn || wheelState.remaining.length === 0){
+      finishWheelDraft();
+    } else {
+      renderWheelScreen(true);
+    }
+  }, 1400);
+}
+
+function finishWheelDraft(){
+  document.getElementById('wheelGame').style.display = 'none';
   const p1H = state.players[1].heroes.length;
   const p2H = state.players[2].heroes.length;
 
@@ -1912,6 +2355,7 @@ function renderFinalList(pId, containerId){
   container.innerHTML = heroes.map(h => {
     const battleHero = battleState ? (pId === 1 ? battleState.t1 : battleState.t2).find(bh => bh.name === h.name) : null;
     const winBadge = battleHero && battleHero.wins > 0 ? `<div class="win-count">🏆 ${battleHero.wins}</div>` : '';
+    const priceBadge = h.boughtPrice !== undefined ? `<div class="price">$${h.boughtPrice}</div>` : `<div class="price">🎡</div>`;
     return `
       <div class="roster-item ${battleHero && battleHero.eliminated ? 'eliminated' : ''}">
         <div class="avatar" style="background:${h.color}">${h.img ? `<img src="${h.img}">` : h.init}</div>
@@ -1919,7 +2363,7 @@ function renderFinalList(pId, containerId){
           <div class="hname">${h.name}</div>
           <div class="hfranchise">${h.fr}</div>
         </div>
-        ${winBadge || `<div class="price">$${h.boughtPrice}</div>`}
+        ${winBadge || priceBadge}
       </div>
     `;
   }).join('');

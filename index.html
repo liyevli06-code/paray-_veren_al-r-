@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kahraman Müzayedesi</title>
+<title>HeroicTeamBattle</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
@@ -287,6 +287,65 @@
     cursor:pointer;font-size:16px;transition:all .15s ease;}
   .sound-toggle:hover{border-color:#D4A544;}
   .sound-toggle.muted{color:#8890A0;}
+
+  /* ================================================================
+     BRANDING — HeroicTeamBattle logo + wordmark
+  ================================================================ */
+  .brand-block{text-align:center; margin-bottom:18px;}
+  .brand-logo{
+    display:block; width:96px; height:96px; margin:0 auto 10px;
+    object-fit:cover; border-radius:50%;
+    border:2px solid rgba(212,165,68,0.55);
+    box-shadow:0 10px 26px rgba(0,0,0,0.55), 0 0 0 5px rgba(212,165,68,0.08);
+  }
+  .brand-name{
+    font-family:'Bebas Neue',sans-serif; font-size:clamp(18px,4.6vw,24px);
+    letter-spacing:0.14em; text-transform:uppercase;
+    background:linear-gradient(180deg, var(--gold-bright), var(--gold));
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:var(--gold-bright);
+  }
+  .brand-name .b2{color:var(--text-light); -webkit-text-fill-color:var(--text-light);}
+
+  .home-title{
+    font-size:clamp(32px,10vw,56px);
+    background:linear-gradient(180deg, var(--gold-bright), #fff6de 35%, var(--gold));
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent;
+    text-shadow:0 6px 24px rgba(212,165,68,0.22);
+  }
+  .home-title span{color:inherit; -webkit-text-fill-color:inherit;}
+  .home-title-divider{
+    width:64px; height:2px; margin:12px auto 0;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* ================================================================
+     OVERFLOW / RESPONSIVE TEXT FIXES
+  ================================================================ */
+  h1,h2,.display,.eyebrow,.eyebrow2,.hero-name,.fname,.pname,.hname,
+  .champion-banner h2,.end-screen h2,.battle-head h1,.logo,.brand-name,
+  .mt-title,.gm-title,.wheel-turn,.leader-note,.flash-text,.who,.brand-block{
+    overflow-wrap:break-word; word-break:break-word;
+  }
+  .poster{max-width:520px; width:100%;}
+  .poster h1{font-size:clamp(30px,9vw,56px);}
+  #lobby .poster h1{font-size:clamp(26px,8vw,44px) !important;}
+  #waitScreen .poster h1{font-size:clamp(24px,7vw,38px) !important;}
+  .hero-name{font-size:clamp(22px,6.5vw,38px); display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:6px;}
+  .battle-head h1{font-size:clamp(26px,8vw,44px);}
+  .end-screen h2{font-size:clamp(26px,8vw,44px);}
+  .champion-banner h2{font-size:clamp(24px,7vw,40px);}
+  .price-board .cur-amount{font-size:clamp(20px,6vw,30px);}
+  .wheel-turn{font-size:clamp(17px,5vw,24px);}
+  .fighter .fname{font-size:clamp(17px,5vw,24px);}
+  .vs-mark{font-size:clamp(20px,6vw,30px);}
+  .eyebrow,.eyebrow2{letter-spacing:clamp(0.1em,2.5vw,0.35em);}
+  .room-box input{text-overflow:ellipsis; overflow:hidden; white-space:nowrap;}
+  .fighter .fbio{overflow-wrap:break-word;}
+  @media (max-width:420px){
+    .poster{padding:32px 20px 26px;}
+    .stage,.arena,.wheel-stage{padding:18px 14px;}
+    .brand-logo{width:76px; height:76px;}
+  }
 </style>
 </head>
 <body>
@@ -312,6 +371,10 @@
 <!-- LOBBY -->
 <div id="lobby">
   <div class="poster">
+    <div class="brand-block">
+      <img class="brand-logo" id="brandLogoLobby" alt="HeroicTeamBattle" src="">
+      <div class="brand-name">Heroic<span class="b2">TeamBattle</span></div>
+    </div>
     <div class="eyebrow" data-i18n="lobby_eyebrow">Qapalı salon</div>
     <h1 style="font-size:44px;"><span data-i18n="lobby_h1_1">Necə </span><span data-i18n="lobby_h1_2">oynayaq?</span></h1>
     <div class="sub" data-i18n="lobby_sub">Eyni cihazda oynayın, ya da otaq yaradıb linki dostunuza göndərin</div>
@@ -763,7 +826,7 @@ const BIOS = {
   "Wolverine":{az:"Adamantium caynaqlı, tez sağalan mutant döyüşçü", tr:"Adamantiyum pençeli, hızlı iyileşen mutant savaşçı", en:"Adamantium-clawed mutant with a powerful healing factor"},
   "Black Panther":{az:"Wakandanın kralı, vibranium zirehli mühafizəçi", tr:"Wakanda'nın kralı, vibranyum zırhlı koruyucu", en:"King of Wakanda, protector clad in vibranium"},
   "Captain America":{az:"II Dünya müharibəsi qəhrəmanı, super əsgər", tr:"II. Dünya Savaşı kahramanı, süper asker", en:"World War II super-soldier and symbol of courage"},
-  "Spider-Man":{az:"Hörümçək gücünə sahib gənc məhəllə qəhrəmanı", tr:"Örümcek gücüne sahip genç mahalle kahramanı", en:"Young hero with spider-like powers and agility"},
+  "Spider-Man":{az:"Hörümçək gücünə sahib gənc məhəllə qəhrəman", tr:"Örümcek gücüne sahip genç mahalle kahramanı", en:"Young hero with spider-like powers and agility"},
   "Deadpool":{az:"Ağzı bişməmiş, ölümsüz muzdlu döyüşçü", tr:"Ağzı bozuk, ölümsüz paralı asker", en:"Wisecracking mercenary with an unstoppable healing factor"},
   "Loki":{az:"Fitnə-fəsad tanrısı, hiyləgər manipulyator", tr:"Hile tanrısı, kurnaz manipülatör", en:"God of mischief, master manipulator and trickster"},
   "Hela":{az:"Ölüm tanrıçası, Asqard taxtının varisi", tr:"Ölüm tanrıçası, Asgard tahtının varisi", en:"Goddess of death and heir to the Asgardian throne"},

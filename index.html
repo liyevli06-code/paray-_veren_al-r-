@@ -34,7 +34,6 @@
   .display{font-family:'Bebas Neue',sans-serif; letter-spacing:0.03em;}
   .mono{font-family:'JetBrains Mono',monospace;}
 
-  /* ---------- LANGUAGE SWITCHER ---------- */
   .lang-switch{
     position:fixed; top:14px; left:14px; z-index:95;
     display:flex; gap:4px; background:var(--bg-panel); border:1px solid var(--line);
@@ -48,7 +47,6 @@
   .lang-btn:hover{color:var(--text-light);}
   .lang-btn.active{background:var(--gold); color:var(--bg-deep);}
 
-  /* ---------- LOBBY / ONLINE UI ---------- */
   #lobby{min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px;}
   #lobby .poster{max-width:480px;}
   .mode-row{display:flex; flex-direction:column; gap:12px; margin-top:18px;}
@@ -76,418 +74,129 @@
   .online-pill.show{display:flex;}
   #hostStatusBar{display:none; background:var(--bg-deep); border:1px solid var(--line); border-radius:4px; padding:12px; margin-bottom:22px;}
 
-  /* ---------- HOME SCREEN ---------- */
-  #home{
-    min-height:100vh;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:24px;
-  }
+  #home{min-height:100vh; display:none; align-items:center; justify-content:center; padding:24px;}
   .poster{
-    width:100%;
-    max-width:520px;
+    width:100%; max-width:520px;
     background:linear-gradient(180deg, var(--bg-panel), var(--bg-panel-2));
-    border:1px solid var(--line);
-    border-radius:4px;
-    padding:44px 40px 36px;
-    position:relative;
-    box-shadow:0 30px 60px rgba(0,0,0,0.5);
+    border:1px solid var(--line); border-radius:4px; padding:44px 40px 36px;
+    position:relative; box-shadow:0 30px 60px rgba(0,0,0,0.5);
   }
   .poster::before{
-    content:"";
-    position:absolute;
-    top:14px; left:14px; right:14px; bottom:14px;
-    border:1px solid rgba(212,165,68,0.35);
-    border-radius:2px;
-    pointer-events:none;
+    content:""; position:absolute; top:14px; left:14px; right:14px; bottom:14px;
+    border:1px solid rgba(212,165,68,0.35); border-radius:2px; pointer-events:none;
   }
-  .eyebrow{
-    text-align:center;
-    color:var(--gold);
-    font-size:12px;
-    letter-spacing:0.35em;
-    text-transform:uppercase;
-    font-weight:700;
-    margin-bottom:10px;
-  }
-  .poster h1{
-    font-size:56px;
-    text-align:center;
-    line-height:0.95;
-    color:var(--text-light);
-    margin-bottom:6px;
-  }
+  .eyebrow{text-align:center; color:var(--gold); font-size:12px; letter-spacing:0.35em; text-transform:uppercase; font-weight:700; margin-bottom:10px;}
+  .poster h1{font-size:56px; text-align:center; line-height:0.95; color:var(--text-light); margin-bottom:6px;}
   .poster h1 span{color:var(--gold-bright);}
-  .poster .sub{
-    text-align:center;
-    color:var(--text-dim);
-    font-size:14px;
-    margin-bottom:34px;
-  }
+  .poster .sub{text-align:center; color:var(--text-dim); font-size:14px; margin-bottom:34px;}
   .field{margin-bottom:26px;}
-  .field label{
-    display:flex;
-    justify-content:space-between;
-    align-items:baseline;
-    font-size:12px;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-    color:var(--text-dim);
-    margin-bottom:10px;
-    font-weight:600;
-  }
-  .field label .val{
-    font-family:'JetBrains Mono',monospace;
-    color:var(--gold-bright);
-    font-size:15px;
-    letter-spacing:0;
-  }
-  input[type=range]{
-    -webkit-appearance:none;
-    width:100%;
-    height:3px;
-    background:var(--line);
-    border-radius:2px;
-    outline:none;
-  }
-  input[type=range]::-webkit-slider-thumb{
-    -webkit-appearance:none;
-    width:18px; height:18px;
-    border-radius:50%;
-    background:var(--gold-bright);
-    border:3px solid var(--bg-deep);
-    box-shadow:0 0 0 1px var(--gold);
-    cursor:pointer;
-    margin-top:-8px;
-  }
+  .field label{display:flex; justify-content:space-between; align-items:baseline; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-dim); margin-bottom:10px; font-weight:600;}
+  .field label .val{font-family:'JetBrains Mono',monospace; color:var(--gold-bright); font-size:15px; letter-spacing:0;}
+  input[type=range]{-webkit-appearance:none; width:100%; height:3px; background:var(--line); border-radius:2px; outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--gold-bright); border:3px solid var(--bg-deep); box-shadow:0 0 0 1px var(--gold); cursor:pointer; margin-top:-8px;}
   input[type=range]::-webkit-slider-runnable-track{height:3px; background:var(--line); border-radius:2px;}
 
   .chip-row{display:flex; flex-wrap:wrap; gap:8px;}
-  .chip{
-    flex:1 1 auto;
-    min-width:42px;
-    text-align:center;
-    padding:9px 0;
-    border:1px solid var(--line);
-    border-radius:3px;
-    background:var(--bg-deep);
-    color:var(--text-dim);
-    font-family:'JetBrains Mono',monospace;
-    font-size:13px;
-    font-weight:700;
-    cursor:pointer;
-    transition:all .15s ease;
-  }
+  .chip{flex:1 1 auto; min-width:42px; text-align:center; padding:9px 0; border:1px solid var(--line); border-radius:3px; background:var(--bg-deep); color:var(--text-dim); font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; cursor:pointer; transition:all .15s ease;}
   .chip:hover{border-color:var(--gold);}
-  .chip.active{
-    background:var(--gold);
-    border-color:var(--gold);
-    color:var(--bg-deep);
-  }
+  .chip.active{background:var(--gold); border-color:var(--gold); color:var(--bg-deep);}
 
-  .start-btn{
-    width:100%;
-    margin-top:8px;
-    padding:16px;
-    border:none;
-    border-radius:3px;
-    background:var(--gold);
-    color:var(--bg-deep);
-    font-family:'Bebas Neue',sans-serif;
-    font-size:22px;
-    letter-spacing:0.08em;
-    cursor:pointer;
-    transition:transform .12s ease, background .15s ease;
-  }
+  .start-btn{width:100%; margin-top:8px; padding:16px; border:none; border-radius:3px; background:var(--gold); color:var(--bg-deep); font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:0.08em; cursor:pointer; transition:transform .12s ease, background .15s ease;}
   .start-btn:hover{background:var(--gold-bright); transform:translateY(-1px);}
   .start-btn:active{transform:translateY(0);}
   .start-btn:disabled{opacity:0.35; cursor:not-allowed; transform:none;}
+  .foot-note{text-align:center; color:var(--text-dim); font-size:11.5px; margin-top:16px; letter-spacing:0.02em;}
 
-  .foot-note{
-    text-align:center;
-    color:var(--text-dim);
-    font-size:11.5px;
-    margin-top:16px;
-    letter-spacing:0.02em;
-  }
-
-  /* ---------- GAME MODE SELECTOR (home) ---------- */
   .gm-row{display:flex; gap:10px;}
-  .gm-btn{
-    flex:1; padding:14px 10px; border:1px solid var(--line); border-radius:4px;
-    background:var(--bg-deep); color:var(--text-light); text-align:center; cursor:pointer;
-    transition:all .15s ease;
-  }
+  .gm-btn{flex:1; padding:14px 10px; border:1px solid var(--line); border-radius:4px; background:var(--bg-deep); color:var(--text-light); text-align:center; cursor:pointer; transition:all .15s ease;}
   .gm-btn:hover{border-color:var(--gold);}
   .gm-btn.active{border-color:var(--gold); background:rgba(212,165,68,0.08);}
   .gm-btn .gm-title{font-family:'Bebas Neue',sans-serif; font-size:17px; letter-spacing:0.04em; color:var(--gold-bright);}
   .gm-btn .gm-sub{font-size:10.5px; color:var(--text-dim); margin-top:3px; line-height:1.3;}
 
-  /* ---------- WHEEL SCREEN ---------- */
   #wheelGame{display:none; min-height:100vh; padding:20px;}
-  .wheel-stage{
-    background:linear-gradient(180deg, var(--bg-panel), var(--bg-panel-2));
-    border:1px solid var(--line);
-    border-radius:6px;
-    padding:28px;
-    text-align:center;
-    position:relative;
-    min-height:420px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-  }
-  .wheel-stage::before{
-    content:"ÇARX";
-    position:absolute;
-    top:14px; left:0; right:0;
-    text-align:center;
-    color:var(--text-dim);
-    font-size:10px;
-    letter-spacing:0.4em;
-  }
-  .wheel-turn{
-    margin-top:26px;
-    font-family:'Bebas Neue',sans-serif;
-    font-size:24px;
-    letter-spacing:0.03em;
-  }
+  .wheel-stage{background:linear-gradient(180deg, var(--bg-panel), var(--bg-panel-2)); border:1px solid var(--line); border-radius:6px; padding:28px; text-align:center; position:relative; min-height:420px; display:flex; flex-direction:column; align-items:center;}
+  .wheel-stage::before{content:"ÇARX"; position:absolute; top:14px; left:0; right:0; text-align:center; color:var(--text-dim); font-size:10px; letter-spacing:0.4em;}
+  .wheel-turn{margin-top:26px; font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:0.03em;}
   .wheel-turn.p1{color:var(--azure);}
   .wheel-turn.p2{color:var(--crimson);}
   .wheel-progress{color:var(--text-dim); font-size:11px; letter-spacing:0.15em; text-transform:uppercase; margin-top:4px;}
-  .wheel-outer{
-    position:relative;
-    width:300px; height:300px;
-    margin:22px auto 18px;
-  }
-  .wheel-pointer{
-    position:absolute;
-    top:-8px; left:50%;
-    transform:translateX(-50%);
-    width:0; height:0;
-    border-left:12px solid transparent;
-    border-right:12px solid transparent;
-    border-top:20px solid var(--gold-bright);
-    z-index:5;
-    filter:drop-shadow(0 2px 3px rgba(0,0,0,0.5));
-  }
-  .wheel-hub{
-    position:absolute;
-    top:50%; left:50%;
-    width:26px; height:26px;
-    transform:translate(-50%,-50%);
-    background:var(--gold-bright);
-    border:3px solid var(--bg-deep);
-    border-radius:50%;
-    z-index:4;
-    box-shadow:0 0 0 2px var(--gold);
-  }
-  .wheel-spinner{
-    width:100%; height:100%;
-    border-radius:50%;
-    transform:rotate(0deg);
-    box-shadow:0 0 0 4px var(--bg-deep), 0 0 0 6px var(--line), 0 20px 40px rgba(0,0,0,0.5);
-  }
+  .wheel-outer{position:relative; width:300px; height:300px; margin:22px auto 18px;}
+  .wheel-pointer{position:absolute; top:-8px; left:50%; transform:translateX(-50%); width:0; height:0; border-left:12px solid transparent; border-right:12px solid transparent; border-top:20px solid var(--gold-bright); z-index:5; filter:drop-shadow(0 2px 3px rgba(0,0,0,0.5));}
+  .wheel-hub{position:absolute; top:50%; left:50%; width:26px; height:26px; transform:translate(-50%,-50%); background:var(--gold-bright); border:3px solid var(--bg-deep); border-radius:50%; z-index:4; box-shadow:0 0 0 2px var(--gold);}
+  .wheel-spinner{width:100%; height:100%; border-radius:50%; transform:rotate(0deg); box-shadow:0 0 0 4px var(--bg-deep), 0 0 0 6px var(--line), 0 20px 40px rgba(0,0,0,0.5);}
   .wheel-spinner svg{display:block; width:100%; height:100%;}
-  .wheel-spin-btn{
-    padding:14px 40px;
-    border:none; border-radius:3px;
-    background:var(--gold); color:var(--bg-deep);
-    font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.08em;
-    cursor:pointer;
-    margin-top:6px;
-  }
+  .wheel-spin-btn{padding:14px 40px; border:none; border-radius:3px; background:var(--gold); color:var(--bg-deep); font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.08em; cursor:pointer; margin-top:6px;}
   .wheel-spin-btn:hover:not(:disabled){background:var(--gold-bright);}
   .wheel-spin-btn:disabled{opacity:0.35; cursor:not-allowed;}
-  .wheel-result{
-    margin-top:16px;
-    min-height:20px;
-    font-size:13px;
-    color:var(--text-dim);
-  }
+  .wheel-result{margin-top:16px; min-height:20px; font-size:13px; color:var(--text-dim);}
   .wheel-result b{color:var(--gold-bright);}
 
-  /* ---------- GAME SCREEN ---------- */
-  #game{display:none; min-height:100vh; padding:20px;}
-  .topbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    max-width:1180px;
-    margin:0 auto 18px;
-    padding:0 4px;
+  /* WHEEL WATCHING indicator */
+  .wheel-watching{
+    margin-top:10px; padding:8px 16px;
+    background:rgba(212,165,68,0.1); border:1px solid rgba(212,165,68,0.3);
+    border-radius:4px; font-size:12px; color:var(--gold);
+    letter-spacing:0.05em; display:none;
   }
+
+  #game{display:none; min-height:100vh; padding:20px;}
+  .topbar{display:flex; justify-content:space-between; align-items:center; max-width:1180px; margin:0 auto 18px; padding:0 4px;}
   .topbar .logo{font-family:'Bebas Neue'; font-size:22px; letter-spacing:0.06em; color:var(--gold-bright);}
   .topbar .progress{color:var(--text-dim); font-size:12px; letter-spacing:0.08em; text-transform:uppercase;}
   .topbar .progress b{color:var(--text-light); font-family:'JetBrains Mono'; font-weight:700;}
 
-  .hall{
-    display:grid;
-    grid-template-columns:250px 1fr 250px;
-    gap:16px;
-    max-width:1180px;
-    margin:0 auto;
-    align-items:start;
-  }
-  @media (max-width:880px){
-    .hall{grid-template-columns:1fr; }
-    .roster{order:3;}
-  }
+  .hall{display:grid; grid-template-columns:250px 1fr 250px; gap:16px; max-width:1180px; margin:0 auto; align-items:start;}
+  @media (max-width:880px){.hall{grid-template-columns:1fr;} .roster{order:3;}}
 
-  .roster{
-    background:var(--bg-panel);
-    border:1px solid var(--line);
-    border-radius:4px;
-    padding:16px;
-  }
+  .roster{background:var(--bg-panel); border:1px solid var(--line); border-radius:4px; padding:16px;}
   .roster.p2{border-top:3px solid var(--crimson);}
   .roster.p1{border-top:3px solid var(--azure);}
-  .roster-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:12px;
-  }
+  .roster-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;}
   .roster-head .pname{font-family:'Bebas Neue'; font-size:19px; letter-spacing:0.03em;}
   .roster.p1 .pname{color:var(--azure);}
   .roster.p2 .pname{color:var(--crimson);}
-  .budget{
-    font-family:'JetBrains Mono';
-    font-size:15px;
-    font-weight:700;
-    color:var(--gold-bright);
-  }
+  .budget{font-family:'JetBrains Mono'; font-size:15px; font-weight:700; color:var(--gold-bright);}
   .roster-list{display:flex; flex-direction:column; gap:8px; min-height:60px;}
   .roster-empty{color:var(--text-dim); font-size:12px; padding:14px 0; text-align:center; border:1px dashed var(--line); border-radius:3px;}
-  .roster-item{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    background:var(--bg-deep);
-    border:1px solid var(--line);
-    border-radius:3px;
-    padding:7px 9px;
-  }
+  .roster-item{display:flex; align-items:center; gap:10px; background:var(--bg-deep); border:1px solid var(--line); border-radius:3px; padding:7px 9px;}
   .roster-item.eliminated{opacity:0.35; filter:grayscale(1);}
-  .roster-item .price{
-    margin-left:auto;
-    font-family:'JetBrains Mono';
-    font-size:12px;
-    color:var(--gold);
-    font-weight:700;
-  }
-  .roster-item .win-count{
-    margin-left:auto;
-    font-family:'JetBrains Mono';
-    font-size:12px;
-    color:var(--gold-bright);
-    font-weight:700;
-  }
+  .roster-item .price{margin-left:auto; font-family:'JetBrains Mono'; font-size:12px; color:var(--gold); font-weight:700;}
+  .roster-item .win-count{margin-left:auto; font-family:'JetBrains Mono'; font-size:12px; color:var(--gold-bright); font-weight:700;}
 
-  .avatar{
-    width:34px; height:34px;
-    border-radius:50%;
-    display:flex; align-items:center; justify-content:center;
-    font-family:'Bebas Neue'; font-size:14px;
-    color:#0B0F1A;
-    flex:none;
-    overflow:hidden;
-  }
-  .avatar img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-  }
+  .avatar{width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue'; font-size:14px; color:#0B0F1A; flex:none; overflow:hidden;}
+  .avatar img{width:100%; height:100%; object-fit:cover;}
   .avatar.big{width:96px; height:96px; font-size:34px;}
   .avatar.mid{width:64px; height:64px; font-size:22px;}
   .hname{font-size:12.5px; font-weight:600; line-height:1.2;}
   .hfranchise{font-size:9.5px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.06em;}
 
   .mini-stats{display:flex; gap:5px; margin-top:4px; flex-wrap:wrap;}
-  .mini-stat{
-    font-family:'JetBrains Mono';
-    font-size:9.5px;
-    padding:1px 5px;
-    border-radius:2px;
-    background:var(--bg-panel-2);
-    border:1px solid var(--line);
-  }
+  .mini-stat{font-family:'JetBrains Mono'; font-size:9.5px; padding:1px 5px; border-radius:2px; background:var(--bg-panel-2); border:1px solid var(--line);}
   .mini-stat.g{color:var(--crimson);}
   .mini-stat.s{color:#6FCB8E;}
   .mini-stat.m{color:#7FB1E6;}
   .mini-stat.c{color:var(--violet);}
 
-  .tier-badge{
-    display:inline-block;
-    font-family:'JetBrains Mono';
-    font-size:9px;
-    font-weight:700;
-    padding:1px 6px;
-    border-radius:2px;
-    letter-spacing:0.04em;
-    margin-left:6px;
-    vertical-align:middle;
-  }
+  .tier-badge{display:inline-block; font-family:'JetBrains Mono'; font-size:9px; font-weight:700; padding:1px 6px; border-radius:2px; letter-spacing:0.04em; margin-left:6px; vertical-align:middle;}
   .tier-S{background:rgba(240,198,105,0.18); color:var(--gold-bright); border:1px solid rgba(240,198,105,0.5);}
   .tier-A{background:rgba(62,111,168,0.18); color:#7FB1E6; border:1px solid rgba(62,111,168,0.5);}
   .tier-B{background:rgba(140,180,140,0.18); color:#8FCB9E; border:1px solid rgba(140,180,140,0.5);}
   .tier-C{background:rgba(160,160,170,0.18); color:#B5B9C4; border:1px solid rgba(160,160,170,0.5);}
 
-  .stage{
-    background:linear-gradient(180deg, var(--bg-panel), var(--bg-panel-2));
-    border:1px solid var(--line);
-    border-radius:6px;
-    padding:28px;
-    text-align:center;
-    position:relative;
-    min-height:420px;
-    display:flex;
-    flex-direction:column;
-  }
-  .stage::before{
-    content:"MÜZAYEDE";
-    position:absolute;
-    top:14px; left:0; right:0;
-    text-align:center;
-    color:var(--text-dim);
-    font-size:10px;
-    letter-spacing:0.4em;
-  }
+  .stage{background:linear-gradient(180deg, var(--bg-panel), var(--bg-panel-2)); border:1px solid var(--line); border-radius:6px; padding:28px; text-align:center; position:relative; min-height:420px; display:flex; flex-direction:column;}
+  .stage::before{content:"MÜZAYEDE"; position:absolute; top:14px; left:0; right:0; text-align:center; color:var(--text-dim); font-size:10px; letter-spacing:0.4em;}
   .lot-label{color:var(--text-dim); font-size:11px; letter-spacing:0.2em; text-transform:uppercase; margin-top:26px;}
   .hero-name{font-family:'Bebas Neue'; font-size:38px; margin-top:12px; letter-spacing:0.02em;}
-  .hero-franchise-tag{
-    display:inline-block;
-    margin-top:4px;
-    padding:3px 10px;
-    border-radius:20px;
-    font-size:10.5px;
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    font-weight:700;
-  }
+  .hero-franchise-tag{display:inline-block; margin-top:4px; padding:3px 10px; border-radius:20px; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; font-weight:700;}
   .tag-dc{background:rgba(62,111,168,0.18); color:#7FB1E6; border:1px solid rgba(62,111,168,0.4);}
   .tag-marvel{background:rgba(193,68,60,0.18); color:#E68680; border:1px solid rgba(193,68,60,0.4);}
   .tag-boys{background:rgba(140,180,140,0.18); color:#8FCB9E; border:1px solid rgba(140,180,140,0.4);}
   .tag-myth{background:rgba(142,124,195,0.18); color:#B39DDB; border:1px solid rgba(142,124,195,0.4);}
 
-  .hero-stats-row{
-    display:flex;
-    justify-content:center;
-    gap:10px;
-    margin-top:14px;
-  }
+  .hero-stats-row{display:flex; justify-content:center; gap:10px; margin-top:14px;}
 
-  .price-board{
-    margin:18px auto 8px;
-    display:inline-flex;
-    align-items:baseline;
-    gap:8px;
-    padding:10px 26px;
-    border:1px solid var(--gold);
-    border-radius:4px;
-    background:rgba(212,165,68,0.06);
-  }
+  .price-board{margin:18px auto 8px; display:inline-flex; align-items:baseline; gap:8px; padding:10px 26px; border:1px solid var(--gold); border-radius:4px; background:rgba(212,165,68,0.06);}
   .price-board .cur-label{font-size:11px; color:var(--text-dim); letter-spacing:0.15em; text-transform:uppercase;}
   .price-board .cur-amount{font-family:'JetBrains Mono'; font-size:30px; font-weight:700; color:var(--gold-bright);}
 
@@ -496,27 +205,12 @@
   .leader-note.p1 b{color:var(--azure);}
   .leader-note.p2 b{color:var(--crimson);}
 
-  .bid-row{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:14px;
-    margin-top:auto;
-    padding-top:22px;
-  }
+  .bid-row{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:auto; padding-top:22px;}
   .bid-col{display:flex; flex-direction:column; gap:8px;}
   .bid-col .who{font-family:'Bebas Neue'; font-size:15px; letter-spacing:0.05em;}
   .bid-col.p1 .who{color:var(--azure);}
   .bid-col.p2 .who{color:var(--crimson);}
-  .btn{
-    padding:12px 8px;
-    border-radius:3px;
-    border:1px solid var(--line);
-    background:var(--bg-deep);
-    color:var(--text-light);
-    font-family:'Inter'; font-weight:700; font-size:13.5px;
-    cursor:pointer;
-    transition:all .12s ease;
-  }
+  .btn{padding:12px 8px; border-radius:3px; border:1px solid var(--line); background:var(--bg-deep); color:var(--text-light); font-family:'Inter'; font-weight:700; font-size:13.5px; cursor:pointer; transition:all .12s ease;}
   .btn.bid.p1{border-color:var(--azure); color:var(--azure);}
   .btn.bid.p1:hover:not(:disabled){background:var(--azure); color:#fff;}
   .btn.bid.p2{border-color:var(--crimson); color:var(--crimson);}
@@ -525,14 +219,7 @@
   .btn.pass:hover:not(:disabled){border-color:var(--text-dim); color:var(--text-light);}
   .btn:disabled{opacity:0.3; cursor:not-allowed;}
 
-  .flash{
-    position:absolute; inset:0;
-    display:flex; align-items:center; justify-content:center;
-    background:rgba(11,15,26,0.92);
-    border-radius:6px;
-    opacity:0; pointer-events:none;
-    transition:opacity .25s ease;
-  }
+  .flash{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(11,15,26,0.92); border-radius:6px; opacity:0; pointer-events:none; transition:opacity .25s ease;}
   .flash.show{opacity:1; pointer-events:auto;}
   .flash-text{font-family:'Bebas Neue'; font-size:30px; color:var(--gold-bright); text-align:center; line-height:1.3;}
   .flash-text .small{display:block; font-family:'Inter'; font-size:13px; color:var(--text-dim); margin-top:8px; font-weight:600; letter-spacing:0.05em;}
@@ -541,44 +228,20 @@
   .end-screen h2{font-family:'Bebas Neue'; font-size:44px; color:var(--gold-bright); margin-bottom:6px;}
   .end-screen p{color:var(--text-dim); margin-bottom:30px;}
   .end-cols{display:grid; grid-template-columns:1fr 1fr; gap:18px; text-align:left; margin-bottom:28px;}
-  .restart-btn{
-    padding:14px 32px;
-    border:none; border-radius:3px;
-    background:var(--gold); color:var(--bg-deep);
-    font-family:'Bebas Neue'; font-size:18px; letter-spacing:0.06em;
-    cursor:pointer;
-  }
+  .restart-btn{padding:14px 32px; border:none; border-radius:3px; background:var(--gold); color:var(--bg-deep); font-family:'Bebas Neue'; font-size:18px; letter-spacing:0.06em; cursor:pointer;}
   .restart-btn:hover{background:var(--gold-bright);}
 
-  /* ---------- BATTLE SCREEN ---------- */
   #battle{display:none; min-height:100vh; padding:20px;}
   .battle-wrap{max-width:1000px; margin:0 auto;}
   .battle-head{text-align:center; margin-bottom:8px;}
-  .battle-head .eyebrow2{
-    color:var(--gold); font-size:12px; letter-spacing:0.35em; text-transform:uppercase; font-weight:700;
-  }
+  .battle-head .eyebrow2{color:var(--gold); font-size:12px; letter-spacing:0.35em; text-transform:uppercase; font-weight:700;}
   .battle-head h1{font-family:'Bebas Neue'; font-size:44px; margin-top:6px;}
-  .team-tally{
-    display:flex; justify-content:center; gap:26px; margin:10px 0 26px;
-    font-family:'JetBrains Mono'; font-size:14px;
-  }
+  .team-tally{display:flex; justify-content:center; gap:26px; margin:10px 0 26px; font-family:'JetBrains Mono'; font-size:14px;}
   .team-tally .t1{color:var(--azure); font-weight:700;}
   .team-tally .t2{color:var(--crimson); font-weight:700;}
 
-  .arena{
-    background:linear-gradient(180deg, var(--bg-panel), var(--bg-panel-2));
-    border:1px solid var(--line);
-    border-radius:6px;
-    padding:32px 24px;
-    position:relative;
-    min-height:340px;
-  }
-  .fighters-row{
-    display:grid;
-    grid-template-columns:1fr 90px 1fr;
-    align-items:center;
-    gap:10px;
-  }
+  .arena{background:linear-gradient(180deg, var(--bg-panel), var(--bg-panel-2)); border:1px solid var(--line); border-radius:6px; padding:32px 24px; position:relative; min-height:340px;}
+  .fighters-row{display:grid; grid-template-columns:1fr 90px 1fr; align-items:center; gap:10px;}
   .fighter{text-align:center;}
   .fighter .fname{font-family:'Bebas Neue'; font-size:24px; margin-top:10px;}
   .fighter.left .fname{color:var(--azure);}
@@ -586,85 +249,30 @@
   .fighter .ffranchise{font-size:10px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.08em; margin-top:2px;}
   .fighter .fbio{font-size:11px; color:var(--text-dim); margin-top:8px; line-height:1.4; max-width:190px; margin-left:auto; margin-right:auto; font-style:italic;}
   .fighter .fstats{max-width:170px; margin:14px auto 0;}
-  .vs-mark{
-    font-family:'Bebas Neue'; font-size:30px; color:var(--gold); text-align:center;
-  }
-  .vs-mark .vscore{
-    display:block; font-family:'JetBrains Mono'; font-size:11px; color:var(--text-dim); margin-top:6px;
-  }
-  .fighter .fscore{
-    margin-top:12px;
-    font-family:'JetBrains Mono';
-    font-size:20px;
-    font-weight:700;
-    color:var(--gold-bright);
-    min-height:26px;
-  }
-  .fighter .fhp-track{
-    max-width:170px; margin:8px auto 0;
-    height:6px; background:var(--line); border-radius:3px; overflow:hidden;
-  }
+  .vs-mark{font-family:'Bebas Neue'; font-size:30px; color:var(--gold); text-align:center;}
+  .vs-mark .vscore{display:block; font-family:'JetBrains Mono'; font-size:11px; color:var(--text-dim); margin-top:6px;}
+  .fighter .fscore{margin-top:12px; font-family:'JetBrains Mono'; font-size:20px; font-weight:700; color:var(--gold-bright); min-height:26px;}
+  .fighter .fhp-track{max-width:170px; margin:8px auto 0; height:6px; background:var(--line); border-radius:3px; overflow:hidden;}
   .fighter .fhp-fill{height:100%; background:var(--crimson); border-radius:3px; transition:width .5s ease;}
   .fighter .fhp-label{font-family:'JetBrains Mono'; font-size:9.5px; color:var(--text-dim); margin-top:3px;}
 
-  .battle-log{
-    margin-top:20px;
-    max-height:130px;
-    overflow-y:auto;
-    border-top:1px solid var(--line);
-    padding-top:12px;
-  }
-  .log-item{
-    display:flex; justify-content:space-between;
-    font-size:12px; color:var(--text-dim);
-    padding:4px 2px;
-    font-family:'JetBrains Mono';
-  }
+  .battle-log{margin-top:20px; max-height:130px; overflow-y:auto; border-top:1px solid var(--line); padding-top:12px;}
+  .log-item{display:flex; justify-content:space-between; font-size:12px; color:var(--text-dim); padding:4px 2px; font-family:'JetBrains Mono';}
   .log-item b{color:var(--text-light); font-weight:700;}
-  .next-fight-btn{
-    display:block; margin:22px auto 0;
-    padding:13px 30px;
-    border:none; border-radius:3px;
-    background:var(--gold); color:var(--bg-deep);
-    font-family:'Bebas Neue'; font-size:18px; letter-spacing:0.06em;
-    cursor:pointer;
-  }
+  .next-fight-btn{display:block; margin:22px auto 0; padding:13px 30px; border:none; border-radius:3px; background:var(--gold); color:var(--bg-deep); font-family:'Bebas Neue'; font-size:18px; letter-spacing:0.06em; cursor:pointer;}
   .next-fight-btn:hover{background:var(--gold-bright);}
   .next-fight-btn:disabled{opacity:0.4; cursor:not-allowed;}
 
-  .champion-banner{
-    display:none;
-    text-align:center;
-    margin-top:14px;
-  }
-  .champion-banner .cb-label{
-    color:var(--gold); font-size:12px; letter-spacing:0.3em; text-transform:uppercase; font-weight:700;
-  }
-  .champion-banner h2{
-    font-family:'Bebas Neue'; font-size:40px; margin-top:6px; color:var(--gold-bright);
-  }
+  .champion-banner{display:none; text-align:center; margin-top:14px;}
+  .champion-banner .cb-label{color:var(--gold); font-size:12px; letter-spacing:0.3em; text-transform:uppercase; font-weight:700;}
+  .champion-banner h2{font-family:'Bebas Neue'; font-size:40px; margin-top:6px; color:var(--gold-bright);}
   .champion-banner p{color:var(--text-dim); margin-top:6px; font-size:13px;}
 
-  /* ---------- CHAT ---------- */
-  .chat-toggle{
-    position:fixed; bottom:20px; right:20px; width:52px; height:52px; border-radius:50%;
-    background:var(--gold); color:var(--bg-deep); display:none; align-items:center; justify-content:center;
-    font-size:22px; cursor:pointer; z-index:90; box-shadow:0 6px 18px rgba(0,0,0,0.45);
-  }
-  .chat-toggle.unread::after{
-    content:""; position:absolute; top:0px; right:0px; width:13px; height:13px; border-radius:50%;
-    background:var(--crimson); border:2px solid var(--bg-deep);
-  }
-  .chat-panel{
-    position:fixed; bottom:84px; right:20px; width:290px; max-height:380px;
-    background:var(--bg-panel); border:1px solid var(--line); border-radius:8px;
-    display:none; flex-direction:column; z-index:90; box-shadow:0 10px 30px rgba(0,0,0,0.5); overflow:hidden;
-  }
+  .chat-toggle{position:fixed; bottom:20px; right:20px; width:52px; height:52px; border-radius:50%; background:var(--gold); color:var(--bg-deep); display:none; align-items:center; justify-content:center; font-size:22px; cursor:pointer; z-index:90; box-shadow:0 6px 18px rgba(0,0,0,0.45);}
+  .chat-toggle.unread::after{content:""; position:absolute; top:0px; right:0px; width:13px; height:13px; border-radius:50%; background:var(--crimson); border:2px solid var(--bg-deep);}
+  .chat-panel{position:fixed; bottom:84px; right:20px; width:290px; max-height:380px; background:var(--bg-panel); border:1px solid var(--line); border-radius:8px; display:none; flex-direction:column; z-index:90; box-shadow:0 10px 30px rgba(0,0,0,0.5); overflow:hidden;}
   .chat-panel.open{display:flex;}
-  .chat-header{
-    padding:10px 12px; background:var(--bg-panel-2); font-family:'Bebas Neue',sans-serif; font-size:16px;
-    letter-spacing:0.04em; display:flex; justify-content:space-between; align-items:center; color:var(--gold-bright);
-  }
+  .chat-header{padding:10px 12px; background:var(--bg-panel-2); font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.04em; display:flex; justify-content:space-between; align-items:center; color:var(--gold-bright);}
   .chat-close{cursor:pointer; color:var(--text-dim); font-size:14px; padding:2px 6px;}
   .chat-messages{flex:1; overflow-y:auto; padding:10px; display:flex; flex-direction:column; gap:6px; max-height:260px;}
   .chat-msg{max-width:82%; padding:7px 10px; border-radius:10px; font-size:12.5px; line-height:1.35; word-break:break-word;}
@@ -696,13 +304,12 @@
   </div>
 </div>
 
-<!-- ===================== LOBBY ===================== -->
+<!-- LOBBY -->
 <div id="lobby">
   <div class="poster">
-    <div class="eyebrow" data-i18n="lobby_eyebrow">Kapalı salon</div>
+    <div class="eyebrow" data-i18n="lobby_eyebrow">Qapalı salon</div>
     <h1 style="font-size:44px;"><span data-i18n="lobby_h1_1">Necə </span><span data-i18n="lobby_h1_2">oynayaq?</span></h1>
     <div class="sub" data-i18n="lobby_sub">Eyni cihazda oynayın, ya da otaq yaradıb linki dostunuza göndərin</div>
-
     <div class="mode-row" id="modeRow">
       <div class="mode-btn" id="localModeBtn">
         <div class="mt-title" data-i18n="mode_local_title">EYNİ CİHAZ</div>
@@ -717,13 +324,11 @@
         <div class="mt-sub" data-i18n="mode_join_sub">Sənə göndərilən link və ya koddan qoşul</div>
       </div>
     </div>
-
     <div class="panel" id="createPanel">
       <div class="status-line"><span class="status-dot" id="createDot"></span><span id="createStatusText" data-i18n="create_status_creating">Otaq yaradılır...</span></div>
       <div class="room-box"><input type="text" id="roomLinkInput" readonly value=""><button class="copy-btn" id="copyLinkBtn" data-i18n="copy_link_btn">Linki kopyala</button></div>
       <div class="back-link" id="backFromCreate" data-i18n="back_link">‹ Geri</div>
     </div>
-
     <div class="panel" id="joinPanel">
       <label style="font-size:12px; color:var(--text-dim); letter-spacing:0.1em; text-transform:uppercase;" data-i18n="join_label">Otaq kodu / linki</label>
       <input type="text" class="join-code-input" id="joinCodeInput" data-i18n-placeholder="join_placeholder" placeholder="Bura yapışdır">
@@ -734,7 +339,7 @@
   </div>
 </div>
 
-<!-- ===================== WAIT SCREEN (guest bekleme) ===================== -->
+<!-- WAIT SCREEN -->
 <div id="waitScreen">
   <div class="poster">
     <div class="eyebrow" data-i18n="wait_eyebrow">Qoşuldun</div>
@@ -744,12 +349,12 @@
   </div>
 </div>
 
-<!-- ===================== HOME SCREEN ===================== -->
+<!-- HOME SCREEN -->
 <div id="home">
   <div class="poster">
-    <div class="eyebrow" data-i18n="home_eyebrow">Kapalı salon &middot; 2 oyuncu</div>
+    <div class="eyebrow" data-i18n="home_eyebrow">Qapalı salon · 2 oyuncu</div>
     <h1><span data-i18n="home_h1_1">KAHRAMAN</span><br><span data-i18n="home_h1_2">Savaşı</span></h1>
-    <div class="sub" data-i18n="home_sub">Bütçeni belirle, artış adımını ve oyuncu başı kahraman sayısını seç, başlat</div>
+    <div class="sub" data-i18n="home_sub">Büdcəni müəyyən et, artım addımını və oyuncu başına kahraman sayını seç, başlat</div>
 
     <div id="hostStatusBar">
       <div class="status-line" style="margin-top:0;"><span class="status-dot" id="hostDot"></span><span id="hostStatusText" data-i18n="host_status_waiting">Oyuncu 2 gözlənilir...</span></div>
@@ -772,12 +377,11 @@
 
     <div id="budgetField">
       <div class="field">
-        <label><span data-i18n="budget_label">Başlangıç bütçesi</span> <span class="val mono" id="budgetVal">$50</span></label>
+        <label><span data-i18n="budget_label">Başlanğıc büdcə</span> <span class="val mono" id="budgetVal">$50</span></label>
         <input type="range" id="budgetRange" min="10" max="100" step="10" value="50">
       </div>
-
       <div class="field">
-        <label data-i18n="inc_label">Teklif artış adımı</label>
+        <label data-i18n="inc_label">Təklif artım addımı</label>
         <div class="chip-row" id="incRow"></div>
       </div>
     </div>
@@ -788,120 +392,96 @@
     </div>
 
     <button class="start-btn" id="startBtn" data-i18n="start_btn">OYUNA BAŞLA</button>
-    <div class="foot-note" id="footNote">Her oyuncu maksimum 5 kahraman alabilir &middot; en yüksek teklif kazanır &middot; güç, hız, savunma ve can gerçek güce dayanır</div>
+    <div class="foot-note" id="footNote">Hər oyuncu maksimum 5 kahraman ala bilər · ən yüksək təklif qazanır</div>
   </div>
 </div>
 
-<!-- ===================== GAME SCREEN ===================== -->
+<!-- GAME SCREEN (Auction) -->
 <div id="game">
   <div class="topbar">
     <div class="logo" data-i18n="game_logo">KAHRAMAN Savaşı</div>
     <div class="progress"><span data-i18n="game_lot">LOT</span> <b id="lotIndex">1</b> / <b id="lotTotal">10</b></div>
   </div>
-
   <div class="hall">
     <div class="roster p1">
-      <div class="roster-head">
-        <div class="pname" data-i18n="player1">OYUNCU 1</div>
-        <div class="budget" id="p1Budget">$50</div>
-      </div>
-      <div class="roster-list" id="p1List"><div class="roster-empty" data-i18n="roster_empty">Henüz kahraman alınmadı</div></div>
+      <div class="roster-head"><div class="pname" data-i18n="player1">OYUNCU 1</div><div class="budget" id="p1Budget">$50</div></div>
+      <div class="roster-list" id="p1List"><div class="roster-empty" data-i18n="roster_empty">Hələ kahraman alınmayıb</div></div>
     </div>
-
     <div class="stage" id="stage">
-      <div class="lot-label" id="lotLabel" data-i18n="lot_label">Şu anki lot</div>
+      <div class="lot-label" id="lotLabel" data-i18n="lot_label">Hazırkı lot</div>
       <div class="avatar big" id="heroAvatar" style="align-self:center;">?</div>
       <div class="hero-name" id="heroName">— <span class="tier-badge" id="heroTier"></span></div>
       <div><span class="hero-franchise-tag" id="heroFranchise">—</span></div>
-
       <div class="hero-stats-row" id="heroStatsRow"></div>
-
       <div class="price-board">
-        <span class="cur-label" data-i18n="current_price">Güncel fiyat</span>
+        <span class="cur-label" data-i18n="current_price">Hazırkı qiymət</span>
         <span class="cur-amount mono" id="curPrice">$0</span>
       </div>
-      <div class="leader-note" id="leaderNote" data-i18n="leader_note_default">Müzayedeye başlamak için teklif verin</div>
-
+      <div class="leader-note" id="leaderNote" data-i18n="leader_note_default">Müzayidəyə başlamaq üçün təklif verin</div>
       <div class="bid-row">
         <div class="bid-col p1">
           <div class="who" data-i18n="player1">OYUNCU 1</div>
-          <button class="btn bid p1" id="p1BidBtn" data-i18n="bid_btn">Teklif ver</button>
-          <button class="btn pass" id="p1PassBtn" data-i18n="pass_btn">Pas geç</button>
+          <button class="btn bid p1" id="p1BidBtn" data-i18n="bid_btn">Təklif ver</button>
+          <button class="btn pass" id="p1PassBtn" data-i18n="pass_btn">Pas keç</button>
         </div>
         <div class="bid-col p2">
           <div class="who" data-i18n="player2">OYUNCU 2</div>
-          <button class="btn bid p2" id="p2BidBtn" data-i18n="bid_btn">Teklif ver</button>
-          <button class="btn pass" id="p2PassBtn" data-i18n="pass_btn">Pas geç</button>
+          <button class="btn bid p2" id="p2BidBtn" data-i18n="bid_btn">Təklif ver</button>
+          <button class="btn pass" id="p2PassBtn" data-i18n="pass_btn">Pas keç</button>
         </div>
       </div>
-
       <div class="flash" id="flash"><div class="flash-text" id="flashText"></div></div>
     </div>
-
     <div class="roster p2">
-      <div class="roster-head">
-        <div class="pname" data-i18n="player2">OYUNCU 2</div>
-        <div class="budget" id="p2Budget">$50</div>
-      </div>
-      <div class="roster-list" id="p2List"><div class="roster-empty" data-i18n="roster_empty">Henüz kahraman alınmadı</div></div>
+      <div class="roster-head"><div class="pname" data-i18n="player2">OYUNCU 2</div><div class="budget" id="p2Budget">$50</div></div>
+      <div class="roster-list" id="p2List"><div class="roster-empty" data-i18n="roster_empty">Hələ kahraman alınmayıb</div></div>
     </div>
   </div>
 </div>
 
-<!-- ===================== WHEEL GAME SCREEN ===================== -->
+<!-- WHEEL GAME SCREEN -->
 <div id="wheelGame">
   <div class="topbar">
     <div class="logo" data-i18n="wheel_game_logo">KAHRAMAN Çarxı</div>
     <div class="progress"><span data-i18n="game_lot">LOT</span> <b id="wheelLotIndex">1</b> / <b id="wheelLotTotal">10</b></div>
   </div>
-
   <div class="hall">
     <div class="roster p1">
-      <div class="roster-head">
-        <div class="pname" data-i18n="player1">OYUNCU 1</div>
-        <div class="budget" id="wheelP1Count">0/5</div>
-      </div>
-      <div class="roster-list" id="wheelP1List"><div class="roster-empty" data-i18n="roster_empty">Henüz kahraman alınmadı</div></div>
+      <div class="roster-head"><div class="pname" data-i18n="player1">OYUNCU 1</div><div class="budget" id="wheelP1Count">0/5</div></div>
+      <div class="roster-list" id="wheelP1List"><div class="roster-empty" data-i18n="roster_empty">Hələ kahraman alınmayıb</div></div>
     </div>
-
     <div class="wheel-stage" id="wheelStage">
       <div class="wheel-turn" id="wheelTurnLabel">—</div>
       <div class="wheel-progress" id="wheelProgress"></div>
-
       <div class="wheel-outer">
         <div class="wheel-pointer"></div>
         <div class="wheel-hub"></div>
         <div class="wheel-spinner" id="wheelSpinner"></div>
       </div>
-
       <button class="wheel-spin-btn" id="wheelSpinBtn" data-i18n="spin_btn">ÇEVİR</button>
+      <!-- Guest watching indicator -->
+      <div class="wheel-watching" id="wheelWatching" data-i18n="wheel_watching">👁 Rəqib fırladır...</div>
       <div class="wheel-result" id="wheelResult"></div>
-
       <div class="flash" id="wheelFlash"><div class="flash-text" id="wheelFlashText"></div></div>
     </div>
-
     <div class="roster p2">
-      <div class="roster-head">
-        <div class="pname" data-i18n="player2">OYUNCU 2</div>
-        <div class="budget" id="wheelP2Count">0/5</div>
-      </div>
-      <div class="roster-list" id="wheelP2List"><div class="roster-empty" data-i18n="roster_empty">Henüz kahraman alınmadı</div></div>
+      <div class="roster-head"><div class="pname" data-i18n="player2">OYUNCU 2</div><div class="budget" id="wheelP2Count">0/5</div></div>
+      <div class="roster-list" id="wheelP2List"><div class="roster-empty" data-i18n="roster_empty">Hələ kahraman alınmayıb</div></div>
     </div>
   </div>
 </div>
 
-<!-- ===================== BATTLE SCREEN ===================== -->
+<!-- BATTLE SCREEN -->
 <div id="battle">
   <div class="battle-wrap">
     <div class="battle-head">
-      <div class="eyebrow2" data-i18n="battle_eyebrow">Tüm kahramanlar meydanda</div>
-      <h1 data-i18n="battle_h1">DÖVÜŞ ARENASI</h1>
+      <div class="eyebrow2" data-i18n="battle_eyebrow">Bütün kahramanlar meydanda</div>
+      <h1 data-i18n="battle_h1">DÖYÜŞ ARENASI</h1>
     </div>
     <div class="team-tally">
       <span class="t1" id="t1Tally">Oyuncu 1: 5 kahraman</span>
       <span class="t2" id="t2Tally">Oyuncu 2: 5 kahraman</span>
     </div>
-
     <div class="arena" id="arena">
       <div class="fighters-row">
         <div class="fighter left" id="fighterLeft">
@@ -914,7 +494,7 @@
           <div class="fhp-label" id="leftHpLabel">CAN: 100%</div>
           <div class="fscore" id="leftScore"></div>
         </div>
-        <div class="vs-mark">VS<span class="vscore" id="fightStatus" data-i18n="fight_ready">Sıradaki dövüşe hazır</span></div>
+        <div class="vs-mark">VS<span class="vscore" id="fightStatus" data-i18n="fight_ready">Növbəti döyüşə hazır</span></div>
         <div class="fighter right" id="fighterRight">
           <div class="avatar mid" id="rightAvatar" style="margin:0 auto;">?</div>
           <div class="fname" id="rightName">—</div>
@@ -926,25 +506,21 @@
           <div class="fscore" id="rightScore"></div>
         </div>
       </div>
-
-      <button class="next-fight-btn" id="nextFightBtn" data-i18n="next_fight_btn">DÖVÜŞÜ BAŞLAT</button>
-
+      <button class="next-fight-btn" id="nextFightBtn" data-i18n="next_fight_btn">DÖYÜŞÜ BAŞLAT</button>
       <div class="champion-banner" id="championBanner">
-        <div class="cb-label" data-i18n="champion_label">Meydanın Galibi</div>
+        <div class="cb-label" data-i18n="champion_label">Meydanın Qalibi</div>
         <h2 id="championText">—</h2>
         <p id="championSub"></p>
       </div>
-
       <div class="battle-log" id="battleLog"></div>
     </div>
-
-    <button class="restart-btn" id="toResultsBtn" style="display:none; margin:22px auto 0;" data-i18n="to_results_btn">SONUÇLARA BAK</button>
+    <button class="restart-btn" id="toResultsBtn" style="display:none; margin:22px auto 0;" data-i18n="to_results_btn">NƏTİCƏLƏRƏ BAX</button>
   </div>
 </div>
 
-<!-- ===================== END SCREEN ===================== -->
+<!-- END SCREEN -->
 <div class="end-screen" id="endScreen">
-  <h2 id="endTitle" data-i18n="end_title">MÜZAYEDE BİTTİ</h2>
+  <h2 id="endTitle" data-i18n="end_title">MÜZAYİDƏ BİTDİ</h2>
   <p id="endSummary"></p>
   <div class="end-cols">
     <div class="roster p1" style="border-top:3px solid var(--azure);">
@@ -956,13 +532,13 @@
       <div class="roster-list" id="p2ListFinal"></div>
     </div>
   </div>
-  <button class="restart-btn" id="restartBtn" data-i18n="restart_btn">YENİDEN OYNA</button>
+  <button class="restart-btn" id="restartBtn" data-i18n="restart_btn">YENİDƏN OYNA</button>
 </div>
 
 <script>
-/* ==================================================================
-   I18N — dil seçimi (AZ / TR / EN)
-================================================================== */
+/* ================================================================
+   I18N
+================================================================ */
 const I18N = {
   az: {
     chat_title:"Söhbət", chat_placeholder:"Mesaj yaz...", chat_send:"Göndər",
@@ -980,13 +556,13 @@ const I18N = {
     join_status_fail:"Otağa qoşulmaq mümkün olmadı", join_status_notfound:"Xəta: otaq tapılmadı",
     wait_eyebrow:"Qoşuldun", wait_h1_1:"Oyuncu ", wait_text:"Otaq sahibinin oyunu qurmasını gözləyin...",
     wait_text_reset:"Otaq sahibi yeni oyun hazırlayır...",
-    pill_p1:"Sən Oyuncu 1-sən", pill_p2:"Sən Oyuncu 2-sən", pill_online:"Onlayn",
+    pill_p1:"Sən Oyuncu 1-sən", pill_p2:"Sən Oyuncu 2-sən",
     home_eyebrow:"Qapalı salon · 2 oyuncu", home_h1_1:"KAHRAMAN", home_h1_2:"Savaşı",
     home_sub:"Büdcəni müəyyən et, artım addımını və oyuncu başına kahraman sayını seç, başlat",
     host_status_waiting:"Oyuncu 2 gözlənilir...", host_status_ready:"Oyuncu 2 qoşuldu — başlaya bilərsən",
     host_copy_btn:"Kopyala", budget_label:"Başlanğıc büdcə", inc_label:"Təklif artım addımı",
     maxheroes_label:"Oyuncu başına maksimum kahraman", start_btn:"OYUNA BAŞLA",
-    foot_note:"Hər oyuncu maksimum {n} kahraman ala bilər · ən yüksək təklif qazanır · güc, sürət, müdafiə və can real gücə əsaslanır",
+    foot_note:"Hər oyuncu maksimum {n} kahraman ala bilər · ən yüksək təklif qazanır",
     no_player2_alert:"Oyuncu 2 hələ qoşulmayıb. Linki göndər və gözlə.",
     conn_lost_alert:"Bağlantı kəsildi. Səhifəni yeniləyib yenidən qoşulun.",
     game_logo:"KAHRAMAN Savaşı", game_lot:"LOT", player1:"OYUNCU 1", player2:"OYUNCU 2",
@@ -1010,7 +586,8 @@ const I18N = {
     mode_wheel_title:"ÇARX", mode_wheel_sub:"Çarxı fırlat, çıxan kahraman sənə qalsın",
     wheel_game_logo:"KAHRAMAN Çarxı", wheel_turn_label:"{PLAYER}-un növbəsi",
     wheel_progress:"{i} / {n} kahraman bölüşdürüldü", spin_btn:"ÇEVİR",
-    wheel_assigned:"{hero} → {PLAYER}-a qismət oldu!", wheel_count:"{c}/{m}"
+    wheel_assigned:"{hero} → {PLAYER}-a qismət oldu!", wheel_count:"{c}/{m}",
+    wheel_watching:"👁 Rəqib fırladır..."
   },
   tr: {
     chat_title:"Sohbet", chat_placeholder:"Mesaj yaz...", chat_send:"Gönder",
@@ -1028,19 +605,19 @@ const I18N = {
     join_status_fail:"Odaya katılmak mümkün olmadı", join_status_notfound:"Hata: oda bulunamadı",
     wait_eyebrow:"Katıldın", wait_h1_1:"Oyuncu ", wait_text:"Oda sahibinin oyunu kurmasını bekleyin...",
     wait_text_reset:"Oda sahibi yeni oyun hazırlıyor...",
-    pill_p1:"Sen Oyuncu 1'sin", pill_p2:"Sen Oyuncu 2'sin", pill_online:"Çevrimiçi",
+    pill_p1:"Sen Oyuncu 1'sin", pill_p2:"Sen Oyuncu 2'sin",
     home_eyebrow:"Kapalı salon · 2 oyuncu", home_h1_1:"KAHRAMAN", home_h1_2:"Savaşı",
     home_sub:"Bütçeni belirle, artış adımını ve oyuncu başı kahraman sayısını seç, başlat",
     host_status_waiting:"Oyuncu 2 bekleniyor...", host_status_ready:"Oyuncu 2 katıldı — başlayabilirsin",
     host_copy_btn:"Kopyala", budget_label:"Başlangıç bütçesi", inc_label:"Teklif artış adımı",
     maxheroes_label:"Oyuncu başına maksimum kahraman", start_btn:"OYUNA BAŞLA",
-    foot_note:"Her oyuncu maksimum {n} kahraman alabilir · en yüksek teklif kazanır · güç, hız, savunma ve can gerçek güce dayanır",
+    foot_note:"Her oyuncu maksimum {n} kahraman alabilir · en yüksek teklif kazanır",
     no_player2_alert:"Oyuncu 2 henüz katılmadı. Linki gönder ve bekle.",
     conn_lost_alert:"Bağlantı kesildi. Sayfayı yenileyip yeniden katılın.",
     game_logo:"KAHRAMAN Savaşı", game_lot:"LOT", player1:"OYUNCU 1", player2:"OYUNCU 2",
     roster_empty:"Henüz kahraman alınmadı", lot_label:"Şu anki lot", lot_label_progress:"Şu anki lot ({i}/{n})",
     current_price:"Güncel fiyat", leader_note_default:"Müzayedeye başlamak için teklif verin",
-    leader_note_leading:"En yüksek teklif: OYUNCU {p} (${x})", bid_btn:"Teklif ver", pass_btn:"Pas geç",
+    leader_note_leading:"En yüksek teklif: {PLAYER} (${x})", bid_btn:"Teklif ver", pass_btn:"Pas geç",
     stat_power:"GÜÇ", stat_speed:"HIZ", stat_defense:"SAVUNMA", stat_health:"CAN",
     stat_power_s:"G", stat_speed_s:"H", stat_defense_s:"S",
     tier_suffix:"-SEVİYE", sold_text:"SATILDI!", unsold_text:"SATILMADI", unsold_sub:"Kimse teklif vermedi",
@@ -1050,7 +627,7 @@ const I18N = {
     fight_ready:"Sıradaki dövüşe hazır", fight_fighting:"Dövüşüyor...", fight_draw:"BERABERE!",
     fight_win:"{n} GALİP GELDİ!", to_results_btn:"SONUÇLARA BAK", win_count:"Galibiyet",
     p1_win_banner:"OYUNCU 1 GALİP GELDİ!", p1_win_sub:"Oyuncu 1'in takımı arenada üstünlük sağladı!",
-    p2_win_banner:"OYUNCU 2 GALİP GELDİ!", p2_win_sub:"Oyuncu 2'nin takımı raundları zaferle tamamladı!",
+    p2_win_banner:"OYUNCU 2 GALİP GELDİ!", p2_win_sub:"Oyuncu 2'nin takımı zaferle tamamladı!",
     tie_banner:"BERABERLİK!", tie_sub:"Her iki taraf cesurca dövüştü!",
     restart_locked:"Oda sahibi yeniden başlatabilir",
     end_title:"MÜZAYEDE BİTTİ", final_no_heroes:"Kahraman yok", restart_btn:"YENİDEN OYNA",
@@ -1058,7 +635,8 @@ const I18N = {
     mode_wheel_title:"ÇARK", mode_wheel_sub:"Çarkı çevir, çıkan kahraman sana kalsın",
     wheel_game_logo:"KAHRAMAN Çarkı", wheel_turn_label:"{PLAYER}'in sırası",
     wheel_progress:"{i} / {n} kahraman dağıtıldı", spin_btn:"ÇEVİR",
-    wheel_assigned:"{hero} → {PLAYER}'e düştü!", wheel_count:"{c}/{m}"
+    wheel_assigned:"{hero} → {PLAYER}'e düştü!", wheel_count:"{c}/{m}",
+    wheel_watching:"👁 Rakip çeviriyor..."
   },
   en: {
     chat_title:"Chat", chat_placeholder:"Type a message...", chat_send:"Send",
@@ -1076,19 +654,19 @@ const I18N = {
     join_status_fail:"Could not join the room", join_status_notfound:"Error: room not found",
     wait_eyebrow:"Joined", wait_h1_1:"Player ", wait_text:"Waiting for the host to set up the game...",
     wait_text_reset:"The host is setting up a new game...",
-    pill_p1:"You are Player 1", pill_p2:"You are Player 2", pill_online:"Online",
+    pill_p1:"You are Player 1", pill_p2:"You are Player 2",
     home_eyebrow:"Private lobby · 2 players", home_h1_1:"HERO", home_h1_2:"Wars",
     home_sub:"Set the budget, bid increment, and heroes per player, then start",
     host_status_waiting:"Waiting for Player 2...", host_status_ready:"Player 2 joined — you can start",
     host_copy_btn:"Copy", budget_label:"Starting budget", inc_label:"Bid increment",
     maxheroes_label:"Max heroes per player", start_btn:"START GAME",
-    foot_note:"Each player can buy up to {n} heroes · highest bid wins · power, speed, defense and health are based on real strength",
+    foot_note:"Each player can buy up to {n} heroes · highest bid wins",
     no_player2_alert:"Player 2 hasn't joined yet. Send the link and wait.",
     conn_lost_alert:"Connection lost. Refresh the page and rejoin.",
     game_logo:"HERO Wars", game_lot:"LOT", player1:"PLAYER 1", player2:"PLAYER 2",
     roster_empty:"No heroes yet", lot_label:"Current lot", lot_label_progress:"Current lot ({i}/{n})",
     current_price:"Current price", leader_note_default:"Place a bid to start the auction",
-    leader_note_leading:"Highest bid: PLAYER {p} (${x})", bid_btn:"Place bid", pass_btn:"Pass",
+    leader_note_leading:"Highest bid: {PLAYER} (${x})", bid_btn:"Place bid", pass_btn:"Pass",
     stat_power:"POWER", stat_speed:"SPEED", stat_defense:"DEFENSE", stat_health:"HEALTH",
     stat_power_s:"P", stat_speed_s:"S", stat_defense_s:"D",
     tier_suffix:"-TIER", sold_text:"SOLD!", unsold_text:"UNSOLD", unsold_sub:"Nobody placed a bid",
@@ -1106,62 +684,44 @@ const I18N = {
     mode_wheel_title:"WHEEL", mode_wheel_sub:"Spin the wheel — whoever it lands on is yours",
     wheel_game_logo:"HERO Wheel", wheel_turn_label:"{PLAYER}'s turn",
     wheel_progress:"{i} / {n} heroes assigned", spin_btn:"SPIN",
-    wheel_assigned:"{hero} goes to {PLAYER}!", wheel_count:"{c}/{m}"
+    wheel_assigned:"{hero} goes to {PLAYER}!", wheel_count:"{c}/{m}",
+    wheel_watching:"👁 Opponent is spinning..."
   }
 };
 
 let currentLang = 'az';
-
-function t(key){
-  const dict = I18N[currentLang] || I18N.az;
-  return dict[key] !== undefined ? dict[key] : key;
-}
+function t(key){ const d=I18N[currentLang]||I18N.az; return d[key]!==undefined?d[key]:key; }
 
 function applyStaticTranslations(){
-  document.querySelectorAll('[data-i18n]').forEach(el=>{
-    el.textContent = t(el.getAttribute('data-i18n'));
-  });
-  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
-    el.setAttribute('placeholder', t(el.getAttribute('data-i18n-placeholder')));
-  });
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ el.textContent=t(el.getAttribute('data-i18n')); });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{ el.setAttribute('placeholder',t(el.getAttribute('data-i18n-placeholder'))); });
 }
 
 function setLanguage(lang){
   if(!I18N[lang]) return;
-  currentLang = lang;
-  document.querySelectorAll('.lang-btn').forEach(b=>{
-    b.classList.toggle('active', b.getAttribute('data-lang') === lang);
-  });
+  currentLang=lang;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.getAttribute('data-lang')===lang));
   applyStaticTranslations();
   updateFootNote();
   refreshDynamicScreens();
 }
 
 function refreshDynamicScreens(){
-  // Re-render whatever screen is currently visible so dynamic text updates too
-  if(document.getElementById('game').style.display === 'block' && state){
-    renderAuction();
-  }
-  if(document.getElementById('wheelGame').style.display === 'block' && wheelState){
-    renderWheelScreen(false);
-  }
-  if(document.getElementById('battle').style.display === 'block' && battleState){
-    renderBattleFromState();
-  }
-  if(document.getElementById('endScreen').style.display === 'block' && state){
-    showFinalResults(true);
-  }
+  if(document.getElementById('game').style.display==='block'&&state) renderAuction();
+  if(document.getElementById('wheelGame').style.display==='block'&&wheelState) renderWheelScreen(false);
+  if(document.getElementById('battle').style.display==='block'&&battleState) renderBattleFromState();
+  if(document.getElementById('endScreen').style.display==='block'&&state) showFinalResults(true);
 }
 
-document.getElementById('langSwitch').addEventListener('click', (e)=>{
-  const btn = e.target.closest('.lang-btn');
+document.getElementById('langSwitch').addEventListener('click',(e)=>{
+  const btn=e.target.closest('.lang-btn');
   if(!btn) return;
   setLanguage(btn.getAttribute('data-lang'));
 });
 
-/* ==================================================================
-   HERO BIOS — kahramanın kim olduğu haqda qısa məlumat (savaş ekranı)
-================================================================== */
+/* ================================================================
+   BIOS
+================================================================ */
 const BIOS = {
   "Hades":{az:"Yeraltı dünyanın hökmdarı, ölülərin tanrısı", tr:"Yeraltı dünyanın hükümdarı, ölüler tanrısı", en:"Ruler of the underworld, god of the dead"},
   "Superman":{az:"Kriptonun son oğlu, inanılmaz gücə sahibdir", tr:"Kripton'un son oğlu, olağanüstü güce sahiptir", en:"Last son of Krypton with god-like power"},
@@ -1200,7 +760,7 @@ const BIOS = {
   "Carnage":{az:"Qırmızı simbiyotlu, amansız kütləvi qatil", tr:"Kırmızı simbiyotlu, acımasız seri katil", en:"Red symbiote-fused, brutally violent killer"},
   "Vision":{az:"Süni intellektlə yaradılmış sintetik qəhrəman", tr:"Yapay zeka ile yaratılmış sentetik kahraman", en:"Synthetic android hero powered by artificial intelligence"},
   "Ultron":{az:"Süni intellektli, bəşəriyyəti təhdid edən robot", tr:"Yapay zekalı, insanlığı tehdit eden robot", en:"Rogue AI robot that threatens humanity"},
-  "Captain Marvel":{az:"Kosmik enerji ilə güclənən Hava Qüvvələri piloti", tr:"Kozmik enerjiyle güçlenen Hava Kuvvetleri pilotu", en:"Air Force pilot empowered by cosmic energy"},
+  "Captain Marvel":{az:"Kosmik enerji ilə güclənən Hava Qüvvələri pilotu", tr:"Kozmik enerjiyle güçlenen Hava Kuvvetleri pilotu", en:"Air Force pilot empowered by cosmic energy"},
   "Winter Soldier":{az:"Kiber qol taxılmış, təlim keçmiş sabiq casus əsgər", tr:"Sibernetik kollu, eğitimli eski suikastçı asker", en:"Cybernetic-armed, highly trained former assassin soldier"},
   "Shang-Chi":{az:"Döyüş sənətləri ustası, On Üzüyün sahibi", tr:"Dövüş sanatları ustası, On Yüzük'ün sahibi", en:"Master martial artist and wielder of the Ten Rings"},
   "Ghost Rider":{az:"Cəhənnəm ruhu daşıyan, alovlu intiqam mələyi", tr:"Cehennem ruhu taşıyan, alevli intikam meleği", en:"Vengeance spirit whose skull burns with hellfire"},
@@ -1213,20 +773,25 @@ const BIOS = {
   "Doctor Octopus":{az:"Dörd mexaniki qolla döyüşən dahi alim", tr:"Dört mekanik kolla savaşan dahi bilim insanı", en:"Brilliant scientist who fights with four mechanical arms"},
   "Homelander":{az:"Ən güclü, lakin qorxulu dərəcədə qeyri-sabit qəhrəman", tr:"En güçlü, ama tehlikeli derecede dengesiz kahraman", en:"The most powerful, but dangerously unstable hero"},
   "Queen Maeve":{az:"Güclü, sürətli və möhkəm super-qəhrəman", tr:"Güçlü, hızlı ve dayanıklı süper kahraman", en:"Powerful, fast, and nearly indestructible superhero"},
-  "Soldier Boy":{az:"II Dünya müharibəsindən qalma köhnə nəsil super-əsgər", tr:"II. Dünya Savaşı'ndan kalma eski nesil süper asker", en:"World War II-era super-soldier from a bygone generation"}
+  "Soldier Boy":{az:"II Dünya müharibəsindən qalma köhnə nəsil super-əsgər", tr:"II. Dünya Savaşı'ndan kalma eski nesil süper asker", en:"World War II-era super-soldier from a bygone generation"},
+  "Ant-Man":{az:"Bədənini kiçilə bilən, ordunu böyüdən qəhrəman", tr:"Vücudunu küçülten, orduyu büyüten kahraman", en:"Hero who can shrink to ant size or grow to giant size"},
+  "Wasp":{az:"Uçan, atıcı, hər ölçüdə döyüşə bilən qəhrəman", tr:"Uçan, atıcı, her boyda savaşabilen kahraman", en:"Flying, stinging hero who can change her size at will"},
+  "Hawkeye":{az:"Dünya ən yaxşı okçusu, hər hədəfi vuran", tr:"Dünyanın en iyi okçusu, her hedefi vuran", en:"The world's greatest archer who never misses a target"},
+  "Black Widow":{az:"Casus, akrobat, ən yaxşı döyüş ustası", tr:"Casus, akrobat, en iyi dövüş ustası", en:"Master spy, acrobat, and world-class combatant"},
+  "Moon Knight":{az:"Gecə tanrısının şərti ilə gücünü alan sirli qəhrəman", tr:"Gece tanrısının koşuluyla gücünü alan gizemli kahraman", en:"Mysterious hero who draws power from the moon god"},
+  "Daredevil":{az:"Kor hüquqşünas, gecə qorxmaz döyüşçüyə çevrilir", tr:"Kör avukat, geceleri korkusuz dövüşçüye dönüşür", en:"Blind lawyer who becomes a fearless vigilante by night"},
+  "Punisher":{az:"Günahkarları cəzalandıran amansız intiqamçı", tr:"Suçluları cezalandıran acımasız intikamcı", en:"Merciless vigilante who punishes criminals with lethal force"},
+  "Morbius":{az:"Vampirik həkim, yarı vampir yarı insan", tr:"Vampirik doktor, yarı vampir yarı insan", en:"Vampiric scientist cursed with living vampire powers"},
+  "Black Cat":{az:"Cəsur oğru qadın, bədbəxtlik gücünə sahibdir", tr:"Cesur kadın hırsız, şanssızlık gücüne sahip", en:"Daring cat burglar with probability-altering bad luck powers"}
 };
 
-function getBio(name){
-  const b = BIOS[name];
-  if(!b) return '';
-  return b[currentLang] || b.az || '';
-}
+function getBio(name){ const b=BIOS[name]; if(!b) return ''; return b[currentLang]||b.az||''; }
 
+/* ================================================================
+   HEROES — genişləndirilmiş siyahı
+================================================================ */
 const HEROES = [
-  // ---- Mythology / Universal ----
   {name:"Hades", fr:"Mythology", init:"HD", color:"#4A148C", tier:"S", power:97, speed:80, defense:95, health:98, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvBRSD4vBwIhu6sAYBQpgH57g2ur_TiPgci_q4lKGpfA&s=10"},
-
-  // ---- DC ----
   {name:"Superman", fr:"DC", init:"SU", color:"#4FA3E3", tier:"S", power:99, speed:92, defense:98, health:98, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgx9BS4HzHuFykljxgnr0rRm82ABPoUE_wdXLkI1V_BQ&s=10"},
   {name:"Wonder Woman", fr:"DC", init:"WW", color:"#E3B23C", tier:"S", power:94, speed:83, defense:92, health:93, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZazh5VL-gTgCx75wAYPSr4P31MhjRM7votEzzrz6SUA&s=10"},
   {name:"Shazam", fr:"DC", init:"SH", color:"#D9A441", tier:"S", power:91, speed:85, defense:86, health:88, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp5aALpEqIV2BMKdhQWNzBZBk22ds_9x-cjBgzAo02DQ&s=10"},
@@ -1243,8 +808,6 @@ const HEROES = [
   {name:"Supergirl", fr:"DC", init:"SG", color:"#1976D2", tier:"S", power:96, speed:89, defense:95, health:95, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHO0mIcVSPlLmxQjCnzdvsIggPvXrCnIp3uLw8u6A5Lw&s=10"},
   {name:"Black Adam", fr:"DC", init:"BA", color:"#FBC02D", tier:"S", power:96, speed:85, defense:93, health:93, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsKncTNtKh_DPLzPv9xiuIC1hHGvpOr3OZRqSgfjyj3A&s"},
   {name:"Red Hood", fr:"DC", init:"RH", color:"#C62828", tier:"C", power:42, speed:64, defense:50, health:58, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHzKjwAbu396jAV6nU1AEF4lNJJeSgXhCUGJCBhQaxkA&s=10"},
-
-  // ---- Avengers / Marvel ----
   {name:"Doctor Doom", fr:"Avengers", init:"DD", color:"#2E7D32", tier:"S", power:96, speed:75, defense:94, health:93, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn8L55m3D6UKmwYybQYXJApJwmLLd-bSKWzIA2lyqgJg&s=10"},
   {name:"Odin", fr:"Avengers", init:"OD", color:"#D4A544", tier:"S", power:99, speed:80, defense:98, health:98, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR13qDmnzU3y8mOI5EoCez8LLsOQhWg-6SIwq7Xf9Nu3w&s=10"},
   {name:"Thanos", fr:"Avengers", init:"TH", color:"#4A148C", tier:"S", power:99, speed:76, defense:97, health:99, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ayYxoYOizQVfpT1aQGGpkd_cBzK9ogXW4uN7kVCJZg&s"},
@@ -1276,1114 +839,910 @@ const HEROES = [
   {name:"Professor X", fr:"Avengers", init:"PX", color:"#283593", tier:"A", power:87, speed:50, defense:60, health:65, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJRU1dtsJBWsb-LHajcaoB4ROpG0ev444TgefoCwrr7g&s=10"},
   {name:"Iceman", fr:"Avengers", init:"IM", color:"#0288D1", tier:"A", power:82, speed:72, defense:80, health:80, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8qNKebrxIr5UuQwkzpM0ARwyk_K8_-c8DoC2WT3Juqw&s=10"},
   {name:"Doctor Octopus", fr:"Avengers", init:"DO", color:"#558B2F", tier:"B", power:64, speed:60, defense:68, health:70, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTajx99dBjKuXCx0awccK1Ox5JWNZL3X7HWHrcr5brliQ&s=10"},
-
-  // ---- The Boys ----
+  {name:"Ant-Man", fr:"Avengers", init:"AM", color:"#E91E63", tier:"B", power:58, speed:74, defense:60, health:65, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5Mj7oZGI3hXKGU4_-M6_6pOEWLuTe2L3BTFfPdIPQ&s=10"},
+  {name:"Wasp", fr:"Avengers", init:"WP", color:"#FDD835", tier:"B", power:55, speed:80, defense:55, health:62, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnmrZDmCF0P-xCf_76HOmvWz6sQTp8n9LqXLHFt5YQBQ&s=10"},
+  {name:"Hawkeye", fr:"Avengers", init:"HE", color:"#78909C", tier:"C", power:36, speed:62, defense:44, health:56, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSHJrCHCAbGc4m4K-JUZ5fF2gtnFz1cSJPLpMSdSH2Rg&s=10"},
+  {name:"Black Widow", fr:"Avengers", init:"BW", color:"#212121", tier:"C", power:38, speed:68, defense:50, health:58, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXDzAOIEiHJ_0Afc-UUjhF5vXlgdBDW13DlnxiEXGKlA&s=10"},
+  {name:"Moon Knight", fr:"Avengers", init:"MK", color:"#EEEEEE", tier:"B", power:62, speed:66, defense:58, health:70, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqaVBJL_lk5-BI3tJ1d--gFJo7r1jl0W9L72Y9UKjMgw&s=10"},
+  {name:"Daredevil", fr:"Avengers", init:"DD", color:"#C62828", tier:"C", power:44, speed:70, defense:52, health:60, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSH7d17-vGOGgGnSqt2fP7DQQshzSmm6bRg2TOnMFOGXQ&s=10"},
+  {name:"Punisher", fr:"Avengers", init:"PU", color:"#424242", tier:"C", power:48, speed:58, defense:46, health:62, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7zRbzJjuSl8pCELOYL_yXmFWaWcpVd3g_8CqxELKjTA&s=10"},
   {name:"Homelander", fr:"The Boys", init:"HL", color:"#0D47A1", tier:"S", power:95, speed:88, defense:92, health:92, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-_M5puEr7jvDEIMuZ_xAjzwxRdVVvQkXbHb5MpHnOoA&s=10"},
   {name:"Queen Maeve", fr:"The Boys", init:"QM", color:"#8D6E63", tier:"A", power:80, speed:70, defense:78, health:82, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDjcvMUjGrc4AeSrwxTyCJHfJekLOzx3XjB3NKwo7bfLkQY-P_byagNsI&s=10"},
   {name:"Soldier Boy", fr:"The Boys", init:"SB", color:"#33691E", tier:"A", power:86, speed:68, defense:87, health:88, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRaFlEQNVMrh4aBLjtxCAF6XbiqtnyvrPPMH2oaqs0Rw&s=10"}
 ];
 
-function shuffle(arr){
-  const a = arr.slice();
-  for(let i=a.length-1;i>0;i--){
-    const j = Math.floor(Math.random()*(i+1));
-    [a[i],a[j]]=[a[j],a[i]];
-  }
-  return a;
-}
-
+function shuffle(arr){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 function rand(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
-function clamp(v,min,max){ return Math.max(min, Math.min(max, v)); }
+function clamp(v,min,max){ return Math.max(min,Math.min(max,v)); }
+function assignStats(hero){ return {...hero, power:clamp(hero.power+rand(-3,3),1,99), speed:clamp(hero.speed+rand(-3,3),1,99), defense:clamp(hero.defense+rand(-3,3),1,99), health:clamp(hero.health+rand(-3,3),1,99), maxHealth:0}; }
 
-function assignStats(hero){
-  return {
-    ...hero,
-    power: clamp(hero.power + rand(-3,3), 1, 99),
-    speed: clamp(hero.speed + rand(-3,3), 1, 99),
-    defense: clamp(hero.defense + rand(-3,3), 1, 99),
-    health: clamp(hero.health + rand(-3,3), 1, 99),
-    maxHealth: 0
-  };
-}
+let state=null, battleState=null;
 
-/* ---------------- STATE ---------------- */
-let state = null;
-let battleState = null;
-
-/* =================================================================
-   ONLINE / PEER-TO-PEER (WebRTC via PeerJS)
-   - "onlineMode" true if playing across two devices
-   - "isHost" true for the player who created the room (always Player 1)
-   - Data goes directly device-to-device; only the initial handshake
-     uses PeerJS's free public broker, no game data passes through it.
-================================================================= */
-let onlineMode = false;
-let isHost = false;
-let peer = null;
-let conn = null;
-let guestConnected = false;
+/* ================================================================
+   ONLINE / P2P
+================================================================ */
+let onlineMode=false, isHost=false, peer=null, conn=null, guestConnected=false;
 
 function showOnlyLobbyPanel(which){
   document.getElementById('createPanel').classList.remove('show');
   document.getElementById('joinPanel').classList.remove('show');
-  document.getElementById('modeRow').style.display = which ? 'none' : 'flex';
+  document.getElementById('modeRow').style.display=which?'none':'flex';
   if(which) document.getElementById(which).classList.add('show');
 }
 
-document.getElementById('localModeBtn').addEventListener('click', ()=>{
-  onlineMode = false;
-  document.getElementById('lobby').style.display = 'none';
-  document.getElementById('home').style.display = 'flex';
+document.getElementById('localModeBtn').addEventListener('click',()=>{
+  onlineMode=false;
+  document.getElementById('lobby').style.display='none';
+  document.getElementById('home').style.display='flex';
 });
 
-document.getElementById('createModeBtn').addEventListener('click', ()=>{
+document.getElementById('createModeBtn').addEventListener('click',()=>{
   showOnlyLobbyPanel('createPanel');
   startHostPeer();
 });
 
-document.getElementById('joinModeBtn').addEventListener('click', ()=>{
+document.getElementById('joinModeBtn').addEventListener('click',()=>{
   showOnlyLobbyPanel('joinPanel');
-  const params = new URLSearchParams(location.search);
-  const pre = params.get('room');
-  if(pre) document.getElementById('joinCodeInput').value = pre;
+  const params=new URLSearchParams(location.search);
+  const pre=params.get('room');
+  if(pre) document.getElementById('joinCodeInput').value=pre;
 });
 
-document.getElementById('backFromCreate').addEventListener('click', ()=>{
+document.getElementById('backFromCreate').addEventListener('click',()=>{
   showOnlyLobbyPanel(null);
-  if(peer){ peer.destroy(); peer = null; }
-  onlineMode = false;
+  if(peer){ peer.destroy(); peer=null; }
+  onlineMode=false;
 });
-document.getElementById('backFromJoin').addEventListener('click', ()=>{
+document.getElementById('backFromJoin').addEventListener('click',()=>{
   showOnlyLobbyPanel(null);
-  if(peer){ peer.destroy(); peer = null; }
-  onlineMode = false;
+  if(peer){ peer.destroy(); peer=null; }
+  onlineMode=false;
 });
 
 function startHostPeer(){
-  onlineMode = true;
-  isHost = true;
-  peer = new Peer();
-  peer.on('open', id=>{
-    const link = location.origin + location.pathname + '?room=' + id;
-    document.getElementById('roomLinkInput').value = link;
-    document.getElementById('hostLinkInput').value = link;
-    document.getElementById('createStatusText').textContent = t('create_status_ready');
+  onlineMode=true; isHost=true;
+  peer=new Peer();
+  peer.on('open',id=>{
+    const link=location.origin+location.pathname+'?room='+id;
+    document.getElementById('roomLinkInput').value=link;
+    document.getElementById('hostLinkInput').value=link;
+    document.getElementById('createStatusText').textContent=t('create_status_ready');
   });
-  peer.on('connection', c=>{
-    conn = c;
-    guestConnected = true;
+  peer.on('connection',c=>{
+    conn=c; guestConnected=true;
     setupConn();
     document.getElementById('createDot').classList.add('on');
-    document.getElementById('createStatusText').textContent = t('create_status_joined');
+    document.getElementById('createStatusText').textContent=t('create_status_joined');
     setTimeout(()=>{
-      document.getElementById('lobby').style.display = 'none';
-      document.getElementById('home').style.display = 'flex';
-      document.getElementById('hostStatusBar').style.display = 'block';
+      document.getElementById('lobby').style.display='none';
+      document.getElementById('home').style.display='flex';
+      document.getElementById('hostStatusBar').style.display='block';
       document.getElementById('hostDot').classList.add('on');
-      document.getElementById('hostStatusText').textContent = t('host_status_ready');
-      document.getElementById('hostLinkInput').value = document.getElementById('roomLinkInput').value;
+      document.getElementById('hostStatusText').textContent=t('host_status_ready');
+      document.getElementById('hostLinkInput').value=document.getElementById('roomLinkInput').value;
       showOnlinePill(t('pill_p1'));
-    }, 500);
+    },500);
   });
-  peer.on('error', err=>{
-    document.getElementById('createStatusText').textContent = t('create_status_error') + (err && err.type ? err.type : '');
-  });
+  peer.on('error',err=>{ document.getElementById('createStatusText').textContent=t('create_status_error')+(err&&err.type?err.type:''); });
 }
 
-document.getElementById('copyLinkBtn').addEventListener('click', ()=>{
-  const inp = document.getElementById('roomLinkInput');
-  inp.select();
-  if(navigator.clipboard){ navigator.clipboard.writeText(inp.value).catch(()=>{}); }
-  document.getElementById('copyLinkBtn').textContent = t('copy_link_copied');
-  setTimeout(()=>{ document.getElementById('copyLinkBtn').textContent = t('copy_link_btn'); }, 1400);
+document.getElementById('copyLinkBtn').addEventListener('click',()=>{
+  const inp=document.getElementById('roomLinkInput'); inp.select();
+  if(navigator.clipboard) navigator.clipboard.writeText(inp.value).catch(()=>{});
+  document.getElementById('copyLinkBtn').textContent=t('copy_link_copied');
+  setTimeout(()=>document.getElementById('copyLinkBtn').textContent=t('copy_link_btn'),1400);
 });
-document.getElementById('hostCopyBtn').addEventListener('click', ()=>{
-  const inp = document.getElementById('hostLinkInput');
-  inp.select();
-  if(navigator.clipboard){ navigator.clipboard.writeText(inp.value).catch(()=>{}); }
-  document.getElementById('hostCopyBtn').textContent = t('copy_link_copied');
-  setTimeout(()=>{ document.getElementById('hostCopyBtn').textContent = t('host_copy_btn'); }, 1400);
+document.getElementById('hostCopyBtn').addEventListener('click',()=>{
+  const inp=document.getElementById('hostLinkInput'); inp.select();
+  if(navigator.clipboard) navigator.clipboard.writeText(inp.value).catch(()=>{});
+  document.getElementById('hostCopyBtn').textContent=t('copy_link_copied');
+  setTimeout(()=>document.getElementById('hostCopyBtn').textContent=t('host_copy_btn'),1400);
 });
 
-document.getElementById('joinConnectBtn').addEventListener('click', ()=>{
-  const raw = document.getElementById('joinCodeInput').value.trim();
-  if(!raw){ document.getElementById('joinStatusText').textContent = t('join_status_empty'); return; }
-  let roomId = raw;
-  try{
-    if(raw.includes('room=')){
-      const u = new URL(raw);
-      roomId = u.searchParams.get('room') || raw;
-    }
-  }catch(e){ /* plain code, use as-is */ }
-
-  onlineMode = true;
-  isHost = false;
-  document.getElementById('joinStatusText').textContent = t('join_status_connecting');
-  peer = new Peer();
-  peer.on('open', ()=>{
-    conn = peer.connect(roomId, {reliable:true});
-    conn.on('open', ()=>{
+document.getElementById('joinConnectBtn').addEventListener('click',()=>{
+  const raw=document.getElementById('joinCodeInput').value.trim();
+  if(!raw){ document.getElementById('joinStatusText').textContent=t('join_status_empty'); return; }
+  let roomId=raw;
+  try{ if(raw.includes('room=')){ const u=new URL(raw); roomId=u.searchParams.get('room')||raw; } }catch(e){}
+  onlineMode=true; isHost=false;
+  document.getElementById('joinStatusText').textContent=t('join_status_connecting');
+  peer=new Peer();
+  peer.on('open',()=>{
+    conn=peer.connect(roomId,{reliable:true});
+    conn.on('open',()=>{
       setupConn();
       document.getElementById('joinDot').classList.add('on');
-      document.getElementById('joinStatusText').textContent = t('join_status_connected');
+      document.getElementById('joinStatusText').textContent=t('join_status_connected');
       showOnlinePill(t('pill_p2'));
       setTimeout(()=>{
-        document.getElementById('lobby').style.display = 'none';
-        document.getElementById('waitScreen').style.display = 'flex';
-      }, 400);
+        document.getElementById('lobby').style.display='none';
+        document.getElementById('waitScreen').style.display='flex';
+      },400);
     });
-    conn.on('error', ()=>{
-      document.getElementById('joinStatusText').textContent = t('join_status_fail');
-    });
+    conn.on('error',()=>{ document.getElementById('joinStatusText').textContent=t('join_status_fail'); });
   });
-  peer.on('error', ()=>{
-    document.getElementById('joinStatusText').textContent = t('join_status_notfound');
-  });
+  peer.on('error',()=>{ document.getElementById('joinStatusText').textContent=t('join_status_notfound'); });
 });
 
 function showOnlinePill(text){
-  document.getElementById('onlinePillText').textContent = text;
+  document.getElementById('onlinePillText').textContent=text;
   document.getElementById('onlinePill').classList.add('show');
 }
 
 function setupConn(){
   initChatUI();
-  conn.on('data', data=>{
-    if(!data || !data.type) return;
-    if(data.type === 'chat'){
-      appendChatMessage(data.text, false);
-      return;
-    }
-    if(isHost && data.type === 'action'){
-      handleGuestAction(data);
-    } else if(!isHost && data.type === 'sync'){
-      applySync(data);
-    } else if(!isHost && data.type === 'reset'){
-      document.getElementById('endScreen').style.display = 'none';
-      document.getElementById('battle').style.display = 'none';
-      document.getElementById('game').style.display = 'none';
-      document.getElementById('waitScreen').style.display = 'flex';
-      document.getElementById('waitText').textContent = t('wait_text_reset');
+  conn.on('data',data=>{
+    if(!data||!data.type) return;
+    if(data.type==='chat'){ appendChatMessage(data.text,false); return; }
+    if(isHost&&data.type==='action') handleGuestAction(data);
+    else if(!isHost&&data.type==='sync') applySync(data);
+    else if(!isHost&&data.type==='reset'){
+      document.getElementById('endScreen').style.display='none';
+      document.getElementById('battle').style.display='none';
+      document.getElementById('game').style.display='none';
+      document.getElementById('waitScreen').style.display='flex';
+      document.getElementById('waitText').textContent=t('wait_text_reset');
     }
   });
-  conn.on('close', ()=>{
-    guestConnected = false;
-    alert(t('conn_lost_alert'));
-  });
+  conn.on('close',()=>{ guestConnected=false; alert(t('conn_lost_alert')); });
 }
 
-/* ---------------- CHAT ---------------- */
-function initChatUI(){
-  document.getElementById('chatToggle').style.display = 'flex';
-}
-
-document.getElementById('chatToggle').addEventListener('click', ()=>{
+/* ================================================================
+   CHAT
+================================================================ */
+function initChatUI(){ document.getElementById('chatToggle').style.display='flex'; }
+document.getElementById('chatToggle').addEventListener('click',()=>{
   document.getElementById('chatPanel').classList.toggle('open');
   document.getElementById('chatToggle').classList.remove('unread');
   document.getElementById('chatInput').focus();
 });
-document.getElementById('chatClose').addEventListener('click', ()=>{
-  document.getElementById('chatPanel').classList.remove('open');
-});
-document.getElementById('chatSendBtn').addEventListener('click', sendChat);
-document.getElementById('chatInput').addEventListener('keydown', e=>{
-  if(e.key === 'Enter') sendChat();
-});
+document.getElementById('chatClose').addEventListener('click',()=>document.getElementById('chatPanel').classList.remove('open'));
+document.getElementById('chatSendBtn').addEventListener('click',sendChat);
+document.getElementById('chatInput').addEventListener('keydown',e=>{ if(e.key==='Enter') sendChat(); });
 
 function sendChat(){
-  const inp = document.getElementById('chatInput');
-  const text = inp.value.trim();
+  const inp=document.getElementById('chatInput');
+  const text=inp.value.trim();
   if(!text) return;
-  appendChatMessage(text, true);
-  if(conn && conn.open) conn.send({type:'chat', text});
-  inp.value = '';
+  appendChatMessage(text,true);
+  if(conn&&conn.open) conn.send({type:'chat',text});
+  inp.value='';
 }
-
-function appendChatMessage(text, mine){
-  const wrap = document.getElementById('chatMessages');
-  const el = document.createElement('div');
-  el.className = 'chat-msg ' + (mine ? 'mine' : 'theirs');
-  el.textContent = text;
+function appendChatMessage(text,mine){
+  const wrap=document.getElementById('chatMessages');
+  const el=document.createElement('div');
+  el.className='chat-msg '+(mine?'mine':'theirs');
+  el.textContent=text;
   wrap.appendChild(el);
-  wrap.scrollTop = wrap.scrollHeight;
-  if(!mine && !document.getElementById('chatPanel').classList.contains('open')){
+  wrap.scrollTop=wrap.scrollHeight;
+  if(!mine&&!document.getElementById('chatPanel').classList.contains('open'))
     document.getElementById('chatToggle').classList.add('unread');
-  }
 }
 
-function sendAction(payload){
-  if(conn && conn.open) conn.send(Object.assign({type:'action'}, payload));
-}
+function sendAction(payload){ if(conn&&conn.open) conn.send(Object.assign({type:'action'},payload)); }
 
 function handleGuestAction(data){
-  if(data.action === 'bid') makeBid(2);
-  else if(data.action === 'pass') makePass(2);
-  else if(data.action === 'spin') spinWheel();
+  if(data.action==='bid') makeBid(2);
+  else if(data.action==='pass') makePass(2);
+  else if(data.action==='spin') triggerWheelSpin(); // host runs the spin
 }
 
 function currentScreenName(){
-  if(document.getElementById('game').style.display === 'block') return 'game';
-  if(document.getElementById('wheelGame').style.display === 'block') return 'wheel';
-  if(document.getElementById('battle').style.display === 'block') return 'battle';
-  if(document.getElementById('endScreen').style.display === 'block') return 'end';
+  if(document.getElementById('game').style.display==='block') return 'game';
+  if(document.getElementById('wheelGame').style.display==='block') return 'wheel';
+  if(document.getElementById('battle').style.display==='block') return 'battle';
+  if(document.getElementById('endScreen').style.display==='block') return 'end';
   return 'home';
 }
 
-function syncGuest(){
-  if(!(onlineMode && isHost && conn && conn.open)) return;
-  const flash = document.getElementById('flash');
-  const wheelFlash = document.getElementById('wheelFlash');
-  conn.send({
+/* ================================================================
+   syncGuest — KEY FIX: send spinTarget so guest can animate wheel
+================================================================ */
+function syncGuest(extra){
+  if(!(onlineMode&&isHost&&conn&&conn.open)) return;
+  const flash=document.getElementById('flash');
+  const wheelFlash=document.getElementById('wheelFlash');
+  const payload={
     type:'sync',
-    screen: currentScreenName(),
-    state: state,
-    battleState: battleState,
-    wheelState: wheelState,
-    flashShow: flash.classList.contains('show'),
-    flashText: document.getElementById('flashText').innerHTML,
-    wheelFlashShow: wheelFlash.classList.contains('show'),
-    wheelFlashText: document.getElementById('wheelFlashText').innerHTML
-  });
+    screen:currentScreenName(),
+    state:state,
+    battleState:battleState,
+    wheelState:wheelState,
+    flashShow:flash.classList.contains('show'),
+    flashText:document.getElementById('flashText').innerHTML,
+    wheelFlashShow:wheelFlash.classList.contains('show'),
+    wheelFlashText:document.getElementById('wheelFlashText').innerHTML
+  };
+  if(extra) Object.assign(payload,extra);
+  conn.send(payload);
 }
 
+/* ================================================================
+   applySync — KEY FIX: animate guest wheel when spinTarget present
+================================================================ */
 function applySync(payload){
-  state = payload.state;
-  battleState = payload.battleState;
-  wheelState = payload.wheelState;
+  state=payload.state;
+  battleState=payload.battleState;
+  wheelState=payload.wheelState;
 
-  document.getElementById('waitScreen').style.display = 'none';
-  document.getElementById('home').style.display = 'none';
-  document.getElementById('game').style.display = payload.screen === 'game' ? 'block' : 'none';
-  document.getElementById('wheelGame').style.display = payload.screen === 'wheel' ? 'block' : 'none';
-  document.getElementById('battle').style.display = payload.screen === 'battle' ? 'block' : 'none';
-  document.getElementById('endScreen').style.display = payload.screen === 'end' ? 'block' : 'none';
+  document.getElementById('waitScreen').style.display='none';
+  document.getElementById('home').style.display='none';
+  document.getElementById('game').style.display=payload.screen==='game'?'block':'none';
+  document.getElementById('wheelGame').style.display=payload.screen==='wheel'?'block':'none';
+  document.getElementById('battle').style.display=payload.screen==='battle'?'block':'none';
+  document.getElementById('endScreen').style.display=payload.screen==='end'?'block':'none';
 
-  if(payload.screen === 'game'){
-    document.getElementById('lotTotal').textContent = state.lots.length;
+  if(payload.screen==='game'){
+    document.getElementById('lotTotal').textContent=state.lots.length;
     renderAuction();
-    const flash = document.getElementById('flash');
-    document.getElementById('flashText').innerHTML = payload.flashText || '';
-    flash.classList.toggle('show', !!payload.flashShow);
-  } else if(payload.screen === 'wheel'){
-    document.getElementById('wheelLotTotal').textContent = wheelState.lots.length;
-    renderWheelScreen(true);
-    const wheelFlash = document.getElementById('wheelFlash');
-    document.getElementById('wheelFlashText').innerHTML = payload.wheelFlashText || '';
-    wheelFlash.classList.toggle('show', !!payload.wheelFlashShow);
-  } else if(payload.screen === 'battle'){
+    const flash=document.getElementById('flash');
+    document.getElementById('flashText').innerHTML=payload.flashText||'';
+    flash.classList.toggle('show',!!payload.flashShow);
+  } else if(payload.screen==='wheel'){
+    document.getElementById('wheelLotTotal').textContent=wheelState.lots.length;
+
+    // If host just started a spin, animate the wheel on guest's side too
+    if(payload.spinTarget!==undefined){
+      // Rebuild SVG with the snapshot of remaining heroes BEFORE the winner was removed
+      const spinnerEl=document.getElementById('wheelSpinner');
+      spinnerEl.style.transition='none';
+      spinnerEl.innerHTML=buildWheelSVG(payload.spinRemainingSnapshot||wheelState.remaining);
+      spinnerEl.style.transform='rotate(0deg)';
+      void spinnerEl.offsetWidth;
+      // Animate to same target angle
+      spinnerEl.style.transition='transform 3.2s cubic-bezier(0.15,0.85,0.25,1)';
+      spinnerEl.style.transform='rotate('+payload.spinTarget+'deg)';
+      // Show "watching" indicator
+      const watchEl=document.getElementById('wheelWatching');
+      watchEl.style.display='block';
+      // After animation settles, update the screen normally
+      setTimeout(()=>{
+        watchEl.style.display='none';
+        renderWheelScreen(true);
+        const wheelFlash=document.getElementById('wheelFlash');
+        document.getElementById('wheelFlashText').innerHTML=payload.wheelFlashText||'';
+        wheelFlash.classList.toggle('show',!!payload.wheelFlashShow);
+      },3400);
+    } else {
+      renderWheelScreen(!payload.skipRebuild);
+      const wheelFlash=document.getElementById('wheelFlash');
+      document.getElementById('wheelFlashText').innerHTML=payload.wheelFlashText||'';
+      wheelFlash.classList.toggle('show',!!payload.wheelFlashShow);
+    }
+  } else if(payload.screen==='battle'){
     renderBattleFromState();
-  } else if(payload.screen === 'end'){
+  } else if(payload.screen==='end'){
     showFinalResults();
-    document.getElementById('restartBtn').textContent = t('restart_locked');
-    document.getElementById('restartBtn').disabled = true;
-    document.getElementById('restartBtn').style.opacity = '0.5';
-    document.getElementById('restartBtn').style.cursor = 'default';
+    const rb=document.getElementById('restartBtn');
+    rb.textContent=t('restart_locked'); rb.disabled=true; rb.style.opacity='0.5'; rb.style.cursor='default';
   }
 }
 
-function renderBattleFromState(){
-  updateBattleTally();
-  document.getElementById('nextFightBtn').style.display = 'none';
-  document.getElementById('fightStatus').textContent = (battleState && battleState.status) || '';
+/* ================================================================
+   HOME SCREEN LOGIC
+================================================================ */
+const budgetRange=document.getElementById('budgetRange');
+const budgetVal=document.getElementById('budgetVal');
+budgetRange.addEventListener('input',()=>budgetVal.textContent='$'+budgetRange.value);
 
-  const log = document.getElementById('battleLog');
-  log.innerHTML = '';
-  ((battleState && battleState.history) || []).slice().reverse().forEach(item=>{
-    const el = document.createElement('div');
-    el.className = 'log-item';
-    el.innerHTML = `<span><b>${item.n1}</b> (-${item.d1} HP)</span> <span><b>${item.n2}</b> (-${item.d2} HP)</span>`;
-    log.appendChild(el);
-  });
-
-  const banner = document.getElementById('championBanner');
-  if(battleState && battleState.championDone){
-    banner.style.display = 'block';
-    document.getElementById('championText').textContent = battleState.championText;
-    document.getElementById('championText').style.color = battleState.championColor || '';
-    document.getElementById('championSub').textContent = battleState.championSub;
-    document.getElementById('toResultsBtn').style.display = 'none';
-  } else {
-    banner.style.display = 'none';
-    const h1 = battleState.t1[battleState.idx1];
-    const h2 = battleState.t2[battleState.idx2];
-    if(h1) renderFighter('left', h1);
-    if(h2) renderFighter('right', h2);
-  }
-}
-
-/* ---------------- HOME SCREEN LOGIC ---------------- */
-const budgetRange = document.getElementById('budgetRange');
-const budgetVal = document.getElementById('budgetVal');
-budgetRange.addEventListener('input', ()=>{ budgetVal.textContent = '$'+budgetRange.value; });
-
-const incRow = document.getElementById('incRow');
-let selectedInc = 1;
+const incRow=document.getElementById('incRow');
+let selectedInc=1;
 for(let i=1;i<=10;i++){
-  const c = document.createElement('div');
-  c.className = 'chip' + (i===1 ? ' active' : '');
-  c.textContent = '$'+i;
-  c.addEventListener('click', ()=>{
+  const c=document.createElement('div');
+  c.className='chip'+(i===1?' active':'');
+  c.textContent='$'+i;
+  c.addEventListener('click',()=>{
     document.querySelectorAll('#incRow .chip').forEach(el=>el.classList.remove('active'));
-    c.classList.add('active');
-    selectedInc = i;
+    c.classList.add('active'); selectedInc=i;
   });
   incRow.appendChild(c);
 }
 
-const maxHeroesRow = document.getElementById('maxHeroesRow');
-const maxHeroesVal = document.getElementById('maxHeroesVal');
-let selectedMaxHeroes = 5;
-function updateFootNote(){
-  document.getElementById('footNote').textContent = t('foot_note').replace('{n}', selectedMaxHeroes);
-}
+const maxHeroesRow=document.getElementById('maxHeroesRow');
+const maxHeroesVal=document.getElementById('maxHeroesVal');
+let selectedMaxHeroes=5;
+function updateFootNote(){ document.getElementById('footNote').textContent=t('foot_note').replace('{n}',selectedMaxHeroes); }
 for(let i=3;i<=10;i++){
-  const c = document.createElement('div');
-  c.className = 'chip' + (i===5 ? ' active' : '');
-  c.textContent = i;
-  c.addEventListener('click', ()=>{
+  const c=document.createElement('div');
+  c.className='chip'+(i===5?' active':'');
+  c.textContent=i;
+  c.addEventListener('click',()=>{
     document.querySelectorAll('#maxHeroesRow .chip').forEach(el=>el.classList.remove('active'));
-    c.classList.add('active');
-    selectedMaxHeroes = i;
-    maxHeroesVal.textContent = i;
-    updateFootNote();
+    c.classList.add('active'); selectedMaxHeroes=i; maxHeroesVal.textContent=i; updateFootNote();
   });
   maxHeroesRow.appendChild(c);
 }
 updateFootNote();
 
-/* ---------------- GAME MODE TOGGLE (auction / wheel) ---------------- */
-let selectedGameMode = 'auction';
-const gmAuctionBtn = document.getElementById('gmAuctionBtn');
-const gmWheelBtn = document.getElementById('gmWheelBtn');
-const budgetField = document.getElementById('budgetField');
+let selectedGameMode='auction';
+const gmAuctionBtn=document.getElementById('gmAuctionBtn');
+const gmWheelBtn=document.getElementById('gmWheelBtn');
+const budgetField=document.getElementById('budgetField');
 
-gmAuctionBtn.addEventListener('click', ()=>{
-  selectedGameMode = 'auction';
-  gmAuctionBtn.classList.add('active');
-  gmWheelBtn.classList.remove('active');
-  budgetField.style.display = '';
+gmAuctionBtn.addEventListener('click',()=>{
+  selectedGameMode='auction';
+  gmAuctionBtn.classList.add('active'); gmWheelBtn.classList.remove('active');
+  budgetField.style.display='';
 });
-gmWheelBtn.addEventListener('click', ()=>{
-  selectedGameMode = 'wheel';
-  gmWheelBtn.classList.add('active');
-  gmAuctionBtn.classList.remove('active');
-  budgetField.style.display = 'none';
+gmWheelBtn.addEventListener('click',()=>{
+  selectedGameMode='wheel';
+  gmWheelBtn.classList.add('active'); gmAuctionBtn.classList.remove('active');
+  budgetField.style.display='none';
 });
 
-document.getElementById('startBtn').addEventListener('click', startGame);
+document.getElementById('startBtn').addEventListener('click',startGame);
 
 function startGame(){
-  if(onlineMode && isHost && !guestConnected){
-    alert(t('no_player2_alert'));
-    return;
-  }
+  if(onlineMode&&isHost&&!guestConnected){ alert(t('no_player2_alert')); return; }
+  if(selectedGameMode==='wheel'){ startWheelGame(selectedMaxHeroes); return; }
 
-  const maxHeroes = selectedMaxHeroes;
+  const budget=parseInt(budgetRange.value,10);
+  const inc=selectedInc;
+  // Auction: up to maxHeroes*2 lots but no more than HEROES length
+  const lotCount=Math.min(HEROES.length,selectedMaxHeroes*2);
+  const lots=shuffle(HEROES).slice(0,lotCount).map(assignStats);
 
-  if(selectedGameMode === 'wheel'){
-    startWheelGame(maxHeroes);
-    return;
-  }
+  state={ mode:'auction', budget, inc, maxHeroes:selectedMaxHeroes, lots,
+    lotIdx:0, price:0, leader:null, p1Passed:false, p2Passed:false,
+    players:{1:{budget,heroes:[]},2:{budget,heroes:[]}} };
 
-  const budget = parseInt(budgetRange.value, 10);
-  const inc = selectedInc;
-  const lotCount = Math.min(HEROES.length, maxHeroes * 2);
-  const lots = shuffle(HEROES).slice(0, lotCount).map(assignStats);
-
-  state = {
-    mode:'auction',
-    budget, inc, maxHeroes, lots,
-    lotIdx: 0,
-    price: 0,
-    leader: null,
-    p1Passed:false, p2Passed:false,
-    players: {
-      1: {budget: budget, heroes: []},
-      2: {budget: budget, heroes: []}
-    }
-  };
-
-  document.getElementById('home').style.display = 'none';
-  document.getElementById('game').style.display = 'block';
-  document.getElementById('wheelGame').style.display = 'none';
-  document.getElementById('battle').style.display = 'none';
-  document.getElementById('endScreen').style.display = 'none';
-
-  document.getElementById('lotTotal').textContent = lots.length;
+  document.getElementById('home').style.display='none';
+  document.getElementById('game').style.display='block';
+  document.getElementById('wheelGame').style.display='none';
+  document.getElementById('battle').style.display='none';
+  document.getElementById('endScreen').style.display='none';
+  document.getElementById('lotTotal').textContent=lots.length;
   renderAuction();
 }
 
-/* ---------------- AUCTION LOGIC ---------------- */
+/* ================================================================
+   AUCTION LOGIC
+================================================================ */
 function renderAuction(){
-  if(state.lotIdx >= state.lots.length){
-    finishAuction();
-    return;
-  }
+  if(state.lotIdx>=state.lots.length){ finishAuction(); return; }
+  const hero=state.lots[state.lotIdx];
+  document.getElementById('lotIndex').textContent=state.lotIdx+1;
+  document.getElementById('lotLabel').textContent=t('lot_label_progress').replace('{i}',state.lotIdx+1).replace('{n}',state.lots.length);
 
-  const hero = state.lots[state.lotIdx];
-  document.getElementById('lotIndex').textContent = state.lotIdx + 1;
-  document.getElementById('lotLabel').textContent = t('lot_label_progress')
-    .replace('{i}', state.lotIdx + 1).replace('{n}', state.lots.length);
+  const avatar=document.getElementById('heroAvatar');
+  if(hero.img) avatar.innerHTML=`<img src="${hero.img}" alt="${hero.name}">`;
+  else{ avatar.innerHTML=hero.init; avatar.style.background=hero.color; }
 
-  // Avatar
-  const avatar = document.getElementById('heroAvatar');
-  if(hero.img){
-    avatar.innerHTML = `<img src="${hero.img}" alt="${hero.name}">`;
-  } else {
-    avatar.innerHTML = hero.init;
-    avatar.style.background = hero.color;
-  }
+  document.getElementById('heroName').childNodes[0].nodeValue=hero.name+' ';
+  const tierEl=document.getElementById('heroTier');
+  tierEl.textContent=hero.tier+t('tier_suffix'); tierEl.className='tier-badge tier-'+hero.tier;
 
-  document.getElementById('heroName').childNodes[0].nodeValue = hero.name + " ";
+  const tagEl=document.getElementById('heroFranchise');
+  tagEl.textContent=hero.fr;
+  if(hero.fr==='DC') tagEl.className='hero-franchise-tag tag-dc';
+  else if(hero.fr==='The Boys') tagEl.className='hero-franchise-tag tag-boys';
+  else if(hero.fr==='Mythology') tagEl.className='hero-franchise-tag tag-myth';
+  else tagEl.className='hero-franchise-tag tag-marvel';
 
-  const tierEl = document.getElementById('heroTier');
-  tierEl.textContent = hero.tier + t('tier_suffix');
-  tierEl.className = 'tier-badge tier-' + hero.tier;
-
-  const tagEl = document.getElementById('heroFranchise');
-  tagEl.textContent = hero.fr;
-  if(hero.fr === 'DC') tagEl.className = 'hero-franchise-tag tag-dc';
-  else if(hero.fr === 'The Boys') tagEl.className = 'hero-franchise-tag tag-boys';
-  else if(hero.fr === 'Mythology') tagEl.className = 'hero-franchise-tag tag-myth';
-  else tagEl.className = 'hero-franchise-tag tag-marvel';
-
-  // Stats
-  document.getElementById('heroStatsRow').innerHTML = `
+  document.getElementById('heroStatsRow').innerHTML=`
     <div class="mini-stat g">${t('stat_power')}: ${hero.power}</div>
     <div class="mini-stat s">${t('stat_speed')}: ${hero.speed}</div>
     <div class="mini-stat m">${t('stat_defense')}: ${hero.defense}</div>
-    <div class="mini-stat c">${t('stat_health')}: ${hero.health}</div>
-  `;
+    <div class="mini-stat c">${t('stat_health')}: ${hero.health}</div>`;
 
-  document.getElementById('curPrice').textContent = '$' + state.price;
+  document.getElementById('curPrice').textContent='$'+state.price;
 
-  const note = document.getElementById('leaderNote');
-  if(!state.leader){
-    note.innerHTML = t('leader_note_default');
-    note.className = "leader-note";
-  } else {
-    note.innerHTML = buildLeaderNote(state.leader, state.price);
-    note.className = `leader-note p${state.leader}`;
-  }
+  const note=document.getElementById('leaderNote');
+  if(!state.leader){ note.innerHTML=t('leader_note_default'); note.className='leader-note'; }
+  else{ note.innerHTML=buildLeaderNote(state.leader,state.price); note.className='leader-note p'+state.leader; }
 
-  // Budgets
-  document.getElementById('p1Budget').textContent = '$' + state.players[1].budget;
-  document.getElementById('p2Budget').textContent = '$' + state.players[2].budget;
-  renderRosterList(1, 'p1List');
-  renderRosterList(2, 'p2List');
+  document.getElementById('p1Budget').textContent='$'+state.players[1].budget;
+  document.getElementById('p2Budget').textContent='$'+state.players[2].budget;
+  renderRosterList(1,'p1List'); renderRosterList(2,'p2List');
 
-  // Buttons
-  const p1CanBid = !state.p1Passed && (state.players[1].heroes.length < state.maxHeroes) && (state.players[1].budget >= state.price + state.inc);
-  const p2CanBid = !state.p2Passed && (state.players[2].heroes.length < state.maxHeroes) && (state.players[2].budget >= state.price + state.inc);
+  const p1CanBid=!state.p1Passed&&(state.players[1].heroes.length<state.maxHeroes)&&(state.players[1].budget>=state.price+state.inc);
+  const p2CanBid=!state.p2Passed&&(state.players[2].heroes.length<state.maxHeroes)&&(state.players[2].budget>=state.price+state.inc);
 
-  document.getElementById('p1BidBtn').disabled = !p1CanBid;
-  document.getElementById('p1PassBtn').disabled = state.p1Passed;
-  document.getElementById('p2BidBtn').disabled = !p2CanBid;
-  document.getElementById('p2PassBtn').disabled = state.p2Passed;
+  document.getElementById('p1BidBtn').disabled=!p1CanBid;
+  document.getElementById('p1PassBtn').disabled=state.p1Passed;
+  document.getElementById('p2BidBtn').disabled=!p2CanBid;
+  document.getElementById('p2PassBtn').disabled=state.p2Passed;
 
   if(onlineMode){
-    if(isHost){
-      document.getElementById('p2BidBtn').disabled = true;
-      document.getElementById('p2PassBtn').disabled = true;
-    } else {
-      document.getElementById('p1BidBtn').disabled = true;
-      document.getElementById('p1PassBtn').disabled = true;
-    }
+    if(isHost){ document.getElementById('p2BidBtn').disabled=true; document.getElementById('p2PassBtn').disabled=true; }
+    else{ document.getElementById('p1BidBtn').disabled=true; document.getElementById('p1PassBtn').disabled=true; }
   }
 
-  if(state.p1Passed && state.p2Passed){
-    resolveLot();
-  }
-
-  if(onlineMode && isHost) syncGuest();
+  if(state.p1Passed&&state.p2Passed) resolveLot();
+  if(onlineMode&&isHost) syncGuest();
 }
 
-function buildLeaderNote(leaderId, price){
-  const template = t('leader_note_leading'); // "En yüksek teklif: OYUNCU {p} (${x})" style
-  const playerLabel = leaderId === 1 ? t('player1') : t('player2');
-  return template.replace('OYUNCU {p}', `<b>${playerLabel}</b>`).replace('{x}', price);
+function buildLeaderNote(leaderId,price){
+  const tmpl=t('leader_note_leading');
+  const playerLabel=leaderId===1?t('player1'):t('player2');
+  return tmpl.replace('{PLAYER}',`<b>${playerLabel}</b>`).replace('{x}',price);
 }
 
-function renderRosterList(pId, containerId){
-  const container = document.getElementById(containerId);
-  const heroes = state.players[pId].heroes;
-  if(heroes.length === 0){
-    container.innerHTML = `<div class="roster-empty">${t('roster_empty')}</div>`;
-    return;
-  }
-  container.innerHTML = heroes.map(h => `
+function renderRosterList(pId,containerId){
+  const container=document.getElementById(containerId);
+  const heroes=state.players[pId].heroes;
+  if(heroes.length===0){ container.innerHTML=`<div class="roster-empty">${t('roster_empty')}</div>`; return; }
+  container.innerHTML=heroes.map(h=>`
     <div class="roster-item">
-      <div class="avatar" style="background:${h.color}">${h.img ? `<img src="${h.img}">` : h.init}</div>
-      <div>
-        <div class="hname">${h.name}</div>
-        <div class="hfranchise">${h.fr}</div>
-      </div>
+      <div class="avatar" style="background:${h.color}">${h.img?`<img src="${h.img}">`:h.init}</div>
+      <div><div class="hname">${h.name}</div><div class="hfranchise">${h.fr}</div></div>
       <div class="price">$${h.boughtPrice}</div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
-document.getElementById('p1BidBtn').addEventListener('click', ()=> triggerBid(1));
-document.getElementById('p2BidBtn').addEventListener('click', ()=> triggerBid(2));
-document.getElementById('p1PassBtn').addEventListener('click', ()=> triggerPass(1));
-document.getElementById('p2PassBtn').addEventListener('click', ()=> triggerPass(2));
+document.getElementById('p1BidBtn').addEventListener('click',()=>triggerBid(1));
+document.getElementById('p2BidBtn').addEventListener('click',()=>triggerBid(2));
+document.getElementById('p1PassBtn').addEventListener('click',()=>triggerPass(1));
+document.getElementById('p2PassBtn').addEventListener('click',()=>triggerPass(2));
 
 function triggerBid(pId){
   if(!onlineMode){ makeBid(pId); return; }
-  if(isHost && pId === 1){ makeBid(1); }
-  else if(!isHost && pId === 2){ sendAction({action:'bid'}); }
+  if(isHost&&pId===1) makeBid(1);
+  else if(!isHost&&pId===2) sendAction({action:'bid'});
 }
 function triggerPass(pId){
   if(!onlineMode){ makePass(pId); return; }
-  if(isHost && pId === 1){ makePass(1); }
-  else if(!isHost && pId === 2){ sendAction({action:'pass'}); }
+  if(isHost&&pId===1) makePass(1);
+  else if(!isHost&&pId===2) sendAction({action:'pass'});
 }
 
-function makeBid(pId){
-  state.price += state.inc;
-  state.leader = pId;
-  renderAuction();
-}
+function makeBid(pId){ state.price+=state.inc; state.leader=pId; renderAuction(); }
 
-/* Fix: if a player is leading and the OTHER player passes, the lot
-   resolves immediately in favor of the leader — both sides no longer
-   need to pass for the hero to be awarded. */
 function makePass(pId){
-  if(pId === 1) state.p1Passed = true;
-  if(pId === 2) state.p2Passed = true;
-
-  if(state.p1Passed && state.p2Passed){
-    resolveLot();
-  } else if(state.leader && ((state.leader === 1 && state.p2Passed) || (state.leader === 2 && state.p1Passed))){
-    resolveLot();
-  } else {
-    renderAuction();
-  }
+  if(pId===1) state.p1Passed=true;
+  if(pId===2) state.p2Passed=true;
+  if(state.p1Passed&&state.p2Passed) resolveLot();
+  else if(state.leader&&((state.leader===1&&state.p2Passed)||(state.leader===2&&state.p1Passed))) resolveLot();
+  else renderAuction();
 }
 
 function resolveLot(){
-  const hero = state.lots[state.lotIdx];
-  const flash = document.getElementById('flash');
-  const flashText = document.getElementById('flashText');
-
+  const hero=state.lots[state.lotIdx];
+  const flash=document.getElementById('flash');
+  const flashText=document.getElementById('flashText');
   if(state.leader){
-    const winner = state.leader;
-    const winnerLabel = winner === 1 ? t('player1') : t('player2');
-    state.players[winner].budget -= state.price;
-    state.players[winner].heroes.push({...hero, boughtPrice: state.price});
-    flashText.innerHTML = `${hero.name}<br>${t('sold_text')} <span class="small">${winnerLabel} — $${state.price}</span>`;
+    const winner=state.leader; const winnerLabel=winner===1?t('player1'):t('player2');
+    state.players[winner].budget-=state.price;
+    state.players[winner].heroes.push({...hero,boughtPrice:state.price});
+    flashText.innerHTML=`${hero.name}<br>${t('sold_text')} <span class="small">${winnerLabel} — $${state.price}</span>`;
   } else {
-    flashText.innerHTML = `${hero.name}<br>${t('unsold_text')} <span class="small">${t('unsold_sub')}</span>`;
+    flashText.innerHTML=`${hero.name}<br>${t('unsold_text')} <span class="small">${t('unsold_sub')}</span>`;
   }
-
   flash.classList.add('show');
-  if(onlineMode && isHost) syncGuest();
-
+  if(onlineMode&&isHost) syncGuest();
   setTimeout(()=>{
     flash.classList.remove('show');
-    state.lotIdx++;
-    state.price = 0;
-    state.leader = null;
-    state.p1Passed = false;
-    state.p2Passed = false;
+    state.lotIdx++; state.price=0; state.leader=null; state.p1Passed=false; state.p2Passed=false;
     renderAuction();
-  }, 1400);
+  },1400);
 }
 
 function finishAuction(){
-  document.getElementById('game').style.display = 'none';
-  const p1H = state.players[1].heroes.length;
-  const p2H = state.players[2].heroes.length;
-
-  if(p1H > 0 && p2H > 0){
-    startBattle();
-  } else {
-    showFinalResults();
-  }
+  document.getElementById('game').style.display='none';
+  const p1H=state.players[1].heroes.length;
+  const p2H=state.players[2].heroes.length;
+  if(p1H>0&&p2H>0) startBattle();
+  else showFinalResults();
 }
 
-/* ---------------- WHEEL MODE LOGIC ---------------- */
-let wheelState = null;
+/* ================================================================
+   WHEEL MODE
+   FIX 1: Guest can only see/click spin button when it's their turn.
+           The button is completely disabled for guest when it's
+           the host's turn, and vice versa.
+   FIX 2: When guest presses spin, action is sent to host who runs
+           triggerWheelSpin() with a spin snapshot, then syncs the
+           animation parameters to guest.
+   FIX 3: spinTarget + spinRemainingSnapshot sent in sync so guest
+           can replay the exact same animation.
+================================================================ */
+let wheelState=null;
 
 function startWheelGame(maxHeroes){
-  const lotCount = Math.min(HEROES.length, maxHeroes * 2);
-  const lots = shuffle(HEROES).slice(0, lotCount).map(assignStats);
+  // More heroes: use maxHeroes * 3 (capped at HEROES length)
+  const lotCount=Math.min(HEROES.length,maxHeroes*3);
+  const lots=shuffle(HEROES).slice(0,lotCount).map(assignStats);
 
-  wheelState = {
-    lots,
-    remaining: lots.slice(),
-    turn: 1,
-    maxHeroes,
-    spinning: false,
-    lastAssigned: ''
-  };
+  wheelState={ lots, remaining:lots.slice(), turn:1, maxHeroes, spinning:false, lastAssigned:'' };
+  state={ mode:'wheel', maxHeroes, players:{1:{budget:0,heroes:[]},2:{budget:0,heroes:[]}} };
 
-  state = {
-    mode: 'wheel',
-    maxHeroes,
-    players: {
-      1: {budget: 0, heroes: []},
-      2: {budget: 0, heroes: []}
-    }
-  };
-
-  document.getElementById('home').style.display = 'none';
-  document.getElementById('game').style.display = 'none';
-  document.getElementById('wheelGame').style.display = 'block';
-  document.getElementById('battle').style.display = 'none';
-  document.getElementById('endScreen').style.display = 'none';
-
-  document.getElementById('wheelLotTotal').textContent = lots.length;
+  document.getElementById('home').style.display='none';
+  document.getElementById('game').style.display='none';
+  document.getElementById('wheelGame').style.display='block';
+  document.getElementById('battle').style.display='none';
+  document.getElementById('endScreen').style.display='none';
+  document.getElementById('wheelLotTotal').textContent=lots.length;
   renderWheelScreen(true);
 }
 
-function escapeHtml(str){
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+function escapeHtml(str){ return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 function buildWheelSVG(items){
-  const size = 300;
-  const r = size / 2;
-  const cx = r, cy = r;
-  const n = items.length;
-  if(n === 0) return '';
-  const anglePer = 360 / n;
-  let svg = `<svg viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">`;
-
-  items.forEach((hero, i)=>{
-    const startAngle = i * anglePer;
-    const endAngle = startAngle + anglePer;
-    const midAngle = startAngle + anglePer / 2;
-    const fillColor = hero.color || '#2A3350';
-
-    if(n === 1){
-      svg += `<circle cx="${cx}" cy="${cy}" r="${r-2}" fill="${fillColor}" stroke="#0B0F1A" stroke-width="1"/>`;
+  const size=300, r=size/2, cx=r, cy=r, n=items.length;
+  if(n===0) return '';
+  const anglePer=360/n;
+  let svg=`<svg viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">`;
+  items.forEach((hero,i)=>{
+    const startAngle=i*anglePer, endAngle=startAngle+anglePer, midAngle=startAngle+anglePer/2;
+    const fillColor=hero.color||'#2A3350';
+    if(n===1){
+      svg+=`<circle cx="${cx}" cy="${cy}" r="${r-2}" fill="${fillColor}" stroke="#0B0F1A" stroke-width="1"/>`;
     } else {
-      const largeArc = anglePer > 180 ? 1 : 0;
-      const sx = cx + r * Math.cos(startAngle * Math.PI / 180);
-      const sy = cy + r * Math.sin(startAngle * Math.PI / 180);
-      const ex = cx + r * Math.cos(endAngle * Math.PI / 180);
-      const ey = cy + r * Math.sin(endAngle * Math.PI / 180);
-      svg += `<path d="M${cx},${cy} L${sx},${sy} A${r},${r} 0 ${largeArc} 1 ${ex},${ey} Z" fill="${fillColor}" stroke="#0B0F1A" stroke-width="1"/>`;
+      const largeArc=anglePer>180?1:0;
+      const sx=cx+r*Math.cos(startAngle*Math.PI/180), sy=cy+r*Math.sin(startAngle*Math.PI/180);
+      const ex=cx+r*Math.cos(endAngle*Math.PI/180), ey=cy+r*Math.sin(endAngle*Math.PI/180);
+      svg+=`<path d="M${cx},${cy} L${sx},${sy} A${r},${r} 0 ${largeArc} 1 ${ex},${ey} Z" fill="${fillColor}" stroke="#0B0F1A" stroke-width="1"/>`;
     }
-
-    const labelR = r * 0.62;
-    const tx = cx + labelR * Math.cos(midAngle * Math.PI / 180);
-    const ty = cy + labelR * Math.sin(midAngle * Math.PI / 180);
-    let labelAngle = midAngle + 90;
-    if(midAngle > 90 && midAngle < 270) labelAngle += 180;
-    const fontSize = n > 16 ? 8 : (n > 10 ? 9.5 : 11);
-    const label = hero.name.length > 12 ? hero.name.slice(0, 11) + '…' : hero.name;
-    svg += `<text x="${tx}" y="${ty}" fill="#fff" font-size="${fontSize}" font-family="Inter, sans-serif" font-weight="700" text-anchor="middle" dominant-baseline="middle" transform="rotate(${labelAngle}, ${tx}, ${ty})">${escapeHtml(label)}</text>`;
+    const labelR=r*0.62;
+    const tx=cx+labelR*Math.cos(midAngle*Math.PI/180), ty=cy+labelR*Math.sin(midAngle*Math.PI/180);
+    let labelAngle=midAngle+90;
+    if(midAngle>90&&midAngle<270) labelAngle+=180;
+    const fontSize=n>16?8:(n>10?9.5:11);
+    const label=hero.name.length>12?hero.name.slice(0,11)+'…':hero.name;
+    svg+=`<text x="${tx}" y="${ty}" fill="#fff" font-size="${fontSize}" font-family="Inter,sans-serif" font-weight="700" text-anchor="middle" dominant-baseline="middle" transform="rotate(${labelAngle},${tx},${ty})">${escapeHtml(label)}</text>`;
   });
-
-  svg += `</svg>`;
+  svg+=`</svg>`;
   return svg;
 }
 
 function renderWheelScreen(rebuildSvg){
   if(!wheelState) return;
-  const total = wheelState.lots.length;
-  const done = total - wheelState.remaining.length;
-  document.getElementById('wheelLotIndex').textContent = Math.min(done + 1, total);
-  document.getElementById('wheelProgress').textContent = t('wheel_progress').replace('{i}', done).replace('{n}', total);
+  const total=wheelState.lots.length;
+  const done=total-wheelState.remaining.length;
+  document.getElementById('wheelLotIndex').textContent=Math.min(done+1,total);
+  document.getElementById('wheelProgress').textContent=t('wheel_progress').replace('{i}',done).replace('{n}',total);
 
-  const turnLabel = wheelState.turn === 1 ? t('player1') : t('player2');
-  const turnEl = document.getElementById('wheelTurnLabel');
-  turnEl.textContent = t('wheel_turn_label').replace('{PLAYER}', turnLabel);
-  turnEl.className = 'wheel-turn p' + wheelState.turn;
+  const turnLabel=wheelState.turn===1?t('player1'):t('player2');
+  const turnEl=document.getElementById('wheelTurnLabel');
+  turnEl.textContent=t('wheel_turn_label').replace('{PLAYER}',turnLabel);
+  turnEl.className='wheel-turn p'+wheelState.turn;
 
-  document.getElementById('wheelP1Count').textContent = t('wheel_count').replace('{c}', state.players[1].heroes.length).replace('{m}', wheelState.maxHeroes);
-  document.getElementById('wheelP2Count').textContent = t('wheel_count').replace('{c}', state.players[2].heroes.length).replace('{m}', wheelState.maxHeroes);
-  renderWheelRosterList(1, 'wheelP1List');
-  renderWheelRosterList(2, 'wheelP2List');
+  document.getElementById('wheelP1Count').textContent=t('wheel_count').replace('{c}',state.players[1].heroes.length).replace('{m}',wheelState.maxHeroes);
+  document.getElementById('wheelP2Count').textContent=t('wheel_count').replace('{c}',state.players[2].heroes.length).replace('{m}',wheelState.maxHeroes);
+  renderWheelRosterList(1,'wheelP1List');
+  renderWheelRosterList(2,'wheelP2List');
 
   if(rebuildSvg){
-    const spinner = document.getElementById('wheelSpinner');
-    spinner.style.transition = 'none';
-    spinner.innerHTML = buildWheelSVG(wheelState.remaining);
-    spinner.style.transform = 'rotate(0deg)';
+    const spinner=document.getElementById('wheelSpinner');
+    spinner.style.transition='none';
+    spinner.innerHTML=buildWheelSVG(wheelState.remaining);
+    spinner.style.transform='rotate(0deg)';
     void spinner.offsetWidth;
-    spinner.style.transition = '';
+    spinner.style.transition='';
   }
 
-  let canSpin = !wheelState.spinning && wheelState.remaining.length > 0;
+  // FIX: button visibility per role
+  const spinBtn=document.getElementById('wheelSpinBtn');
+  const watchEl=document.getElementById('wheelWatching');
+
   if(onlineMode){
-    canSpin = canSpin && (isHost ? wheelState.turn === 1 : wheelState.turn === 2);
+    const myTurn=(isHost&&wheelState.turn===1)||(!isHost&&wheelState.turn===2);
+    spinBtn.style.display=myTurn?'block':'none';
+    watchEl.style.display=(!myTurn&&!wheelState.spinning)?'block':'none';
+    if(wheelState.spinning){
+      spinBtn.style.display='none';
+      watchEl.style.display='block';
+      watchEl.textContent=t('wheel_watching');
+    }
+    if(myTurn&&!wheelState.spinning){
+      spinBtn.disabled=wheelState.remaining.length===0;
+      watchEl.style.display='none';
+    }
+  } else {
+    spinBtn.style.display='block';
+    watchEl.style.display='none';
+    spinBtn.disabled=wheelState.spinning||wheelState.remaining.length===0;
   }
-  document.getElementById('wheelSpinBtn').disabled = !canSpin;
-  document.getElementById('wheelResult').innerHTML = wheelState.lastAssigned || '';
 
-  if(onlineMode && isHost) syncGuest();
+  document.getElementById('wheelResult').innerHTML=wheelState.lastAssigned||'';
+  if(onlineMode&&isHost) syncGuest();
 }
 
-function renderWheelRosterList(pId, containerId){
-  const container = document.getElementById(containerId);
-  const heroes = state.players[pId].heroes;
-  if(heroes.length === 0){
-    container.innerHTML = `<div class="roster-empty">${t('roster_empty')}</div>`;
-    return;
-  }
-  container.innerHTML = heroes.map(h => `
+function renderWheelRosterList(pId,containerId){
+  const container=document.getElementById(containerId);
+  const heroes=state.players[pId].heroes;
+  if(heroes.length===0){ container.innerHTML=`<div class="roster-empty">${t('roster_empty')}</div>`; return; }
+  container.innerHTML=heroes.map(h=>`
     <div class="roster-item">
-      <div class="avatar" style="background:${h.color}">${h.img ? `<img src="${h.img}">` : h.init}</div>
-      <div>
-        <div class="hname">${h.name}</div>
-        <div class="hfranchise">${h.fr}</div>
-      </div>
-    </div>
-  `).join('');
+      <div class="avatar" style="background:${h.color}">${h.img?`<img src="${h.img}">`:h.init}</div>
+      <div><div class="hname">${h.name}</div><div class="hfranchise">${h.fr}</div></div>
+    </div>`).join('');
 }
 
-document.getElementById('wheelSpinBtn').addEventListener('click', spinWheel);
+document.getElementById('wheelSpinBtn').addEventListener('click',spinWheel);
 
 function spinWheel(){
-  if(!wheelState || wheelState.spinning || wheelState.remaining.length === 0) return;
-
+  if(!wheelState||wheelState.spinning||wheelState.remaining.length===0) return;
   if(onlineMode){
-    if(isHost){
-      if(wheelState.turn !== 1) return;
-    } else {
-      if(wheelState.turn !== 2) return;
+    if(isHost&&wheelState.turn===1) triggerWheelSpin();
+    else if(!isHost&&wheelState.turn===2){
+      // Guest requests spin from host
       sendAction({action:'spin'});
-      return;
+      // Immediately disable to prevent double-tap
+      document.getElementById('wheelSpinBtn').disabled=true;
     }
+  } else {
+    triggerWheelSpin();
   }
-
-  triggerWheelSpin();
 }
 
 function triggerWheelSpin(){
-  const remaining = wheelState.remaining;
-  if(remaining.length === 0) return;
+  if(!wheelState||wheelState.spinning||wheelState.remaining.length===0) return;
+  wheelState.spinning=true;
 
-  wheelState.spinning = true;
-  document.getElementById('wheelSpinBtn').disabled = true;
-  document.getElementById('wheelResult').textContent = '';
+  const remaining=wheelState.remaining;
+  const n=remaining.length;
+  const winIdx=rand(0,n-1);
+  const anglePer=360/n;
+  const midAngle=winIdx*anglePer+anglePer/2;
+  const fullSpins=5;
+  const targetDeg=fullSpins*360+(((270-midAngle)%360)+360)%360;
 
-  const n = remaining.length;
-  const winIdx = rand(0, n - 1);
-  const anglePer = 360 / n;
-  const midAngle = winIdx * anglePer + anglePer / 2;
-  const fullSpins = 5;
-  const targetDeg = fullSpins * 360 + (((270 - midAngle) % 360) + 360) % 360;
+  // Snapshot of remaining BEFORE removing winner — needed for guest animation
+  const spinRemainingSnapshot=remaining.map(h=>({...h}));
 
-  const spinner = document.getElementById('wheelSpinner');
-  spinner.style.transition = 'transform 3.2s cubic-bezier(0.15,0.85,0.25,1)';
+  const spinner=document.getElementById('wheelSpinner');
+  spinner.style.transition='none';
+  spinner.innerHTML=buildWheelSVG(remaining);
+  spinner.style.transform='rotate(0deg)';
   void spinner.offsetWidth;
-  spinner.style.transform = 'rotate(' + targetDeg + 'deg)';
+  spinner.style.transition='transform 3.2s cubic-bezier(0.15,0.85,0.25,1)';
+  spinner.style.transform='rotate('+targetDeg+'deg)';
 
-  if(onlineMode && isHost) syncGuest();
+  // FIX: Sync with spinTarget so guest can replay same animation
+  if(onlineMode&&isHost){
+    syncGuest({ spinTarget:targetDeg, spinRemainingSnapshot });
+  }
+
+  // Show watching indicator for non-active player (local mode: nobody)
+  document.getElementById('wheelSpinBtn').style.display='none';
+  document.getElementById('wheelWatching').style.display='none';
 
   setTimeout(()=>{
     assignWheelHero(winIdx);
-  }, 3300);
+  },3300);
 }
 
 function computeNextWheelTurn(justPlayer){
-  const other = justPlayer === 1 ? 2 : 1;
-  const otherMaxed = state.players[other].heroes.length >= wheelState.maxHeroes;
-  const selfMaxed = state.players[justPlayer].heroes.length >= wheelState.maxHeroes;
-  if(otherMaxed && selfMaxed) return null;
+  const other=justPlayer===1?2:1;
+  const otherMaxed=state.players[other].heroes.length>=wheelState.maxHeroes;
+  const selfMaxed=state.players[justPlayer].heroes.length>=wheelState.maxHeroes;
+  if(otherMaxed&&selfMaxed) return null;
   if(otherMaxed) return justPlayer;
   return other;
 }
 
 function assignWheelHero(winIdx){
-  const hero = wheelState.remaining[winIdx];
-  wheelState.remaining.splice(winIdx, 1);
+  const hero=wheelState.remaining[winIdx];
+  wheelState.remaining.splice(winIdx,1);
 
-  const player = wheelState.turn;
+  const player=wheelState.turn;
   state.players[player].heroes.push({...hero});
 
-  const playerLabel = player === 1 ? t('player1') : t('player2');
-  const flash = document.getElementById('wheelFlash');
-  const flashText = document.getElementById('wheelFlashText');
-  flashText.innerHTML = `${hero.name}<br><span class="small">${playerLabel}</span>`;
+  const playerLabel=player===1?t('player1'):t('player2');
+  const flash=document.getElementById('wheelFlash');
+  const flashText=document.getElementById('wheelFlashText');
+  flashText.innerHTML=`${hero.name}<br><span class="small">${playerLabel}</span>`;
   flash.classList.add('show');
 
-  wheelState.lastAssigned = t('wheel_assigned').replace('{hero}', hero.name).replace('{PLAYER}', playerLabel);
-  wheelState.spinning = false;
+  wheelState.lastAssigned=t('wheel_assigned').replace('{hero}',hero.name).replace('{PLAYER}',playerLabel);
+  wheelState.spinning=false;
 
-  const nextTurn = computeNextWheelTurn(player);
-  if(nextTurn) wheelState.turn = nextTurn;
+  const nextTurn=computeNextWheelTurn(player);
+  if(nextTurn) wheelState.turn=nextTurn;
 
-  if(onlineMode && isHost) syncGuest();
+  if(onlineMode&&isHost) syncGuest();
 
   setTimeout(()=>{
     flash.classList.remove('show');
-    if(!nextTurn || wheelState.remaining.length === 0){
-      finishWheelDraft();
-    } else {
-      renderWheelScreen(true);
-    }
-  }, 1400);
+    if(!nextTurn||wheelState.remaining.length===0) finishWheelDraft();
+    else renderWheelScreen(true);
+  },1400);
 }
 
 function finishWheelDraft(){
-  document.getElementById('wheelGame').style.display = 'none';
-  const p1H = state.players[1].heroes.length;
-  const p2H = state.players[2].heroes.length;
-
-  if(p1H > 0 && p2H > 0){
-    startBattle();
-  } else {
-    showFinalResults();
-  }
+  document.getElementById('wheelGame').style.display='none';
+  const p1H=state.players[1].heroes.length;
+  const p2H=state.players[2].heroes.length;
+  if(p1H>0&&p2H>0) startBattle();
+  else showFinalResults();
 }
 
-/* ---------------- BATTLE LOGIC ---------------- */
+/* ================================================================
+   BATTLE LOGIC
+================================================================ */
 function startBattle(){
-  document.getElementById('battle').style.display = 'block';
-
-  const prepareTeam = (team) => team.map(h => ({
-    ...h,
-    curHp: h.health * 10,
-    maxHp: h.health * 10,
-    eliminated: false,
-    wins: 0
-  }));
-
-  battleState = {
-    t1: prepareTeam(state.players[1].heroes),
-    t2: prepareTeam(state.players[2].heroes),
-    idx1: 0,
-    idx2: 0,
-    history: [],
-    status: '',
-    championDone: false,
-    championText: '',
-    championSub: '',
-    championColor: ''
+  document.getElementById('battle').style.display='block';
+  const prepareTeam=(team)=>team.map(h=>({...h,curHp:h.health*10,maxHp:h.health*10,eliminated:false,wins:0}));
+  battleState={
+    t1:prepareTeam(state.players[1].heroes), t2:prepareTeam(state.players[2].heroes),
+    idx1:0, idx2:0, history:[], status:'', championDone:false,
+    championText:'', championSub:'', championColor:''
   };
-
   updateBattleTally();
   setupBattlePair();
 }
 
 function updateBattleTally(){
-  const alive1 = battleState.t1.filter(h => !h.eliminated).length;
-  const alive2 = battleState.t2.filter(h => !h.eliminated).length;
-  document.getElementById('t1Tally').textContent = t('tally_p1').replace('{n}', alive1);
-  document.getElementById('t2Tally').textContent = t('tally_p2').replace('{n}', alive2);
+  const alive1=battleState.t1.filter(h=>!h.eliminated).length;
+  const alive2=battleState.t2.filter(h=>!h.eliminated).length;
+  document.getElementById('t1Tally').textContent=t('tally_p1').replace('{n}',alive1);
+  document.getElementById('t2Tally').textContent=t('tally_p2').replace('{n}',alive2);
 }
 
 function setupBattlePair(){
-  const h1 = battleState.t1[battleState.idx1];
-  const h2 = battleState.t2[battleState.idx2];
-
-  if(!h1 || !h2){
-    endBattle();
-    return;
-  }
-
-  renderFighter('left', h1);
-  renderFighter('right', h2);
-
-  battleState.status = t('fight_ready');
-  document.getElementById('fightStatus').textContent = battleState.status;
-  document.getElementById('nextFightBtn').disabled = false;
-  document.getElementById('nextFightBtn').style.display = 'block';
-
-  if(onlineMode && isHost) syncGuest();
+  const h1=battleState.t1[battleState.idx1], h2=battleState.t2[battleState.idx2];
+  if(!h1||!h2){ endBattle(); return; }
+  renderFighter('left',h1); renderFighter('right',h2);
+  battleState.status=t('fight_ready');
+  document.getElementById('fightStatus').textContent=battleState.status;
+  document.getElementById('nextFightBtn').disabled=false;
+  document.getElementById('nextFightBtn').style.display='block';
+  if(onlineMode&&isHost) syncGuest();
 }
 
-function renderFighter(side, h){
-  const prefix = side === 'left' ? 'left' : 'right';
-  const avatar = document.getElementById(prefix + 'Avatar');
-  if(h.img) avatar.innerHTML = `<img src="${h.img}">`;
-  else avatar.innerHTML = h.init;
-
-  document.getElementById(prefix + 'Name').textContent = h.name;
-  document.getElementById(prefix + 'Franchise').textContent = h.fr;
-  document.getElementById(prefix + 'Bio').textContent = getBio(h.name);
-  document.getElementById(prefix + 'Stats').innerHTML = `
+function renderFighter(side,h){
+  const prefix=side==='left'?'left':'right';
+  const avatar=document.getElementById(prefix+'Avatar');
+  if(h.img) avatar.innerHTML=`<img src="${h.img}">`;
+  else avatar.innerHTML=h.init;
+  document.getElementById(prefix+'Name').textContent=h.name;
+  document.getElementById(prefix+'Franchise').textContent=h.fr;
+  document.getElementById(prefix+'Bio').textContent=getBio(h.name);
+  document.getElementById(prefix+'Stats').innerHTML=`
     <div class="mini-stats" style="justify-content:center;">
       <span class="mini-stat g">${t('stat_power_s')}:${h.power}</span>
       <span class="mini-stat s">${t('stat_speed_s')}:${h.speed}</span>
       <span class="mini-stat m">${t('stat_defense_s')}:${h.defense}</span>
-    </div>
-  `;
-
-  const hpPct = Math.max(0, Math.round((h.curHp / h.maxHp) * 100));
-  document.getElementById(prefix + 'HpFill').style.width = hpPct + '%';
-  document.getElementById(prefix + 'HpLabel').textContent = `${t('stat_health')}: ${hpPct}%`;
-  document.getElementById(prefix + 'Score').textContent = h.wins > 0 ? `${t('win_count')}: ${h.wins}` : '';
+    </div>`;
+  const hpPct=Math.max(0,Math.round((h.curHp/h.maxHp)*100));
+  document.getElementById(prefix+'HpFill').style.width=hpPct+'%';
+  document.getElementById(prefix+'HpLabel').textContent=`${t('stat_health')}: ${hpPct}%`;
+  document.getElementById(prefix+'Score').textContent=h.wins>0?`${t('win_count')}: ${h.wins}`:'';
 }
 
-document.getElementById('nextFightBtn').addEventListener('click', ()=>{
-  if(onlineMode && !isHost) return;
+function renderBattleFromState(){
+  updateBattleTally();
+  document.getElementById('nextFightBtn').style.display='none';
+  document.getElementById('fightStatus').textContent=(battleState&&battleState.status)||'';
+  const log=document.getElementById('battleLog'); log.innerHTML='';
+  ((battleState&&battleState.history)||[]).slice().reverse().forEach(item=>{
+    const el=document.createElement('div'); el.className='log-item';
+    el.innerHTML=`<span><b>${item.n1}</b> (-${item.d1} HP)</span> <span><b>${item.n2}</b> (-${item.d2} HP)</span>`;
+    log.appendChild(el);
+  });
+  const banner=document.getElementById('championBanner');
+  if(battleState&&battleState.championDone){
+    banner.style.display='block';
+    document.getElementById('championText').textContent=battleState.championText;
+    document.getElementById('championText').style.color=battleState.championColor||'';
+    document.getElementById('championSub').textContent=battleState.championSub;
+    document.getElementById('toResultsBtn').style.display='none';
+  } else {
+    banner.style.display='none';
+    const h1=battleState.t1[battleState.idx1], h2=battleState.t2[battleState.idx2];
+    if(h1) renderFighter('left',h1);
+    if(h2) renderFighter('right',h2);
+  }
+}
+
+document.getElementById('nextFightBtn').addEventListener('click',()=>{
+  if(onlineMode&&!isHost) return;
   runFightRound();
 });
 
 function runFightRound(){
-  const btn = document.getElementById('nextFightBtn');
-  btn.disabled = true;
-  document.getElementById('fightStatus').textContent = t('fight_fighting');
-  battleState.status = t('fight_fighting');
+  const btn=document.getElementById('nextFightBtn');
+  btn.disabled=true;
+  document.getElementById('fightStatus').textContent=t('fight_fighting');
+  battleState.status=t('fight_fighting');
   simulateFightStep();
 }
 
 function simulateFightStep(){
-  const h1 = battleState.t1[battleState.idx1];
-  const h2 = battleState.t2[battleState.idx2];
-  if(!h1 || !h2) return;
-
-  const p1SpdBonus = h1.speed >= h2.speed ? 1.1 : 0.9;
-  const p2SpdBonus = h2.speed >= h1.speed ? 1.1 : 0.9;
-
-  const dmgTo2 = Math.max(10, Math.round((h1.power * 1.5 - h2.defense * 0.8) * p1SpdBonus + rand(-5, 5)));
-  const dmgTo1 = Math.max(10, Math.round((h2.power * 1.5 - h1.defense * 0.8) * p2SpdBonus + rand(-5, 5)));
-
-  h2.curHp -= dmgTo2;
-  h1.curHp -= dmgTo1;
-
-  renderFighter('left', h1);
-  renderFighter('right', h2);
-
-  const log = document.getElementById('battleLog');
-  const logEntry = document.createElement('div');
-  logEntry.className = 'log-item';
-  logEntry.innerHTML = `<span><b>${h1.name}</b> (-${dmgTo1} HP)</span> <span><b>${h2.name}</b> (-${dmgTo2} HP)</span>`;
+  const h1=battleState.t1[battleState.idx1], h2=battleState.t2[battleState.idx2];
+  if(!h1||!h2) return;
+  const p1SpdBonus=h1.speed>=h2.speed?1.1:0.9;
+  const p2SpdBonus=h2.speed>=h1.speed?1.1:0.9;
+  const dmgTo2=Math.max(10,Math.round((h1.power*1.5-h2.defense*0.8)*p1SpdBonus+rand(-5,5)));
+  const dmgTo1=Math.max(10,Math.round((h2.power*1.5-h1.defense*0.8)*p2SpdBonus+rand(-5,5)));
+  h2.curHp-=dmgTo2; h1.curHp-=dmgTo1;
+  renderFighter('left',h1); renderFighter('right',h2);
+  const log=document.getElementById('battleLog');
+  const logEntry=document.createElement('div'); logEntry.className='log-item';
+  logEntry.innerHTML=`<span><b>${h1.name}</b> (-${dmgTo1} HP)</span> <span><b>${h2.name}</b> (-${dmgTo2} HP)</span>`;
   log.prepend(logEntry);
-  battleState.history.push({n1:h1.name, n2:h2.name, d1:dmgTo1, d2:dmgTo2});
-
-  if(onlineMode && isHost) syncGuest();
-
-  if(h1.curHp <= 0 || h2.curHp <= 0){
-    setTimeout(()=> resolveFightWinner(h1, h2), 700);
-  } else {
-    setTimeout(simulateFightStep, 700);
-  }
+  battleState.history.push({n1:h1.name,n2:h2.name,d1:dmgTo1,d2:dmgTo2});
+  if(onlineMode&&isHost) syncGuest();
+  if(h1.curHp<=0||h2.curHp<=0) setTimeout(()=>resolveFightWinner(h1,h2),700);
+  else setTimeout(simulateFightStep,700);
 }
 
-function resolveFightWinner(h1, h2){
-  const status = document.getElementById('fightStatus');
-
-  if(h1.curHp <= 0 && h2.curHp <= 0){
-    battleState.status = t('fight_draw');
-    h1.eliminated = true;
-    h2.eliminated = true;
-    battleState.idx1++;
-    battleState.idx2++;
-  } else if(h1.curHp <= 0){
-    battleState.status = t('fight_win').replace('{n}', h2.name);
-    h1.eliminated = true;
-    h2.wins++;
-    battleState.idx1++;
+function resolveFightWinner(h1,h2){
+  const status=document.getElementById('fightStatus');
+  if(h1.curHp<=0&&h2.curHp<=0){
+    battleState.status=t('fight_draw'); h1.eliminated=true; h2.eliminated=true; battleState.idx1++; battleState.idx2++;
+  } else if(h1.curHp<=0){
+    battleState.status=t('fight_win').replace('{n}',h2.name); h1.eliminated=true; h2.wins++; battleState.idx1++;
   } else {
-    battleState.status = t('fight_win').replace('{n}', h1.name);
-    h2.eliminated = true;
-    h1.wins++;
-    battleState.idx2++;
+    battleState.status=t('fight_win').replace('{n}',h1.name); h2.eliminated=true; h1.wins++; battleState.idx2++;
   }
-  status.textContent = battleState.status;
-
+  status.textContent=battleState.status;
   updateBattleTally();
-  if(onlineMode && isHost) syncGuest();
-
+  if(onlineMode&&isHost) syncGuest();
   setTimeout(()=>{
-    if(battleState.idx1 < battleState.t1.length && battleState.idx2 < battleState.t2.length){
-      setupBattlePair();
-    } else {
-      endBattle();
-    }
-  }, 1200);
+    if(battleState.idx1<battleState.t1.length&&battleState.idx2<battleState.t2.length) setupBattlePair();
+    else endBattle();
+  },1200);
 }
 
 function endBattle(){
-  document.getElementById('nextFightBtn').style.display = 'none';
-  const alive1 = battleState.t1.filter(h => !h.eliminated).length;
-  const alive2 = battleState.t2.filter(h => !h.eliminated).length;
-
-  const banner = document.getElementById('championBanner');
-  const championText = document.getElementById('championText');
-  const championSub = document.getElementById('championSub');
-  banner.style.display = 'block';
-
-  battleState.championDone = true;
-  if(alive1 > alive2){
-    battleState.championText = t('p1_win_banner');
-    battleState.championColor = "var(--azure)";
-    battleState.championSub = t('p1_win_sub');
-  } else if(alive2 > alive1){
-    battleState.championText = t('p2_win_banner');
-    battleState.championColor = "var(--crimson)";
-    battleState.championSub = t('p2_win_sub');
-  } else {
-    battleState.championText = t('tie_banner');
-    battleState.championColor = "";
-    battleState.championSub = t('tie_sub');
-  }
-
-  championText.textContent = battleState.championText;
-  championText.style.color = battleState.championColor;
-  championSub.textContent = battleState.championSub;
-
-  document.getElementById('toResultsBtn').style.display = (!onlineMode || isHost) ? 'block' : 'none';
-
-  if(onlineMode && isHost) syncGuest();
+  document.getElementById('nextFightBtn').style.display='none';
+  const alive1=battleState.t1.filter(h=>!h.eliminated).length;
+  const alive2=battleState.t2.filter(h=>!h.eliminated).length;
+  const banner=document.getElementById('championBanner');
+  const championText=document.getElementById('championText');
+  const championSub=document.getElementById('championSub');
+  banner.style.display='block';
+  battleState.championDone=true;
+  if(alive1>alive2){ battleState.championText=t('p1_win_banner'); battleState.championColor='var(--azure)'; battleState.championSub=t('p1_win_sub'); }
+  else if(alive2>alive1){ battleState.championText=t('p2_win_banner'); battleState.championColor='var(--crimson)'; battleState.championSub=t('p2_win_sub'); }
+  else{ battleState.championText=t('tie_banner'); battleState.championColor=''; battleState.championSub=t('tie_sub'); }
+  championText.textContent=battleState.championText;
+  championText.style.color=battleState.championColor;
+  championSub.textContent=battleState.championSub;
+  document.getElementById('toResultsBtn').style.display=(!onlineMode||isHost)?'block':'none';
+  if(onlineMode&&isHost) syncGuest();
 }
 
-document.getElementById('toResultsBtn').addEventListener('click', ()=>{
-  document.getElementById('battle').style.display = 'none';
+document.getElementById('toResultsBtn').addEventListener('click',()=>{
+  document.getElementById('battle').style.display='none';
   showFinalResults();
 });
 
-/* ---------------- FINAL RESULTS ---------------- */
+/* ================================================================
+   FINAL RESULTS
+================================================================ */
 function showFinalResults(){
-  const end = document.getElementById('endScreen');
-  end.style.display = 'block';
-
-  document.getElementById('p1BudgetFinal').textContent = '$' + state.players[1].budget;
-  document.getElementById('p2BudgetFinal').textContent = '$' + state.players[2].budget;
-
-  renderFinalList(1, 'p1ListFinal');
-  renderFinalList(2, 'p2ListFinal');
-
-  if(onlineMode && isHost) syncGuest();
+  const end=document.getElementById('endScreen');
+  end.style.display='block';
+  document.getElementById('p1BudgetFinal').textContent='$'+state.players[1].budget;
+  document.getElementById('p2BudgetFinal').textContent='$'+state.players[2].budget;
+  renderFinalList(1,'p1ListFinal');
+  renderFinalList(2,'p2ListFinal');
+  if(onlineMode&&isHost) syncGuest();
 }
 
-function renderFinalList(pId, containerId){
-  const container = document.getElementById(containerId);
-  const heroes = state.players[pId].heroes;
-  if(heroes.length === 0){
-    container.innerHTML = `<div class="roster-empty">${t('final_no_heroes')}</div>`;
-    return;
-  }
-
-  container.innerHTML = heroes.map(h => {
-    const battleHero = battleState ? (pId === 1 ? battleState.t1 : battleState.t2).find(bh => bh.name === h.name) : null;
-    const winBadge = battleHero && battleHero.wins > 0 ? `<div class="win-count">🏆 ${battleHero.wins}</div>` : '';
-    const priceBadge = h.boughtPrice !== undefined ? `<div class="price">$${h.boughtPrice}</div>` : `<div class="price">🎡</div>`;
+function renderFinalList(pId,containerId){
+  const container=document.getElementById(containerId);
+  const heroes=state.players[pId].heroes;
+  if(heroes.length===0){ container.innerHTML=`<div class="roster-empty">${t('final_no_heroes')}</div>`; return; }
+  container.innerHTML=heroes.map(h=>{
+    const battleHero=battleState?(pId===1?battleState.t1:battleState.t2).find(bh=>bh.name===h.name):null;
+    const winBadge=battleHero&&battleHero.wins>0?`<div class="win-count">🏆 ${battleHero.wins}</div>`:'';
+    const priceBadge=h.boughtPrice!==undefined?`<div class="price">$${h.boughtPrice}</div>`:`<div class="price">🎡</div>`;
     return `
-      <div class="roster-item ${battleHero && battleHero.eliminated ? 'eliminated' : ''}">
-        <div class="avatar" style="background:${h.color}">${h.img ? `<img src="${h.img}">` : h.init}</div>
-        <div>
-          <div class="hname">${h.name}</div>
-          <div class="hfranchise">${h.fr}</div>
-        </div>
-        ${winBadge || priceBadge}
-      </div>
-    `;
+      <div class="roster-item ${battleHero&&battleHero.eliminated?'eliminated':''}">
+        <div class="avatar" style="background:${h.color}">${h.img?`<img src="${h.img}">`:h.init}</div>
+        <div><div class="hname">${h.name}</div><div class="hfranchise">${h.fr}</div></div>
+        ${winBadge||priceBadge}
+      </div>`;
   }).join('');
 }
 
-document.getElementById('restartBtn').addEventListener('click', ()=>{
-  if(onlineMode && !isHost) return;
-  document.getElementById('endScreen').style.display = 'none';
-  document.getElementById('home').style.display = 'flex';
-  if(onlineMode && isHost && conn && conn.open){
-    conn.send({type:'reset'});
-  }
+document.getElementById('restartBtn').addEventListener('click',()=>{
+  if(onlineMode&&!isHost) return;
+  document.getElementById('endScreen').style.display='none';
+  document.getElementById('home').style.display='flex';
+  if(onlineMode&&isHost&&conn&&conn.open) conn.send({type:'reset'});
 });
 
-/* ---------------- AUTO-JOIN FROM LINK ---------------- */
-window.addEventListener('DOMContentLoaded', ()=>{
-  const params = new URLSearchParams(location.search);
-  if(params.get('room')){
-    document.getElementById('joinModeBtn').click();
-  }
+/* ================================================================
+   AUTO-JOIN FROM LINK
+================================================================ */
+window.addEventListener('DOMContentLoaded',()=>{
+  const params=new URLSearchParams(location.search);
+  if(params.get('room')) document.getElementById('joinModeBtn').click();
   setLanguage('az');
 });
 </script>

@@ -132,7 +132,6 @@
   .wheel-result{margin-top:16px; min-height:20px; font-size:13px; color:var(--text-dim);}
   .wheel-result b{color:var(--gold-bright);}
 
-  /* WHEEL WATCHING indicator */
   .wheel-watching{
     margin-top:10px; padding:8px 16px;
     background:rgba(212,165,68,0.1); border:1px solid rgba(212,165,68,0.3);
@@ -282,6 +281,12 @@
   .chat-input-row input{flex:1; min-width:0; padding:10px; background:transparent; border:none; color:var(--text-light); font-size:12.5px; outline:none; font-family:'Inter',sans-serif;}
   .chat-input-row button{padding:0 14px; border:none; background:var(--gold); color:var(--bg-deep); font-weight:700; font-size:12px; cursor:pointer;}
   .chat-input-row button:hover{background:var(--gold-bright);}
+
+  .sound-toggle{position:fixed;top:14px;right:14px;z-index:96;width:38px;height:38px;border-radius:50%;
+    background:#141A2A;border:1px solid #2A3350;color:#F0C669;display:flex;align-items:center;justify-content:center;
+    cursor:pointer;font-size:16px;transition:all .15s ease;}
+  .sound-toggle:hover{border-color:#D4A544;}
+  .sound-toggle.muted{color:#8890A0;}
 </style>
 </head>
 <body>
@@ -463,7 +468,6 @@
         <div class="wheel-spinner" id="wheelSpinner"></div>
       </div>
       <button class="wheel-spin-btn" id="wheelSpinBtn" data-i18n="spin_btn">ÇEVİR</button>
-      <!-- Guest watching indicator -->
       <div class="wheel-watching" id="wheelWatching" data-i18n="wheel_watching">👁 Rəqib fırladır...</div>
       <div class="wheel-result" id="wheelResult"></div>
       <div class="flash" id="wheelFlash"><div class="flash-text" id="wheelFlashText"></div></div>
@@ -878,8 +882,6 @@ function botHeroValue(hero){
   return hero.power*1.15 + hero.speed*0.7 + hero.defense*0.9 + hero.health*0.5;
 }
 
-// Average value of all lots still up for auction (including the current one) —
-// used so the bot knows if today's hero is above/below the "going rate".
 function remainingLotsAvgValue(fromIdx){
   if(!state||!state.lots) return 150;
   const remainingLots=state.lots.slice(fromIdx);
@@ -888,19 +890,6 @@ function remainingLotsAvgValue(fromIdx){
   return sum/remainingLots.length;
 }
 
-/* ================================================================
-   Smart bot bidding brain:
-   - Knows exactly how many heroes it still needs (maxHeroes - owned)
-   - Knows exactly how many lots are still left in the whole auction
-   - If lots left <= heroes still needed -> it MUST fight for every
-     remaining lot (can't afford to pass anymore)
-   - Otherwise it splits its remaining budget across the heroes it
-     still needs, and pays MORE for strong (high value/tier) heroes
-     and LESS for weak ones, always keeping a reserve for the other
-     heroes it still has to buy
-   - Also backs off a bit if its own budget is much smaller than the
-     human's, and pushes a bit harder when it has a budget edge
-================================================================ */
 function botAuctionMove(){
   if(!vsBotMode||!state||state.mode!=='auction') return;
   if(state.p1Passed&&state.p2Passed) return;
@@ -915,7 +904,7 @@ function botAuctionMove(){
   const hero=state.lots[lotIdxAtCall];
   if(!hero) return;
 
-  const lotsRemaining=state.lots.length-lotIdxAtCall; // includes current lot
+  const lotsRemaining=state.lots.length-lotIdxAtCall;
   const mustFightForAll=lotsRemaining<=heroesStillNeeded;
 
   const myBudget=state.players[2].budget;
@@ -924,19 +913,13 @@ function botAuctionMove(){
   const avgValue=remainingLotsAvgValue(lotIdxAtCall);
   const valueRatio=avgValue>0?heroValue/avgValue:1;
 
-  // Reserve at least one increment per OTHER hero still needed, so the
-  // bot never spends itself into a corner where it can't bid again later.
   const reserveForOthers=Math.max(0,(heroesStillNeeded-1))*state.inc;
 
   let willingness;
   if(mustFightForAll){
-    // Last chance territory: must win essentially every remaining lot.
     willingness=Math.max(state.price+state.inc, myBudget-reserveForOthers);
   } else {
     const perHeroBudget=myBudget/heroesStillNeeded;
-    // Budget-pressure adjustment: if the bot has noticeably more budget
-    // than the human it can afford to push a bit harder for top heroes;
-    // if it has much less, it plays tighter.
     const budgetEdge=oppBudget>0?clamp(myBudget/oppBudget,0.6,1.6):1.2;
     willingness=perHeroBudget*valueRatio*budgetEdge*(0.85+Math.random()*0.3);
     willingness=Math.min(willingness,myBudget-reserveForOthers);
@@ -1145,7 +1128,7 @@ function sendAction(payload){ if(conn&&conn.open) conn.send(Object.assign({type:
 function handleGuestAction(data){
   if(data.action==='bid') makeBid(2);
   else if(data.action==='pass') makePass(2);
-  else if(data.action==='spin') triggerWheelSpin(); // host runs the spin
+  else if(data.action==='spin') triggerWheelSpin();
 }
 
 function currentScreenName(){
@@ -1156,9 +1139,6 @@ function currentScreenName(){
   return 'home';
 }
 
-/* ================================================================
-   syncGuest — KEY FIX: send spinTarget so guest can animate wheel
-================================================================ */
 function syncGuest(extra){
   if(!(onlineMode&&isHost&&conn&&conn.open)) return;
   const flash=document.getElementById('flash');
@@ -1178,9 +1158,6 @@ function syncGuest(extra){
   conn.send(payload);
 }
 
-/* ================================================================
-   applySync — KEY FIX: animate guest wheel when spinTarget present
-================================================================ */
 function applySync(payload){
   state=payload.state;
   battleState=payload.battleState;
@@ -1202,21 +1179,16 @@ function applySync(payload){
   } else if(payload.screen==='wheel'){
     document.getElementById('wheelLotTotal').textContent=wheelState.lots.length;
 
-    // If host just started a spin, animate the wheel on guest's side too
     if(payload.spinTarget!==undefined){
-      // Rebuild SVG with the snapshot of remaining heroes BEFORE the winner was removed
       const spinnerEl=document.getElementById('wheelSpinner');
       spinnerEl.style.transition='none';
       spinnerEl.innerHTML=buildWheelSVG(payload.spinRemainingSnapshot||wheelState.remaining);
       spinnerEl.style.transform='rotate(0deg)';
       void spinnerEl.offsetWidth;
-      // Animate to same target angle
       spinnerEl.style.transition='transform 3.2s cubic-bezier(0.15,0.85,0.25,1)';
       spinnerEl.style.transform='rotate('+payload.spinTarget+'deg)';
-      // Show "watching" indicator
       const watchEl=document.getElementById('wheelWatching');
       watchEl.style.display='block';
-      // After animation settles, update the screen normally
       setTimeout(()=>{
         watchEl.style.display='none';
         renderWheelScreen(true);
@@ -1299,7 +1271,6 @@ function startGame(){
 
   const budget=parseInt(budgetRange.value,10);
   const inc=selectedInc;
-  // Auction: up to maxHeroes*2 lots but no more than HEROES length
   const lotCount=Math.min(HEROES.length,selectedMaxHeroes*2);
   const lots=shuffle(HEROES).slice(0,lotCount).map(assignStats);
 
@@ -1474,20 +1445,10 @@ function finishAuction(){
 
 /* ================================================================
    WHEEL MODE
-   FIX 1: Guest can only see/click spin button when it's their turn.
-           The button is completely disabled for guest when it's
-           the host's turn, and vice versa.
-   FIX 2: When guest presses spin, action is sent to host who runs
-           triggerWheelSpin() with a spin snapshot, then syncs the
-           animation parameters to guest.
-   FIX 3: spinTarget + spinRemainingSnapshot sent in sync so guest
-           can replay the exact same animation.
-   FIX 4 (bot mode): when vsBotMode, player 2's turn auto-spins.
 ================================================================ */
 let wheelState=null;
 
 function startWheelGame(maxHeroes){
-  // More heroes: use maxHeroes * 3 (capped at HEROES length)
   const lotCount=Math.min(HEROES.length,maxHeroes*3);
   const lots=shuffle(HEROES).slice(0,lotCount).map(assignStats);
 
@@ -1562,7 +1523,6 @@ function renderWheelScreen(rebuildSvg){
     spinner.style.transition='';
   }
 
-  // FIX: button visibility per role
   const spinBtn=document.getElementById('wheelSpinBtn');
   const watchEl=document.getElementById('wheelWatching');
 
@@ -1623,9 +1583,7 @@ function spinWheel(){
   if(onlineMode){
     if(isHost&&wheelState.turn===1) triggerWheelSpin();
     else if(!isHost&&wheelState.turn===2){
-      // Guest requests spin from host
       sendAction({action:'spin'});
-      // Immediately disable to prevent double-tap
       document.getElementById('wheelSpinBtn').disabled=true;
     }
   } else if(vsBotMode){
@@ -1647,7 +1605,6 @@ function triggerWheelSpin(){
   const fullSpins=5;
   const targetDeg=fullSpins*360+(((270-midAngle)%360)+360)%360;
 
-  // Snapshot of remaining BEFORE removing winner — needed for guest animation
   const spinRemainingSnapshot=remaining.map(h=>({...h}));
 
   const spinner=document.getElementById('wheelSpinner');
@@ -1658,12 +1615,10 @@ function triggerWheelSpin(){
   spinner.style.transition='transform 3.2s cubic-bezier(0.15,0.85,0.25,1)';
   spinner.style.transform='rotate('+targetDeg+'deg)';
 
-  // FIX: Sync with spinTarget so guest can replay same animation
   if(onlineMode&&isHost){
     syncGuest({ spinTarget:targetDeg, spinRemainingSnapshot });
   }
 
-  // Show watching indicator for non-active player (local mode: nobody)
   document.getElementById('wheelSpinBtn').style.display='none';
   document.getElementById('wheelWatching').style.display=vsBotMode?'block':'none';
 
@@ -1916,6 +1871,154 @@ window.addEventListener('DOMContentLoaded',()=>{
   if(params.get('room')) document.getElementById('joinModeBtn').click();
   setLanguage('az');
 });
+
+/* ================================================================
+   SOUND FX PATCH — synthesized Web Audio API, no external files
+================================================================ */
+(function(){
+
+const SFX=(function(){
+  let ctx=null, muted=false, master=null;
+  function ensureCtx(){
+    if(!ctx){
+      ctx=new (window.AudioContext||window.webkitAudioContext)();
+      master=ctx.createGain(); master.gain.value=0.55; master.connect(ctx.destination);
+    }
+    if(ctx.state==='suspended') ctx.resume();
+    return ctx;
+  }
+  function env(g,t0,attack,decay,peak,sustain){
+    g.gain.cancelScheduledValues(t0);
+    g.gain.setValueAtTime(0.0001,t0);
+    g.gain.exponentialRampToValueAtTime(peak,t0+attack);
+    g.gain.exponentialRampToValueAtTime(Math.max(sustain,0.0001),t0+attack+decay);
+  }
+  function tone(freq,t0,dur,type,peak,pitchTo){
+    const o=ctx.createOscillator(); const g=ctx.createGain();
+    o.type=type||'sine'; o.frequency.setValueAtTime(freq,t0);
+    if(pitchTo) o.frequency.exponentialRampToValueAtTime(pitchTo,t0+dur);
+    o.connect(g); g.connect(master);
+    env(g,t0,0.008,dur,peak||0.3,0.0001);
+    o.start(t0); o.stop(t0+dur+0.05);
+  }
+  function noiseBurst(t0,dur,peak,filterFreq,filterType){
+    const bufSize=Math.max(1,Math.floor(ctx.sampleRate*dur));
+    const buf=ctx.createBuffer(1,bufSize,ctx.sampleRate);
+    const data=buf.getChannelData(0);
+    for(let i=0;i<bufSize;i++) data[i]=(Math.random()*2-1)*(1-i/bufSize);
+    const src=ctx.createBufferSource(); src.buffer=buf;
+    const filt=ctx.createBiquadFilter(); filt.type=filterType||'bandpass'; filt.frequency.value=filterFreq||1200;
+    const g=ctx.createGain(); g.gain.setValueAtTime(peak||0.3,t0); g.gain.exponentialRampToValueAtTime(0.0001,t0+dur);
+    src.connect(filt); filt.connect(g); g.connect(master);
+    src.start(t0); src.stop(t0+dur+0.02);
+  }
+  function safe(fn){
+    return function(){
+      if(muted) return;
+      try{ ensureCtx(); fn.apply(null,arguments); }catch(e){}
+    };
+  }
+  return {
+    setMuted(v){ muted=v; }, isMuted(){ return muted; }, unlock(){ try{ ensureCtx(); }catch(e){} },
+    click: safe(()=>{ const t0=ctx.currentTime; tone(720,t0,0.06,'square',0.12); tone(1180,t0+0.01,0.05,'sine',0.08); }),
+    connect: safe(()=>{ const t0=ctx.currentTime; [520,660,880].forEach((f,i)=>tone(f,t0+i*0.08,0.16,'sine',0.18)); }),
+    disconnect: safe(()=>{ const t0=ctx.currentTime; [880,660,440].forEach((f,i)=>tone(f,t0+i*0.07,0.15,'sine',0.15)); }),
+    chat: safe(()=>{ const t0=ctx.currentTime; tone(920,t0,0.05,'sine',0.14); tone(1300,t0+0.05,0.09,'sine',0.12); }),
+    bid: safe(()=>{ const t0=ctx.currentTime; tone(300,t0,0.05,'square',0.1); tone(900,t0+0.02,0.09,'triangle',0.16,1300); noiseBurst(t0,0.05,0.08,3000,'highpass'); }),
+    pass: safe(()=>{ const t0=ctx.currentTime; tone(340,t0,0.14,'sine',0.13,180); }),
+    sold: safe(()=>{ const t0=ctx.currentTime; [523.25,659.25,783.99,1046.5].forEach((f,i)=>tone(f,t0+i*0.09,0.28,'triangle',0.2)); noiseBurst(t0+0.02,0.3,0.05,6000,'highpass'); }),
+    unsold: safe(()=>{ const t0=ctx.currentTime; [440,349.23,293.66].forEach((f,i)=>tone(f,t0+i*0.12,0.24,'sawtooth',0.12)); }),
+    wheelTick: safe(()=>{ const t0=ctx.currentTime; tone(1400,t0,0.02,'square',0.09); }),
+    wheelLand: safe(()=>{ const t0=ctx.currentTime; [660,880,1108.73].forEach((f,i)=>tone(f,t0+i*0.07,0.22,'triangle',0.2)); noiseBurst(t0,0.15,0.06,4000,'highpass'); }),
+    fightHit: safe(()=>{ const t0=ctx.currentTime; noiseBurst(t0,0.12,0.28,700,'lowpass'); tone(120,t0,0.1,'square',0.22,60); }),
+    fightKO: safe(()=>{ const t0=ctx.currentTime; noiseBurst(t0,0.3,0.3,500,'lowpass'); tone(180,t0,0.35,'sawtooth',0.25,40); }),
+    roundWin: safe(()=>{ const t0=ctx.currentTime; [523.25,783.99].forEach((f,i)=>tone(f,t0+i*0.1,0.2,'triangle',0.18)); }),
+    champion: safe(()=>{ const t0=ctx.currentTime; [523.25,659.25,783.99,1046.5,1318.51].forEach((f,i)=>tone(f,t0+i*0.11,0.4,'triangle',0.22)); noiseBurst(t0+0.05,0.5,0.08,7000,'highpass'); }),
+    whoosh: safe(()=>{ const t0=ctx.currentTime; noiseBurst(t0,0.22,0.1,1800,'bandpass'); })
+  };
+})();
+window.SFX=SFX;
+
+['pointerdown','keydown'].forEach(evt=>{
+  window.addEventListener(evt,function once(){ SFX.unlock(); window.removeEventListener(evt,once); },{once:true});
+});
+
+const soundBtn=document.createElement('div');
+soundBtn.className='sound-toggle'; soundBtn.id='soundToggle'; soundBtn.textContent='🔊';
+document.body.appendChild(soundBtn);
+soundBtn.addEventListener('click',()=>{
+  SFX.unlock();
+  const nowMuted=!SFX.isMuted();
+  SFX.setMuted(nowMuted);
+  soundBtn.textContent=nowMuted?'🔇':'🔊';
+  soundBtn.classList.toggle('muted',nowMuted);
+  if(!nowMuted) SFX.click();
+});
+
+document.addEventListener('click',function(e){
+  const el=e.target.closest('button,.mode-btn,.lang-btn,.chip,.gm-btn,.copy-btn,.back-link,.chat-toggle,.chat-close');
+  if(!el) return;
+  if(el.classList.contains('bid')||el.classList.contains('pass')) return;
+  if(el.id==='wheelSpinBtn'||el.id==='soundToggle') return;
+  SFX.click();
+},true);
+
+function wrap(name,before,after){
+  const orig=window[name];
+  if(typeof orig!=='function') return;
+  window[name]=function(){
+    if(before) before.apply(null,arguments);
+    const r=orig.apply(this,arguments);
+    if(after) after.apply(null,arguments);
+    return r;
+  };
+}
+
+wrap('makeBid',()=>SFX.bid());
+wrap('makePass',()=>SFX.pass());
+wrap('startGame',()=>SFX.whoosh());
+wrap('startBattle',()=>SFX.whoosh());
+wrap('sendChat',()=>SFX.chat());
+wrap('endBattle',()=>SFX.champion());
+
+wrap('resolveLot',function(){
+  try{
+    if(window.state && window.state.leader) SFX.sold();
+    else SFX.unsold();
+  }catch(e){}
+});
+
+wrap('triggerWheelSpin',function(){
+  if(!window.wheelState||window.wheelState.spinning||window.wheelState.remaining.length===0) return;
+  SFX.whoosh();
+  let tickCount=0; const totalTicks=28;
+  (function scheduleTick(){
+    if(tickCount>=totalTicks) return;
+    const progress=tickCount/totalTicks;
+    const delay=40+Math.pow(progress,2.2)*260;
+    setTimeout(()=>{
+      if(window.wheelState&&window.wheelState.spinning) SFX.wheelTick();
+      tickCount++; scheduleTick();
+    },delay);
+  })();
+});
+
+wrap('assignWheelHero',()=>SFX.wheelLand());
+
+wrap('simulateFightStep',function(){
+  const h1=window.battleState&&window.battleState.t1[window.battleState.idx1];
+  const h2=window.battleState&&window.battleState.t2[window.battleState.idx2];
+  if(h1&&h2) SFX.fightHit();
+});
+
+wrap('resolveFightWinner',function(){
+  SFX.fightKO();
+  setTimeout(()=>SFX.roundWin(),300);
+});
+
+wrap('setupConn',()=>SFX.connect());
+
+})();
 </script>
 </body>
 </html>

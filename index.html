@@ -323,6 +323,10 @@
         <div class="mt-title" data-i18n="mode_join_title">OTAĞA QOŞUL</div>
         <div class="mt-sub" data-i18n="mode_join_sub">Sənə göndərilən link və ya koddan qoşul</div>
       </div>
+      <div class="mode-btn" id="botModeBtn">
+        <div class="mt-title" data-i18n="mode_bot_title">BOTA QARŞI</div>
+        <div class="mt-sub" data-i18n="mode_bot_sub">Tək oyna, rəqibi süni intellekt idarə etsin</div>
+      </div>
     </div>
     <div class="panel" id="createPanel">
       <div class="status-line"><span class="status-dot" id="createDot"></span><span id="createStatusText" data-i18n="create_status_creating">Otaq yaradılır...</span></div>
@@ -547,6 +551,7 @@ const I18N = {
     mode_local_title:"EYNİ CİHAZ", mode_local_sub:"İki oyuncu eyni ekranda növbə ilə oynayır",
     mode_create_title:"OTAQ YARAT", mode_create_sub:"Sən Oyuncu 1 olursan, link yaradıb göndər",
     mode_join_title:"OTAĞA QOŞUL", mode_join_sub:"Sənə göndərilən link və ya koddan qoşul",
+    mode_bot_title:"BOTA QARŞI", mode_bot_sub:"Tək oyna, rəqibi süni intellekt idarə etsin",
     create_status_creating:"Otaq yaradılır...", create_status_ready:"Otaq hazır — linki göndər",
     create_status_joined:"Oyuncu 2 qoşuldu!", create_status_error:"Xəta: ",
     copy_link_btn:"Linki kopyala", copy_link_copied:"Kopyalandı!", back_link:"‹ Geri",
@@ -596,6 +601,7 @@ const I18N = {
     mode_local_title:"AYNI CİHAZ", mode_local_sub:"İki oyuncu aynı ekranda sırayla oynar",
     mode_create_title:"ODA KUR", mode_create_sub:"Sen Oyuncu 1 olursun, link oluşturup gönder",
     mode_join_title:"ODAYA KATIL", mode_join_sub:"Sana gönderilen link ya da koddan katıl",
+    mode_bot_title:"BOTA KARŞI", mode_bot_sub:"Tek oyna, rakibi yapay zeka yönetsin",
     create_status_creating:"Oda oluşturuluyor...", create_status_ready:"Oda hazır — linki gönder",
     create_status_joined:"Oyuncu 2 katıldı!", create_status_error:"Hata: ",
     copy_link_btn:"Linki kopyala", copy_link_copied:"Kopyalandı!", back_link:"‹ Geri",
@@ -645,6 +651,7 @@ const I18N = {
     mode_local_title:"SAME DEVICE", mode_local_sub:"Two players take turns on the same screen",
     mode_create_title:"CREATE ROOM", mode_create_sub:"You'll be Player 1 — create a link and send it",
     mode_join_title:"JOIN ROOM", mode_join_sub:"Join using the link or code sent to you",
+    mode_bot_title:"PLAY VS BOT", mode_bot_sub:"Play solo — the AI controls the opponent",
     create_status_creating:"Creating room...", create_status_ready:"Room ready — send the link",
     create_status_joined:"Player 2 joined!", create_status_error:"Error: ",
     copy_link_btn:"Copy link", copy_link_copied:"Copied!", back_link:"‹ Back",
@@ -862,6 +869,110 @@ let state=null, battleState=null;
    ONLINE / P2P
 ================================================================ */
 let onlineMode=false, isHost=false, peer=null, conn=null, guestConnected=false;
+let vsBotMode=false;
+
+/* ================================================================
+   BOT AI (Player 2) — used only in "Play vs Bot" mode
+================================================================ */
+function botHeroValue(hero){
+  return hero.power*1.15 + hero.speed*0.7 + hero.defense*0.9 + hero.health*0.5;
+}
+
+// Average value of all lots still up for auction (including the current one) —
+// used so the bot knows if today's hero is above/below the "going rate".
+function remainingLotsAvgValue(fromIdx){
+  if(!state||!state.lots) return 150;
+  const remainingLots=state.lots.slice(fromIdx);
+  if(remainingLots.length===0) return 150;
+  const sum=remainingLots.reduce((s,h)=>s+botHeroValue(h),0);
+  return sum/remainingLots.length;
+}
+
+/* ================================================================
+   Smart bot bidding brain:
+   - Knows exactly how many heroes it still needs (maxHeroes - owned)
+   - Knows exactly how many lots are still left in the whole auction
+   - If lots left <= heroes still needed -> it MUST fight for every
+     remaining lot (can't afford to pass anymore)
+   - Otherwise it splits its remaining budget across the heroes it
+     still needs, and pays MORE for strong (high value/tier) heroes
+     and LESS for weak ones, always keeping a reserve for the other
+     heroes it still has to buy
+   - Also backs off a bit if its own budget is much smaller than the
+     human's, and pushes a bit harder when it has a budget edge
+================================================================ */
+function botAuctionMove(){
+  if(!vsBotMode||!state||state.mode!=='auction') return;
+  if(state.p1Passed&&state.p2Passed) return;
+  if(state.p2Passed) return;
+  if(state.leader===2) return;
+
+  const heroesOwned=state.players[2].heroes.length;
+  const heroesStillNeeded=state.maxHeroes-heroesOwned;
+  if(heroesStillNeeded<=0){ makePass(2); return; }
+
+  const lotIdxAtCall=state.lotIdx;
+  const hero=state.lots[lotIdxAtCall];
+  if(!hero) return;
+
+  const lotsRemaining=state.lots.length-lotIdxAtCall; // includes current lot
+  const mustFightForAll=lotsRemaining<=heroesStillNeeded;
+
+  const myBudget=state.players[2].budget;
+  const oppBudget=state.players[1].budget;
+  const heroValue=botHeroValue(hero);
+  const avgValue=remainingLotsAvgValue(lotIdxAtCall);
+  const valueRatio=avgValue>0?heroValue/avgValue:1;
+
+  // Reserve at least one increment per OTHER hero still needed, so the
+  // bot never spends itself into a corner where it can't bid again later.
+  const reserveForOthers=Math.max(0,(heroesStillNeeded-1))*state.inc;
+
+  let willingness;
+  if(mustFightForAll){
+    // Last chance territory: must win essentially every remaining lot.
+    willingness=Math.max(state.price+state.inc, myBudget-reserveForOthers);
+  } else {
+    const perHeroBudget=myBudget/heroesStillNeeded;
+    // Budget-pressure adjustment: if the bot has noticeably more budget
+    // than the human it can afford to push a bit harder for top heroes;
+    // if it has much less, it plays tighter.
+    const budgetEdge=oppBudget>0?clamp(myBudget/oppBudget,0.6,1.6):1.2;
+    willingness=perHeroBudget*valueRatio*budgetEdge*(0.85+Math.random()*0.3);
+    willingness=Math.min(willingness,myBudget-reserveForOthers);
+  }
+  willingness=Math.max(0,willingness);
+
+  const nextPrice=state.price+state.inc;
+  const canAfford=myBudget>=nextPrice;
+  const wantsToBid=canAfford && nextPrice<=willingness;
+
+  setTimeout(()=>{
+    if(!vsBotMode||!state||state.mode!=='auction'||state.lotIdx!==lotIdxAtCall) return;
+    if(state.p2Passed||state.leader===2) return;
+    if(state.p1Passed&&state.p2Passed) return;
+    const stillBudget=state.players[2].budget;
+    const stillCanAfford=stillBudget>=state.price+state.inc;
+    const stillWants=stillCanAfford && (state.price+state.inc)<=willingness;
+    if(stillWants || (mustFightForAll && stillCanAfford)){
+      makeBid(2);
+      if(state.p1Passed) resolveLot();
+    } else {
+      makePass(2);
+    }
+  }, 500+Math.random()*650);
+}
+
+function botWheelTick(){
+  if(!vsBotMode||!wheelState||wheelState.turn!==2||wheelState.spinning) return;
+  const remainingAtCall=wheelState.remaining.length;
+  if(remainingAtCall===0) return;
+  setTimeout(()=>{
+    if(!vsBotMode||!wheelState||wheelState.turn!==2||wheelState.spinning) return;
+    if(wheelState.remaining.length!==remainingAtCall) return;
+    triggerWheelSpin();
+  }, 700+Math.random()*700);
+}
 
 function showOnlyLobbyPanel(which){
   document.getElementById('createPanel').classList.remove('show');
@@ -872,16 +983,26 @@ function showOnlyLobbyPanel(which){
 
 document.getElementById('localModeBtn').addEventListener('click',()=>{
   onlineMode=false;
+  vsBotMode=false;
+  document.getElementById('lobby').style.display='none';
+  document.getElementById('home').style.display='flex';
+});
+
+document.getElementById('botModeBtn').addEventListener('click',()=>{
+  onlineMode=false;
+  vsBotMode=true;
   document.getElementById('lobby').style.display='none';
   document.getElementById('home').style.display='flex';
 });
 
 document.getElementById('createModeBtn').addEventListener('click',()=>{
+  vsBotMode=false;
   showOnlyLobbyPanel('createPanel');
   startHostPeer();
 });
 
 document.getElementById('joinModeBtn').addEventListener('click',()=>{
+  vsBotMode=false;
   showOnlyLobbyPanel('joinPanel');
   const params=new URLSearchParams(location.search);
   const pre=params.get('room');
@@ -1235,6 +1356,16 @@ function renderAuction(){
   document.getElementById('p2Budget').textContent='$'+state.players[2].budget;
   renderRosterList(1,'p1List'); renderRosterList(2,'p2List');
 
+  const p2Label=document.querySelector('#game .roster.p2 .pname');
+  const p2WhoLabel=document.querySelector('#game .bid-col.p2 .who');
+  if(vsBotMode){
+    if(p2Label) p2Label.textContent='🤖 BOT';
+    if(p2WhoLabel) p2WhoLabel.textContent='🤖 BOT';
+  } else {
+    if(p2Label) p2Label.textContent=t('player2');
+    if(p2WhoLabel) p2WhoLabel.textContent=t('player2');
+  }
+
   const p1CanBid=!state.p1Passed&&(state.players[1].heroes.length<state.maxHeroes)&&(state.players[1].budget>=state.price+state.inc);
   const p2CanBid=!state.p2Passed&&(state.players[2].heroes.length<state.maxHeroes)&&(state.players[2].budget>=state.price+state.inc);
 
@@ -1248,13 +1379,21 @@ function renderAuction(){
     else{ document.getElementById('p1BidBtn').disabled=true; document.getElementById('p1PassBtn').disabled=true; }
   }
 
+  if(vsBotMode){
+    document.getElementById('p2BidBtn').style.display='none';
+    document.getElementById('p2PassBtn').style.display='none';
+  } else {
+    document.getElementById('p2BidBtn').style.display='';
+    document.getElementById('p2PassBtn').style.display='';
+  }
+
   if(state.p1Passed&&state.p2Passed) resolveLot();
   if(onlineMode&&isHost) syncGuest();
 }
 
 function buildLeaderNote(leaderId,price){
   const tmpl=t('leader_note_leading');
-  const playerLabel=leaderId===1?t('player1'):t('player2');
+  const playerLabel=leaderId===1?t('player1'):(vsBotMode?'🤖 BOT':t('player2'));
   return tmpl.replace('{PLAYER}',`<b>${playerLabel}</b>`).replace('{x}',price);
 }
 
@@ -1276,12 +1415,20 @@ document.getElementById('p1PassBtn').addEventListener('click',()=>triggerPass(1)
 document.getElementById('p2PassBtn').addEventListener('click',()=>triggerPass(2));
 
 function triggerBid(pId){
-  if(!onlineMode){ makeBid(pId); return; }
+  if(!onlineMode){
+    makeBid(pId);
+    if(vsBotMode&&pId===1) botAuctionMove();
+    return;
+  }
   if(isHost&&pId===1) makeBid(1);
   else if(!isHost&&pId===2) sendAction({action:'bid'});
 }
 function triggerPass(pId){
-  if(!onlineMode){ makePass(pId); return; }
+  if(!onlineMode){
+    makePass(pId);
+    if(vsBotMode&&pId===1) botAuctionMove();
+    return;
+  }
   if(isHost&&pId===1) makePass(1);
   else if(!isHost&&pId===2) sendAction({action:'pass'});
 }
@@ -1301,7 +1448,7 @@ function resolveLot(){
   const flash=document.getElementById('flash');
   const flashText=document.getElementById('flashText');
   if(state.leader){
-    const winner=state.leader; const winnerLabel=winner===1?t('player1'):t('player2');
+    const winner=state.leader; const winnerLabel=winner===1?t('player1'):(vsBotMode?'🤖 BOT':t('player2'));
     state.players[winner].budget-=state.price;
     state.players[winner].heroes.push({...hero,boughtPrice:state.price});
     flashText.innerHTML=`${hero.name}<br>${t('sold_text')} <span class="small">${winnerLabel} — $${state.price}</span>`;
@@ -1335,6 +1482,7 @@ function finishAuction(){
            animation parameters to guest.
    FIX 3: spinTarget + spinRemainingSnapshot sent in sync so guest
            can replay the exact same animation.
+   FIX 4 (bot mode): when vsBotMode, player 2's turn auto-spins.
 ================================================================ */
 let wheelState=null;
 
@@ -1392,10 +1540,13 @@ function renderWheelScreen(rebuildSvg){
   document.getElementById('wheelLotIndex').textContent=Math.min(done+1,total);
   document.getElementById('wheelProgress').textContent=t('wheel_progress').replace('{i}',done).replace('{n}',total);
 
-  const turnLabel=wheelState.turn===1?t('player1'):t('player2');
+  const turnLabelText=wheelState.turn===1?t('player1'):(vsBotMode?'🤖 BOT':t('player2'));
   const turnEl=document.getElementById('wheelTurnLabel');
-  turnEl.textContent=t('wheel_turn_label').replace('{PLAYER}',turnLabel);
+  turnEl.textContent=t('wheel_turn_label').replace('{PLAYER}',turnLabelText);
   turnEl.className='wheel-turn p'+wheelState.turn;
+
+  const wp2Label=document.querySelector('#wheelGame .roster.p2 .pname');
+  if(wp2Label) wp2Label.textContent=vsBotMode?'🤖 BOT':t('player2');
 
   document.getElementById('wheelP1Count').textContent=t('wheel_count').replace('{c}',state.players[1].heroes.length).replace('{m}',wheelState.maxHeroes);
   document.getElementById('wheelP2Count').textContent=t('wheel_count').replace('{c}',state.players[2].heroes.length).replace('{m}',wheelState.maxHeroes);
@@ -1427,6 +1578,22 @@ function renderWheelScreen(rebuildSvg){
     if(myTurn&&!wheelState.spinning){
       spinBtn.disabled=wheelState.remaining.length===0;
       watchEl.style.display='none';
+    }
+  } else if(vsBotMode){
+    if(wheelState.turn===2){
+      spinBtn.style.display='none';
+      if(!wheelState.spinning){
+        watchEl.style.display='block';
+        watchEl.textContent=t('wheel_watching');
+        botWheelTick();
+      } else {
+        watchEl.style.display='block';
+        watchEl.textContent=t('wheel_watching');
+      }
+    } else {
+      spinBtn.style.display='block';
+      watchEl.style.display='none';
+      spinBtn.disabled=wheelState.spinning||wheelState.remaining.length===0;
     }
   } else {
     spinBtn.style.display='block';
@@ -1461,6 +1628,8 @@ function spinWheel(){
       // Immediately disable to prevent double-tap
       document.getElementById('wheelSpinBtn').disabled=true;
     }
+  } else if(vsBotMode){
+    if(wheelState.turn===1) triggerWheelSpin();
   } else {
     triggerWheelSpin();
   }
@@ -1496,7 +1665,7 @@ function triggerWheelSpin(){
 
   // Show watching indicator for non-active player (local mode: nobody)
   document.getElementById('wheelSpinBtn').style.display='none';
-  document.getElementById('wheelWatching').style.display='none';
+  document.getElementById('wheelWatching').style.display=vsBotMode?'block':'none';
 
   setTimeout(()=>{
     assignWheelHero(winIdx);
@@ -1519,7 +1688,7 @@ function assignWheelHero(winIdx){
   const player=wheelState.turn;
   state.players[player].heroes.push({...hero});
 
-  const playerLabel=player===1?t('player1'):t('player2');
+  const playerLabel=player===1?t('player1'):(vsBotMode?'🤖 BOT':t('player2'));
   const flash=document.getElementById('wheelFlash');
   const flashText=document.getElementById('wheelFlashText');
   flashText.innerHTML=`${hero.name}<br><span class="small">${playerLabel}</span>`;
@@ -1708,6 +1877,8 @@ function showFinalResults(){
   end.style.display='block';
   document.getElementById('p1BudgetFinal').textContent='$'+state.players[1].budget;
   document.getElementById('p2BudgetFinal').textContent='$'+state.players[2].budget;
+  const p2FinalLabel=document.querySelector('#endScreen .roster.p2 .pname');
+  if(p2FinalLabel) p2FinalLabel.textContent=vsBotMode?'🤖 BOT':t('player2');
   renderFinalList(1,'p1ListFinal');
   renderFinalList(2,'p2ListFinal');
   if(onlineMode&&isHost) syncGuest();

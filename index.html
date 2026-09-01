@@ -827,6 +827,13 @@ input[type=range]::-webkit-slider-thumb{
               <div class="play-mode-sub">İki oyuncu eyni ekranda növbə ilə oynayır</div>
             </div>
           </div>
+          <div class="play-mode" onclick="selectMode('matchmaking')">
+            <div class="play-mode-icon">🎲</div>
+            <div class="play-mode-info">
+              <div class="play-mode-title">TEZ OYUN (RANDOM)</div>
+              <div class="play-mode-sub">Sistem sənə avtomatik rəqib tapsın</div>
+            </div>
+          </div>
           <div class="play-mode" onclick="selectMode('create')">
             <div class="play-mode-icon">🔗</div>
             <div class="play-mode-info">
@@ -864,6 +871,16 @@ input[type=range]::-webkit-slider-thumb{
           <button class="btn btn-primary btn-full" onclick="doJoin()" style="margin-top:10px;">QOŞUL</button>
           <div class="status-row" style="margin-top:8px;"><span class="dot" id="joinDot"></span><span id="joinStatusText">Kod daxil edin</span></div>
           <div class="back-link" onclick="backToLobby()">‹ Geri</div>
+        </div>
+
+        <!-- Matchmaking panel -->
+        <div class="panel-section" id="matchmakingPanel">
+          <div style="text-align:center;">
+            <div class="spinner" style="margin:6px auto 14px;"></div>
+            <div style="font-size:14px;font-weight:600;" id="matchmakingText">Rəqib axtarılır...</div>
+            <div style="font-size:11px;color:var(--text-3);margin-top:6px;" id="matchmakingSub">Zəhmət olmasa gözlə, tapan kimi qoşulacaqsan</div>
+          </div>
+          <div class="back-link" onclick="cancelMatchmaking()">‹ İmtina et</div>
         </div>
       </div>
 
@@ -1217,6 +1234,232 @@ input[type=range]::-webkit-slider-thumb{
 ══════════════════════════════════════════════ -->
 <script>
 /* ════════════════════════════════════
+   I18N
+════════════════════════════════════ */
+let currentLang='az';
+const I18N={
+  az:{
+    navPlay:'⚔️ Oyna',navCollection:'🗡️ Kolleksiya',navShop:'🏪 Mağaza',navProfile:'👤 Profil',
+    authTitle:'HeroicTeamBattle',authSub:'Qeydiyyatdan keç, nəticələrini izlə',authLogin:'Giriş',authRegister:'Qeydiyyat',
+    authUsernameLabel:'İstifadəçi adı',authUsernamePh:'İstifadəçi adın...',authEmailLabel:'E-mail (Gmail)',
+    authPasswordLabel:'Şifrə',authGoogle:'Google ilə davam et',authOr:'və ya',
+    playHeroTitle:'KAHRAMAN<br>SAVAŞI',playHeroSub:'Rejim seç, kahramanları topla, zəfər qur',
+    modeLocalTitle:'EYNİ CİHAZ',modeLocalSub:'İki oyuncu eyni ekranda növbə ilə oynayır',
+    modeMatchTitle:'TEZ OYUN (RANDOM)',modeMatchSub:'Sistem sənə avtomatik rəqib tapsın',
+    modeCreateTitle:'OTAQ YARAT',modeCreateSub:'Sən Oyuncu 1 olursan, link yaradıb göndər',
+    modeJoinTitle:'OTAĞA QOŞUL',modeJoinSub:'Sənə göndərilən link və ya koddan qoşul',
+    modeBotTitle:'BOTA QARŞI',modeBotSub:'Tək oyna, rəqibi süni intellekt idarə etsin',
+    copy:'Kopyala',back:'‹ Geri',joinCodeLabel:'Otaq kodu / linki',joinBtn:'QOŞUL',joinPh:'Bura yapışdır',
+    matchmakingText:'Rəqib axtarılır...',matchmakingSub:'Zəhmət olmasa gözlə, tapan kimi qoşulacaqsan',cancelMatch:'‹ İmtina et',
+    configTitle:'Oyun Tənzimləmələri',gameMode:'Oyun rejimi',modeAuction:'ARTIRMA',modeAuctionSub:'Büdcə ilə təklif ver',
+    modeWheel:'ÇARX',modeWheelSub:'Çarxı fırlat',startBudget:'Başlanğıc büdcə',bidStep:'Təklif artım addımı',
+    heroesPerPlayer:'Oyuncu başına kahraman',startGameBtn:'OYUNA BAŞLA',
+    lot:'LOT',auctionLabel:'MÜZAYEDƏ',curPriceLabel:'Hazırkı qiymət',bidBtn:'Təklif ver',passBtn:'Pas keç',
+    startAuctionMsg:'Müzayidəyə başlamaq üçün təklif verin',noHeroYet:'Hələ kahraman alınmayıb',
+    wheelTitle:'🎡 KAHRAMAN ÇARXI',spinBtn:'ÇEVİR',watchingOpp:'👁 Rəqib fırladır...',
+    battleEyebrow:'Bütün kahramanlar meydanda',battleTitle:'DÖYÜŞ ARENASI',startFightBtn:'DÖYÜŞÜ BAŞLAT',
+    resultsBtn:'NƏTİCƏLƏRƏ BAX',hpLabel:'CAN',championLabel:'Meydanın Qalibi',
+    endTitle:'MÜZAYİDƏ BİTDİ',restart:'YENİDƏN OYNA',backToLobby:'Lobbyə Qayıt',
+    profileEdit:'✏️ Düzənlə',profileInventory:'🎒 İnventory',profileLogout:'🚪 Çıxış',
+    wins:'Qalibiyyət',games:'Oyun',coins:'Coin',heroes:'Kahraman',
+    usernameLabel:'İstifadəçi adı',avatarLabel:'Avatar seç',save:'Yadda saxla',
+    frames:'Çərçivələr',titles:'Başlıqlar',effects:'Effektlər',logoutConfirm:'Çıxmağa əminsən?',logoutBtn:'🚪 Hesabdan çıx',
+    shopTitle:'🏪 Mağaza',shopHeroesNote:'Qəhrəmanları coin ilə al. Aldığın qəhrəmanlar kolleksiyanda görünər və oyunda istifadə edilər.',
+    shopHeroesTab:'🦸 Qəhrəmanlar',collectionTitle:'🗡️ Kolleksiyam',discover:'Kəşf et',heroCount:'kahraman',
+    chatTitle:'Söhbət',chatPh:'Mesaj yaz...',online:'Onlayn'
+  },
+  tr:{
+    navPlay:'⚔️ Oyna',navCollection:'🗡️ Koleksiyon',navShop:'🏪 Mağaza',navProfile:'👤 Profil',
+    authTitle:'HeroicTeamBattle',authSub:'Kayıt ol, sonuçlarını takip et',authLogin:'Giriş',authRegister:'Kayıt',
+    authUsernameLabel:'Kullanıcı adı',authUsernamePh:'Kullanıcı adın...',authEmailLabel:'E-posta (Gmail)',
+    authPasswordLabel:'Şifre',authGoogle:'Google ile devam et',authOr:'veya',
+    playHeroTitle:'KAHRAMAN<br>SAVAŞI',playHeroSub:'Mod seç, kahramanları topla, zafer kazan',
+    modeLocalTitle:'AYNI CİHAZ',modeLocalSub:'İki oyuncu aynı ekranda sırayla oynar',
+    modeMatchTitle:'HIZLI OYUN (RASTGELE)',modeMatchSub:'Sistem sana otomatik rakip bulsun',
+    modeCreateTitle:'ODA OLUŞTUR',modeCreateSub:'Sen Oyuncu 1 olursun, bağlantı oluşturup gönder',
+    modeJoinTitle:'ODAYA KATIL',modeJoinSub:'Sana gönderilen bağlantı veya koddan katıl',
+    modeBotTitle:'BOTA KARŞI',modeBotSub:'Tek oyna, rakibi yapay zeka yönetsin',
+    copy:'Kopyala',back:'‹ Geri',joinCodeLabel:'Oda kodu / bağlantısı',joinBtn:'KATIL',joinPh:'Buraya yapıştır',
+    matchmakingText:'Rakip aranıyor...',matchmakingSub:'Lütfen bekle, bulunduğunda otomatik katılacaksın',cancelMatch:'‹ Vazgeç',
+    configTitle:'Oyun Ayarları',gameMode:'Oyun modu',modeAuction:'AÇIK ARTIRMA',modeAuctionSub:'Bütçe ile teklif ver',
+    modeWheel:'ÇARK',modeWheelSub:'Çarkı çevir',startBudget:'Başlangıç bütçesi',bidStep:'Teklif artış adımı',
+    heroesPerPlayer:'Oyuncu başına kahraman',startGameBtn:'OYUNA BAŞLA',
+    lot:'LOT',auctionLabel:'AÇIK ARTIRMA',curPriceLabel:'Güncel fiyat',bidBtn:'Teklif ver',passBtn:'Pas geç',
+    startAuctionMsg:'Açık artırmayı başlatmak için teklif ver',noHeroYet:'Henüz kahraman alınmadı',
+    wheelTitle:'🎡 KAHRAMAN ÇARKI',spinBtn:'ÇEVİR',watchingOpp:'👁 Rakip çeviriyor...',
+    battleEyebrow:'Tüm kahramanlar meydanda',battleTitle:'DÖVÜŞ ARENASI',startFightBtn:'DÖVÜŞÜ BAŞLAT',
+    resultsBtn:'SONUÇLARA BAK',hpLabel:'CAN',championLabel:'Meydanın Galibi',
+    endTitle:'AÇIK ARTIRMA BİTTİ',restart:'YENİDEN OYNA',backToLobby:'Lobiye Dön',
+    profileEdit:'✏️ Düzenle',profileInventory:'🎒 Envanter',profileLogout:'🚪 Çıkış',
+    wins:'Galibiyet',games:'Oyun',coins:'Coin',heroes:'Kahraman',
+    usernameLabel:'Kullanıcı adı',avatarLabel:'Avatar seç',save:'Kaydet',
+    frames:'Çerçeveler',titles:'Unvanlar',effects:'Efektler',logoutConfirm:'Çıkmak istediğine emin misin?',logoutBtn:'🚪 Hesaptan çık',
+    shopTitle:'🏪 Mağaza',shopHeroesNote:'Kahramanları coin ile satın al. Aldığın kahramanlar koleksiyonunda görünür ve oyunda kullanılır.',
+    shopHeroesTab:'🦸 Kahramanlar',collectionTitle:'🗡️ Koleksiyonum',discover:'Keşfet',heroCount:'kahraman',
+    chatTitle:'Sohbet',chatPh:'Mesaj yaz...',online:'Çevrimiçi'
+  },
+  en:{
+    navPlay:'⚔️ Play',navCollection:'🗡️ Collection',navShop:'🏪 Shop',navProfile:'👤 Profile',
+    authTitle:'HeroicTeamBattle',authSub:'Sign up and track your results',authLogin:'Log In',authRegister:'Register',
+    authUsernameLabel:'Username',authUsernamePh:'Your username...',authEmailLabel:'Email (Gmail)',
+    authPasswordLabel:'Password',authGoogle:'Continue with Google',authOr:'or',
+    playHeroTitle:'HERO<br>BATTLE',playHeroSub:'Pick a mode, collect heroes, claim victory',
+    modeLocalTitle:'SAME DEVICE',modeLocalSub:'Two players take turns on the same screen',
+    modeMatchTitle:'QUICK PLAY (RANDOM)',modeMatchSub:'Let the system find you an opponent automatically',
+    modeCreateTitle:'CREATE ROOM',modeCreateSub:'You become Player 1, create a link and share it',
+    modeJoinTitle:'JOIN ROOM',modeJoinSub:'Join with a link or code sent to you',
+    modeBotTitle:'VS BOT',modeBotSub:'Play solo, the AI controls your opponent',
+    copy:'Copy',back:'‹ Back',joinCodeLabel:'Room code / link',joinBtn:'JOIN',joinPh:'Paste here',
+    matchmakingText:'Finding an opponent...',matchmakingSub:'Please wait, you will join automatically once found',cancelMatch:'‹ Cancel',
+    configTitle:'Game Settings',gameMode:'Game mode',modeAuction:'AUCTION',modeAuctionSub:'Bid with a budget',
+    modeWheel:'WHEEL',modeWheelSub:'Spin the wheel',startBudget:'Starting budget',bidStep:'Bid increment',
+    heroesPerPlayer:'Heroes per player',startGameBtn:'START GAME',
+    lot:'LOT',auctionLabel:'AUCTION',curPriceLabel:'Current price',bidBtn:'Place bid',passBtn:'Pass',
+    startAuctionMsg:'Place a bid to start the auction',noHeroYet:'No heroes yet',
+    wheelTitle:'🎡 HERO WHEEL',spinBtn:'SPIN',watchingOpp:'👁 Opponent spinning...',
+    battleEyebrow:'All heroes on the field',battleTitle:'BATTLE ARENA',startFightBtn:'START FIGHT',
+    resultsBtn:'VIEW RESULTS',hpLabel:'HP',championLabel:'Champion of the Arena',
+    endTitle:'AUCTION FINISHED',restart:'PLAY AGAIN',backToLobby:'Back to Lobby',
+    profileEdit:'✏️ Edit',profileInventory:'🎒 Inventory',profileLogout:'🚪 Logout',
+    wins:'Wins',games:'Games',coins:'Coins',heroes:'Heroes',
+    usernameLabel:'Username',avatarLabel:'Choose avatar',save:'Save',
+    frames:'Frames',titles:'Titles',effects:'Effects',logoutConfirm:'Are you sure you want to log out?',logoutBtn:'🚪 Log out',
+    shopTitle:'🏪 Shop',shopHeroesNote:'Buy heroes with coins. Purchased heroes appear in your collection and can be used in games.',
+    shopHeroesTab:'🦸 Heroes',collectionTitle:'🗡️ My Collection',discover:'Discover',heroCount:'heroes',
+    chatTitle:'Chat',chatPh:'Type a message...',online:'Online'
+  }
+};
+
+function t(key){return (I18N[currentLang]&&I18N[currentLang][key])||I18N.az[key]||key;}
+
+function applyLanguage(lang){
+  if(!I18N[lang])return;
+  currentLang=lang;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+  document.documentElement.lang=lang;
+  localStorage.setItem('htb_lang',lang);
+
+  // Nav
+  const navPlay=document.getElementById('navPlay');if(navPlay)navPlay.textContent=t('navPlay');
+  const navCollection=document.getElementById('navCollection');if(navCollection)navCollection.textContent=t('navCollection');
+  const navShop=document.getElementById('navShop');if(navShop)navShop.textContent=t('navShop');
+  const navProfile=document.getElementById('navProfile');if(navProfile)navProfile.textContent=t('navProfile');
+
+  // Auth
+  const authTitle=document.querySelector('.auth-title');if(authTitle)authTitle.textContent=t('authTitle');
+  const authSub=document.querySelector('.auth-sub');if(authSub)authSub.textContent=t('authSub');
+  const authTabs=document.querySelectorAll('.auth-tab');
+  if(authTabs[0])authTabs[0].textContent=t('authLogin');
+  if(authTabs[1])authTabs[1].textContent=t('authRegister');
+  const authUserLbl=document.querySelector('#authForm > div:nth-child(1) .label');if(authUserLbl)authUserLbl.textContent=t('authUsernameLabel');
+  const authUserInp=document.getElementById('authUsername');if(authUserInp)authUserInp.placeholder=t('authUsernamePh');
+  const authEmailLbl=document.querySelector('#authEmailRow .label');if(authEmailLbl)authEmailLbl.textContent=t('authEmailLabel');
+  const authPwLbl=document.querySelector('#authForm > div:nth-child(3) .label');if(authPwLbl)authPwLbl.textContent=t('authPasswordLabel');
+  const authSubmitBtn=document.querySelector('.auth-form .btn-primary');if(authSubmitBtn)authSubmitBtn.textContent=authMode==='login'?t('authLogin').toUpperCase():t('authRegister').toUpperCase();
+  const authDivider=document.querySelector('.auth-divider');if(authDivider)authDivider.childNodes[0].nodeValue=t('authOr');
+  const authGoogleBtn=document.querySelector('.auth-google-btn');if(authGoogleBtn){const svg=authGoogleBtn.querySelector('svg');authGoogleBtn.innerHTML='';if(svg)authGoogleBtn.appendChild(svg);authGoogleBtn.appendChild(document.createTextNode(' '+t('authGoogle')));}
+
+  // Play page
+  const heroH1=document.querySelector('.play-hero h1');if(heroH1)heroH1.innerHTML=t('playHeroTitle');
+  const heroSub=document.querySelector('.play-hero .sub');if(heroSub)heroSub.textContent=t('playHeroSub');
+  const modes=document.querySelectorAll('.play-mode');
+  const modeKeys=[['modeLocalTitle','modeLocalSub'],['modeMatchTitle','modeMatchSub'],['modeCreateTitle','modeCreateSub'],['modeJoinTitle','modeJoinSub'],['modeBotTitle','modeBotSub']];
+  modes.forEach((m,i)=>{if(!modeKeys[i])return;const tt=m.querySelector('.play-mode-title'),ss=m.querySelector('.play-mode-sub');if(tt)tt.textContent=t(modeKeys[i][0]);if(ss)ss.textContent=t(modeKeys[i][1]);});
+  document.querySelectorAll('#copyLinkBtn,#hostCopyBtn').forEach(b=>b.textContent=t('copy'));
+  document.querySelectorAll('.back-link').forEach(b=>{if(b.getAttribute('onclick')==="cancelMatchmaking()")b.textContent=t('cancelMatch');else b.textContent=t('back');});
+  const joinLbl=document.querySelector('#joinPanel .label');if(joinLbl)joinLbl.textContent=t('joinCodeLabel');
+  const joinInp=document.getElementById('joinCodeInput');if(joinInp)joinInp.placeholder=t('joinPh');
+  const joinBtn=document.querySelector('#joinPanel .btn-primary');if(joinBtn)joinBtn.textContent=t('joinBtn');
+  const mmText=document.getElementById('matchmakingText');if(mmText)mmText.textContent=t('matchmakingText');
+  const mmSub=document.getElementById('matchmakingSub');if(mmSub)mmSub.textContent=t('matchmakingSub');
+
+  // Config
+  const configTitle=document.querySelector('.config-title');if(configTitle)configTitle.textContent=t('configTitle');
+  const gmLabel=document.querySelector('#gameConfig .field-group:nth-of-type(1) label');
+  const fieldLabels=document.querySelectorAll('#gameConfig .field-group > label');
+  if(fieldLabels[0])fieldLabels[0].childNodes[0].nodeValue=t('gameMode');
+  document.getElementById('gmAuction').querySelector('.mode-opt-title').textContent=t('modeAuction');
+  document.getElementById('gmAuction').querySelector('.mode-opt-sub').textContent=t('modeAuctionSub');
+  document.getElementById('gmWheel').querySelector('.mode-opt-title').textContent=t('modeWheel');
+  document.getElementById('gmWheel').querySelector('.mode-opt-sub').textContent=t('modeWheelSub');
+  const budgetLbl=document.querySelector('#budgetField .field-group:nth-child(1) label');
+  if(budgetLbl)budgetLbl.childNodes[0].nodeValue=t('startBudget')+' ';
+  const incLbl=document.querySelector('#budgetField .field-group:nth-child(2) label');
+  if(incLbl)incLbl.textContent=t('bidStep');
+  const maxHLbl=document.querySelector('#gameConfig .field-group:last-of-type label');
+  if(maxHLbl)maxHLbl.childNodes[0].nodeValue=t('heroesPerPlayer')+' ';
+  const startBtn=document.getElementById('startBtn');if(startBtn)startBtn.textContent=t('startGameBtn');
+
+  // Auction game
+  document.querySelectorAll('.lot-progress').forEach(el=>{el.childNodes[0].nodeValue=t('lot')+' ';});
+  const stageLabel=document.querySelector('.stage-label');if(stageLabel)stageLabel.textContent=t('auctionLabel');
+  const priceLabel=document.querySelector('.price-label');if(priceLabel)priceLabel.textContent=t('curPriceLabel');
+  document.querySelectorAll('#p1BidBtn,#p2BidBtn').forEach(b=>b.textContent=t('bidBtn'));
+  document.querySelectorAll('#p1PassBtn,#p2PassBtn').forEach(b=>b.textContent=t('passBtn'));
+  document.querySelectorAll('.roster-empty').forEach(el=>el.textContent=t('noHeroYet'));
+  if(state&&state.mode==='auction'&&!state.leader)document.getElementById('leaderNote').textContent=t('startAuctionMsg');
+
+  // Wheel
+  const wheelLogo=document.querySelector('#wheelPage .game-logo');if(wheelLogo)wheelLogo.textContent=t('wheelTitle');
+  const spinBtn=document.getElementById('wheelSpinBtn');if(spinBtn)spinBtn.textContent=t('spinBtn');
+  const wheelWatching=document.getElementById('wheelWatching');if(wheelWatching)wheelWatching.textContent=t('watchingOpp');
+
+  // Battle
+  const battleEyebrow=document.querySelector('.battle-eyebrow');if(battleEyebrow)battleEyebrow.textContent=t('battleEyebrow');
+  const battleTitleEl=document.querySelector('.battle-title');if(battleTitleEl)battleTitleEl.textContent=t('battleTitle');
+  const nextFightBtn=document.getElementById('nextFightBtn');if(nextFightBtn&&!battleState?.championDone)nextFightBtn.textContent=t('startFightBtn');
+  const toResultsBtn=document.getElementById('toResultsBtn');if(toResultsBtn)toResultsBtn.textContent=t('resultsBtn');
+  const cbLabel=document.querySelector('.cb-label');if(cbLabel)cbLabel.textContent=t('championLabel');
+  document.querySelectorAll('.hp-label').forEach(el=>{const pct=el.textContent.match(/\d+%/);el.textContent=t('hpLabel')+': '+(pct?pct[0]:'100%');});
+
+  // End
+  const endTitleEl=document.getElementById('endTitle');if(endTitleEl&&!battleState)endTitleEl.textContent=t('endTitle');
+  const restartBtn=document.querySelector('#endPage .btn-primary');if(restartBtn)restartBtn.textContent=t('restart');
+  const lobbyBtn=document.querySelector('#endPage .btn:not(.btn-primary)');if(lobbyBtn)lobbyBtn.textContent=t('backToLobby');
+
+  // Profile
+  const profTabs=document.querySelectorAll('.profile-tab');
+  if(profTabs[0])profTabs[0].textContent=t('profileEdit');
+  if(profTabs[1])profTabs[1].textContent=t('profileInventory');
+  if(profTabs[2])profTabs[2].textContent=t('profileLogout');
+  const statLabels=document.querySelectorAll('.profile-stat-label');
+  const statKeys=['wins','games','coins','heroes'];
+  statLabels.forEach((el,i)=>{if(statKeys[i])el.textContent=t(statKeys[i]);});
+  const editUserLbl=document.querySelector('.edit-form .label');if(editUserLbl)editUserLbl.textContent=t('usernameLabel');
+  const avatarLbl=document.querySelectorAll('.edit-form .label')[1];if(avatarLbl)avatarLbl.textContent=t('avatarLabel');
+  const saveBtn=document.querySelector('.edit-form .btn-primary');if(saveBtn)saveBtn.textContent=t('save');
+  const invLbls=document.querySelectorAll('#profilePanelInventory .label');
+  if(invLbls[0])invLbls[0].textContent=t('frames');
+  if(invLbls[1])invLbls[1].textContent=t('titles');
+  if(invLbls[2])invLbls[2].textContent=t('effects');
+  const logoutText=document.querySelector('#profilePanelLogout div div');if(logoutText)logoutText.textContent=t('logoutConfirm');
+  const logoutBtn=document.querySelector('#profilePanelLogout .btn-danger');if(logoutBtn)logoutBtn.textContent=t('logoutBtn');
+
+  // Shop
+  const shopTitleEl=document.querySelector('.shop-title');if(shopTitleEl)shopTitleEl.textContent=t('shopTitle');
+  const shopTabs=document.querySelectorAll('.shop-tab');
+  const shopTabKeys=['frames','titles','effects','shopHeroesTab'];
+  shopTabs.forEach((el,i)=>{if(shopTabKeys[i]){const icon=el.textContent.trim().split(' ')[0];el.textContent=t(shopTabKeys[i]);}});
+  const heroesNote=document.querySelector('#shopPanelHeroes div div');if(heroesNote)heroesNote.textContent=t('shopHeroesNote');
+
+  // Collection
+  const collTitleEl=document.querySelector('.collection-title');if(collTitleEl)collTitleEl.textContent=t('collectionTitle');
+
+  // Chat
+  const chatHeader=document.querySelector('.chat-header');if(chatHeader){const close=chatHeader.querySelector('.chat-close');chatHeader.childNodes[0].nodeValue=t('chatTitle')+' ';}
+  const chatInputEl=document.getElementById('chatInput');if(chatInputEl)chatInputEl.placeholder=t('chatPh');
+
+  // Re-render dynamic content that depends on language
+  if(document.getElementById('profilePage')&&document.getElementById('profilePage').classList.contains('active'))renderProfilePage();
+  if(document.getElementById('shopPage')&&document.getElementById('shopPage').classList.contains('active'))renderShopPage();
+  if(document.getElementById('collectionPage')&&document.getElementById('collectionPage').classList.contains('active'))renderCollectionPage();
+}
+
+document.querySelectorAll('.lang-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>applyLanguage(btn.dataset.lang));
+});
+
+/* ════════════════════════════════════
    BIOS
 ════════════════════════════════════ */
 const BIOS={
@@ -1428,9 +1671,9 @@ function updateNavCoins(){
 let authMode='login';
 function switchAuthTab(mode){
   authMode=mode;
-  document.querySelectorAll('.auth-tab').forEach((t,i)=>t.classList.toggle('active',(i===0&&mode==='login')||(i===1&&mode==='register')));
+  document.querySelectorAll('.auth-tab').forEach((tab,i)=>tab.classList.toggle('active',(i===0&&mode==='login')||(i===1&&mode==='register')));
   document.getElementById('authEmailRow').style.display=mode==='register'?'block':'none';
-  document.querySelector('.auth-form .btn-primary').textContent=mode==='login'?'GİRİŞ':'QEYDİYYAT';
+  document.querySelector('.auth-form .btn-primary').textContent=mode==='login'?t('authLogin').toUpperCase():t('authRegister').toUpperCase();
 }
 
 function handleAuth(){
@@ -1729,7 +1972,7 @@ function switchShopTab(tab){
 function renderCollectionPage(){
   if(!currentUser) return;
   const owned=currentUser.inventory?.heroes||[];
-  document.getElementById('collectionCount').textContent=owned.length+' kahraman';
+  document.getElementById('collectionCount').textContent=owned.length+' '+t('heroCount');
   const el=document.getElementById('collectionGrid');
   el.innerHTML=HEROES.map(h=>{
     const isOwned=owned.includes(h.name);
@@ -1740,7 +1983,7 @@ function renderCollectionPage(){
       <div class="hero-card-name">${h.name}</div>
       <div class="hero-card-fr"><span class="badge ${frBadge(h.fr)}">${h.fr}</span></div>
       <span class="tier-badge tier-${h.tier}">${h.tier}</span>
-      ${isOwned?'<div class="shop-item-status owned">✓</div>':'<div style="font-size:10px;color:var(--text-3);">Kəşf et</div>'}
+      ${isOwned?'<div class="shop-item-status owned">✓</div>':`<div style="font-size:10px;color:var(--text-3);">${t('discover')}</div>`}
     </div>`;
   }).join('');
 }
@@ -1761,9 +2004,19 @@ function showToast(msg,type=''){
 ════════════════════════════════════ */
 let onlineMode=false,isHost=false,peer=null,conn=null,guestConnected=false,vsBotMode=false;
 
+/* ── Matchmaking (random auto-match) ──
+   Uses a shared PeerJS "lobby" id derived from a fixed public room prefix.
+   The first player to open the lobby id becomes the host; if that id is
+   taken, we fall back through a small pool of lobby slots until we either
+   claim an empty slot (and wait) or connect to someone already waiting. */
+let matchmakingActive=false,matchmakingPeer=null,matchmakingSlot=null;
+const MATCHMAKING_PREFIX='htb-mm-slot-';
+const MATCHMAKING_SLOTS=25;
+
 function selectMode(mode){
   document.getElementById('createPanel').classList.remove('show');
   document.getElementById('joinPanel').classList.remove('show');
+  document.getElementById('matchmakingPanel').classList.remove('show');
   if(mode==='local'){onlineMode=false;vsBotMode=false;showConfigScreen();}
   else if(mode==='bot'){onlineMode=false;vsBotMode=true;showConfigScreen();}
   else if(mode==='create'){document.getElementById('createPanel').classList.add('show');startHostPeer();}
@@ -1773,6 +2026,120 @@ function selectMode(mode){
     const pre=params.get('room');
     if(pre) document.getElementById('joinCodeInput').value=pre;
   }
+  else if(mode==='matchmaking'){
+    document.getElementById('matchmakingPanel').classList.add('show');
+    startMatchmaking();
+  }
+}
+
+function startMatchmaking(){
+  if(matchmakingActive)return;
+  matchmakingActive=true;
+  onlineMode=true;
+  document.getElementById('matchmakingText').textContent=t('matchmakingText');
+  tryMatchmakingSlot(0);
+}
+
+function tryMatchmakingSlot(order){
+  if(!matchmakingActive)return;
+  // Randomize the slot scan order so multiple simultaneous searchers spread out
+  const slots=shuffle(Array.from({length:MATCHMAKING_SLOTS},(_,i)=>i));
+  attemptSlots(slots,0);
+}
+
+function attemptSlots(slots,idx){
+  if(!matchmakingActive)return;
+  if(idx>=slots.length){
+    // All slots busy as guests already tried — retry after a short delay
+    setTimeout(()=>{if(matchmakingActive)attemptSlots(shuffle(slots),0);},1500);
+    return;
+  }
+  const slotId=MATCHMAKING_PREFIX+slots[idx];
+  const p=new Peer(slotId);
+  let settled=false;
+  const timeout=setTimeout(()=>{
+    if(settled)return;
+    settled=true;
+    try{p.destroy();}catch(e){}
+    attemptSlots(slots,idx+1);
+  },1800);
+  p.on('open',id=>{
+    if(settled)return;
+    settled=true;clearTimeout(timeout);
+    // We claimed this slot as host — wait for a guest
+    matchmakingPeer=p;matchmakingSlot=slotId;
+    peer=p;isHost=true;
+    document.getElementById('matchmakingText').textContent=t('matchmakingText');
+    document.getElementById('matchmakingSub').textContent=t('matchmakingSub');
+    p.on('connection',c=>{
+      if(!matchmakingActive)return;
+      conn=c;guestConnected=true;setupConn();
+      matchmakingActive=false;
+      document.getElementById('matchmakingPanel').classList.remove('show');
+      showConfigScreen();
+      showOnlinePill(t('modeMatchTitle')+' — '+ (currentLang==='en'?'Player 1':'Oyuncu 1'));
+      showToast('🎲 '+(currentLang==='en'?'Opponent found!':currentLang==='tr'?'Rakip bulundu!':'Rəqib tapıldı!'),'gold');
+    });
+  });
+  p.on('error',err=>{
+    if(settled)return;
+    settled=true;clearTimeout(timeout);
+    try{p.destroy();}catch(e){}
+    if(err&&err.type==='unavailable-id'){
+      // Slot taken — try to join it as a guest instead
+      joinMatchmakingSlot(slotId,slots,idx);
+    } else {
+      attemptSlots(slots,idx+1);
+    }
+  });
+}
+
+function joinMatchmakingSlot(slotId,slots,idx){
+  if(!matchmakingActive)return;
+  const p=new Peer();
+  let settled=false;
+  const timeout=setTimeout(()=>{
+    if(settled)return;
+    settled=true;
+    try{p.destroy();}catch(e){}
+    attemptSlots(slots,idx+1);
+  },1800);
+  p.on('open',()=>{
+    const c=p.connect(slotId,{reliable:true});
+    c.on('open',()=>{
+      if(settled)return;
+      settled=true;clearTimeout(timeout);
+      if(!matchmakingActive){try{p.destroy();}catch(e){}return;}
+      peer=p;conn=c;isHost=false;setupConn();
+      matchmakingActive=false;
+      document.getElementById('matchmakingPanel').classList.remove('show');
+      showOnlinePill(t('modeMatchTitle')+' — '+(currentLang==='en'?'Player 2':'Oyuncu 2'));
+      showToast('🎲 '+(currentLang==='en'?'Opponent found!':currentLang==='tr'?'Rakip bulundu!':'Rəqib tapıldı!'),'gold');
+      document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active'));
+      document.getElementById('waitPage').classList.add('show');
+    });
+    c.on('error',()=>{
+      if(settled)return;
+      settled=true;clearTimeout(timeout);
+      try{p.destroy();}catch(e){}
+      attemptSlots(slots,idx+1);
+    });
+  });
+  p.on('error',()=>{
+    if(settled)return;
+    settled=true;clearTimeout(timeout);
+    try{p.destroy();}catch(e){}
+    attemptSlots(slots,idx+1);
+  });
+}
+
+function cancelMatchmaking(){
+  matchmakingActive=false;
+  onlineMode=false;isHost=false;
+  if(matchmakingPeer){try{matchmakingPeer.destroy();}catch(e){}matchmakingPeer=null;}
+  if(peer){try{peer.destroy();}catch(e){}peer=null;}
+  conn=null;guestConnected=false;
+  document.getElementById('matchmakingPanel').classList.remove('show');
 }
 
 function showConfigScreen(){
@@ -1780,13 +2147,14 @@ function showConfigScreen(){
   document.getElementById('gameConfig').style.display='block';
   if(onlineMode&&isHost){
     document.getElementById('hostStatusArea').style.display='block';
-    document.getElementById('hostLinkInput').value=document.getElementById('roomLinkInput').value;
+    document.getElementById('hostLinkInput').value=document.getElementById('roomLinkInput').value||'';
   }
 }
 
 function backToLobby(){
   document.getElementById('createPanel').classList.remove('show');
   document.getElementById('joinPanel').classList.remove('show');
+  document.getElementById('matchmakingPanel').classList.remove('show');
   if(peer){peer.destroy();peer=null;}
   onlineMode=false;
 }
@@ -2011,7 +2379,7 @@ function renderAuction(){
   document.getElementById('heroStatsRow').innerHTML=`<span class="mini-stat g">GÜC:${h.power}</span><span class="mini-stat s">SÜR:${h.speed}</span><span class="mini-stat m">MÜD:${h.defense}</span><span class="mini-stat c">CAN:${h.health}</span>`;
   document.getElementById('curPrice').textContent='$'+state.price;
   const ln=document.getElementById('leaderNote');
-  if(!state.leader){ln.innerHTML='Müzayidəyə başlamaq üçün təklif verin';ln.className='leader-note';}
+  if(!state.leader){ln.innerHTML=t('startAuctionMsg');ln.className='leader-note';}
   else{const pl=state.leader===1?'OYUNCU 1':(vsBotMode?'🤖 BOT':'OYUNCU 2');ln.innerHTML=`Ən yüksək təklif: <b>${pl}</b> ($${state.price})`;ln.className='leader-note';}
   document.getElementById('p1Budget').textContent='$'+state.players[1].budget;
   document.getElementById('p2Budget').textContent='$'+state.players[2].budget;
@@ -2030,7 +2398,7 @@ function renderAuction(){
 
 function renderRoster(pId,cId,wheel){
   const c=document.getElementById(cId),heroes=state.players[pId].heroes;
-  if(!heroes.length){c.innerHTML='<div class="roster-empty">Hələ kahraman alınmayıb</div>';return;}
+  if(!heroes.length){c.innerHTML='<div class="roster-empty">'+t('noHeroYet')+'</div>';return;}
   c.innerHTML=heroes.map(h=>`<div class="roster-item">
     <div class="hero-avatar" style="background:${h.color}">${h.img?`<img src="${h.img}" onerror="this.style.display='none'">`:h.init}</div>
     <div><div class="hname">${h.name}</div><div class="hfr">${h.fr}</div></div>
@@ -2064,7 +2432,7 @@ function resolveLot(){
 function finishAuction(){document.getElementById('gamePage').style.display='none';if(state.players[1].heroes.length>0&&state.players[2].heroes.length>0)startBattle();else showFinalResults();}
 
 /* ════════════════════════════════════
-   BOT AI
+   BOT AI (bids based on hero power, then stops appropriately)
 ════════════════════════════════════ */
 function botHV(h){return h.power*1.15+h.speed*0.7+h.defense*0.9+h.health*0.5;}
 function botMove(){
@@ -2073,19 +2441,37 @@ function botMove(){
   if(needed<=0){makePass(2);return;}
   const remaining=state.lots.length-state.lotIdx;
   const must=remaining<=needed;
-  const hv=botHV(state.lots[state.lotIdx]);
+  const hero=state.lots[state.lotIdx];
+  const hv=botHV(hero);
   const avgV=state.lots.slice(state.lotIdx).reduce((s,h)=>s+botHV(h),0)/Math.max(1,remaining);
   const budget=state.players[2].budget;
   const reserve=Math.max(0,(needed-1)*state.inc);
-  let willing;
-  if(must)willing=Math.max(state.price+state.inc,budget-reserve);
-  else{const pbg=budget/needed;willing=pbg*(hv/avgV)*(0.85+Math.random()*0.3)-reserve;}
   const next=state.price+state.inc;
-  const want=budget>=next&&next<=willing;
+
+  // Max amount the bot is willing to pay for THIS hero, scaled by its
+  // power/speed/defense/health relative to the average hero left in the pool.
+  // Stronger heroes (higher relative value) get a bigger share of the
+  // remaining per-hero budget; weak heroes get proportionally less.
+  const perHeroBudget=budget/needed;
+  const strengthRatio=avgV>0?(hv/avgV):1;
+  let willing=perHeroBudget*strengthRatio*(0.85+Math.random()*0.3)-reserve;
+  if(must) willing=Math.max(willing,Math.max(state.price+state.inc,budget-reserve));
+
+  const canAfford=budget>=next&&(budget-next)>=reserve-((needed-1)*state.inc);
+  const wantsToBid=next<=willing;
+
   setTimeout(()=>{
-    if(!vsBotMode||!state)return;
-    if(want||(must&&state.players[2].budget>=next)){makeBid(2);if(state.p1Passed)resolveLot();}
-    else makePass(2);
+    if(!vsBotMode||!state||state.mode!=='auction')return;
+    // Bot bids only while it can afford the next step AND the price still
+    // fits what this specific hero's power/stats justify. As soon as the
+    // price exceeds that value (or it can no longer afford it), it stops
+    // and passes rather than bidding forever.
+    if(budget>=next&&(wantsToBid||(must&&budget>=next))){
+      makeBid(2);
+      if(state.p1Passed)resolveLot();
+    } else {
+      makePass(2);
+    }
   },500+Math.random()*600);
 }
 
@@ -2143,7 +2529,7 @@ function renderWheelScreen(rebuild){
 
 function renderWheelRoster(pId,cId){
   const c=document.getElementById(cId),heroes=state.players[pId].heroes;
-  if(!heroes.length){c.innerHTML='<div class="roster-empty">Hələ kahraman alınmayıb</div>';return;}
+  if(!heroes.length){c.innerHTML='<div class="roster-empty">'+t('noHeroYet')+'</div>';return;}
   c.innerHTML=heroes.map(h=>`<div class="roster-item"><div class="hero-avatar" style="background:${h.color}">${h.img?`<img src="${h.img}" onerror="this.style.display='none'">`:h.init}</div><div><div class="hname">${h.name}</div><div class="hfr">${h.fr}</div></div></div>`).join('');
 }
 
@@ -2226,11 +2612,11 @@ function renderFighter(side,h){
   if(h.img)av.innerHTML=`<img src="${h.img}" onerror="this.style.display='none'">`;else av.innerHTML=h.init;
   document.getElementById(p+'Name').textContent=h.name;
   document.getElementById(p+'Franchise').textContent=h.fr;
-  document.getElementById(p+'Bio').textContent=(BIOS[h.name]||{}).az||'';
+  document.getElementById(p+'Bio').textContent=(BIOS[h.name]||{})[currentLang]||(BIOS[h.name]||{}).az||'';
   document.getElementById(p+'Stats').innerHTML=`<div class="mini-stats" style="justify-content:center;gap:4px;display:flex;"><span class="mini-stat g">G:${h.power}</span><span class="mini-stat s">S:${h.speed}</span><span class="mini-stat m">M:${h.defense}</span></div>`;
   const pct=Math.max(0,Math.round((h.curHp/h.maxHp)*100));
   document.getElementById(p+'HpFill').style.width=pct+'%';
-  document.getElementById(p+'HpLabel').textContent='CAN: '+pct+'%';
+  document.getElementById(p+'HpLabel').textContent=t('hpLabel')+': '+pct+'%';
   document.getElementById(p+'Score').textContent=h.wins>0?'Qalibiyyət: '+h.wins:'';
 }
 
@@ -2317,7 +2703,7 @@ function showFinalResults(){
 
 function renderFinalList(pId,cId){
   const c=document.getElementById(cId),heroes=state.players[pId].heroes;
-  if(!heroes.length){c.innerHTML='<div class="roster-empty">Kahraman yoxdur</div>';return;}
+  if(!heroes.length){c.innerHTML='<div class="roster-empty">'+t('noHeroYet')+'</div>';return;}
   c.innerHTML=heroes.map(h=>{
     const bh=battleState?(pId===1?battleState.t1:battleState.t2).find(b=>b.name===h.name):null;
     const wb=bh&&bh.wins>0?`<div style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold-2);">🏆${bh.wins}</div>`:'';
@@ -2346,6 +2732,8 @@ function restartGame(){
    INIT
 ════════════════════════════════════ */
 window.addEventListener('DOMContentLoaded',()=>{
+  const savedLang=localStorage.getItem('htb_lang');
+  if(savedLang&&I18N[savedLang])applyLanguage(savedLang);
   const params=new URLSearchParams(location.search);
   if(params.get('room')){
     // Auto-join flow: show auth first

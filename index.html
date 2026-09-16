@@ -838,14 +838,14 @@ input[type=range]::-webkit-slider-thumb{
             <div class="play-mode-icon">🔗</div>
             <div class="play-mode-info">
               <div class="play-mode-title">OTAQ YARAT</div>
-              <div class="play-mode-sub">Sən Oyuncu 1 olursan, link yaradıb göndər</div>
+              <div class="play-mode-sub">Sən Oyuncu 1 olursan, 4 rəqəmli kod yaradıb göndər</div>
             </div>
           </div>
           <div class="play-mode" onclick="selectMode('join')">
             <div class="play-mode-icon">📎</div>
             <div class="play-mode-info">
               <div class="play-mode-title">OTAĞA QOŞUL</div>
-              <div class="play-mode-sub">Sənə göndərilən link və ya koddan qoşul</div>
+              <div class="play-mode-sub">Sənə göndərilən 4 rəqəmli koddan qoşul</div>
             </div>
           </div>
           <div class="play-mode" onclick="selectMode('bot')">
@@ -860,14 +860,14 @@ input[type=range]::-webkit-slider-thumb{
         <!-- Create panel -->
         <div class="panel-section" id="createPanel">
           <div class="status-row"><span class="dot" id="createDot"></span><span id="createStatusText">Otaq yaradılır...</span></div>
-          <div class="room-link-row"><input type="text" id="roomLinkInput" readonly><button class="btn btn-sm" id="copyLinkBtn">Kopyala</button></div>
+          <div class="room-link-row"><input type="text" id="roomLinkInput" readonly style="text-align:center;letter-spacing:0.4em;font-size:20px;font-weight:700;"><button class="btn btn-sm" id="copyLinkBtn">Kopyala</button></div>
           <div class="back-link" onclick="backToLobby()">‹ Geri</div>
         </div>
 
         <!-- Join panel -->
         <div class="panel-section" id="joinPanel">
-          <div class="label">Otaq kodu / linki</div>
-          <input type="text" class="input" id="joinCodeInput" placeholder="Bura yapışdır" style="margin-top:4px;">
+          <div class="label">Otaq kodu (4 rəqəm)</div>
+          <input type="text" class="input" id="joinCodeInput" placeholder="4 rəqəmli kod" maxlength="4" inputmode="numeric" style="margin-top:4px;text-align:center;letter-spacing:0.3em;font-family:'JetBrains Mono',monospace;font-size:20px;">
           <button class="btn btn-primary btn-full" onclick="doJoin()" style="margin-top:10px;">QOŞUL</button>
           <div class="status-row" style="margin-top:8px;"><span class="dot" id="joinDot"></span><span id="joinStatusText">Kod daxil edin</span></div>
           <div class="back-link" onclick="backToLobby()">‹ Geri</div>
@@ -890,7 +890,7 @@ input[type=range]::-webkit-slider-thumb{
           <div class="config-title">Oyun Tənzimləmələri</div>
           <div id="hostStatusArea" style="display:none;margin-bottom:18px;">
             <div class="status-row"><span class="dot on" id="hostDot"></span><span id="hostStatusText">Oyuncu 2 gözlənilir...</span></div>
-            <div class="room-link-row" style="margin-top:8px;"><input type="text" id="hostLinkInput" readonly><button class="btn btn-sm" id="hostCopyBtn">Kopyala</button></div>
+            <div class="room-link-row" style="margin-top:8px;"><input type="text" id="hostLinkInput" readonly style="text-align:center;letter-spacing:0.4em;font-size:20px;font-weight:700;"><button class="btn btn-sm" id="hostCopyBtn">Kopyala</button></div>
           </div>
           <div class="field-group">
             <label>Oyun rejimi</label>
@@ -1086,7 +1086,7 @@ input[type=range]::-webkit-slider-thumb{
       </div>
     </div>
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-      <button class="btn btn-primary" onclick="restartGame()">YENİDƏN OYNA</button>
+      <button class="btn btn-primary" id="restartBtn" onclick="restartGame()">YENİDƏN OYNA</button>
       <button class="btn" onclick="showPage('playPage')">Lobbyə Qayıt</button>
     </div>
   </div>
@@ -1246,10 +1246,10 @@ const I18N={
     playHeroTitle:'KAHRAMAN<br>SAVAŞI',playHeroSub:'Rejim seç, kahramanları topla, zəfər qur',
     modeLocalTitle:'EYNİ CİHAZ',modeLocalSub:'İki oyuncu eyni ekranda növbə ilə oynayır',
     modeMatchTitle:'TEZ OYUN (RANDOM)',modeMatchSub:'Sistem sənə avtomatik rəqib tapsın',
-    modeCreateTitle:'OTAQ YARAT',modeCreateSub:'Sən Oyuncu 1 olursan, link yaradıb göndər',
-    modeJoinTitle:'OTAĞA QOŞUL',modeJoinSub:'Sənə göndərilən link və ya koddan qoşul',
+    modeCreateTitle:'OTAQ YARAT',modeCreateSub:'Sən Oyuncu 1 olursan, 4 rəqəmli kod yaradıb göndər',
+    modeJoinTitle:'OTAĞA QOŞUL',modeJoinSub:'Sənə göndərilən 4 rəqəmli koddan qoşul',
     modeBotTitle:'BOTA QARŞI',modeBotSub:'Tək oyna, rəqibi süni intellekt idarə etsin',
-    copy:'Kopyala',back:'‹ Geri',joinCodeLabel:'Otaq kodu / linki',joinBtn:'QOŞUL',joinPh:'Bura yapışdır',
+    copy:'Kopyala',back:'‹ Geri',joinCodeLabel:'Otaq kodu (4 rəqəm)',joinBtn:'QOŞUL',joinPh:'4 rəqəmli kod',
     matchmakingText:'Rəqib axtarılır...',matchmakingSub:'Zəhmət olmasa gözlə, tapan kimi qoşulacaqsan',cancelMatch:'‹ İmtina et',
     configTitle:'Oyun Tənzimləmələri',gameMode:'Oyun rejimi',modeAuction:'ARTIRMA',modeAuctionSub:'Büdcə ilə təklif ver',
     modeWheel:'ÇARX',modeWheelSub:'Çarxı fırlat',startBudget:'Başlanğıc büdcə',bidStep:'Təklif artım addımı',
@@ -1276,10 +1276,10 @@ const I18N={
     playHeroTitle:'KAHRAMAN<br>SAVAŞI',playHeroSub:'Mod seç, kahramanları topla, zafer kazan',
     modeLocalTitle:'AYNI CİHAZ',modeLocalSub:'İki oyuncu aynı ekranda sırayla oynar',
     modeMatchTitle:'HIZLI OYUN (RASTGELE)',modeMatchSub:'Sistem sana otomatik rakip bulsun',
-    modeCreateTitle:'ODA OLUŞTUR',modeCreateSub:'Sen Oyuncu 1 olursun, bağlantı oluşturup gönder',
-    modeJoinTitle:'ODAYA KATIL',modeJoinSub:'Sana gönderilen bağlantı veya koddan katıl',
+    modeCreateTitle:'ODA OLUŞTUR',modeCreateSub:'Sen Oyuncu 1 olursun, 4 haneli kod oluştur ve gönder',
+    modeJoinTitle:'ODAYA KATIL',modeJoinSub:'Sana gönderilen 4 haneli koddan katıl',
     modeBotTitle:'BOTA KARŞI',modeBotSub:'Tek oyna, rakibi yapay zeka yönetsin',
-    copy:'Kopyala',back:'‹ Geri',joinCodeLabel:'Oda kodu / bağlantısı',joinBtn:'KATIL',joinPh:'Buraya yapıştır',
+    copy:'Kopyala',back:'‹ Geri',joinCodeLabel:'Oda kodu (4 hane)',joinBtn:'KATIL',joinPh:'4 haneli kod',
     matchmakingText:'Rakip aranıyor...',matchmakingSub:'Lütfen bekle, bulunduğunda otomatik katılacaksın',cancelMatch:'‹ Vazgeç',
     configTitle:'Oyun Ayarları',gameMode:'Oyun modu',modeAuction:'AÇIK ARTIRMA',modeAuctionSub:'Bütçe ile teklif ver',
     modeWheel:'ÇARK',modeWheelSub:'Çarkı çevir',startBudget:'Başlangıç bütçesi',bidStep:'Teklif artış adımı',
@@ -1306,10 +1306,10 @@ const I18N={
     playHeroTitle:'HERO<br>BATTLE',playHeroSub:'Pick a mode, collect heroes, claim victory',
     modeLocalTitle:'SAME DEVICE',modeLocalSub:'Two players take turns on the same screen',
     modeMatchTitle:'QUICK PLAY (RANDOM)',modeMatchSub:'Let the system find you an opponent automatically',
-    modeCreateTitle:'CREATE ROOM',modeCreateSub:'You become Player 1, create a link and share it',
-    modeJoinTitle:'JOIN ROOM',modeJoinSub:'Join with a link or code sent to you',
+    modeCreateTitle:'CREATE ROOM',modeCreateSub:'You become Player 1, create a 4-digit code and share it',
+    modeJoinTitle:'JOIN ROOM',modeJoinSub:'Join with a 4-digit code sent to you',
     modeBotTitle:'VS BOT',modeBotSub:'Play solo, the AI controls your opponent',
-    copy:'Copy',back:'‹ Back',joinCodeLabel:'Room code / link',joinBtn:'JOIN',joinPh:'Paste here',
+    copy:'Copy',back:'‹ Back',joinCodeLabel:'Room code (4 digits)',joinBtn:'JOIN',joinPh:'4-digit code',
     matchmakingText:'Finding an opponent...',matchmakingSub:'Please wait, you will join automatically once found',cancelMatch:'‹ Cancel',
     configTitle:'Game Settings',gameMode:'Game mode',modeAuction:'AUCTION',modeAuctionSub:'Bid with a budget',
     modeWheel:'WHEEL',modeWheelSub:'Spin the wheel',startBudget:'Starting budget',bidStep:'Bid increment',
@@ -2009,7 +2009,7 @@ let onlineMode=false,isHost=false,peer=null,conn=null,guestConnected=false,vsBot
    The first player to open the lobby id becomes the host; if that id is
    taken, we fall back through a small pool of lobby slots until we either
    claim an empty slot (and wait) or connect to someone already waiting. */
-let matchmakingActive=false,matchmakingPeer=null,matchmakingSlot=null;
+let matchmakingActive=false,matchmakingPeer=null,matchmakingSlot=null,mmWatchdog=null;
 const MATCHMAKING_PREFIX='htb-mm-slot-';
 const MATCHMAKING_SLOTS=25;
 
@@ -2042,16 +2042,22 @@ function startMatchmaking(){
 
 function tryMatchmakingSlot(order){
   if(!matchmakingActive)return;
-  // Randomize the slot scan order so multiple simultaneous searchers spread out
-  const slots=shuffle(Array.from({length:MATCHMAKING_SLOTS},(_,i)=>i));
+  // Deterministic ascending scan order so two people who click "quick play"
+  // around the same time converge on the SAME slot immediately: one of them
+  // claims it as host, the other sees it's taken half a second later and
+  // joins it as the guest right away, instead of drifting to different
+  // random slots and never finding each other.
+  const slots=Array.from({length:MATCHMAKING_SLOTS},(_,i)=>i);
   attemptSlots(slots,0);
 }
 
 function attemptSlots(slots,idx){
   if(!matchmakingActive)return;
   if(idx>=slots.length){
-    // All slots busy as guests already tried — retry after a short delay
-    setTimeout(()=>{if(matchmakingActive)attemptSlots(shuffle(slots),0);},1500);
+    // Went through every slot without landing a match — wait a moment then
+    // scan again from the top (slots may have freed up, or a new searcher
+    // may have just claimed slot 0).
+    setTimeout(()=>{if(matchmakingActive)attemptSlots(slots,0);},1200+Math.random()*800);
     return;
   }
   const slotId=MATCHMAKING_PREFIX+slots[idx];
@@ -2062,7 +2068,7 @@ function attemptSlots(slots,idx){
     settled=true;
     try{p.destroy();}catch(e){}
     attemptSlots(slots,idx+1);
-  },1800);
+  },2500);
   p.on('open',id=>{
     if(settled)return;
     settled=true;clearTimeout(timeout);
@@ -2103,7 +2109,7 @@ function joinMatchmakingSlot(slotId,slots,idx){
     settled=true;
     try{p.destroy();}catch(e){}
     attemptSlots(slots,idx+1);
-  },1800);
+  },2500);
   p.on('open',()=>{
     const c=p.connect(slotId,{reliable:true});
     c.on('open',()=>{
@@ -2117,6 +2123,21 @@ function joinMatchmakingSlot(slotId,slots,idx){
       showToast('🎲 '+(currentLang==='en'?'Opponent found!':currentLang==='tr'?'Rakip bulundu!':'Rəqib tapıldı!'),'gold');
       document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active'));
       document.getElementById('waitPage').classList.add('show');
+      // Watchdog: the slot's host may already be paired with someone else
+      // (a rare 3-way collision). If we never receive game state within a
+      // few seconds, give up on this pairing and resume searching.
+      clearTimeout(mmWatchdog);
+      mmWatchdog=setTimeout(()=>{
+        if(document.getElementById('waitPage').classList.contains('show')&&!state){
+          try{c.close();}catch(e){}
+          try{p.destroy();}catch(e){}
+          peer=null;conn=null;onlineMode=true;
+          document.getElementById('waitPage').classList.remove('show');
+          matchmakingActive=true;
+          document.getElementById('matchmakingPanel').classList.add('show');
+          tryMatchmakingSlot(0);
+        }
+      },7000);
     });
     c.on('error',()=>{
       if(settled)return;
@@ -2136,6 +2157,7 @@ function joinMatchmakingSlot(slotId,slots,idx){
 function cancelMatchmaking(){
   matchmakingActive=false;
   onlineMode=false;isHost=false;
+  clearTimeout(mmWatchdog);mmWatchdog=null;
   if(matchmakingPeer){try{matchmakingPeer.destroy();}catch(e){}matchmakingPeer=null;}
   if(peer){try{peer.destroy();}catch(e){}peer=null;}
   conn=null;guestConnected=false;
@@ -2161,27 +2183,45 @@ function backToLobby(){
 
 function startHostPeer(){
   onlineMode=true;isHost=true;
-  peer=new Peer();
-  peer.on('open',id=>{
-    const link=location.origin+location.pathname+'?room='+id;
-    document.getElementById('roomLinkInput').value=link;
-    document.getElementById('hostLinkInput').value=link;
-    document.getElementById('createStatusText').textContent='Otaq hazır — linki göndər';
+  attemptHostRoomCode();
+}
+
+function attemptHostRoomCode(attemptsLeft){
+  if(attemptsLeft===undefined)attemptsLeft=8;
+  const code=String(rand(1000,9999));
+  const p=new Peer('htb-room-'+code);
+  let settled=false;
+  p.on('open',()=>{
+    if(settled)return;settled=true;
+    peer=p;
+    document.getElementById('roomLinkInput').value=code;
+    document.getElementById('hostLinkInput').value=code;
+    document.getElementById('createStatusText').textContent='Otaq hazır — bu kodu Oyuncu 2-yə göndər: '+code;
     document.getElementById('createDot').classList.add('on');
   });
-  peer.on('connection',c=>{
+  p.on('connection',c=>{
     conn=c;guestConnected=true;setupConn();
     document.getElementById('createStatusText').textContent='Oyuncu 2 qoşuldu!';
     setTimeout(()=>{showConfigScreen();showOnlinePill('Sən Oyuncu 1-sən');},400);
   });
-  peer.on('error',err=>{document.getElementById('createStatusText').textContent='Xəta: '+(err?.type||'');});
+  p.on('error',err=>{
+    if(settled)return;
+    if(err&&err.type==='unavailable-id'&&attemptsLeft>0){
+      try{p.destroy();}catch(e){}
+      attemptHostRoomCode(attemptsLeft-1);
+      return;
+    }
+    settled=true;
+    document.getElementById('createStatusText').textContent='Xəta: '+(err?.type||'');
+  });
 }
 
 function doJoin(){
   const raw=document.getElementById('joinCodeInput').value.trim();
   if(!raw){document.getElementById('joinStatusText').textContent='Kod boş ola bilməz';return;}
-  let roomId=raw;
-  try{if(raw.includes('room=')){const u=new URL(raw);roomId=u.searchParams.get('room')||raw;}}catch(e){}
+  const digits=raw.replace(/\D/g,'').slice(0,4);
+  if(digits.length<4){document.getElementById('joinStatusText').textContent='4 rəqəmli kod daxil edin';return;}
+  const roomId='htb-room-'+digits;
   onlineMode=true;isHost=false;
   document.getElementById('joinStatusText').textContent='Qoşulur...';
   peer=new Peer();
@@ -2198,9 +2238,9 @@ function doJoin(){
         document.getElementById('waitPage').classList.add('show');
       },400);
     });
-    conn.on('error',()=>document.getElementById('joinStatusText').textContent='Otağa qoşulmaq mümkün olmadı');
+    conn.on('error',()=>document.getElementById('joinStatusText').textContent='Otağa qoşulmaq mümkün olmadı — kodu yoxlayın');
   });
-  peer.on('error',()=>document.getElementById('joinStatusText').textContent='Xəta: otaq tapılmadı');
+  peer.on('error',()=>document.getElementById('joinStatusText').textContent='Xəta: bu koda uyğun otaq tapılmadı');
 }
 
 function showOnlinePill(text){
@@ -2214,7 +2254,7 @@ function setupConn(){
     if(!data||!data.type) return;
     if(data.type==='chat'){appendChatMessage(data.text,false);return;}
     if(isHost&&data.type==='action') handleGuestAction(data);
-    else if(!isHost&&data.type==='sync') applySync(data);
+    else if(!isHost&&data.type==='sync'){clearTimeout(mmWatchdog);mmWatchdog=null;applySync(data);}
     else if(!isHost&&data.type==='reset'){
       document.getElementById('endPage').style.display='none';
       document.getElementById('battlePage').style.display='none';
@@ -2457,16 +2497,23 @@ function botMove(){
   let willing=perHeroBudget*strengthRatio*(0.85+Math.random()*0.3)-reserve;
   if(must) willing=Math.max(willing,Math.max(state.price+state.inc,budget-reserve));
 
-  const canAfford=budget>=next&&(budget-next)>=reserve-((needed-1)*state.inc);
+  // Proper affordability check: after placing this bid the bot must still be
+  // able to afford at least the minimum increment for every OTHER hero it
+  // still needs to fill its roster. This is what makes it genuinely plan
+  // across the whole draft instead of blowing its whole budget on one hero
+  // and being unable to buy anything afterwards.
+  const afterBid=budget-next;
+  const canAfford=afterBid>=0&&(needed<=1||afterBid>=reserve);
   const wantsToBid=next<=willing;
 
   setTimeout(()=>{
     if(!vsBotMode||!state||state.mode!=='auction')return;
-    // Bot bids only while it can afford the next step AND the price still
-    // fits what this specific hero's power/stats justify. As soon as the
-    // price exceeds that value (or it can no longer afford it), it stops
-    // and passes rather than bidding forever.
-    if(budget>=next&&(wantsToBid||(must&&budget>=next))){
+    // Bot bids only while it can afford the next step (leaving enough behind
+    // for its remaining needed heroes) AND the price still fits what this
+    // specific hero's stats justify relative to the pool. As soon as the
+    // price exceeds that value — or buying it would leave it unable to fill
+    // its roster — it stops and passes rather than bidding forever.
+    if(canAfford&&(wantsToBid||must)){
       makeBid(2);
       if(state.p1Passed)resolveLot();
     } else {
@@ -2698,6 +2745,7 @@ function showFinalResults(){
     document.getElementById('coinRewardAmount').textContent='🪙 '+(a1===battleState.t1.length?80:50);
   } else document.getElementById('coinRewardBanner').style.display='none';
   renderFinalList(1,'p1ListFinal');renderFinalList(2,'p2ListFinal');
+  const rb=document.getElementById('restartBtn');if(rb)rb.style.display=(!onlineMode||isHost)?'inline-flex':'none';
   if(onlineMode&&isHost)syncGuest();
 }
 
@@ -2722,9 +2770,9 @@ function restartGame(){
   document.getElementById('gamePage').style.display='none';
   document.getElementById('battlePage').style.display='none';
   document.getElementById('wheelPage').style.display='none';
-  document.getElementById('lobbySelect').style.display='block';
-  document.getElementById('gameConfig').style.display='none';
+  state=null;battleState=null;wheelState=null;
   showPage('playPage');
+  showConfigScreen();
   if(onlineMode&&isHost&&conn&&conn.open)conn.send({type:'reset'});
 }
 

@@ -2008,19 +2008,8 @@ let onlineMode=false,isHost=false,peer=null,conn=null,guestConnected=false,vsBot
    Uses a shared PeerJS "lobby" id derived from a fixed public room prefix.
    The first player to open the lobby id becomes the host; if that id is
    taken, we fall back through a small pool of lobby slots until we either
-   claim an empty slot (and wait) or connect to someone already waiting.
-
-   Slot-reuse fix: once a slot's host has been matched with a guest
-   (matchmakingMatched = true), that host explicitly rejects and closes
-   any further incoming connection attempts to the same slot, instead of
-   silently ignoring them. Guests, in turn, listen for their own connection
-   being closed and treat that as a signal to move on to the NEXT slot
-   immediately — rather than sitting in the wait screen until the 7s
-   watchdog fires. This means a 3rd/4th/etc. player scanning the same
-   slot as an already-paired 1st/2nd player gets bounced straight to the
-   next slot and pairs up with each other, instead of everyone piling up
-   waiting on the very first player. */
-let matchmakingActive=false,matchmakingPeer=null,matchmakingSlot=null,mmWatchdog=null,matchmakingMatched=false;
+   claim an empty slot (and wait) or connect to someone already waiting. */
+let matchmakingActive=false,matchmakingPeer=null,matchmakingSlot=null,mmWatchdog=null;
 const MATCHMAKING_PREFIX='htb-mm-slot-';
 const MATCHMAKING_SLOTS=25;
 
@@ -2046,7 +2035,6 @@ function selectMode(mode){
 function startMatchmaking(){
   if(matchmakingActive)return;
   matchmakingActive=true;
-  matchmakingMatched=false;
   onlineMode=true;
   document.getElementById('matchmakingText').textContent=t('matchmakingText');
   tryMatchmakingSlot(0);
@@ -2090,15 +2078,7 @@ function attemptSlots(slots,idx){
     document.getElementById('matchmakingText').textContent=t('matchmakingText');
     document.getElementById('matchmakingSub').textContent=t('matchmakingSub');
     p.on('connection',c=>{
-      if(matchmakingMatched){
-        // This slot already found its pair — reject any further arrivals
-        // so they don't sit here waiting forever; they'll bounce to the
-        // next slot as soon as they see this connection close.
-        try{c.on('open',()=>{try{c.close();}catch(e){}});}catch(e){}
-        return;
-      }
       if(!matchmakingActive)return;
-      matchmakingMatched=true;
       conn=c;guestConnected=true;setupConn();
       matchmakingActive=false;
       document.getElementById('matchmakingPanel').classList.remove('show');
@@ -2124,7 +2104,6 @@ function joinMatchmakingSlot(slotId,slots,idx){
   if(!matchmakingActive)return;
   const p=new Peer();
   let settled=false;
-  let paired=false;
   const timeout=setTimeout(()=>{
     if(settled)return;
     settled=true;
@@ -2137,7 +2116,6 @@ function joinMatchmakingSlot(slotId,slots,idx){
       if(settled)return;
       settled=true;clearTimeout(timeout);
       if(!matchmakingActive){try{p.destroy();}catch(e){}return;}
-      paired=true;
       peer=p;conn=c;isHost=false;setupConn();
       matchmakingActive=false;
       document.getElementById('matchmakingPanel').classList.remove('show');
@@ -2161,17 +2139,6 @@ function joinMatchmakingSlot(slotId,slots,idx){
         }
       },7000);
     });
-    // If the slot's host already paired with someone else, it will close
-    // this connection immediately (see the "matchmakingMatched" rejection
-    // above on the host side). Catch that here and move straight to the
-    // next slot instead of waiting on the 7s watchdog.
-    c.on('close',()=>{
-      if(paired)return;
-      if(settled)return;
-      settled=true;clearTimeout(timeout);
-      try{p.destroy();}catch(e){}
-      if(matchmakingActive)attemptSlots(slots,idx+1);
-    });
     c.on('error',()=>{
       if(settled)return;
       settled=true;clearTimeout(timeout);
@@ -2189,7 +2156,6 @@ function joinMatchmakingSlot(slotId,slots,idx){
 
 function cancelMatchmaking(){
   matchmakingActive=false;
-  matchmakingMatched=false;
   onlineMode=false;isHost=false;
   clearTimeout(mmWatchdog);mmWatchdog=null;
   if(matchmakingPeer){try{matchmakingPeer.destroy();}catch(e){}matchmakingPeer=null;}
@@ -2884,3 +2850,4 @@ wrap('setupConn',()=>SFX.whoosh());
 </script>
 </body>
 </html>
+

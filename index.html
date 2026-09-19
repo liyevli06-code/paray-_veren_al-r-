@@ -163,6 +163,33 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:0.04em;}
 .badge-mint{background:rgba(42,138,106,0.15);color:#52C09A;border:1px solid rgba(42,138,106,0.3);}
 
 /* ═══════════════════════════════════════════
+   ABILITY (PASSIVE POWERS)
+═══════════════════════════════════════════ */
+.ability-box{
+  margin:12px auto 0;max-width:280px;
+  padding:9px 11px;text-align:left;
+  background:rgba(201,145,42,0.07);
+  border:1px solid rgba(201,145,42,0.28);
+  border-radius:var(--r);
+}
+.ability-name{
+  font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:0.04em;
+  color:var(--gold-2);display:flex;align-items:center;gap:5px;
+}
+.ability-en{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-3);letter-spacing:0;margin-top:1px;}
+.ability-desc{font-size:10.5px;color:var(--text-2);line-height:1.45;margin-top:4px;}
+.ability-mini{
+  font-size:9px;line-height:1.3;color:var(--gold-2);
+  background:rgba(201,145,42,0.09);border:1px solid rgba(201,145,42,0.22);
+  border-radius:2px;padding:4px 6px;text-align:center;width:100%;
+}
+.ability-chip{
+  display:inline-flex;align-items:center;gap:3px;
+  font-size:9px;color:var(--gold-2);margin-top:3px;
+}
+.log-item.ability{justify-content:center;color:var(--gold-2);font-size:10px;text-align:center;}
+
+/* ═══════════════════════════════════════════
    COIN DISPLAY
 ═══════════════════════════════════════════ */
 .coin-display{
@@ -401,7 +428,7 @@ input[type=range]::-webkit-slider-thumb{
 .roster-budget{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--gold-2);}
 .roster-list{display:flex;flex-direction:column;gap:6px;min-height:50px;}
 .roster-empty{color:var(--text-3);font-size:11px;padding:12px 0;text-align:center;border:1px dashed var(--border);border-radius:var(--r);}
-.roster-item{display:flex;align-items:center;gap:8px;background:var(--ink-1);border:1px solid var(--border);border-radius:var(--r);padding:6px 8px;}
+.roster-item{display:flex;align-items:center;gap:8px;background:var(--ink-1);border:1px solid var(--border);border-radius:var(--r);padding:6px 8px;flex-wrap:wrap;}
 .roster-item.eliminated{opacity:0.3;filter:grayscale(1);}
 .roster-price{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);font-weight:700;}
 .hero-avatar{width:30px;height:30px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:12px;color:var(--ink);flex:none;}
@@ -523,7 +550,7 @@ input[type=range]::-webkit-slider-thumb{
 .hp-track{max-width:160px;margin:6px auto 0;height:5px;background:var(--border);border-radius:2px;overflow:hidden;}
 .hp-fill{height:100%;background:var(--crimson-2);border-radius:2px;transition:width .5s;}
 .hp-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-3);margin-top:3px;}
-.battle-log{margin-top:18px;max-height:120px;overflow-y:auto;border-top:1px solid var(--border);padding-top:10px;}
+.battle-log{margin-top:18px;max-height:140px;overflow-y:auto;border-top:1px solid var(--border);padding-top:10px;}
 .log-item{display:flex;justify-content:space-between;font-size:11px;color:var(--text-3);padding:3px 2px;font-family:'JetBrains Mono',monospace;}
 .log-item b{color:var(--text);font-weight:700;}
 .next-fight-btn{display:block;margin:18px auto 0;padding:12px 28px;border:none;border-radius:var(--r);background:var(--gold);color:var(--ink);font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:0.06em;cursor:pointer;}
@@ -637,14 +664,14 @@ input[type=range]::-webkit-slider-thumb{
 .shop-item-status.equipped{color:var(--gold-2);}
 
 /* Hero Collection Shop */
-.hero-shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;}
+.hero-shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;}
 .hero-shop-card{
   background:var(--ink-2);border:1px solid var(--border);border-radius:var(--r);
   padding:16px 12px;text-align:center;transition:all .15s;
   display:flex;flex-direction:column;align-items:center;gap:8px;
 }
 .hero-shop-card:hover{border-color:var(--border-bright);}
-.hero-shop-card.owned{border-color:var(--mint);opacity:0.7;}
+.hero-shop-card.owned{border-color:var(--mint);opacity:0.75;}
 .hero-card-avatar{width:64px;height:64px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--ink);}
 .hero-card-avatar img{width:100%;height:100%;object-fit:cover;}
 .hero-card-name{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:0.04em;color:var(--gold-2);}
@@ -657,7 +684,7 @@ input[type=range]::-webkit-slider-thumb{
 #collectionPage{padding:76px 16px 40px;}
 .collection-wrap{max-width:900px;margin:0 auto;}
 .collection-title{font-size:36px;color:var(--gold-2);margin-bottom:20px;}
-.collection-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}
+.collection-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;}
 .collection-card{
   background:var(--ink-2);border:1px solid var(--border);border-radius:var(--r);
   padding:16px 12px;text-align:center;
@@ -957,6 +984,7 @@ input[type=range]::-webkit-slider-thumb{
       <div class="hero-name-row" id="heroName">— <span class="tier-badge" id="heroTier"></span></div>
       <div><span class="hero-franchise-tag" id="heroFranchise">—</span></div>
       <div class="stats-row" id="heroStatsRow"></div>
+      <div id="heroAbility"></div>
       <div class="price-board">
         <span class="price-label">Hazırkı qiymət</span>
         <span class="price-amount mono" id="curPrice">$0</span>
@@ -1007,6 +1035,7 @@ input[type=range]::-webkit-slider-thumb{
       <button class="spin-btn" id="wheelSpinBtn" onclick="spinWheel()">ÇEVİR</button>
       <div class="wheel-watching" id="wheelWatching">👁 Rəqib fırladır...</div>
       <div class="wheel-result" id="wheelResult"></div>
+      <div id="wheelAbility"></div>
       <div class="flash-overlay" id="wheelFlash"><div class="flash-content" id="wheelFlashText"></div></div>
     </div>
     <div class="roster p2">
@@ -1037,6 +1066,7 @@ input[type=range]::-webkit-slider-thumb{
           <div class="fighter-fr" id="leftFranchise">—</div>
           <div class="fighter-bio" id="leftBio"></div>
           <div class="fighter-stats" id="leftStats"></div>
+          <div id="leftAbility"></div>
           <div class="hp-track"><div class="hp-fill" id="leftHpFill" style="width:100%"></div></div>
           <div class="hp-label" id="leftHpLabel">CAN: 100%</div>
           <div class="fighter-score" id="leftScore"></div>
@@ -1048,6 +1078,7 @@ input[type=range]::-webkit-slider-thumb{
           <div class="fighter-fr" id="rightFranchise">—</div>
           <div class="fighter-bio" id="rightBio"></div>
           <div class="fighter-stats" id="rightStats"></div>
+          <div id="rightAbility"></div>
           <div class="hp-track"><div class="hp-fill" id="rightHpFill" style="width:100%"></div></div>
           <div class="hp-label" id="rightHpLabel">CAN: 100%</div>
           <div class="fighter-score" id="rightScore"></div>
@@ -1061,7 +1092,7 @@ input[type=range]::-webkit-slider-thumb{
       </div>
       <div class="battle-log" id="battleLog"></div>
     </div>
-    <button class="btn btn-primary" id="toResultsBtn" style="display:none;margin:18px auto 0;display:none;" onclick="goToResults()">NƏTİCƏLƏRƏ BAX</button>
+    <button class="btn btn-primary" id="toResultsBtn" style="display:none;margin:18px auto 0;" onclick="goToResults()">NƏTİCƏLƏRƏ BAX</button>
   </div>
 </div>
 
@@ -1266,7 +1297,8 @@ const I18N={
     frames:'Çərçivələr',titles:'Başlıqlar',effects:'Effektlər',logoutConfirm:'Çıxmağa əminsən?',logoutBtn:'🚪 Hesabdan çıx',
     shopTitle:'🏪 Mağaza',shopHeroesNote:'Qəhrəmanları coin ilə al. Aldığın qəhrəmanlar kolleksiyanda görünər və oyunda istifadə edilər.',
     shopHeroesTab:'🦸 Qəhrəmanlar',collectionTitle:'🗡️ Kolleksiyam',discover:'Kəşf et',heroCount:'kahraman',
-    chatTitle:'Söhbət',chatPh:'Mesaj yaz...',online:'Onlayn'
+    chatTitle:'Söhbət',chatPh:'Mesaj yaz...',online:'Onlayn',
+    abilityLabel:'ÖZƏLLİK',noAbility:'Özəl bacarığı yoxdur'
   },
   tr:{
     navPlay:'⚔️ Oyna',navCollection:'🗡️ Koleksiyon',navShop:'🏪 Mağaza',navProfile:'👤 Profil',
@@ -1296,7 +1328,8 @@ const I18N={
     frames:'Çerçeveler',titles:'Unvanlar',effects:'Efektler',logoutConfirm:'Çıkmak istediğine emin misin?',logoutBtn:'🚪 Hesaptan çık',
     shopTitle:'🏪 Mağaza',shopHeroesNote:'Kahramanları coin ile satın al. Aldığın kahramanlar koleksiyonunda görünür ve oyunda kullanılır.',
     shopHeroesTab:'🦸 Kahramanlar',collectionTitle:'🗡️ Koleksiyonum',discover:'Keşfet',heroCount:'kahraman',
-    chatTitle:'Sohbet',chatPh:'Mesaj yaz...',online:'Çevrimiçi'
+    chatTitle:'Sohbet',chatPh:'Mesaj yaz...',online:'Çevrimiçi',
+    abilityLabel:'ÖZELLİK',noAbility:'Özel yeteneği yok'
   },
   en:{
     navPlay:'⚔️ Play',navCollection:'🗡️ Collection',navShop:'🏪 Shop',navProfile:'👤 Profile',
@@ -1326,7 +1359,8 @@ const I18N={
     frames:'Frames',titles:'Titles',effects:'Effects',logoutConfirm:'Are you sure you want to log out?',logoutBtn:'🚪 Log out',
     shopTitle:'🏪 Shop',shopHeroesNote:'Buy heroes with coins. Purchased heroes appear in your collection and can be used in games.',
     shopHeroesTab:'🦸 Heroes',collectionTitle:'🗡️ My Collection',discover:'Discover',heroCount:'heroes',
-    chatTitle:'Chat',chatPh:'Type a message...',online:'Online'
+    chatTitle:'Chat',chatPh:'Type a message...',online:'Online',
+    abilityLabel:'ABILITY',noAbility:'No special ability'
   }
 };
 
@@ -1375,7 +1409,6 @@ function applyLanguage(lang){
 
   // Config
   const configTitle=document.querySelector('.config-title');if(configTitle)configTitle.textContent=t('configTitle');
-  const gmLabel=document.querySelector('#gameConfig .field-group:nth-of-type(1) label');
   const fieldLabels=document.querySelectorAll('#gameConfig .field-group > label');
   if(fieldLabels[0])fieldLabels[0].childNodes[0].nodeValue=t('gameMode');
   document.getElementById('gmAuction').querySelector('.mode-opt-title').textContent=t('modeAuction');
@@ -1398,6 +1431,8 @@ function applyLanguage(lang){
   document.querySelectorAll('#p1PassBtn,#p2PassBtn').forEach(b=>b.textContent=t('passBtn'));
   document.querySelectorAll('.roster-empty').forEach(el=>el.textContent=t('noHeroYet'));
   if(state&&state.mode==='auction'&&!state.leader)document.getElementById('leaderNote').textContent=t('startAuctionMsg');
+  if(state&&state.mode==='auction'&&state.lots&&state.lots[state.lotIdx])
+    document.getElementById('heroAbility').innerHTML=abilityBoxHTML(state.lots[state.lotIdx].name);
 
   // Wheel
   const wheelLogo=document.querySelector('#wheelPage .game-logo');if(wheelLogo)wheelLogo.textContent=t('wheelTitle');
@@ -1411,6 +1446,11 @@ function applyLanguage(lang){
   const toResultsBtn=document.getElementById('toResultsBtn');if(toResultsBtn)toResultsBtn.textContent=t('resultsBtn');
   const cbLabel=document.querySelector('.cb-label');if(cbLabel)cbLabel.textContent=t('championLabel');
   document.querySelectorAll('.hp-label').forEach(el=>{const pct=el.textContent.match(/\d+%/);el.textContent=t('hpLabel')+': '+(pct?pct[0]:'100%');});
+  if(battleState&&!battleState.championDone){
+    const bh1=battleState.t1[battleState.idx1],bh2=battleState.t2[battleState.idx2];
+    if(bh1)document.getElementById('leftAbility').innerHTML=abilityBoxHTML(bh1.name);
+    if(bh2)document.getElementById('rightAbility').innerHTML=abilityBoxHTML(bh2.name);
+  }
 
   // End
   const endTitleEl=document.getElementById('endTitle');if(endTitleEl&&!battleState)endTitleEl.textContent=t('endTitle');
@@ -1439,14 +1479,14 @@ function applyLanguage(lang){
   const shopTitleEl=document.querySelector('.shop-title');if(shopTitleEl)shopTitleEl.textContent=t('shopTitle');
   const shopTabs=document.querySelectorAll('.shop-tab');
   const shopTabKeys=['frames','titles','effects','shopHeroesTab'];
-  shopTabs.forEach((el,i)=>{if(shopTabKeys[i]){const icon=el.textContent.trim().split(' ')[0];el.textContent=t(shopTabKeys[i]);}});
+  shopTabs.forEach((el,i)=>{if(shopTabKeys[i])el.textContent=t(shopTabKeys[i]);});
   const heroesNote=document.querySelector('#shopPanelHeroes div div');if(heroesNote)heroesNote.textContent=t('shopHeroesNote');
 
   // Collection
   const collTitleEl=document.querySelector('.collection-title');if(collTitleEl)collTitleEl.textContent=t('collectionTitle');
 
   // Chat
-  const chatHeader=document.querySelector('.chat-header');if(chatHeader){const close=chatHeader.querySelector('.chat-close');chatHeader.childNodes[0].nodeValue=t('chatTitle')+' ';}
+  const chatHeader=document.querySelector('.chat-header');if(chatHeader){chatHeader.childNodes[0].nodeValue=t('chatTitle')+' ';}
   const chatInputEl=document.getElementById('chatInput');if(chatInputEl)chatInputEl.placeholder=t('chatPh');
 
   // Re-render dynamic content that depends on language
@@ -1592,6 +1632,226 @@ const HEROES=[
 ];
 
 /* ════════════════════════════════════
+   ABILITIES (PASSIVE POWERS)
+   n = ad (az/en/tr), d = izah, fx = döyüşdə işləyən effekt
+════════════════════════════════════ */
+const HERO_TAGS={
+  "Venom":["symbiote"],"Carnage":["symbiote"],"Morbius":["vampire"],"Blade":["vampire"],
+  "Iron Man":["metal"],"Ultron":["metal"],"Vision":["metal"],"Cyborg":["metal"],
+  "Winter Soldier":["metal"],"Doctor Octopus":["metal"],"Magneto":["metal"],"Doctor Doom":["metal"]
+};
+
+const ABILITIES={
+/* ── DC ── */
+"Superman":{n:{az:"Günəş Radiasiyası",en:"Solar Radiation",tr:"Güneş Radyasyonu"},
+ d:{az:"Döyüş boyunca öz Hücum və Müdafiə göstəricilərini +10% artırır.",en:"Boosts own Attack and Defense by 10% for the entire fight.",tr:"Dövüş boyunca kendi Saldırı ve Savunmasını %10 artırır."},
+ fx:{selfAtk:0.10,selfDef:0.10}},
+"Wonder Woman":{n:{az:"Afinanın Hərbi Hikməti",en:"Wisdom of Athena",tr:"Athena'nın Bilgeliği"},
+ d:{az:"Bütün komanda yoldaşlarının Müdafiəsini +10% artırır.",en:"Increases the Defense of all teammates by 10%.",tr:"Tüm takım arkadaşlarının Savunmasını %10 artırır."},
+ fx:{teamDef:0.10}},
+"Shazam":{n:{az:"Zevsin İldırımı",en:"Lightning of Zeus",tr:"Zeus'un Yıldırımı"},
+ d:{az:"İlk zərbədə rəqibə +20 əlavə sehr zərəri vurur.",en:"Deals +20 bonus magic damage on the first strike.",tr:"İlk vuruşta rakibe +20 ek büyü hasarı verir."},
+ fx:{firstHitBonus:20}},
+"Green Lantern":{n:{az:"İradə Qalxanı",en:"Willpower Shield",tr:"İrade Kalkanı"},
+ d:{az:"Döyüşün ilk 2 raundunda alınan zərəri 20% azaldır.",en:"Reduces incoming damage by 20% for the first 2 rounds.",tr:"İlk 2 raundda alınan hasarı %20 azaltır."},
+ fx:{dmgReduceEarly:{pct:0.20,rounds:2}}},
+"Aquaman":{n:{az:"Okeanın Çağırışı",en:"Call of the Deep",tr:"Derinlerin Çağrısı"},
+ d:{az:"Öz Canını (HP) hər raund +5 bərpa edir.",en:"Restores +5 HP every round.",tr:"Her raund +5 CAN yeniler."},
+ fx:{regen:5}},
+"Flash":{n:{az:"Kvant Sürəti",en:"Speed Force",tr:"Hız Gücü"},
+ d:{az:"30% ehtimalla rəqibin zərbəsindən tam yayınır və ilk vurur.",en:"30% chance to fully dodge the enemy strike and hit first.",tr:"%30 ihtimalle rakibin vuruşundan kaçar ve ilk vurur."},
+ fx:{dodge:0.30,firstStrike:true}},
+"Cyborg":{n:{az:"Kiber Bərpa",en:"Cybernetic Repair",tr:"Sibernetik Onarım"},
+ d:{az:"Canı 30%-dən aşağı düşdükdə dərhal +25 HP bərpa edir (1 dəfə).",en:"Instantly restores +25 HP once when dropping below 30% HP.",tr:"CAN %30'un altına düşünce bir kez +25 CAN yeniler."},
+ fx:{healAtThreshold:{hp:0.30,amount:25}}},
+"Batman":{n:{az:"Dahi Strateq",en:"Tactical Mastermind",tr:"Dahi Stratejist"},
+ d:{az:"Bütün komandanın Müdafiəsini +10% artırır və rəqibin kritik şansını azaldır.",en:"Raises the whole team's Defense by 10% and lowers enemy crit chance.",tr:"Tüm takımın Savunmasını %10 artırır, rakibin kritik şansını düşürür."},
+ fx:{teamDef:0.10,oppCritDown:0.15}},
+"Nightwing":{n:{az:"Akrobatik İllüziya",en:"Acrobatic Feat",tr:"Akrobatik İllüzyon"},
+ d:{az:"Rəqibin Dəqiqliyini (Accuracy) -15% azaldır.",en:"Lowers the enemy's Accuracy by 15%.",tr:"Rakibin İsabetini %15 azaltır."},
+ fx:{accuracyDown:0.15}},
+"Batgirl":{n:{az:"Haker Şəbəkəsi",en:"Tactical Network",tr:"Hacker Ağı"},
+ d:{az:"Rəqibin Hücum gücünü -8% azaldır.",en:"Reduces the enemy's Attack by 8%.",tr:"Rakibin Saldırı gücünü %8 azaltır."},
+ fx:{oppAtkDown:0.08}},
+"Green Arrow":{n:{az:"Kritik Ox",en:"Precision Shot",tr:"Kritik Ok"},
+ d:{az:"Zərbələrinin 25% ehtimalla kritik (2x) olma şansı var.",en:"25% chance for strikes to land as a critical (2x) hit.",tr:"Vuruşlarının %25 ihtimalle kritik (2x) olma şansı var."},
+ fx:{critChance:0.25}},
+"Harley Quinn":{n:{az:"Gözlənilməz Xaos",en:"Chaotic Surprises",tr:"Beklenmedik Kaos"},
+ d:{az:"Hər raund rastgələ olaraq ya +15% Hücum qazanır, ya da +10 HP bərpa edir.",en:"Each round randomly gains +15% Attack or restores +10 HP.",tr:"Her raund rastgele +%15 Saldırı kazanır ya da +10 CAN yeniler."},
+ fx:{randomBuff:{atk:0.15,heal:10}}},
+"Joker":{n:{az:"Zəhərli Qəhqəhə",en:"Joker Venom",tr:"Zehirli Kahkaha"},
+ d:{az:"Rəqibi zəhərləyərək hər raund 8 zərər verir.",en:"Poisons the enemy for 8 damage each round.",tr:"Rakibi zehirleyerek her raund 8 hasar verir."},
+ fx:{poison:8}},
+"Supergirl":{n:{az:"Kripton Qəzəbi",en:"Kryptonian Rage",tr:"Kripton Öfkesi"},
+ d:{az:"Canı 50%-dən aşağı düşdükdə Hücum gücü +15% artır.",en:"Gains +15% Attack when HP drops below 50%.",tr:"CAN %50'nin altına düşünce Saldırı %15 artar."},
+ fx:{rageBelow:{hp:0.50,atk:0.15}}},
+"Black Adam":{n:{az:"Qədim Misir Qəzəbi",en:"Wrath of Amon",tr:"Antik Mısır Öfkesi"},
+ d:{az:"Rəqibin Müdafiəsini 15% yarmaq (Armor Penetration) qabiliyyətinə malikdir.",en:"Penetrates 15% of the enemy's Defense.",tr:"Rakibin Savunmasının %15'ini deler."},
+ fx:{armorPen:0.15}},
+"Red Hood":{n:{az:"Amansız Ədalət",en:"Relentless Vengeance",tr:"Amansız Adalet"},
+ d:{az:"Zərbələri rəqibin sağalma (heal) effektlərini 50% bloklayır.",en:"His strikes block 50% of the enemy's healing.",tr:"Vuruşları rakibin iyileşmesini %50 engeller."},
+ fx:{healBlock:0.50}},
+/* ── MARVEL ── */
+"Doctor Doom":{n:{az:"Sehr və Texnologiya",en:"Master of Magic & Science",tr:"Büyü ve Teknoloji"},
+ d:{az:"Rəqibin pasiv bacarığını ilk 2 raund bloklayır.",en:"Blocks the enemy's passive ability for the first 2 rounds.",tr:"Rakibin pasif yeteneğini ilk 2 raund engeller."},
+ fx:{blockPassive:2}},
+"Odin":{n:{az:"Odin-Force",en:"Cosmic Authority",tr:"Odin-Force"},
+ d:{az:"Döyüşə +20% daha çox Maksimum HP ilə başlayır.",en:"Starts the fight with +20% Max HP.",tr:"Dövüşe +%20 Maksimum CAN ile başlar."},
+ fx:{maxHpBonus:0.20}},
+"Thanos":{n:{az:"Titan Təzyiqi",en:"Titan's Might",tr:"Titan Baskısı"},
+ d:{az:"Döyüşün ilk raundunda rəqibin Hücum gücünü -20% azaldır.",en:"Cuts the enemy's Attack by 20% in the first round.",tr:"İlk raundda rakibin Saldırısını %20 azaltır."},
+ fx:{oppAtkDownFirst:0.20}},
+"Silver Surfer":{n:{az:"Kosmik Güc",en:"Power Cosmic",tr:"Kozmik Güç"},
+ d:{az:"Bütün fiziki zərbələrdən alınan zərəri 15% azaldır.",en:"Reduces all incoming physical damage by 15%.",tr:"Tüm fiziksel hasarı %15 azaltır."},
+ fx:{physReduce:0.15}},
+"Hulk":{n:{az:"Tükənməz Qəzəb",en:"Infinite Rage",tr:"Tükenmez Öfke"},
+ d:{az:"Canı azaldıqca Hücum gücü artır (Maksimum +30% Hücum).",en:"Attack rises as HP falls (up to +30% Attack).",tr:"CAN azaldıkça Saldırı artar (en fazla +%30)."},
+ fx:{hulkRage:0.30}},
+"Thor":{n:{az:"İldırım Hökmdarı",en:"God of Thunder",tr:"Yıldırım Hükümdarı"},
+ d:{az:"Zərbə vurarkən 20% ehtimalla rəqibi 1 raundluq dondurur (Stun).",en:"20% chance to stun the enemy for 1 round when striking.",tr:"Vururken %20 ihtimalle rakibi 1 raund dondurur."},
+ fx:{stunChance:0.20}},
+"Scarlet Witch":{n:{az:"Xaos Sehri",en:"Reality Distortion",tr:"Kaos Büyüsü"},
+ d:{az:"Rəqibin statistikasını rastgələ 10% azaldır.",en:"Randomly lowers the enemy's stats by 10%.",tr:"Rakibin istatistiklerini rastgele %10 azaltır."},
+ fx:{statDebuffRandom:0.10}},
+"Doctor Strange":{n:{az:"Mistik Qalxan",en:"Sorcerer's Ward",tr:"Mistik Kalkan"},
+ d:{az:"Rəqibin ilk sehr zərbəsini tamamilə neytrallaşdırır.",en:"Fully negates the enemy's first strike.",tr:"Rakibin ilk vuruşunu tamamen etkisiz kılar."},
+ fx:{negateFirstHit:true}},
+"Iron Man":{n:{az:"Adaptiv Zireh",en:"Nanotech Adaption",tr:"Adaptif Zırh"},
+ d:{az:"Hər vurulan zərbədən sonra Müdafiəsi +3% artır (Maksimum +15%).",en:"Defense grows +3% after each hit taken (up to +15%).",tr:"Her alınan vuruştan sonra Savunma +%3 artar (en fazla +%15)."},
+ fx:{adaptiveDef:{step:0.03,max:0.15}}},
+"Wolverine":{n:{az:"Adamantium Bərpa",en:"Regeneration Factor",tr:"Adamantium Yenilenme"},
+ d:{az:"Hər raund özünə +10 HP bərpa edir və kritik zərər vermə şansı yüksəkdir.",en:"Restores +10 HP each round and has a high crit chance.",tr:"Her raund +10 CAN yeniler ve kritik şansı yüksektir."},
+ fx:{regen:10,critChance:0.20}},
+"Black Panther":{n:{az:"Vibranium Absorbsiyası",en:"Vibranium Kinetic Absorb",tr:"Vibranyum Emilimi"},
+ d:{az:"Alınan zərərin 15%-ni toplayıb növbəti raund rəqibə qaytarır.",en:"Stores 15% of damage taken and returns it next round.",tr:"Alınan hasarın %15'ini biriktirip sonraki raund geri verir."},
+ fx:{reflect:0.15}},
+"Captain America":{n:{az:"Vibranium Qalxan",en:"Indomitable Shield",tr:"Vibranyum Kalkan"},
+ d:{az:"Komandasına gələn ilk zərbənin zərərini 50% azaldır.",en:"Cuts the first hit taken by his team by 50%.",tr:"Takımına gelen ilk vuruşun hasarını %50 azaltır."},
+ fx:{teamFirstHitCut:0.50}},
+"Spider-Man":{n:{az:"Hörümçək Hissi",en:"Spider-Sense",tr:"Örümcek Hissi"},
+ d:{az:"20% ehtimalla zərbədən yayınır və dərhal əks-hücum edir.",en:"20% chance to dodge and immediately counter-attack.",tr:"%20 ihtimalle kaçar ve hemen karşı saldırı yapar."},
+ fx:{dodge:0.20,counter:0.6}},
+"Deadpool":{n:{az:"Ölümsüzlük Məzhəkəsi",en:"Fourth Wall Regeneration",tr:"Ölümsüzlük Komedisi"},
+ d:{az:"Məğlub olduqda 15% ehtimalla 10 HP ilə yenidən dirilir.",en:"15% chance to revive with 10 HP after being defeated.",tr:"Yenildiğinde %15 ihtimalle 10 CAN ile dirilir."},
+ fx:{revive:{chance:0.15,flat:10}}},
+"Loki":{n:{az:"Hiyləgər Klon",en:"Illusion Mastery",tr:"Hilekâr Klon"},
+ d:{az:"Döyüşün başlanğıcında klon yaradaraq rəqibin ilk zərbəsini boşa çıxarır.",en:"Creates a clone that wastes the enemy's first strike.",tr:"Klon yaratarak rakibin ilk vuruşunu boşa çıkarır."},
+ fx:{negateFirstHit:true}},
+"Hela":{n:{az:"Ölüm Ordusu",en:"Necromancy",tr:"Ölüm Ordusu"},
+ d:{az:"Məğlub etdiyi hər rəqibdən sonra Hücum gücü +15% artır.",en:"Attack grows +15% after each enemy she defeats.",tr:"Yendiği her rakipten sonra Saldırısı %15 artar."},
+ fx:{killStackAtk:0.15}},
+"Venom":{n:{az:"Simbiyot Hərisliyi",en:"Symbiote Parasite",tr:"Simbiyot Açlığı"},
+ d:{az:"Rəqibə vurduğu zərərin 15%-i qədər öz Canını bərpa edir.",en:"Heals for 15% of the damage he deals (lifesteal).",tr:"Verdiği hasarın %15'i kadar CAN çalar."},
+ fx:{lifesteal:0.15}},
+"Carnage":{n:{az:"Qanlı Amansızlıq",en:"Bloody Carnage",tr:"Kanlı Acımasızlık"},
+ d:{az:"Rəqibə qanaxma effekti verir (3 raund boyunca hər raund 10 zərər).",en:"Applies bleed: 10 damage per round for 3 rounds.",tr:"Kanama verir: 3 raund boyunca her raund 10 hasar."},
+ fx:{bleed:{dmg:10,rounds:3}}},
+"Vision":{n:{az:"Sıxlıq Tənzimlənməsi",en:"Density Control",tr:"Yoğunluk Kontrolü"},
+ d:{az:"Fiziki zərbələrə qarşı Müdafiəsini +20% artırır.",en:"Raises Defense against physical strikes by 20%.",tr:"Fiziksel vuruşlara karşı Savunmasını %20 artırır."},
+ fx:{selfDef:0.20}},
+"Ultron":{n:{az:"Süni İntellekt Adaptasiyası",en:"Self-Evolution",tr:"Yapay Zeka Adaptasyonu"},
+ d:{az:"Rəqib hər eyni həmləni etdikdə o həmlədən alınan zərər 5% azalır.",en:"Each repeated enemy attack deals 5% less damage.",tr:"Rakip aynı hamleyi tekrarladıkça hasar %5 azalır."},
+ fx:{sameMoveResist:{step:0.05,max:0.30}}},
+"Captain Marvel":{n:{az:"Binaya Rejimi",en:"Photon Energy Blast",tr:"Binary Modu"},
+ d:{az:"Canı 40%-dən aşağı düşdükdə Sürəti və Hücum gücü +20% artır.",en:"Speed and Attack rise by 20% below 40% HP.",tr:"CAN %40'ın altına düşünce Hız ve Saldırı %20 artar."},
+ fx:{rageBelow:{hp:0.40,atk:0.20,speed:0.20}}},
+"Winter Soldier":{n:{az:"Kiber Qol Zərbəsi",en:"Cybernetic Strike",tr:"Sibernetik Kol Vuruşu"},
+ d:{az:"Zərbələri rəqibin Müdafiəsini -10% azaldır.",en:"His strikes lower the enemy's Defense by 10%.",tr:"Vuruşları rakibin Savunmasını %10 azaltır."},
+ fx:{defBreakOnHit:{pct:0.10,max:0.30}}},
+"Shang-Chi":{n:{az:"On Üzük Ustası",en:"Ten Rings Mastery",tr:"On Yüzük Ustası"},
+ d:{az:"Hər raund əlavə +1 kiçik zərbə vurur.",en:"Lands one extra small strike each round.",tr:"Her raund fazladan küçük bir vuruş yapar."},
+ fx:{extraHit:0.25}},
+"Ghost Rider":{n:{az:"Cəhənnəm Alovu",en:"Penance Stare",tr:"Cehennem Alevi"},
+ d:{az:"Rəqibin Hücum gücü nə qədər yüksəkdirsə, ona vurulan zərər bir o qədər çox olur.",en:"The higher the enemy's Attack, the more damage they take.",tr:"Rakibin Saldırısı ne kadar yüksekse o kadar çok hasar alır."},
+ fx:{ampVsHighAtk:true}},
+"Blade":{n:{az:"Vampir Ovçusu",en:"Daywalker",tr:"Vampir Avcısı"},
+ d:{az:"Yarı-vampir/simbiyot rəqiblərə qarşı +25% əlavə zərər vurur.",en:"Deals +25% bonus damage to vampire/symbiote enemies.",tr:"Vampir/simbiyot rakiplere +%25 ek hasar verir."},
+ fx:{bonusVsTag:{tags:["vampire","symbiote"],pct:0.25}}},
+"She-Hulk":{n:{az:"Hüquqi Müdafiə",en:"Legal Muscle",tr:"Hukuki Savunma"},
+ d:{az:"Müdafiəsi +15% daha yüksək hesablanır.",en:"Her Defense counts as 15% higher.",tr:"Savunması %15 daha yüksek hesaplanır."},
+ fx:{selfDef:0.15}},
+"Jean Grey":{n:{az:"Fenix Gücü",en:"Phoenix Force",tr:"Anka Gücü"},
+ d:{az:"Məğlub olduqda 100% ehtimalla 30% HP ilə dirilir (matçda 1 dəfə).",en:"Always revives once per match with 30% HP.",tr:"Yenildiğinde maç başına bir kez %30 CAN ile dirilir."},
+ fx:{revive:{chance:1,pct:0.30}}},
+"Magneto":{n:{az:"Metal Hökmdarı",en:"Magnetic Field",tr:"Metal Hükümdarı"},
+ d:{az:"Metal zirehli/kiber rəqiblərin Müdafiəsini 25% azaldır.",en:"Cuts the Defense of metal/cybernetic enemies by 25%.",tr:"Metal/sibernetik rakiplerin Savunmasını %25 azaltır."},
+ fx:{defDownVsTag:{tags:["metal"],pct:0.25}}},
+"Professor X":{n:{az:"Telepatik İdarəetmə",en:"Mind Control",tr:"Telepatik Kontrol"},
+ d:{az:"Rəqibin ilk raundda hücum etməsinin qarşısını alır.",en:"Prevents the enemy from attacking in round 1.",tr:"Rakibin ilk raundda saldırmasını engeller."},
+ fx:{preventFirstAttack:true}},
+"Iceman":{n:{az:"Mütləq Sıfır",en:"Absolute Zero",tr:"Mutlak Sıfır"},
+ d:{az:"Rəqibin Sürətini -15% azaldır.",en:"Lowers the enemy's Speed by 15%.",tr:"Rakibin Hızını %15 azaltır."},
+ fx:{oppSpeedDown:0.15}},
+"Doctor Octopus":{n:{az:"Mexaniki Sürət",en:"Multi-Arm Grapple",tr:"Mekanik Hız"},
+ d:{az:"Zərbə vurarkən rəqibin Müdafiəsini 10% sıradan çıxarır.",en:"Each strike disables 10% of the enemy's Defense.",tr:"Her vuruşta rakibin Savunmasının %10'unu devre dışı bırakır."},
+ fx:{defBreakOnHit:{pct:0.10,max:0.30}}},
+"Ant-Man":{n:{az:"Kvant Kiçilməsi",en:"Quantum Shrink",tr:"Kuantum Küçülme"},
+ d:{az:"25% ehtimalla rəqibin zərbəsindən kiçilərək qaçır.",en:"25% chance to shrink and avoid the enemy's strike.",tr:"%25 ihtimalle küçülerek vuruştan kaçar."},
+ fx:{dodge:0.25}},
+"Wasp":{n:{az:"Atıcı İynə",en:"Bio-Electric Sting",tr:"Biyo-Elektrik İğne"},
+ d:{az:"Rəqibin Hücum gücünü -10% azaldır.",en:"Reduces the enemy's Attack by 10%.",tr:"Rakibin Saldırısını %10 azaltır."},
+ fx:{oppAtkDown:0.10}},
+"Hawkeye":{n:{az:"Sərrast Oxçu",en:"Master Marksman",tr:"Usta Okçu"},
+ d:{az:"Zərbələri heç vaxt boşa çıxmır (100% dəqiqlik) və kritik şansı +15%-dir.",en:"Never misses (100% accuracy) and has +15% crit chance.",tr:"Vuruşları asla ıskalamaz ve kritik şansı +%15'tir."},
+ fx:{neverMiss:true,critChance:0.15}},
+"Black Widow":{n:{az:"Gizli Casus",en:"Covert Ops",tr:"Gizli Casus"},
+ d:{az:"Döyüşün ilk raundunda kritik zərbə vurma şansı 50%-dir.",en:"50% crit chance during the first round.",tr:"İlk raundda kritik vuruş şansı %50'dir."},
+ fx:{critFirstRound:0.50}},
+"Moon Knight":{n:{az:"Ay Tanrısının Qəyyumluğu",en:"Khonshu's Blessing",tr:"Ay Tanrısı'nın Koruması"},
+ d:{az:"Hər raund rastgələ olaraq zərbə gücü 5% ilə 25% arasında dəyişir.",en:"Strike power varies randomly between 5% and 25% each round.",tr:"Her raund vuruş gücü rastgele %5 ile %25 arasında değişir."},
+ fx:{randomDmgVar:{min:0.05,max:0.25}}},
+"Daredevil":{n:{az:"Ekolokasiya Hissi",en:"Radar Sense",tr:"Radar Hissi"},
+ d:{az:"Rəqibin gizlilik və duman effektlərini ləğv edir, 15% Dodge qazanır.",en:"Cancels enemy stealth effects and gains 15% dodge.",tr:"Rakibin gizlilik etkilerini iptal eder, %15 kaçınma kazanır."},
+ fx:{dodge:0.15,cancelStealth:true}},
+"Punisher":{n:{az:"Son Hədd",en:"Tactical Arsenal",tr:"Son Sınır"},
+ d:{az:"Canı 20%-dən aşağı düşdükdə Hücum gücü +30% artır.",en:"Gains +30% Attack below 20% HP.",tr:"CAN %20'nin altına düşünce Saldırı %30 artar."},
+ fx:{rageBelow:{hp:0.20,atk:0.30}}},
+"Morbius":{n:{az:"Qan Hərisliyi",en:"Vampiric Drain",tr:"Kan Açlığı"},
+ d:{az:"Vurduğu zərərin 10%-ni HP kimi özünə götürür.",en:"Drains 10% of the damage he deals as HP.",tr:"Verdiği hasarın %10'unu CAN olarak alır."},
+ fx:{lifesteal:0.10}},
+"Black Cat":{n:{az:"Bədbəxtlik Aurası",en:"Bad Luck Field",tr:"Şanssızlık Aurası"},
+ d:{az:"Rəqibin kritik zərbə vurma şansını 0%-ə endirir.",en:"Drops the enemy's crit chance to 0%.",tr:"Rakibin kritik şansını %0'a indirir."},
+ fx:{noOppCrit:true}},
+/* ── THE BOYS ── */
+"Homelander":{n:{az:"Lazer Baxışı və Qürur",en:"Laser Eyes & Ego",tr:"Lazer Bakışı ve Gurur"},
+ d:{az:"Döyüşün başında rəqibə birbaşa 20 zərər vurur, lakin Canı 30%-dən aşağı düşdükdə Müdafiəsi -10% azalır.",en:"Deals 20 direct damage at the start, but loses 10% Defense below 30% HP.",tr:"Dövüş başında 20 direkt hasar verir, ama CAN %30'un altındayken Savunması %10 düşer."},
+ fx:{startDirectDmg:20,defBelowPenalty:{hp:0.30,def:0.10}}},
+"Queen Maeve":{n:{az:"Döyüşçü Möhkəmliyi",en:"Warrior's Endurance",tr:"Savaşçı Dayanıklılığı"},
+ d:{az:"Sağlamlığı 50%-dən yuxarı olduqda Müdafiəsi +15% artır.",en:"Gains +15% Defense while above 50% HP.",tr:"CAN %50'nin üzerindeyken Savunması %15 artar."},
+ fx:{defAbove:{hp:0.50,def:0.15}}},
+"Soldier Boy":{n:{az:"Nüvə Partlayışı",en:"Nuclear Deprivation Blast",tr:"Nükleer Patlama"},
+ d:{az:"Rəqibin bütün pasiv bacarıqlarını döyüş sonunadək ləğv edir.",en:"Nullifies all enemy passives for the rest of the fight.",tr:"Rakibin tüm pasiflerini dövüş sonuna kadar iptal eder."},
+ fx:{blockPassive:999}},
+/* ── MYTHOLOGY ── */
+"Hades":{n:{az:"Yeraltı Dünyanın Hökmü",en:"Realm of the Dead",tr:"Yeraltı Dünyasının Hükmü"},
+ d:{az:"Rəqibin Maksimum HP-sini döyüşün başında -10% azaldır.",en:"Cuts the enemy's Max HP by 10% at the start of the fight.",tr:"Dövüş başında rakibin Maksimum CAN'ını %10 azaltır."},
+ fx:{oppMaxHpDown:0.10}}
+};
+
+/* Ability helpers */
+function abName(name){const a=ABILITIES[name];if(!a)return'';return a.n[currentLang]||a.n.az;}
+function abDesc(name){const a=ABILITIES[name];if(!a)return'';return a.d[currentLang]||a.d.az;}
+function abilityBoxHTML(name){
+  const a=ABILITIES[name];
+  if(!a)return`<div class="ability-box"><div class="ability-name">⚡ ${t('abilityLabel')}</div><div class="ability-desc">${t('noAbility')}</div></div>`;
+  return`<div class="ability-box">
+    <div class="ability-name">⚡ ${abName(name)}</div>
+    <div class="ability-en">${a.n.en}</div>
+    <div class="ability-desc">${abDesc(name)}</div>
+  </div>`;
+}
+function abilityMiniHTML(name){
+  const a=ABILITIES[name];
+  if(!a)return'';
+  return`<div class="ability-mini" title="${abDesc(name).replace(/"/g,'&quot;')}">⚡ ${abName(name)}</div>`;
+}
+function abilityChipHTML(name){
+  const a=ABILITIES[name];
+  if(!a)return'';
+  return`<div class="ability-chip" title="${abDesc(name).replace(/"/g,'&quot;')}">⚡ ${abName(name)}</div>`;
+}
+
+/* ════════════════════════════════════
    SHOP CATALOG
 ════════════════════════════════════ */
 const SHOP_FRAMES=[
@@ -1721,7 +1981,6 @@ function doLogin(username){
 function doLogout(){
   currentUser=null;
   localStorage.removeItem('htb_current');
-  document.getElementById('navbar').classList.remove('none');
   document.getElementById('navbar').classList.remove('show');
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('gamePage').style.display='none';
@@ -1762,7 +2021,6 @@ function showPage(id){
   if(id==='profilePage') renderProfilePage();
   if(id==='shopPage') renderShopPage();
   if(id==='collectionPage') renderCollectionPage();
-  // Hide game screens when going to a page
   if(['playPage','profilePage','shopPage','collectionPage'].includes(id)){
     document.getElementById('gamePage').style.display='none';
     document.getElementById('wheelPage').style.display='none';
@@ -1783,27 +2041,22 @@ function renderProfilePage(){
   document.getElementById('statGames').textContent=currentUser.games||0;
   document.getElementById('statCoins').textContent='🪙 '+(currentUser.coins||0);
   document.getElementById('statHeroes').textContent=(currentUser.inventory?.heroes?.length||0);
-  // Title badge
-  const eqTitle=SHOP_TITLES.find(t=>t.id===(currentUser.equipped?.title||'title_none'));
+  const eqTitle=SHOP_TITLES.find(x=>x.id===(currentUser.equipped?.title||'title_none'));
   const tb=document.getElementById('profileTitleBadge');
   if(eqTitle) tb.innerHTML=`<span class="badge ${eqTitle.badge}">${eqTitle.text}</span>`;
-  // Frame ring
   const eqFrame=SHOP_FRAMES.find(f=>f.id===(currentUser.equipped?.frame||'frame_none'));
   const ring=document.getElementById('profileFrameRing');
   if(eqFrame&&eqFrame.style) ring.style.border=eqFrame.style;
   else ring.style.border='none';
-  // Edit form
   document.getElementById('editUsername').value=currentUser.username;
-  // Avatar options
   document.querySelectorAll('.avatar-opt').forEach(opt=>{
     opt.classList.toggle('selected',opt.dataset.emoji===currentUser.avatar);
   });
-  // Inventory
   renderInventory();
 }
 
 function switchProfileTab(tab){
-  document.querySelectorAll('.profile-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.profile-tab').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.profile-panel').forEach(p=>p.classList.remove('active'));
   const tabIdx={edit:0,inventory:1,logout:2};
   document.querySelectorAll('.profile-tab')[tabIdx[tab]].classList.add('active');
@@ -1908,11 +2161,12 @@ function renderHeroShop(){
       <div class="hero-card-name">${h.name}</div>
       <div class="hero-card-fr"><span class="badge ${frBadge(h.fr)}">${h.fr}</span></div>
       <span class="tier-badge tier-${h.tier}">${h.tier}</span>
-      <div class="mini-stats" style="justify-content:center;gap:4px;">
+      <div class="mini-stats" style="justify-content:center;gap:4px;display:flex;">
         <span class="mini-stat g">G:${h.power}</span>
         <span class="mini-stat s">S:${h.speed}</span>
         <span class="mini-stat m">M:${h.defense}</span>
       </div>
+      ${abilityMiniHTML(h.name)}
       ${isOwned
         ?`<div class="shop-item-status owned">✓ Var</div>`
         :`<div class="hero-card-price"><span>🪙</span>${price}</div>
@@ -1945,7 +2199,7 @@ function buyItem(type,id){
 
 function buyHero(name){
   if(!currentUser) return;
-  const h=HEROES.find(h=>h.name===name);
+  const h=HEROES.find(x=>x.name===name);
   if(!h) return;
   const price=heroCoinPrice(h);
   if(currentUser.coins<price){showToast('Kifayət qədər coin yoxdur 😢','red');return;}
@@ -1959,7 +2213,7 @@ function buyHero(name){
 }
 
 function switchShopTab(tab){
-  document.querySelectorAll('.shop-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.shop-tab').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.shop-panel').forEach(p=>p.classList.remove('active'));
   const tabMap={frames:0,titles:1,effects:2,heroes:3};
   document.querySelectorAll('.shop-tab')[tabMap[tab]].classList.add('active');
@@ -1983,6 +2237,7 @@ function renderCollectionPage(){
       <div class="hero-card-name">${h.name}</div>
       <div class="hero-card-fr"><span class="badge ${frBadge(h.fr)}">${h.fr}</span></div>
       <span class="tier-badge tier-${h.tier}">${h.tier}</span>
+      ${abilityMiniHTML(h.name)}
       ${isOwned?'<div class="shop-item-status owned">✓</div>':`<div style="font-size:10px;color:var(--text-3);">${t('discover')}</div>`}
     </div>`;
   }).join('');
@@ -1992,11 +2247,11 @@ function renderCollectionPage(){
    TOAST
 ════════════════════════════════════ */
 function showToast(msg,type=''){
-  const t=document.getElementById('toast');
-  t.textContent=msg;
-  t.className='toast show '+(type||'');
-  clearTimeout(t._t);
-  t._t=setTimeout(()=>t.classList.remove('show'),2600);
+  const el=document.getElementById('toast');
+  el.textContent=msg;
+  el.className='toast show '+(type||'');
+  clearTimeout(el._t);
+  el._t=setTimeout(()=>el.classList.remove('show'),2600);
 }
 
 /* ════════════════════════════════════
@@ -2004,11 +2259,6 @@ function showToast(msg,type=''){
 ════════════════════════════════════ */
 let onlineMode=false,isHost=false,peer=null,conn=null,guestConnected=false,vsBotMode=false;
 
-/* ── Matchmaking (random auto-match) ──
-   Uses a shared PeerJS "lobby" id derived from a fixed public room prefix.
-   The first player to open the lobby id becomes the host; if that id is
-   taken, we fall back through a small pool of lobby slots until we either
-   claim an empty slot (and wait) or connect to someone already waiting. */
 let matchmakingActive=false,matchmakingPeer=null,matchmakingSlot=null,mmWatchdog=null;
 const MATCHMAKING_PREFIX='htb-mm-slot-';
 const MATCHMAKING_SLOTS=25;
@@ -2042,11 +2292,6 @@ function startMatchmaking(){
 
 function tryMatchmakingSlot(order){
   if(!matchmakingActive)return;
-  // Deterministic ascending scan order so two people who click "quick play"
-  // around the same time converge on the SAME slot immediately: one of them
-  // claims it as host, the other sees it's taken half a second later and
-  // joins it as the guest right away, instead of drifting to different
-  // random slots and never finding each other.
   const slots=Array.from({length:MATCHMAKING_SLOTS},(_,i)=>i);
   attemptSlots(slots,0);
 }
@@ -2054,9 +2299,6 @@ function tryMatchmakingSlot(order){
 function attemptSlots(slots,idx){
   if(!matchmakingActive)return;
   if(idx>=slots.length){
-    // Went through every slot without landing a match — wait a moment then
-    // scan again from the top (slots may have freed up, or a new searcher
-    // may have just claimed slot 0).
     setTimeout(()=>{if(matchmakingActive)attemptSlots(slots,0);},1200+Math.random()*800);
     return;
   }
@@ -2072,7 +2314,6 @@ function attemptSlots(slots,idx){
   p.on('open',id=>{
     if(settled)return;
     settled=true;clearTimeout(timeout);
-    // We claimed this slot as host — wait for a guest
     matchmakingPeer=p;matchmakingSlot=slotId;
     peer=p;isHost=true;
     document.getElementById('matchmakingText').textContent=t('matchmakingText');
@@ -2092,7 +2333,6 @@ function attemptSlots(slots,idx){
     settled=true;clearTimeout(timeout);
     try{p.destroy();}catch(e){}
     if(err&&err.type==='unavailable-id'){
-      // Slot taken — try to join it as a guest instead
       joinMatchmakingSlot(slotId,slots,idx);
     } else {
       attemptSlots(slots,idx+1);
@@ -2123,9 +2363,6 @@ function joinMatchmakingSlot(slotId,slots,idx){
       showToast('🎲 '+(currentLang==='en'?'Opponent found!':currentLang==='tr'?'Rakip bulundu!':'Rəqib tapıldı!'),'gold');
       document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active'));
       document.getElementById('waitPage').classList.add('show');
-      // Watchdog: the slot's host may already be paired with someone else
-      // (a rare 3-way collision). If we never receive game state within a
-      // few seconds, give up on this pairing and resume searching.
       clearTimeout(mmWatchdog);
       mmWatchdog=setTimeout(()=>{
         if(document.getElementById('waitPage').classList.contains('show')&&!state){
@@ -2233,7 +2470,7 @@ function doJoin(){
       document.getElementById('joinStatusText').textContent='Qoşuldu!';
       showOnlinePill('Sən Oyuncu 2-sən');
       setTimeout(()=>{
-        showPage('playPage'); // hide pages
+        showPage('playPage');
         document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
         document.getElementById('waitPage').classList.add('show');
       },400);
@@ -2417,6 +2654,7 @@ function renderAuction(){
   const te=document.getElementById('heroTier');te.textContent=h.tier;te.className='tier-badge tier-'+h.tier;
   const fe=document.getElementById('heroFranchise');fe.textContent=h.fr;fe.className='hero-franchise-tag tag-'+(h.fr==='DC'?'dc':h.fr==='The Boys'?'boys':h.fr==='Mythology'?'myth':'marvel');
   document.getElementById('heroStatsRow').innerHTML=`<span class="mini-stat g">GÜC:${h.power}</span><span class="mini-stat s">SÜR:${h.speed}</span><span class="mini-stat m">MÜD:${h.defense}</span><span class="mini-stat c">CAN:${h.health}</span>`;
+  document.getElementById('heroAbility').innerHTML=abilityBoxHTML(h.name);
   document.getElementById('curPrice').textContent='$'+state.price;
   const ln=document.getElementById('leaderNote');
   if(!state.leader){ln.innerHTML=t('startAuctionMsg');ln.className='leader-note';}
@@ -2441,7 +2679,7 @@ function renderRoster(pId,cId,wheel){
   if(!heroes.length){c.innerHTML='<div class="roster-empty">'+t('noHeroYet')+'</div>';return;}
   c.innerHTML=heroes.map(h=>`<div class="roster-item">
     <div class="hero-avatar" style="background:${h.color}">${h.img?`<img src="${h.img}" onerror="this.style.display='none'">`:h.init}</div>
-    <div><div class="hname">${h.name}</div><div class="hfr">${h.fr}</div></div>
+    <div><div class="hname">${h.name}</div><div class="hfr">${h.fr}</div>${abilityChipHTML(h.name)}</div>
     ${h.boughtPrice!==undefined?`<div class="roster-price">$${h.boughtPrice}</div>`:''}
   </div>`).join('');
 }
@@ -2463,7 +2701,7 @@ function makePass(p){
 function resolveLot(){
   const h=state.lots[state.lotIdx];
   const fl=document.getElementById('flash'),ft=document.getElementById('flashText');
-  if(state.leader){const w=state.leader;const wl=w===1?'OYUNCU 1':(vsBotMode?'🤖 BOT':'OYUNCU 2');state.players[w].budget-=state.price;state.players[w].heroes.push({...h,boughtPrice:state.price});ft.innerHTML=`${h.name}<br>SATILDI! <span class="small">${wl} — $${state.price}</span>`;}
+  if(state.leader){const w=state.leader;const wl=w===1?'OYUNCU 1':(vsBotMode?'🤖 BOT':'OYUNCU 2');state.players[w].budget-=state.price;state.players[w].heroes.push({...h,boughtPrice:state.price});ft.innerHTML=`${h.name}<br>SATILDI! <span class="small">${wl} — $${state.price}</span><span class="small">⚡ ${abName(h.name)||'—'}</span>`;}
   else ft.innerHTML=`${h.name}<br>SATILMADI <span class="small">Heç kim təklif vermədi</span>`;
   fl.classList.add('show');
   if(onlineMode&&isHost)syncGuest();
@@ -2472,9 +2710,13 @@ function resolveLot(){
 function finishAuction(){document.getElementById('gamePage').style.display='none';if(state.players[1].heroes.length>0&&state.players[2].heroes.length>0)startBattle();else showFinalResults();}
 
 /* ════════════════════════════════════
-   BOT AI (bids based on hero power, then stops appropriately)
+   BOT AI
 ════════════════════════════════════ */
-function botHV(h){return h.power*1.15+h.speed*0.7+h.defense*0.9+h.health*0.5;}
+function botHV(h){
+  let v=h.power*1.15+h.speed*0.7+h.defense*0.9+h.health*0.5;
+  if(ABILITIES[h.name])v*=1.08; // özəlliyi olan kahramanlar bot üçün daha dəyərlidir
+  return v;
+}
 function botMove(){
   if(!vsBotMode||!state||state.mode!=='auction'||state.p2Passed||state.leader===2)return;
   const needed=state.maxHeroes-state.players[2].heroes.length;
@@ -2488,31 +2730,17 @@ function botMove(){
   const reserve=Math.max(0,(needed-1)*state.inc);
   const next=state.price+state.inc;
 
-  // Max amount the bot is willing to pay for THIS hero, scaled by its
-  // power/speed/defense/health relative to the average hero left in the pool.
-  // Stronger heroes (higher relative value) get a bigger share of the
-  // remaining per-hero budget; weak heroes get proportionally less.
   const perHeroBudget=budget/needed;
   const strengthRatio=avgV>0?(hv/avgV):1;
   let willing=perHeroBudget*strengthRatio*(0.85+Math.random()*0.3)-reserve;
   if(must) willing=Math.max(willing,Math.max(state.price+state.inc,budget-reserve));
 
-  // Proper affordability check: after placing this bid the bot must still be
-  // able to afford at least the minimum increment for every OTHER hero it
-  // still needs to fill its roster. This is what makes it genuinely plan
-  // across the whole draft instead of blowing its whole budget on one hero
-  // and being unable to buy anything afterwards.
   const afterBid=budget-next;
   const canAfford=afterBid>=0&&(needed<=1||afterBid>=reserve);
   const wantsToBid=next<=willing;
 
   setTimeout(()=>{
     if(!vsBotMode||!state||state.mode!=='auction')return;
-    // Bot bids only while it can afford the next step (leaving enough behind
-    // for its remaining needed heroes) AND the price still fits what this
-    // specific hero's stats justify relative to the pool. As soon as the
-    // price exceeds that value — or buying it would leave it unable to fill
-    // its roster — it stops and passes rather than bidding forever.
     if(canAfford&&(wantsToBid||must)){
       makeBid(2);
       if(state.p1Passed)resolveLot();
@@ -2528,7 +2756,7 @@ function botMove(){
 function startWheelGame(maxHeroes){
   const lotCount=Math.min(HEROES.length,maxHeroes*3);
   const lots=shuffle(HEROES).slice(0,lotCount).map(assignStats);
-  wheelState={lots,remaining:lots.slice(),turn:1,maxHeroes,spinning:false,lastAssigned:''};
+  wheelState={lots,remaining:lots.slice(),turn:1,maxHeroes,spinning:false,lastAssigned:'',lastHero:''};
   state={mode:'wheel',maxHeroes,players:{1:{budget:0,heroes:[]},2:{budget:0,heroes:[]}}};
   hideAllGameScreens();
   document.getElementById('wheelPage').style.display='block';
@@ -2571,13 +2799,14 @@ function renderWheelScreen(rebuild){
   else if(vsBotMode){if(wheelState.turn===2){sb.style.display='none';if(!wheelState.spinning){we.style.display='block';botWheelTick();}else we.style.display='block';}else{sb.style.display='block';we.style.display='none';sb.disabled=wheelState.spinning||!wheelState.remaining.length;}}
   else{sb.style.display='block';we.style.display='none';sb.disabled=wheelState.spinning||!wheelState.remaining.length;}
   document.getElementById('wheelResult').innerHTML=wheelState.lastAssigned||'';
+  document.getElementById('wheelAbility').innerHTML=wheelState.lastHero?abilityBoxHTML(wheelState.lastHero):'';
   if(onlineMode&&isHost)syncGuest();
 }
 
 function renderWheelRoster(pId,cId){
   const c=document.getElementById(cId),heroes=state.players[pId].heroes;
   if(!heroes.length){c.innerHTML='<div class="roster-empty">'+t('noHeroYet')+'</div>';return;}
-  c.innerHTML=heroes.map(h=>`<div class="roster-item"><div class="hero-avatar" style="background:${h.color}">${h.img?`<img src="${h.img}" onerror="this.style.display='none'">`:h.init}</div><div><div class="hname">${h.name}</div><div class="hfr">${h.fr}</div></div></div>`).join('');
+  c.innerHTML=heroes.map(h=>`<div class="roster-item"><div class="hero-avatar" style="background:${h.color}">${h.img?`<img src="${h.img}" onerror="this.style.display='none'">`:h.init}</div><div><div class="hname">${h.name}</div><div class="hfr">${h.fr}</div>${abilityChipHTML(h.name)}</div></div>`).join('');
 }
 
 function spinWheel(){
@@ -2616,8 +2845,8 @@ function assignWheelHero(wi){
   const p=wheelState.turn;state.players[p].heroes.push({...h});
   const pl=p===1?'OYUNCU 1':(vsBotMode?'🤖 BOT':'OYUNCU 2');
   const wfl=document.getElementById('wheelFlash'),wft=document.getElementById('wheelFlashText');
-  wft.innerHTML=`${h.name}<br><span class="small">${pl}</span>`;wfl.classList.add('show');
-  wheelState.lastAssigned=`${h.name} → ${pl}`;wheelState.spinning=false;
+  wft.innerHTML=`${h.name}<br><span class="small">${pl}</span><span class="small">⚡ ${abName(h.name)||'—'}</span>`;wfl.classList.add('show');
+  wheelState.lastAssigned=`${h.name} → ${pl}`;wheelState.lastHero=h.name;wheelState.spinning=false;
   const nt=computeNextWheelTurn(p);if(nt)wheelState.turn=nt;
   if(onlineMode&&isHost)syncGuest();
   setTimeout(()=>{wfl.classList.remove('show');if(!nt||!wheelState.remaining.length)finishWheelDraft();else renderWheelScreen(true);},1400);
@@ -2629,12 +2858,191 @@ function finishWheelDraft(){
 }
 
 /* ════════════════════════════════════
-   BATTLE
+   BATTLE + ABILITY ENGINE
 ════════════════════════════════════ */
+const ABS=5; /* döyüşdə HP miqyası: bacarıqlardakı "+10 HP" kimi dəyərlər ×5 tətbiq olunur */
+
+function hasTag(h,tags){const ht=HERO_TAGS[h.name]||[];return tags.some(x=>ht.includes(x));}
+function FX(f,r){
+  const a=ABILITIES[f.name];
+  if(!a)return{};
+  if(f.blockedRounds&&r<=f.blockedRounds)return{};
+  return a.fx;
+}
+function healAmount(f,o,amt,r){
+  const fo=FX(o,r||battleState?.round||1);
+  if(fo.healBlock)amt=amt*(1-fo.healBlock);
+  return Math.max(0,Math.round(amt));
+}
+
+function prepTeam(heroes){
+  const team=heroes.map(h=>({...h,curHp:h.health*10,maxHp:h.health*10,eliminated:false,wins:0,revived:false}));
+  let teamDef=1,teamFirstHitCut=0,teamCritDown=0;
+  team.forEach(h=>{
+    const fx=(ABILITIES[h.name]||{}).fx||{};
+    if(fx.teamDef)teamDef+=fx.teamDef;
+    if(fx.teamFirstHitCut)teamFirstHitCut=Math.max(teamFirstHitCut,fx.teamFirstHitCut);
+    if(fx.oppCritDown)teamCritDown=Math.max(teamCritDown,fx.oppCritDown);
+  });
+  team.forEach(h=>{h.teamDefMul=teamDef;h.teamFirstHitCut=teamFirstHitCut;h.teamCritDown=teamCritDown;});
+  return team;
+}
+
+function initPairState(h1,h2,notes){
+  [h1,h2].forEach(f=>{
+    f.st={atkBuff:0,atkDebuff:0,defDebuff:0,adaptDef:0,stored:0,dots:[],stunned:false,
+          negated:false,healedOnce:false,resist:0,speedDebuff:0,round1AtkDebuff:0,firstHitUsed:false};
+    f.blockedRounds=0;
+  });
+  const a1=(ABILITIES[h1.name]||{}).fx||{},a2=(ABILITIES[h2.name]||{}).fx||{};
+  if(a1.blockPassive){h2.blockedRounds=a1.blockPassive;notes.push('⚡ '+h1.name+': '+abName(h1.name)+' — '+h2.name+'-in pasivi bloklandı');}
+  if(a2.blockPassive){h1.blockedRounds=a2.blockPassive;notes.push('⚡ '+h2.name+': '+abName(h2.name)+' — '+h1.name+'-in pasivi bloklandı');}
+  applyStartEffects(h1,h2,notes);
+  applyStartEffects(h2,h1,notes);
+}
+
+function applyStartEffects(f,o,notes){
+  const fx=FX(f,1);
+  if(!Object.keys(fx).length)return;
+  if(fx.maxHpBonus){f.maxHp=Math.round(f.maxHp*(1+fx.maxHpBonus));f.curHp=f.maxHp;notes.push('⚡ '+f.name+': '+abName(f.name)+' (+'+Math.round(fx.maxHpBonus*100)+'% Max HP)');}
+  if(fx.oppMaxHpDown){o.maxHp=Math.round(o.maxHp*(1-fx.oppMaxHpDown));o.curHp=Math.min(o.curHp,o.maxHp);notes.push('⚡ '+f.name+': '+abName(f.name)+' ('+o.name+' -'+Math.round(fx.oppMaxHpDown*100)+'% Max HP)');}
+  if(fx.startDirectDmg){const dd=fx.startDirectDmg*ABS;o.curHp-=dd;notes.push('⚡ '+f.name+': '+abName(f.name)+' ('+o.name+' -'+dd+')');}
+  if(fx.oppAtkDown){o.st.atkDebuff+=fx.oppAtkDown;notes.push('⚡ '+f.name+': '+o.name+' Hücum -'+Math.round(fx.oppAtkDown*100)+'%');}
+  if(fx.oppAtkDownFirst){o.st.round1AtkDebuff+=fx.oppAtkDownFirst;notes.push('⚡ '+f.name+': '+o.name+' ilk raund Hücum -'+Math.round(fx.oppAtkDownFirst*100)+'%');}
+  if(fx.oppSpeedDown){o.st.speedDebuff+=fx.oppSpeedDown;notes.push('⚡ '+f.name+': '+o.name+' Sürət -'+Math.round(fx.oppSpeedDown*100)+'%');}
+  if(fx.statDebuffRandom){
+    const pick=rand(0,2);
+    if(pick===0)o.st.atkDebuff+=fx.statDebuffRandom;
+    else if(pick===1)o.st.defDebuff+=fx.statDebuffRandom;
+    else o.st.speedDebuff+=fx.statDebuffRandom;
+    notes.push('⚡ '+f.name+': xaos sehri — '+o.name+' '+(pick===0?'Hücum':pick===1?'Müdafiə':'Sürət')+' -'+Math.round(fx.statDebuffRandom*100)+'%');
+  }
+  if(fx.poison){o.st.dots.push({dmg:fx.poison*ABS,rounds:999,kind:'poison'});notes.push('⚡ '+f.name+': '+o.name+' zəhərləndi');}
+  if(fx.bleed){o.st.dots.push({dmg:fx.bleed.dmg*ABS,rounds:fx.bleed.rounds,kind:'bleed'});notes.push('⚡ '+f.name+': '+o.name+' qanaxma aldı');}
+}
+
+function effAtk(f,r){
+  const fx=FX(f,r);let m=1;
+  if(fx.selfAtk)m+=fx.selfAtk;
+  if(fx.rageBelow&&f.curHp/f.maxHp<fx.rageBelow.hp)m+=fx.rageBelow.atk;
+  if(fx.hulkRage)m+=fx.hulkRage*(1-Math.max(0,f.curHp)/f.maxHp);
+  if(fx.killStackAtk)m+=fx.killStackAtk*(f.wins||0);
+  m+=f.st.atkBuff||0;
+  m-=f.st.atkDebuff||0;
+  if(r===1)m-=f.st.round1AtkDebuff||0;
+  return Math.max(5,f.power*Math.max(0.3,m));
+}
+function effDef(f,r){
+  const fx=FX(f,r);let m=1;
+  if(fx.selfDef)m+=fx.selfDef;
+  if(fx.defAbove&&f.curHp/f.maxHp>fx.defAbove.hp)m+=fx.defAbove.def;
+  if(fx.defBelowPenalty&&f.curHp/f.maxHp<fx.defBelowPenalty.hp)m-=fx.defBelowPenalty.def;
+  m+=f.st.adaptDef||0;
+  m-=f.st.defDebuff||0;
+  return Math.max(3,f.defense*(f.teamDefMul||1)*Math.max(0.2,m));
+}
+function effSpeed(f,r){
+  const fx=FX(f,r);let m=1;
+  if(fx.rageBelow&&fx.rageBelow.speed&&f.curHp/f.maxHp<fx.rageBelow.hp)m+=fx.rageBelow.speed;
+  m-=f.st.speedDebuff||0;
+  return Math.max(5,f.speed*Math.max(0.3,m));
+}
+
+function baseDamage(a,d,r){
+  const fa=FX(a,r);
+  let atk=effAtk(a,r),def=effDef(d,r);
+  if(fa.armorPen)def*=(1-fa.armorPen);
+  if(fa.defDownVsTag&&hasTag(d,fa.defDownVsTag.tags))def*=(1-fa.defDownVsTag.pct);
+  const sp=effSpeed(a,r)>=effSpeed(d,r)?1.1:0.9;
+  let dmg=Math.max(10,Math.round((atk*1.5-def*0.8)*sp+rand(-5,5)));
+  if(fa.randomDmgVar)dmg=Math.round(dmg*(1+fa.randomDmgVar.min+Math.random()*(fa.randomDmgVar.max-fa.randomDmgVar.min)));
+  if(fa.bonusVsTag&&hasTag(d,fa.bonusVsTag.tags))dmg=Math.round(dmg*(1+fa.bonusVsTag.pct));
+  if(fa.ampVsHighAtk)dmg=Math.round(dmg*(1+d.power/250));
+  return dmg;
+}
+
+function strike(a,d,r,notes){
+  const fa=FX(a,r),fd=FX(d,r);
+  if(a.st.stunned){a.st.stunned=false;notes.push('⚡ '+a.name+' dondurulub, hücum edə bilmədi');return 0;}
+  if(r===1&&fd.preventFirstAttack){notes.push('⚡ '+d.name+': '+abName(d.name)+' — '+a.name+' ilk raundda hücum edə bilmədi');return 0;}
+  let avoid=fd.dodge||0;
+  if(!fa.neverMiss)avoid+=(fd.accuracyDown||0);
+  if(Math.random()<avoid){
+    notes.push('⚡ '+d.name+' zərbədən yayındı');
+    if(fd.counter){
+      const cd=Math.round(baseDamage(d,a,r)*fd.counter);
+      a.curHp-=cd;
+      notes.push('⚡ '+d.name+' əks-hücum etdi (-'+cd+')');
+    }
+    return 0;
+  }
+  let dmg=baseDamage(a,d,r);
+  let crit=(fa.critChance||0)+(r===1?(fa.critFirstRound||0):0)-(d.teamCritDown||0);
+  if(fd.noOppCrit)crit=0;
+  if(crit>0&&Math.random()<crit){dmg*=2;notes.push('⚡ '+a.name+' KRİTİK zərbə vurdu!');}
+  if(r===1&&fa.firstHitBonus){dmg+=fa.firstHitBonus*ABS;notes.push('⚡ '+a.name+': '+abName(a.name)+' (+'+(fa.firstHitBonus*ABS)+')');}
+  if(fa.extraHit)dmg+=Math.round(dmg*fa.extraHit);
+  if(fd.physReduce)dmg*=(1-fd.physReduce);
+  if(fd.dmgReduceEarly&&r<=fd.dmgReduceEarly.rounds)dmg*=(1-fd.dmgReduceEarly.pct);
+  if(fd.sameMoveResist){
+    dmg*=(1-Math.min(fd.sameMoveResist.max,d.st.resist||0));
+    d.st.resist=Math.min(fd.sameMoveResist.max,(d.st.resist||0)+fd.sameMoveResist.step);
+  }
+  if(d.teamFirstHitCut&&!d.st.firstHitUsed){dmg*=(1-d.teamFirstHitCut);d.st.firstHitUsed=true;notes.push('⚡ '+d.name+' qalxan arxasında ilk zərbəni yumşaltdı');}
+  if(fd.negateFirstHit&&!d.st.negated){d.st.negated=true;dmg=0;notes.push('⚡ '+d.name+': '+abName(d.name)+' — ilk zərbə boşa çıxdı');}
+  dmg=Math.max(0,Math.round(dmg));
+  d.curHp-=dmg;
+  if(dmg>0){
+    if(fa.lifesteal){
+      const hv=healAmount(a,d,dmg*fa.lifesteal,r);
+      if(hv>0){a.curHp=Math.min(a.maxHp,a.curHp+hv);notes.push('⚡ '+a.name+' '+hv+' HP uddu');}
+    }
+    if(fa.defBreakOnHit)d.st.defDebuff=Math.min(fa.defBreakOnHit.max,(d.st.defDebuff||0)+fa.defBreakOnHit.pct);
+    if(fd.adaptiveDef)d.st.adaptDef=Math.min(fd.adaptiveDef.max,(d.st.adaptDef||0)+fd.adaptiveDef.step);
+    if(fd.reflect)d.st.stored=(d.st.stored||0)+Math.round(dmg*fd.reflect);
+    if(fa.stunChance&&Math.random()<fa.stunChance){d.st.stunned=true;notes.push('⚡ '+a.name+' rəqibi 1 raund dondurdu');}
+  }
+  return dmg;
+}
+
+function preRound(f,o,r,notes){
+  const fx=FX(f,r);
+  if(f.st.stored>0){o.curHp-=f.st.stored;notes.push('⚡ '+f.name+' topladığı '+f.st.stored+' zərəri qaytardı');f.st.stored=0;}
+  if(fx.regen){
+    const hv=healAmount(f,o,fx.regen*ABS,r);
+    if(hv>0&&f.curHp>0){f.curHp=Math.min(f.maxHp,f.curHp+hv);notes.push('⚡ '+f.name+' +'+hv+' HP bərpa etdi');}
+  }
+  if(fx.randomBuff){
+    if(Math.random()<0.5){f.st.atkBuff=fx.randomBuff.atk;notes.push('⚡ '+f.name+' xaos: Hücum +'+Math.round(fx.randomBuff.atk*100)+'%');}
+    else{f.st.atkBuff=0;const hv=healAmount(f,o,fx.randomBuff.heal*ABS,r);f.curHp=Math.min(f.maxHp,f.curHp+hv);notes.push('⚡ '+f.name+' xaos: +'+hv+' HP');}
+  }
+  (f.st.dots||[]).forEach(dt=>{
+    if(dt.rounds>0){f.curHp-=dt.dmg;dt.rounds--;notes.push('⚡ '+f.name+' '+(dt.kind==='poison'?'zəhərdən':'qanaxmadan')+' -'+dt.dmg);}
+  });
+  f.st.dots=(f.st.dots||[]).filter(dt=>dt.rounds>0);
+  if(fx.healAtThreshold&&!f.st.healedOnce&&f.curHp>0&&f.curHp/f.maxHp<fx.healAtThreshold.hp){
+    f.st.healedOnce=true;
+    const hv=healAmount(f,o,fx.healAtThreshold.amount*ABS,r);
+    f.curHp=Math.min(f.maxHp,f.curHp+hv);
+    notes.push('⚡ '+f.name+': '+abName(f.name)+' (+'+hv+' HP)');
+  }
+}
+
+function checkRevive(f,r,notes){
+  const fx=FX(f,r);
+  if(f.curHp<=0&&fx.revive&&!f.revived&&Math.random()<fx.revive.chance){
+    f.revived=true;
+    f.curHp=fx.revive.pct?Math.round(f.maxHp*fx.revive.pct):fx.revive.flat*ABS;
+    notes.push('⚡ '+f.name+': '+abName(f.name)+' — yenidən dirildi!');
+    return true;
+  }
+  return false;
+}
+
 function startBattle(){
   document.getElementById('battlePage').style.display='block';
-  const prep=team=>team.map(h=>({...h,curHp:h.health*10,maxHp:h.health*10,eliminated:false,wins:0}));
-  battleState={t1:prep(state.players[1].heroes),t2:prep(state.players[2].heroes),idx1:0,idx2:0,history:[],status:'',championDone:false,championText:'',championSub:'',championColor:''};
+  battleState={t1:prepTeam(state.players[1].heroes),t2:prepTeam(state.players[2].heroes),
+    idx1:0,idx2:0,round:0,history:[],status:'',championDone:false,championText:'',championSub:'',championColor:''};
   updateTally();setupPair();
 }
 
@@ -2647,7 +3055,15 @@ function updateTally(){
 function setupPair(){
   const h1=battleState.t1[battleState.idx1],h2=battleState.t2[battleState.idx2];
   if(!h1||!h2){endBattle();return;}
+  battleState.round=0;
+  const notes=[];
+  initPairState(h1,h2,notes);
   renderFighter('left',h1);renderFighter('right',h2);
+  if(notes.length){
+    const log=document.getElementById('battleLog');
+    notes.slice().reverse().forEach(n=>{const el=document.createElement('div');el.className='log-item ability';el.textContent=n;log.prepend(el);});
+    battleState.history.push({n1:h1.name,n2:h2.name,d1:0,d2:0,notes});
+  }
   battleState.status='Növbəti döyüşə hazır';document.getElementById('fightStatus').textContent=battleState.status;
   document.getElementById('nextFightBtn').disabled=false;document.getElementById('nextFightBtn').style.display='block';
   if(onlineMode&&isHost)syncGuest();
@@ -2661,6 +3077,7 @@ function renderFighter(side,h){
   document.getElementById(p+'Franchise').textContent=h.fr;
   document.getElementById(p+'Bio').textContent=(BIOS[h.name]||{})[currentLang]||(BIOS[h.name]||{}).az||'';
   document.getElementById(p+'Stats').innerHTML=`<div class="mini-stats" style="justify-content:center;gap:4px;display:flex;"><span class="mini-stat g">G:${h.power}</span><span class="mini-stat s">S:${h.speed}</span><span class="mini-stat m">M:${h.defense}</span></div>`;
+  document.getElementById(p+'Ability').innerHTML=abilityBoxHTML(h.name);
   const pct=Math.max(0,Math.round((h.curHp/h.maxHp)*100));
   document.getElementById(p+'HpFill').style.width=pct+'%';
   document.getElementById(p+'HpLabel').textContent=t('hpLabel')+': '+pct+'%';
@@ -2672,9 +3089,12 @@ function renderBattleFromState(){
   document.getElementById('fightStatus').textContent=battleState?.status||'';
   const log=document.getElementById('battleLog');log.innerHTML='';
   (battleState?.history||[]).slice().reverse().forEach(item=>{
-    const el=document.createElement('div');el.className='log-item';
-    el.innerHTML=`<span><b>${item.n1}</b> (-${item.d1})</span><span><b>${item.n2}</b> (-${item.d2})</span>`;
-    log.appendChild(el);
+    (item.notes||[]).slice().reverse().forEach(n=>{const el=document.createElement('div');el.className='log-item ability';el.textContent=n;log.appendChild(el);});
+    if(item.d1||item.d2){
+      const el=document.createElement('div');el.className='log-item';
+      el.innerHTML=`<span><b>${item.n1}</b> (-${item.d1})</span><span><b>${item.n2}</b> (-${item.d2})</span>`;
+      log.appendChild(el);
+    }
   });
   const ban=document.getElementById('championBanner');
   if(battleState?.championDone){ban.style.display='block';document.getElementById('championText').textContent=battleState.championText;document.getElementById('championText').style.color=battleState.championColor||'';document.getElementById('championSub').textContent=battleState.championSub;}
@@ -2689,14 +3109,38 @@ function runFightRound(){
 }
 
 function simStep(){
-  const h1=battleState.t1[battleState.idx1],h2=battleState.t2[battleState.idx2];if(!h1||!h2)return;
-  const s1=h1.speed>=h2.speed?1.1:0.9,s2=h2.speed>=h1.speed?1.1:0.9;
-  const d2=Math.max(10,Math.round((h1.power*1.5-h2.defense*0.8)*s1+rand(-5,5)));
-  const d1=Math.max(10,Math.round((h2.power*1.5-h1.defense*0.8)*s2+rand(-5,5)));
-  h2.curHp-=d2;h1.curHp-=d1;renderFighter('left',h1);renderFighter('right',h2);
-  const log=document.getElementById('battleLog'),le=document.createElement('div');le.className='log-item';
+  const h1=battleState.t1[battleState.idx1],h2=battleState.t2[battleState.idx2];
+  if(!h1||!h2)return;
+  battleState.round=(battleState.round||0)+1;
+  const r=battleState.round,notes=[];
+
+  preRound(h1,h2,r,notes);
+  preRound(h2,h1,r,notes);
+
+  const f1=FX(h1,r),f2=FX(h2,r);
+  let d2=0,d1=0;
+  if(f1.firstStrike&&!f2.firstStrike){
+    d2=strike(h1,h2,r,notes);
+    if(h2.curHp>0)d1=strike(h2,h1,r,notes);
+    else notes.push('⚡ '+h1.name+' sürətlə ilk vurdu, cavab gəlmədi');
+  } else if(f2.firstStrike&&!f1.firstStrike){
+    d1=strike(h2,h1,r,notes);
+    if(h1.curHp>0)d2=strike(h1,h2,r,notes);
+    else notes.push('⚡ '+h2.name+' sürətlə ilk vurdu, cavab gəlmədi');
+  } else {
+    d2=strike(h1,h2,r,notes);
+    d1=strike(h2,h1,r,notes);
+  }
+
+  checkRevive(h1,r,notes);checkRevive(h2,r,notes);
+
+  renderFighter('left',h1);renderFighter('right',h2);
+  const log=document.getElementById('battleLog');
+  const le=document.createElement('div');le.className='log-item';
   le.innerHTML=`<span><b>${h1.name}</b> (-${d1})</span><span><b>${h2.name}</b> (-${d2})</span>`;
-  log.prepend(le);battleState.history.push({n1:h1.name,n2:h2.name,d1,d2});
+  log.prepend(le);
+  notes.slice().reverse().forEach(n=>{const el=document.createElement('div');el.className='log-item ability';el.textContent=n;log.prepend(el);});
+  battleState.history.push({n1:h1.name,n2:h2.name,d1,d2,notes});
   if(onlineMode&&isHost)syncGuest();
   if(h1.curHp<=0||h2.curHp<=0)setTimeout(()=>resolveWinner(h1,h2),700);
   else setTimeout(simStep,700);
@@ -2758,7 +3202,7 @@ function renderFinalList(pId,cId){
     const pb=h.boughtPrice!==undefined?`<div class="roster-price">$${h.boughtPrice}</div>`:`<div class="roster-price">🎡</div>`;
     return `<div class="roster-item${bh&&bh.eliminated?' eliminated':''}">
       <div class="hero-avatar" style="background:${h.color}">${h.img?`<img src="${h.img}" onerror="this.style.display='none'">`:h.init}</div>
-      <div><div class="hname">${h.name}</div><div class="hfr">${h.fr}</div></div>
+      <div><div class="hname">${h.name}</div><div class="hfr">${h.fr}</div>${abilityChipHTML(h.name)}</div>
       ${wb||pb}
     </div>`;
   }).join('');
@@ -2770,6 +3214,8 @@ function restartGame(){
   document.getElementById('gamePage').style.display='none';
   document.getElementById('battlePage').style.display='none';
   document.getElementById('wheelPage').style.display='none';
+  document.getElementById('battleLog').innerHTML='';
+  document.getElementById('championBanner').style.display='none';
   state=null;battleState=null;wheelState=null;
   showPage('playPage');
   showConfigScreen();
@@ -2784,15 +3230,13 @@ window.addEventListener('DOMContentLoaded',()=>{
   if(savedLang&&I18N[savedLang])applyLanguage(savedLang);
   const params=new URLSearchParams(location.search);
   if(params.get('room')){
-    // Auto-join flow: show auth first
-    document.getElementById('joinCodeInput').value=location.search;
+    document.getElementById('joinCodeInput').value=params.get('room');
   }
   const saved=localStorage.getItem('htb_current');
   if(saved){
     const u=loadUser(saved);
     if(u){currentUser=u;doLogin(saved);return;}
   }
-  // Show auth
   document.getElementById('authPage').style.display='flex';
   switchAuthTab('login');
 });
@@ -2818,6 +3262,7 @@ const SFX=(function(){
     wheelLand:safe(()=>{const t=ctx.currentTime;[660,880,1108.73].forEach((f,i)=>tone(f,t+i*0.07,0.22,'triangle',0.2));noise(t,0.15,0.06,4000,'highpass');}),
     fightHit:safe(()=>{const t=ctx.currentTime;noise(t,0.12,0.28,700,'lowpass');tone(120,t,0.1,'square',0.22,60);}),
     fightKO:safe(()=>{const t=ctx.currentTime;noise(t,0.3,0.3,500,'lowpass');tone(180,t,0.35,'sawtooth',0.25,40);}),
+    ability:safe(()=>{const t=ctx.currentTime;tone(880,t,0.09,'triangle',0.16,1500);tone(1320,t+0.05,0.12,'sine',0.12);}),
     champion:safe(()=>{const t=ctx.currentTime;[523.25,659.25,783.99,1046.5,1318.51].forEach((f,i)=>tone(f,t+i*0.11,0.4,'triangle',0.22));noise(t+0.05,0.5,0.08,7000,'highpass');}),
     whoosh:safe(()=>{const t=ctx.currentTime;noise(t,0.22,0.1,1800,'bandpass');})
   };
@@ -2838,8 +3283,8 @@ wrap('makeBid',()=>SFX.bid());
 wrap('makePass',()=>SFX.pass());
 wrap('startGame',()=>SFX.whoosh());
 wrap('startBattle',()=>SFX.whoosh());
-wrap('sendChat',()=>{try{const t=window.SFX._ctx?window.SFX._ctx.currentTime:0;SFX.click();}catch(e){}});
 wrap('endBattle',()=>SFX.champion());
+wrap('initPairState',()=>SFX.ability());
 wrap('resolveLot',function(){try{if(window.state&&window.state.leader)SFX.sold();else SFX.unsold();}catch(e){}});
 wrap('triggerWheelSpin',function(){if(!window.wheelState||window.wheelState.spinning||!window.wheelState.remaining.length)return;SFX.whoosh();let tc=0;(function st(){if(tc>=28)return;const p=tc/28,d=40+Math.pow(p,2.2)*260;setTimeout(()=>{if(window.wheelState&&window.wheelState.spinning)SFX.wheelTick();tc++;st();},d);})();});
 wrap('assignWheelHero',()=>SFX.wheelLand());
@@ -2850,4 +3295,3 @@ wrap('setupConn',()=>SFX.whoosh());
 </script>
 </body>
 </html>
-

@@ -56,24 +56,14 @@ body::before{
   z-index:0;
 }
 *{position:relative;z-index:1;}
-
-/* ═══════════════════════════════════════════
-   TYPOGRAPHY
-═══════════════════════════════════════════ */
 .display{font-family:'Bebas Neue',sans-serif;letter-spacing:0.04em;}
 .mono{font-family:'JetBrains Mono',monospace;}
 h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:0.04em;}
 
-/* ═══════════════════════════════════════════
-   SCROLLBAR
-═══════════════════════════════════════════ */
 ::-webkit-scrollbar{width:4px;height:4px;}
 ::-webkit-scrollbar-track{background:var(--ink-2);}
 ::-webkit-scrollbar-thumb{background:var(--border-bright);border-radius:2px;}
 
-/* ═══════════════════════════════════════════
-   LAYOUT UTILITIES
-═══════════════════════════════════════════ */
 .flex{display:flex;}
 .flex-col{display:flex;flex-direction:column;}
 .items-center{align-items:center;}
@@ -88,20 +78,10 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:0.04em;}
 .text-center{text-align:center;}
 .hidden{display:none!important;}
 
-/* ═══════════════════════════════════════════
-   PANEL / CARD
-═══════════════════════════════════════════ */
-.panel{
-  background:var(--ink-2);
-  border:1px solid var(--border);
-  border-radius:var(--r);
-}
+.panel{background:var(--ink-2);border:1px solid var(--border);border-radius:var(--r);}
 .panel-gold{border-color:var(--gold);}
 .panel-inner{padding:20px;}
 
-/* ═══════════════════════════════════════════
-   BUTTONS
-═══════════════════════════════════════════ */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:6px;
   padding:10px 18px;border-radius:var(--r);
@@ -131,9 +111,6 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:0.04em;}
 .btn:disabled{opacity:0.3;cursor:not-allowed;pointer-events:none;}
 .btn-full{width:100%;}
 
-/* ═══════════════════════════════════════════
-   INPUT
-═══════════════════════════════════════════ */
 .input{
   width:100%;padding:11px 14px;
   background:var(--ink-1);
@@ -148,166 +125,63 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:0.04em;}
 .input::placeholder{color:var(--text-3);}
 .label{display:block;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:6px;}
 
-/* ═══════════════════════════════════════════
-   BADGE / TAG
-═══════════════════════════════════════════ */
-.badge{
-  display:inline-flex;align-items:center;gap:4px;
-  padding:2px 8px;border-radius:2px;
-  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
-}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:2px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;}
 .badge-gold{background:rgba(201,145,42,0.15);color:var(--gold-2);border:1px solid rgba(201,145,42,0.3);}
 .badge-azure{background:rgba(46,95,163,0.15);color:var(--azure-2);border:1px solid rgba(46,95,163,0.3);}
 .badge-crimson{background:rgba(184,50,50,0.15);color:var(--crimson-2);border:1px solid rgba(184,50,50,0.3);}
 .badge-violet{background:rgba(108,95,199,0.15);color:#9B8EE8;border:1px solid rgba(108,95,199,0.3);}
 .badge-mint{background:rgba(42,138,106,0.15);color:#52C09A;border:1px solid rgba(42,138,106,0.3);}
 
-/* ═══════════════════════════════════════════
-   COIN DISPLAY
-═══════════════════════════════════════════ */
-.coin-display{
-  display:inline-flex;align-items:center;gap:6px;
-  background:var(--coin-bg);
-  border:1px solid rgba(245,204,106,0.25);
-  border-radius:20px;padding:5px 12px;
-  font-family:'JetBrains Mono',monospace;font-weight:700;
-  color:var(--coin);font-size:13px;
-}
+.ability-box{margin:12px auto 0;max-width:280px;padding:9px 11px;text-align:left;background:rgba(201,145,42,0.07);border:1px solid rgba(201,145,42,0.28);border-radius:var(--r);}
+.ability-name{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:0.04em;color:var(--gold-2);display:flex;align-items:center;gap:5px;}
+.ability-en{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-3);letter-spacing:0;margin-top:1px;}
+.ability-desc{font-size:10.5px;color:var(--text-2);line-height:1.45;margin-top:4px;}
+
+.coin-display{display:inline-flex;align-items:center;gap:6px;background:var(--coin-bg);border:1px solid rgba(245,204,106,0.25);border-radius:20px;padding:5px 12px;font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--coin);font-size:13px;}
 .coin-icon{font-size:14px;}
 
-/* ═══════════════════════════════════════════
-   NAV BAR
-═══════════════════════════════════════════ */
-#navbar{
-  position:fixed;top:0;left:0;right:0;
-  height:56px;
-  background:rgba(8,12,20,0.92);
-  border-bottom:1px solid var(--border);
-  backdrop-filter:blur(12px);
-  display:none;align-items:center;
-  padding:0 20px;gap:12px;
-  z-index:200;
-}
+#navbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(8,12,20,0.92);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);display:none;align-items:center;padding:0 20px;gap:12px;z-index:200;}
 #navbar.show{display:flex;}
 .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.08em;color:var(--gold-2);flex:none;}
 .nav-spacer{flex:1;}
 .nav-links{display:flex;align-items:center;gap:4px;}
-.nav-link{
-  padding:6px 12px;border-radius:var(--r);
-  font-size:12px;font-weight:600;color:var(--text-2);
-  cursor:pointer;transition:all .12s;
-  display:flex;align-items:center;gap:5px;
-}
+.nav-link{padding:6px 12px;border-radius:var(--r);font-size:12px;font-weight:600;color:var(--text-2);cursor:pointer;transition:all .12s;display:flex;align-items:center;gap:5px;}
 .nav-link:hover{background:var(--ink-3);color:var(--text);}
 .nav-link.active{color:var(--gold-2);}
-.nav-avatar{
-  width:32px;height:32px;border-radius:50%;
-  overflow:hidden;border:2px solid var(--border);
-  cursor:pointer;transition:border-color .15s;
-  display:flex;align-items:center;justify-content:center;
-  background:var(--ink-3);font-size:14px;
-}
+.nav-avatar{width:32px;height:32px;border-radius:50%;overflow:hidden;border:2px solid var(--border);cursor:pointer;transition:border-color .15s;display:flex;align-items:center;justify-content:center;background:var(--ink-3);font-size:14px;}
 .nav-avatar:hover{border-color:var(--gold);}
 
-/* ═══════════════════════════════════════════
-   PAGES (full-screen)
-═══════════════════════════════════════════ */
-.page{
-  min-height:100vh;
-  display:none;
-  padding-top:56px;
-}
+.page{min-height:100vh;display:none;padding-top:56px;}
 .page.active{display:block;}
-.page-center{
-  min-height:calc(100vh - 56px);
-  display:flex;align-items:center;justify-content:center;
-  padding:24px;
-}
+.page-center{min-height:calc(100vh - 56px);display:flex;align-items:center;justify-content:center;padding:24px;}
 
-/* ═══════════════════════════════════════════
-   AUTH PAGE
-═══════════════════════════════════════════ */
-#authPage{
-  min-height:100vh;
-  display:flex;align-items:center;justify-content:center;
-  padding:24px;
-}
-.auth-card{
-  width:100%;max-width:420px;
-  background:var(--ink-2);
-  border:1px solid var(--border);
-  border-radius:var(--r);
-  padding:40px 36px;
-}
+#authPage{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+.auth-card{width:100%;max-width:420px;background:var(--ink-2);border:1px solid var(--border);border-radius:var(--r);padding:40px 36px;}
 .auth-logo-row{text-align:center;margin-bottom:28px;}
-.auth-logo{
-  width:72px;height:72px;border-radius:50%;
-  margin:0 auto 14px;
-  background:linear-gradient(135deg,var(--ink-3),var(--ink-4));
-  border:2px solid var(--gold);
-  display:flex;align-items:center;justify-content:center;
-  font-size:32px;
-}
+.auth-logo{width:72px;height:72px;border-radius:50%;margin:0 auto 14px;background:linear-gradient(135deg,var(--ink-3),var(--ink-4));border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:32px;}
 .auth-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.06em;color:var(--gold-2);}
 .auth-sub{font-size:12px;color:var(--text-3);margin-top:4px;}
 .auth-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:24px;}
-.auth-tab{
-  flex:1;padding:10px;text-align:center;
-  font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
-  color:var(--text-3);cursor:pointer;border-bottom:2px solid transparent;
-  margin-bottom:-1px;transition:all .15s;
-}
+.auth-tab{flex:1;padding:10px;text-align:center;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;}
 .auth-tab.active{color:var(--gold-2);border-bottom-color:var(--gold);}
 .auth-form{display:flex;flex-direction:column;gap:14px;}
-.auth-google-btn{
-  width:100%;padding:11px;
-  background:var(--ink-1);border:1px solid var(--border);border-radius:var(--r);
-  color:var(--text);font-size:13px;font-weight:600;
-  cursor:pointer;transition:all .15s;
-  display:flex;align-items:center;justify-content:center;gap:10px;
-}
+.auth-google-btn{width:100%;padding:11px;background:var(--ink-1);border:1px solid var(--border);border-radius:var(--r);color:var(--text);font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:10px;}
 .auth-google-btn:hover{border-color:var(--border-bright);background:var(--ink-3);}
 .auth-divider{display:flex;align-items:center;gap:12px;color:var(--text-3);font-size:11px;}
 .auth-divider::before,.auth-divider::after{content:"";flex:1;height:1px;background:var(--border);}
 .auth-error{color:var(--crimson-2);font-size:12px;text-align:center;min-height:16px;}
 
-/* ═══════════════════════════════════════════
-   HOME / PLAY PAGE
-═══════════════════════════════════════════ */
 .play-wrap{max-width:600px;margin:0 auto;padding:40px 20px;}
-.play-hero{
-  text-align:center;margin-bottom:32px;
-  padding:32px 24px;
-  background:linear-gradient(180deg,var(--ink-3),var(--ink-2));
-  border:1px solid var(--border);border-radius:var(--r);
-}
-.play-hero h1{font-size:52px;line-height:0.95;
-  background:linear-gradient(180deg,var(--gold-3),var(--gold));
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-}
+.play-hero{text-align:center;margin-bottom:32px;padding:32px 24px;background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--border);border-radius:var(--r);}
+.play-hero h1{font-size:52px;line-height:0.95;background:linear-gradient(180deg,var(--gold-3),var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
 .play-hero .sub{color:var(--text-3);font-size:13px;margin-top:10px;}
 .play-modes{display:flex;flex-direction:column;gap:10px;}
-.play-mode{
-  padding:16px 18px;
-  background:var(--ink-2);
-  border:1px solid var(--border);border-radius:var(--r);
-  cursor:pointer;transition:all .15s;
-  display:flex;align-items:center;gap:14px;
-}
+.play-mode{padding:16px 18px;background:var(--ink-2);border:1px solid var(--border);border-radius:var(--r);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:14px;}
 .play-mode:hover{border-color:var(--gold);background:var(--ink-3);}
-.play-mode-icon{
-  width:40px;height:40px;border-radius:var(--r);
-  background:var(--ink-4);border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-  font-size:18px;flex:none;
-}
-.play-mode-info{}
+.play-mode-icon{width:40px;height:40px;border-radius:var(--r);background:var(--ink-4);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;flex:none;}
 .play-mode-title{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:0.04em;color:var(--gold-2);}
 .play-mode-sub{font-size:11px;color:var(--text-3);margin-top:2px;}
-.panel-section{
-  background:var(--ink-2);border:1px solid var(--border);border-radius:var(--r);
-  padding:20px;margin-top:16px;display:none;
-}
+.panel-section{background:var(--ink-2);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-top:16px;display:none;}
 .panel-section.show{display:block;}
 .room-link-row{display:flex;gap:8px;align-items:center;background:var(--ink-1);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px;margin-top:10px;}
 .room-link-row input{flex:1;background:transparent;border:none;color:var(--gold-2);font-family:'JetBrains Mono',monospace;font-size:12px;outline:none;text-overflow:ellipsis;}
@@ -317,72 +191,32 @@ h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:0.04em;}
 .back-link{font-size:12px;color:var(--text-3);text-align:center;cursor:pointer;margin-top:12px;text-decoration:underline;}
 .back-link:hover{color:var(--text);}
 
-/* ═══════════════════════════════════════════
-   GAME CONFIG (home screen)
-═══════════════════════════════════════════ */
-.config-card{
-  background:var(--ink-2);border:1px solid var(--border);border-radius:var(--r);
-  padding:28px 24px;max-width:500px;margin:0 auto;
-}
+.config-card{background:var(--ink-2);border:1px solid var(--border);border-radius:var(--r);padding:28px 24px;max-width:500px;margin:0 auto;}
 .config-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.04em;color:var(--gold-2);margin-bottom:20px;}
 .field-group{margin-bottom:22px;}
 .field-group label{display:flex;justify-content:space-between;align-items:baseline;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:10px;}
 .field-group label .val{font-family:'JetBrains Mono',monospace;color:var(--gold-2);font-size:14px;letter-spacing:0;text-transform:none;}
-input[type=range]{
-  -webkit-appearance:none;width:100%;height:2px;
-  background:var(--border);border-radius:1px;outline:none;
-}
-input[type=range]::-webkit-slider-thumb{
-  -webkit-appearance:none;width:16px;height:16px;border-radius:50%;
-  background:var(--gold-2);border:3px solid var(--ink);
-  box-shadow:0 0 0 1px var(--gold);cursor:pointer;
-}
+input[type=range]{-webkit-appearance:none;width:100%;height:2px;background:var(--border);border-radius:1px;outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--gold-2);border:3px solid var(--ink);box-shadow:0 0 0 1px var(--gold);cursor:pointer;}
 .chip-row{display:flex;flex-wrap:wrap;gap:6px;}
-.chip{
-  flex:1;min-width:36px;text-align:center;
-  padding:8px 4px;border:1px solid var(--border);border-radius:var(--r);
-  background:var(--ink-1);color:var(--text-3);
-  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
-  cursor:pointer;transition:all .12s;
-}
+.chip{flex:1;min-width:36px;text-align:center;padding:8px 4px;border:1px solid var(--border);border-radius:var(--r);background:var(--ink-1);color:var(--text-3);font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;cursor:pointer;transition:all .12s;}
 .chip:hover{border-color:var(--gold);}
 .chip.active{background:var(--gold);border-color:var(--gold);color:var(--ink);}
 .mode-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.mode-opt{
-  padding:14px 10px;border:1px solid var(--border);border-radius:var(--r);
-  background:var(--ink-1);text-align:center;cursor:pointer;transition:all .15s;
-}
+.mode-opt{padding:14px 10px;border:1px solid var(--border);border-radius:var(--r);background:var(--ink-1);text-align:center;cursor:pointer;transition:all .15s;}
 .mode-opt:hover{border-color:var(--gold);}
 .mode-opt.active{border-color:var(--gold);background:rgba(201,145,42,0.07);}
 .mode-opt-title{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:0.04em;color:var(--gold-2);}
 .mode-opt-sub{font-size:10px;color:var(--text-3);margin-top:3px;}
 
-/* ═══════════════════════════════════════════
-   ONLINE PILL
-═══════════════════════════════════════════ */
-.online-pill{
-  position:fixed;top:68px;right:12px;
-  background:var(--ink-2);border:1px solid var(--gold);border-radius:20px;
-  padding:5px 12px;font-size:11px;font-family:'JetBrains Mono',monospace;
-  color:var(--gold-2);z-index:300;display:none;align-items:center;gap:6px;
-}
+.online-pill{position:fixed;top:68px;right:12px;background:var(--ink-2);border:1px solid var(--gold);border-radius:20px;padding:5px 12px;font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--gold-2);z-index:300;display:none;align-items:center;gap:6px;}
 .online-pill.show{display:flex;}
 
-/* ═══════════════════════════════════════════
-   WAIT SCREEN
-═══════════════════════════════════════════ */
-#waitPage{
-  min-height:100vh;display:none;
-  align-items:center;justify-content:center;
-  flex-direction:column;gap:16px;text-align:center;
-}
+#waitPage{min-height:100vh;display:none;align-items:center;justify-content:center;flex-direction:column;gap:16px;text-align:center;}
 #waitPage.show{display:flex;}
 .spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .9s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
-/* ═══════════════════════════════════════════
-   GAME (AUCTION)
-═══════════════════════════════════════════ */
 #gamePage{min-height:100vh;padding:76px 16px 20px;display:none;}
 #gamePage.show{display:block;}
 .game-topbar{max-width:1100px;margin:0 auto 16px;display:flex;justify-content:space-between;align-items:center;}
@@ -401,46 +235,21 @@ input[type=range]::-webkit-slider-thumb{
 .roster-budget{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--gold-2);}
 .roster-list{display:flex;flex-direction:column;gap:6px;min-height:50px;}
 .roster-empty{color:var(--text-3);font-size:11px;padding:12px 0;text-align:center;border:1px dashed var(--border);border-radius:var(--r);}
-.roster-item{display:flex;align-items:center;gap:8px;background:var(--ink-1);border:1px solid var(--border);border-radius:var(--r);padding:6px 8px;}
-.roster-item.eliminated{opacity:0.3;filter:grayscale(1);}
+.roster-item{display:flex;align-items:center;gap:8px;background:var(--ink-1);border:1px solid var(--border);border-radius:var(--r);padding:6px 8px;flex-wrap:wrap;}
 .roster-price{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);font-weight:700;}
-.hero-avatar{width:30px;height:30px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:12px;color:var(--ink);flex:none;}
-.hero-avatar img{width:100%;height:100%;object-fit:cover;}
+.hero-avatar{width:30px;height:30px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:12px;color:var(--ink);flex:none;background:var(--gold-2);}
 .hero-avatar.big{width:88px;height:88px;font-size:30px;}
 .hero-avatar.mid{width:58px;height:58px;font-size:20px;}
-.hname{font-size:12px;font-weight:600;line-height:1.2;}
-.hfr{font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;}
 
-/* Stage */
-.stage{
-  background:linear-gradient(180deg,var(--ink-3),var(--ink-2));
-  border:1px solid var(--border);border-radius:var(--r);
-  padding:24px;text-align:center;min-height:400px;
-  display:flex;flex-direction:column;position:relative;
-}
+.stage{background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--border);border-radius:var(--r);padding:24px;text-align:center;min-height:400px;display:flex;flex-direction:column;position:relative;}
 .stage-label{font-size:9px;letter-spacing:0.4em;text-transform:uppercase;color:var(--text-3);margin-bottom:20px;}
 .hero-franchise-tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;font-weight:700;margin-top:6px;}
-.tag-dc{background:rgba(46,95,163,0.15);color:var(--azure-2);border:1px solid rgba(46,95,163,0.35);}
-.tag-marvel{background:rgba(184,50,50,0.15);color:var(--crimson-2);border:1px solid rgba(184,50,50,0.35);}
-.tag-boys{background:rgba(42,138,106,0.15);color:#52C09A;border:1px solid rgba(42,138,106,0.35);}
-.tag-myth{background:rgba(108,95,199,0.15);color:#9B8EE8;border:1px solid rgba(108,95,199,0.35);}
 .hero-name-row{font-family:'Bebas Neue',sans-serif;font-size:34px;letter-spacing:0.02em;margin-top:10px;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px;}
 .tier-badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;padding:2px 6px;border-radius:2px;}
 .tier-S{background:rgba(245,204,106,0.18);color:var(--gold-3);border:1px solid rgba(245,204,106,0.45);}
 .tier-A{background:rgba(46,95,163,0.18);color:#7FAEE6;border:1px solid rgba(46,95,163,0.45);}
-.tier-B{background:rgba(42,138,106,0.18);color:#52C09A;border:1px solid rgba(42,138,106,0.45);}
-.tier-C{background:rgba(160,160,170,0.18);color:#B0B8C8;border:1px solid rgba(160,160,170,0.45);}
-.stats-row{display:flex;justify-content:center;gap:8px;margin-top:12px;flex-wrap:wrap;}
-.mini-stat{font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 6px;border-radius:2px;background:var(--ink-4);border:1px solid var(--border);}
-.mini-stat.g{color:var(--crimson-2);}
-.mini-stat.s{color:#4CAF50;}
-.mini-stat.m{color:var(--azure-2);}
-.mini-stat.c{color:var(--violet);}
-.price-board{
-  margin:16px auto 8px;display:inline-flex;align-items:baseline;gap:8px;
-  padding:10px 22px;border:1px solid var(--gold);border-radius:var(--r);
-  background:rgba(201,145,42,0.06);
-}
+
+.price-board{margin:16px auto 8px;display:inline-flex;align-items:baseline;gap:8px;padding:10px 22px;border:1px solid var(--gold);border-radius:var(--r);background:rgba(201,145,42,0.06);}
 .price-label{font-size:10px;color:var(--text-3);letter-spacing:0.15em;text-transform:uppercase;}
 .price-amount{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;color:var(--gold-2);}
 .leader-note{font-size:12px;color:var(--text-3);min-height:18px;margin-bottom:8px;}
@@ -450,291 +259,79 @@ input[type=range]::-webkit-slider-thumb{
 .bid-who{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:0.04em;}
 .bid-col.p1 .bid-who{color:var(--azure-2);}
 .bid-col.p2 .bid-who{color:var(--crimson-2);}
-.bid-btn-p1{border-color:var(--azure-2);color:var(--azure-2);}
-.bid-btn-p1:hover:not(:disabled){background:var(--azure-2);color:#fff;}
-.bid-btn-p2{border-color:var(--crimson-2);color:var(--crimson-2);}
-.bid-btn-p2:hover:not(:disabled){background:var(--crimson-2);color:#fff;}
-.flash-overlay{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  background:rgba(8,12,20,0.92);border-radius:var(--r);
-  opacity:0;pointer-events:none;transition:opacity .22s;
-}
+
+.flash-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(8,12,20,0.92);border-radius:var(--r);opacity:0;pointer-events:none;transition:opacity .22s;}
 .flash-overlay.show{opacity:1;pointer-events:auto;}
 .flash-content{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--gold-2);text-align:center;line-height:1.3;}
-.flash-content .small{display:block;font-family:'Inter',sans-serif;font-size:12px;color:var(--text-3);margin-top:6px;font-weight:600;}
 
-/* ═══════════════════════════════════════════
-   WHEEL GAME
-═══════════════════════════════════════════ */
 #wheelPage{min-height:100vh;padding:76px 16px 20px;display:none;}
 #wheelPage.show{display:block;}
-.wheel-stage{
-  background:linear-gradient(180deg,var(--ink-3),var(--ink-2));
-  border:1px solid var(--border);border-radius:var(--r);
-  padding:24px;text-align:center;min-height:400px;
-  display:flex;flex-direction:column;align-items:center;
-  position:relative;
-}
+.wheel-stage{background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--border);border-radius:var(--r);padding:24px;text-align:center;min-height:400px;display:flex;flex-direction:column;align-items:center;position:relative;}
 .wheel-turn-label{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.04em;margin-top:20px;}
 .wheel-turn-label.p1{color:var(--azure-2);}
 .wheel-turn-label.p2{color:var(--crimson-2);}
-.wheel-progress-text{color:var(--text-3);font-size:10px;letter-spacing:0.15em;text-transform:uppercase;margin-top:4px;}
 .wheel-outer{position:relative;width:280px;height:280px;margin:20px auto 16px;}
-.wheel-pointer{position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-top:18px solid var(--gold-2);z-index:5;filter:drop-shadow(0 2px 3px rgba(0,0,0,.5));}
-.wheel-hub{position:absolute;top:50%;left:50%;width:22px;height:22px;transform:translate(-50%,-50%);background:var(--gold-2);border:3px solid var(--ink);border-radius:50%;z-index:4;box-shadow:0 0 0 2px var(--gold);}
-.wheel-spinner{width:100%;height:100%;border-radius:50%;box-shadow:0 0 0 4px var(--ink),0 0 0 6px var(--border),0 20px 40px rgba(0,0,0,.5);}
-.wheel-spinner svg{display:block;width:100%;height:100%;}
-.spin-btn{padding:12px 36px;border:none;border-radius:var(--r);background:var(--gold);color:var(--ink);font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:0.08em;cursor:pointer;margin-top:4px;}
-.spin-btn:hover:not(:disabled){background:var(--gold-2);}
-.spin-btn:disabled{opacity:0.3;cursor:not-allowed;}
-.wheel-result{margin-top:12px;min-height:18px;font-size:12px;color:var(--text-3);}
-.wheel-result b{color:var(--gold-2);}
-.wheel-watching{margin-top:8px;padding:7px 14px;background:rgba(201,145,42,0.09);border:1px solid rgba(201,145,42,0.25);border-radius:var(--r);font-size:11px;color:var(--gold);display:none;}
+.wheel-pointer{position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-top:18px solid var(--gold-2);z-index:5;}
+.wheel-hub{position:absolute;top:50%;left:50%;width:22px;height:22px;transform:translate(-50%,-50%);background:var(--gold-2);border:3px solid var(--ink);border-radius:50%;z-index:4;}
+.wheel-spinner{width:100%;height:100%;border-radius:50%;box-shadow:0 0 0 4px var(--ink),0 0 0 6px var(--border);transition:transform 3s cubic-bezier(0.15,0.9,0.2,1);background:conic-gradient(from 0deg,#B83232 0 90deg,#2E5FA3 90deg 180deg,#6C5FC7 180deg 270deg,#2A8A6A 270deg 360deg);}
+.spin-btn{padding:12px 36px;border:none;border-radius:var(--r);background:var(--gold);color:var(--ink);font-family:'Bebas Neue',sans-serif;font-size:18px;cursor:pointer;}
 
-/* ═══════════════════════════════════════════
-   BATTLE
-═══════════════════════════════════════════ */
 #battlePage{min-height:100vh;padding:76px 16px 20px;display:none;}
 #battlePage.show{display:block;}
 .battle-wrap{max-width:960px;margin:0 auto;}
 .battle-head{text-align:center;margin-bottom:8px;}
-.battle-eyebrow{color:var(--gold);font-size:11px;letter-spacing:0.3em;text-transform:uppercase;font-weight:700;}
 .battle-title{font-size:40px;margin-top:4px;}
 .team-tally{display:flex;justify-content:center;gap:24px;font-family:'JetBrains Mono',monospace;font-size:13px;margin:10px 0 22px;}
-.team-tally .t1{color:var(--azure-2);font-weight:700;}
-.team-tally .t2{color:var(--crimson-2);font-weight:700;}
-.arena{
-  background:linear-gradient(180deg,var(--ink-3),var(--ink-2));
-  border:1px solid var(--border);border-radius:var(--r);
-  padding:28px 20px;min-height:320px;
-}
+.arena{background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--border);border-radius:var(--r);padding:28px 20px;min-height:320px;}
 .fighters-row{display:grid;grid-template-columns:1fr 80px 1fr;align-items:center;gap:8px;}
 .fighter{text-align:center;}
 .fighter-name{font-family:'Bebas Neue',sans-serif;font-size:22px;margin-top:8px;}
-.fighter.left .fighter-name{color:var(--azure-2);}
-.fighter.right .fighter-name{color:var(--crimson-2);}
-.fighter-fr{font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.08em;margin-top:2px;}
-.fighter-bio{font-size:10px;color:var(--text-3);margin-top:6px;line-height:1.4;max-width:170px;margin-left:auto;margin-right:auto;font-style:italic;}
-.fighter-stats{max-width:160px;margin:12px auto 0;}
 .vs-mark{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--gold);text-align:center;}
-.vscore{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-3);margin-top:4px;}
-.fighter-score{margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:var(--gold-2);min-height:22px;}
 .hp-track{max-width:160px;margin:6px auto 0;height:5px;background:var(--border);border-radius:2px;overflow:hidden;}
 .hp-fill{height:100%;background:var(--crimson-2);border-radius:2px;transition:width .5s;}
-.hp-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-3);margin-top:3px;}
-.battle-log{margin-top:18px;max-height:120px;overflow-y:auto;border-top:1px solid var(--border);padding-top:10px;}
+.battle-log{margin-top:18px;max-height:140px;overflow-y:auto;border-top:1px solid var(--border);padding-top:10px;}
 .log-item{display:flex;justify-content:space-between;font-size:11px;color:var(--text-3);padding:3px 2px;font-family:'JetBrains Mono',monospace;}
-.log-item b{color:var(--text);font-weight:700;}
-.next-fight-btn{display:block;margin:18px auto 0;padding:12px 28px;border:none;border-radius:var(--r);background:var(--gold);color:var(--ink);font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:0.06em;cursor:pointer;}
-.next-fight-btn:hover{background:var(--gold-2);}
-.next-fight-btn:disabled{opacity:0.4;cursor:not-allowed;}
-.champion-banner{display:none;text-align:center;margin-top:14px;}
-.cb-label{color:var(--gold);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;font-weight:700;}
-.champion-banner h2{font-family:'Bebas Neue',sans-serif;font-size:36px;margin-top:4px;}
-.champion-banner p{color:var(--text-3);font-size:12px;margin-top:4px;}
+.next-fight-btn{display:block;margin:18px auto 0;padding:12px 28px;border:none;border-radius:var(--r);background:var(--gold);color:var(--ink);font-family:'Bebas Neue',sans-serif;font-size:16px;cursor:pointer;}
 
-/* ═══════════════════════════════════════════
-   END SCREEN
-═══════════════════════════════════════════ */
 #endPage{display:none;padding:76px 16px 40px;}
 #endPage.show{display:block;}
 .end-wrap{max-width:600px;margin:0 auto;text-align:center;}
 .end-title{font-size:40px;color:var(--gold-2);}
 .end-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0;text-align:left;}
-.coin-reward-banner{
-  padding:16px 20px;
-  background:var(--coin-bg);
-  border:1px solid rgba(245,204,106,0.3);
-  border-radius:var(--r);
-  margin-top:14px;
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.06em;color:var(--gold-2);
-}
 
-/* ═══════════════════════════════════════════
-   PROFILE PAGE
-═══════════════════════════════════════════ */
-#profilePage{padding:76px 16px 40px;}
-.profile-wrap{max-width:800px;margin:0 auto;}
-.profile-header{
-  background:linear-gradient(135deg,var(--ink-3),var(--ink-2));
-  border:1px solid var(--border);border-radius:var(--r);
-  padding:28px;display:flex;gap:24px;align-items:flex-start;
-  margin-bottom:20px;
-}
-@media(max-width:600px){.profile-header{flex-direction:column;align-items:center;text-align:center;}}
-.profile-avatar-wrap{position:relative;flex:none;}
-.profile-big-avatar{
-  width:96px;height:96px;border-radius:50%;
-  overflow:hidden;display:flex;align-items:center;justify-content:center;
-  font-size:36px;font-family:'Bebas Neue',sans-serif;
-  background:var(--ink-4);
-}
-.profile-big-avatar img{width:100%;height:100%;object-fit:cover;}
-.profile-frame-ring{
-  position:absolute;inset:-4px;border-radius:50%;
-  border:3px solid transparent;
-  pointer-events:none;
-}
-.profile-info{flex:1;}
-.profile-username{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.04em;}
-.profile-title-badge{margin-top:4px;}
-.profile-stats-row{display:flex;gap:16px;margin-top:14px;flex-wrap:wrap;}
-.profile-stat{text-align:center;}
-.profile-stat-val{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:var(--gold-2);}
-.profile-stat-label{font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.08em;margin-top:2px;}
-.profile-tabs{display:flex;gap:4px;margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:0;}
-.profile-tab{
-  padding:10px 16px;font-size:12px;font-weight:700;letter-spacing:0.06em;
-  text-transform:uppercase;color:var(--text-3);cursor:pointer;
-  border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;
-}
-.profile-tab.active{color:var(--gold-2);border-bottom-color:var(--gold);}
-.profile-panel{display:none;}
-.profile-panel.active{display:block;}
-
-/* Edit form */
-.edit-form{background:var(--ink-2);border:1px solid var(--border);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;gap:16px;}
-.edit-avatar-row{display:flex;align-items:center;gap:14px;}
-.avatar-options{display:flex;gap:8px;flex-wrap:wrap;}
-.avatar-opt{
-  width:44px;height:44px;border-radius:50%;
-  border:2px solid var(--border);cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  font-size:20px;transition:border-color .12s;
-}
-.avatar-opt:hover{border-color:var(--gold);}
-.avatar-opt.selected{border-color:var(--gold-2);}
-
-/* ═══════════════════════════════════════════
-   SHOP PAGE
-═══════════════════════════════════════════ */
-#shopPage{padding:76px 16px 40px;}
-.shop-wrap{max-width:900px;margin:0 auto;}
-.shop-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
-.shop-title{font-size:36px;color:var(--gold-2);}
-.shop-tabs{display:flex;gap:4px;margin-bottom:16px;border-bottom:1px solid var(--border);}
-.shop-tab{padding:10px 16px;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;}
-.shop-tab.active{color:var(--gold-2);border-bottom-color:var(--gold);}
-.shop-panel{display:none;}
-.shop-panel.active{display:block;}
-.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;}
-.shop-item{
-  background:var(--ink-2);border:1px solid var(--border);border-radius:var(--r);
-  padding:18px 14px;text-align:center;transition:border-color .15s;
-  display:flex;flex-direction:column;align-items:center;gap:10px;
-}
-.shop-item:hover{border-color:var(--border-bright);}
-.shop-item.owned{border-color:var(--mint);}
-.shop-item.equipped{border-color:var(--gold);}
-.shop-item-preview{width:72px;height:72px;border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:28px;border:4px solid transparent;}
-.shop-item-name{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:0.04em;color:var(--gold-2);}
-.shop-item-desc{font-size:10px;color:var(--text-3);line-height:1.4;}
-.shop-item-price{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--coin);}
-.shop-item-status{font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;}
-.shop-item-status.owned{color:#4CAF50;}
-.shop-item-status.equipped{color:var(--gold-2);}
-
-/* Hero Collection Shop */
-.hero-shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;}
-.hero-shop-card{
-  background:var(--ink-2);border:1px solid var(--border);border-radius:var(--r);
-  padding:16px 12px;text-align:center;transition:all .15s;
-  display:flex;flex-direction:column;align-items:center;gap:8px;
-}
-.hero-shop-card:hover{border-color:var(--border-bright);}
-.hero-shop-card.owned{border-color:var(--mint);opacity:0.7;}
-.hero-card-avatar{width:64px;height:64px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--ink);}
-.hero-card-avatar img{width:100%;height:100%;object-fit:cover;}
-.hero-card-name{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:0.04em;color:var(--gold-2);}
-.hero-card-fr{font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;}
-.hero-card-price{display:flex;align-items:center;gap:4px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--coin);}
-
-/* ═══════════════════════════════════════════
-   COLLECTION PAGE
-═══════════════════════════════════════════ */
-#collectionPage{padding:76px 16px 40px;}
-.collection-wrap{max-width:900px;margin:0 auto;}
-.collection-title{font-size:36px;color:var(--gold-2);margin-bottom:20px;}
-.collection-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}
-.collection-card{
-  background:var(--ink-2);border:1px solid var(--border);border-radius:var(--r);
-  padding:16px 12px;text-align:center;
-  display:flex;flex-direction:column;align-items:center;gap:8px;
-}
-.collection-card.empty{opacity:0.3;filter:grayscale(1);}
-
-/* ═══════════════════════════════════════════
-   TOAST
-═══════════════════════════════════════════ */
-.toast{
-  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);
-  background:var(--ink-3);border:1px solid var(--border);border-radius:var(--r);
-  padding:10px 18px;font-size:13px;font-weight:600;
-  z-index:9999;transition:transform .3s;pointer-events:none;
-  white-space:nowrap;max-width:90vw;
-}
+#profilePage,#shopPage,#collectionPage{padding:76px 16px 40px;display:none;}
+#profilePage.show,#shopPage.show,#collectionPage.show{display:block;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--ink-3);border:1px solid var(--border);border-radius:var(--r);padding:10px 18px;font-size:13px;font-weight:600;z-index:9999;transition:transform .3s;pointer-events:none;}
 .toast.show{transform:translateX(-50%) translateY(0);}
-.toast.gold{border-color:var(--gold);color:var(--gold-2);}
-.toast.green{border-color:var(--mint);color:#52C09A;}
-.toast.red{border-color:var(--crimson);color:var(--crimson-2);}
 
-/* ═══════════════════════════════════════════
-   CHAT
-═══════════════════════════════════════════ */
-.chat-toggle{position:fixed;bottom:20px;right:20px;width:48px;height:48px;border-radius:50%;background:var(--gold);color:var(--ink);display:none;align-items:center;justify-content:center;font-size:20px;cursor:pointer;z-index:400;box-shadow:0 6px 18px rgba(0,0,0,.45);}
-.chat-toggle.unread::after{content:"";position:absolute;top:0;right:0;width:12px;height:12px;border-radius:50%;background:var(--crimson-2);border:2px solid var(--ink);}
-.chat-panel{position:fixed;bottom:80px;right:20px;width:280px;max-height:360px;background:var(--ink-2);border:1px solid var(--border);border-radius:var(--r);display:none;flex-direction:column;z-index:400;box-shadow:0 10px 30px rgba(0,0,0,.5);overflow:hidden;}
+.chat-toggle{position:fixed;bottom:20px;right:20px;width:48px;height:48px;border-radius:50%;background:var(--gold);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;z-index:400;}
+.chat-panel{position:fixed;bottom:80px;right:20px;width:280px;max-height:360px;background:var(--ink-2);border:1px solid var(--border);border-radius:var(--r);display:none;flex-direction:column;z-index:400;}
 .chat-panel.open{display:flex;}
-.chat-header{padding:10px 12px;background:var(--ink-3);font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:0.04em;display:flex;justify-content:space-between;align-items:center;color:var(--gold-2);}
-.chat-close{cursor:pointer;color:var(--text-3);font-size:13px;padding:2px 6px;}
+.chat-header{padding:10px 12px;background:var(--ink-3);font-family:'Bebas Neue',sans-serif;font-size:15px;color:var(--gold-2);display:flex;justify-content:space-between;}
 .chat-messages{flex:1;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:5px;max-height:240px;}
-.chat-msg{max-width:82%;padding:6px 10px;border-radius:8px;font-size:12px;line-height:1.35;word-break:break-word;}
-.chat-msg.mine{align-self:flex-end;background:var(--azure-2);color:#fff;border-bottom-right-radius:2px;}
-.chat-msg.theirs{align-self:flex-start;background:var(--ink-1);border:1px solid var(--border);color:var(--text);border-bottom-left-radius:2px;}
+.chat-msg{max-width:82%;padding:6px 10px;border-radius:8px;font-size:12px;}
+.chat-msg.mine{align-self:flex-end;background:var(--azure-2);color:#fff;}
+.chat-msg.theirs{align-self:flex-start;background:var(--ink-1);color:var(--text);}
 .chat-input-row{display:flex;border-top:1px solid var(--border);}
-.chat-input-row input{flex:1;min-width:0;padding:9px;background:transparent;border:none;color:var(--text);font-size:12px;outline:none;font-family:'Inter',sans-serif;}
-.chat-input-row button{padding:0 14px;border:none;background:var(--gold);color:var(--ink);font-weight:700;font-size:12px;cursor:pointer;}
+.chat-input-row input{flex:1;padding:9px;background:transparent;border:none;color:var(--text);font-size:12px;outline:none;}
+.chat-input-row button{padding:0 14px;border:none;background:var(--gold);color:var(--ink);font-weight:700;cursor:pointer;}
 
-/* ═══════════════════════════════════════════
-   SOUND TOGGLE
-═══════════════════════════════════════════ */
-.sound-toggle{position:fixed;bottom:20px;left:20px;z-index:400;width:38px;height:38px;border-radius:50%;background:var(--ink-2);border:1px solid var(--border);color:var(--gold-2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;transition:all .15s;}
-.sound-toggle:hover{border-color:var(--gold);}
-.sound-toggle.muted{color:var(--text-3);}
-
-/* ═══════════════════════════════════════════
-   LANG SWITCH
-═══════════════════════════════════════════ */
+.sound-toggle{position:fixed;bottom:20px;left:20px;z-index:400;width:38px;height:38px;border-radius:50%;background:var(--ink-2);border:1px solid var(--border);color:var(--gold-2);display:flex;align-items:center;justify-content:center;cursor:pointer;}
 .lang-switch{position:fixed;top:68px;left:12px;z-index:300;display:flex;gap:3px;background:var(--ink-2);border:1px solid var(--border);border-radius:20px;padding:3px;}
-.lang-btn{padding:4px 10px;border-radius:16px;border:none;background:transparent;color:var(--text-3);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;cursor:pointer;letter-spacing:0.03em;}
-.lang-btn:hover{color:var(--text);}
+.lang-btn{padding:4px 10px;border-radius:16px;border:none;background:transparent;color:var(--text-3);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;cursor:pointer;}
 .lang-btn.active{background:var(--gold);color:var(--ink);}
-
-/* ═══════════════════════════════════════════
-   MISC RESPONSIVE
-═══════════════════════════════════════════ */
-@media(max-width:500px){
-  .play-wrap{padding:20px 14px;}
-  .config-card{padding:20px 16px;}
-  .auth-card{padding:28px 20px;}
-  .stage,.wheel-stage,.arena{padding:18px 12px;}
-  .price-amount{font-size:22px;}
-}
 </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav id="navbar">
   <div class="nav-logo">HTB</div>
   <div class="nav-spacer"></div>
   <div class="nav-links">
-    <div class="nav-link" id="navPlay" onclick="showPage('playPage')">⚔️ Oyna</div>
-    <div class="nav-link" id="navCollection" onclick="showPage('collectionPage')">🗡️ Kolleksiya</div>
-    <div class="nav-link" id="navShop" onclick="showPage('shopPage')">🏪 Mağaza</div>
-    <div class="nav-link" id="navProfile" onclick="showPage('profilePage')">👤 Profil</div>
+    <div class="nav-link active" onclick="showPage('playPage')">⚔️ Oyna</div>
+    <div class="nav-link" onclick="showPage('collectionPage')">🗡️ Kolleksiya</div>
+    <div class="nav-link" onclick="showPage('shopPage')">🏪 Mağaza</div>
+    <div class="nav-link" onclick="showPage('profilePage')">👤 Profil</div>
   </div>
   <div id="navCoinDisplay" class="coin-display" style="margin-left:10px;">
     <span class="coin-icon">🪙</span><span id="navCoins">0</span>
@@ -742,36 +339,28 @@ input[type=range]::-webkit-slider-thumb{
   <div class="nav-avatar" id="navAvatar" onclick="showPage('profilePage')" style="margin-left:8px;">👤</div>
 </nav>
 
-<!-- ONLINE PILL -->
 <div class="online-pill" id="onlinePill">🟢 <span id="onlinePillText">Onlayn</span></div>
 
-<!-- LANG SWITCH -->
 <div class="lang-switch" id="langSwitch">
-  <button class="lang-btn active" data-lang="az">AZ</button>
-  <button class="lang-btn" data-lang="tr">TR</button>
-  <button class="lang-btn" data-lang="en">EN</button>
+  <button class="lang-btn active" onclick="setLang('az')">AZ</button>
+  <button class="lang-btn" onclick="setLang('tr')">TR</button>
+  <button class="lang-btn" onclick="setLang('en')">EN</button>
 </div>
 
-<!-- CHAT -->
-<div class="chat-toggle" id="chatToggle">💬</div>
+<div class="chat-toggle" id="chatToggle" onclick="toggleChat()">💬</div>
 <div class="chat-panel" id="chatPanel">
-  <div class="chat-header">Söhbət <span class="chat-close" id="chatClose">✕</span></div>
+  <div class="chat-header">Söhbət <span style="cursor:pointer;" onclick="toggleChat()">✕</span></div>
   <div class="chat-messages" id="chatMessages"></div>
   <div class="chat-input-row">
     <input type="text" id="chatInput" placeholder="Mesaj yaz..." maxlength="300">
-    <button id="chatSendBtn">→</button>
+    <button id="chatSendBtn" onclick="sendChatMessage()">→</button>
   </div>
 </div>
 
-<!-- SOUND -->
-<div class="sound-toggle" id="soundToggle">🔊</div>
-
-<!-- TOAST -->
+<div class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</div>
 <div class="toast" id="toast"></div>
 
-<!-- ══════════════════════════════════════════════
-     AUTH PAGE
-══════════════════════════════════════════════ -->
+<!-- AUTH PAGE -->
 <div id="authPage">
   <div class="auth-card">
     <div class="auth-logo-row">
@@ -780,15 +369,15 @@ input[type=range]::-webkit-slider-thumb{
       <div class="auth-sub">Qeydiyyatdan keç, nəticələrini izlə</div>
     </div>
     <div class="auth-tabs">
-      <div class="auth-tab active" onclick="switchAuthTab('login')">Giriş</div>
-      <div class="auth-tab" onclick="switchAuthTab('register')">Qeydiyyat</div>
+      <div class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">Giriş</div>
+      <div class="auth-tab" id="tabRegister" onclick="switchAuthTab('register')">Qeydiyyat</div>
     </div>
-    <div class="auth-form" id="authForm">
+    <div class="auth-form">
       <div>
         <div class="label">İstifadəçi adı</div>
         <input class="input" type="text" id="authUsername" placeholder="İstifadəçi adın...">
       </div>
-      <div id="authEmailRow">
+      <div id="authEmailRow" style="display:none;">
         <div class="label">E-mail (Gmail)</div>
         <input class="input" type="email" id="authEmail" placeholder="sən@gmail.com">
       </div>
@@ -799,21 +388,15 @@ input[type=range]::-webkit-slider-thumb{
       <div id="authError" class="auth-error"></div>
       <button class="btn btn-primary btn-full" onclick="handleAuth()">GİRİŞ</button>
       <div class="auth-divider">və ya</div>
-      <button class="auth-google-btn" onclick="handleGoogleAuth()">
-        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.3 29.3 35 24 35c-6.1 0-11-4.9-11-11s4.9-11 11-11c2.8 0 5.3 1 7.2 2.7l5.7-5.7C33.5 7.3 29 5.5 24 5.5 13.2 5.5 4.5 14.2 4.5 25S13.2 44.5 24 44.5 43.5 35.8 43.5 25c0-1.7-.2-3.3-.5-4.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16.1 19 13 24 13c2.8 0 5.3 1 7.2 2.7l5.7-5.7C33.5 7.3 29 5.5 24 5.5c-7.7 0-14.3 4.4-17.7 10.9v-.7z"/><path fill="#4CAF50" d="M24 44.5c4.9 0 9.3-1.8 12.7-4.7l-6.2-5.2C28.8 36.3 26.5 37 24 37c-5.3 0-9.7-3.5-11.3-8.3l-6.6 5.1C9.5 40 16.2 44.5 24 44.5z"/><path fill="#1565C0" d="M43.6 20.1H42V20H24v8h11.3c-.7 2.1-2 3.9-3.7 5.2l6.2 5.2C37.5 39.5 43.5 33 43.5 25c0-1.7-.2-3.3-.5-4.9z"/></svg>
-        Google ilə davam et
-      </button>
+      <button class="auth-google-btn" onclick="handleGoogleAuth()">Google ilə davam et</button>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════
-     PLAY PAGE (Lobby + Config)
-══════════════════════════════════════════════ -->
+<!-- PLAY PAGE -->
 <div id="playPage" class="page">
   <div class="page-center">
     <div class="play-wrap" style="width:100%;">
-      <!-- Lobby select -->
       <div id="lobbySelect">
         <div class="play-hero">
           <h1>KAHRAMAN<br>SAVAŞI</h1>
@@ -822,76 +405,51 @@ input[type=range]::-webkit-slider-thumb{
         <div class="play-modes">
           <div class="play-mode" onclick="selectMode('local')">
             <div class="play-mode-icon">🖥️</div>
-            <div class="play-mode-info">
+            <div>
               <div class="play-mode-title">EYNİ CİHAZ</div>
               <div class="play-mode-sub">İki oyuncu eyni ekranda növbə ilə oynayır</div>
             </div>
           </div>
-          <div class="play-mode" onclick="selectMode('matchmaking')">
-            <div class="play-mode-icon">🎲</div>
-            <div class="play-mode-info">
-              <div class="play-mode-title">TEZ OYUN (RANDOM)</div>
-              <div class="play-mode-sub">Sistem sənə avtomatik rəqib tapsın</div>
-            </div>
-          </div>
           <div class="play-mode" onclick="selectMode('create')">
             <div class="play-mode-icon">🔗</div>
-            <div class="play-mode-info">
+            <div>
               <div class="play-mode-title">OTAQ YARAT</div>
-              <div class="play-mode-sub">Sən Oyuncu 1 olursan, 4 rəqəmli kod yaradıb göndər</div>
+              <div class="play-mode-sub">4 rəqəmli kod yaradıb dostunla oyna</div>
             </div>
           </div>
           <div class="play-mode" onclick="selectMode('join')">
             <div class="play-mode-icon">📎</div>
-            <div class="play-mode-info">
+            <div>
               <div class="play-mode-title">OTAĞA QOŞUL</div>
               <div class="play-mode-sub">Sənə göndərilən 4 rəqəmli koddan qoşul</div>
             </div>
           </div>
           <div class="play-mode" onclick="selectMode('bot')">
             <div class="play-mode-icon">🤖</div>
-            <div class="play-mode-info">
+            <div>
               <div class="play-mode-title">BOTA QARŞI</div>
               <div class="play-mode-sub">Tək oyna, rəqibi süni intellekt idarə etsin</div>
             </div>
           </div>
         </div>
 
-        <!-- Create panel -->
         <div class="panel-section" id="createPanel">
           <div class="status-row"><span class="dot" id="createDot"></span><span id="createStatusText">Otaq yaradılır...</span></div>
-          <div class="room-link-row"><input type="text" id="roomLinkInput" readonly style="text-align:center;letter-spacing:0.4em;font-size:20px;font-weight:700;"><button class="btn btn-sm" id="copyLinkBtn">Kopyala</button></div>
+          <div class="room-link-row"><input type="text" id="roomLinkInput" readonly style="text-align:center;letter-spacing:0.4em;font-size:20px;font-weight:700;"><button class="btn btn-sm" onclick="copyCode()">Kopyala</button></div>
           <div class="back-link" onclick="backToLobby()">‹ Geri</div>
         </div>
 
-        <!-- Join panel -->
         <div class="panel-section" id="joinPanel">
           <div class="label">Otaq kodu (4 rəqəm)</div>
-          <input type="text" class="input" id="joinCodeInput" placeholder="4 rəqəmli kod" maxlength="4" inputmode="numeric" style="margin-top:4px;text-align:center;letter-spacing:0.3em;font-family:'JetBrains Mono',monospace;font-size:20px;">
+          <input type="text" class="input" id="joinCodeInput" placeholder="4 rəqəmli kod" maxlength="4" style="text-align:center;letter-spacing:0.3em;font-size:20px;">
           <button class="btn btn-primary btn-full" onclick="doJoin()" style="margin-top:10px;">QOŞUL</button>
-          <div class="status-row" style="margin-top:8px;"><span class="dot" id="joinDot"></span><span id="joinStatusText">Kod daxil edin</span></div>
           <div class="back-link" onclick="backToLobby()">‹ Geri</div>
-        </div>
-
-        <!-- Matchmaking panel -->
-        <div class="panel-section" id="matchmakingPanel">
-          <div style="text-align:center;">
-            <div class="spinner" style="margin:6px auto 14px;"></div>
-            <div style="font-size:14px;font-weight:600;" id="matchmakingText">Rəqib axtarılır...</div>
-            <div style="font-size:11px;color:var(--text-3);margin-top:6px;" id="matchmakingSub">Zəhmət olmasa gözlə, tapan kimi qoşulacaqsan</div>
-          </div>
-          <div class="back-link" onclick="cancelMatchmaking()">‹ İmtina et</div>
         </div>
       </div>
 
-      <!-- Game config -->
       <div id="gameConfig" style="display:none;">
         <div class="config-card">
           <div class="config-title">Oyun Tənzimləmələri</div>
-          <div id="hostStatusArea" style="display:none;margin-bottom:18px;">
-            <div class="status-row"><span class="dot on" id="hostDot"></span><span id="hostStatusText">Oyuncu 2 gözlənilir...</span></div>
-            <div class="room-link-row" style="margin-top:8px;"><input type="text" id="hostLinkInput" readonly style="text-align:center;letter-spacing:0.4em;font-size:20px;font-weight:700;"><button class="btn btn-sm" id="hostCopyBtn">Kopyala</button></div>
-          </div>
           <div class="field-group">
             <label>Oyun rejimi</label>
             <div class="mode-toggle">
@@ -908,73 +466,56 @@ input[type=range]::-webkit-slider-thumb{
           <div id="budgetField">
             <div class="field-group">
               <label>Başlanğıc büdcə <span class="val mono" id="budgetVal">$50</span></label>
-              <input type="range" id="budgetRange" min="10" max="100" step="10" value="50">
-            </div>
-            <div class="field-group">
-              <label>Təklif artım addımı</label>
-              <div class="chip-row" id="incRow"></div>
+              <input type="range" id="budgetRange" min="10" max="100" step="10" value="50" oninput="document.getElementById('budgetVal').innerText='$'+this.value">
             </div>
           </div>
-          <div class="field-group">
-            <label>Oyuncu başına kahraman <span class="val mono" id="maxHeroesVal">5</span></label>
-            <div class="chip-row" id="maxHeroesRow"></div>
-          </div>
-          <button class="btn btn-primary btn-full" id="startBtn" onclick="startGame()">OYUNA BAŞLA</button>
+          <button class="btn btn-primary btn-full" onclick="startGame()">OYUNA BAŞLA</button>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════
-     WAIT PAGE
-══════════════════════════════════════════════ -->
+<!-- WAIT PAGE -->
 <div id="waitPage">
   <div style="text-align:center;">
     <div style="font-size:12px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);font-weight:700;">Qoşuldun</div>
     <h1 style="font-size:34px;margin-top:8px;">OYUNCU 2</h1>
     <div class="spinner" style="margin:20px auto;"></div>
-    <div style="color:var(--text-3);font-size:13px;" id="waitText">Otaq sahibinin oyunu qurmasını gözləyin...</div>
+    <div style="color:var(--text-3);font-size:13px;">Otaq sahibinin oyunu qurmasını gözləyin...</div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════
-     GAME PAGE (Auction)
-══════════════════════════════════════════════ -->
+<!-- GAME PAGE (Auction) -->
 <div id="gamePage">
   <div class="game-topbar">
     <div class="game-logo">⚔️ KAHRAMAN SAVAŞI</div>
-    <div class="lot-progress">LOT <b id="lotIndex">1</b> / <b id="lotTotal">10</b></div>
+    <div class="lot-progress">LOT <b id="lotIndex">1</b> / <b id="lotTotal">6</b></div>
   </div>
   <div class="game-hall">
     <div class="roster p1">
       <div class="roster-head"><div class="roster-pname" id="p1Name">OYUNCU 1</div><div class="roster-budget" id="p1Budget">$50</div></div>
       <div class="roster-list" id="p1List"><div class="roster-empty">Hələ kahraman alınmayıb</div></div>
     </div>
-    <div class="stage" id="stage">
+    <div class="stage">
       <div class="stage-label">MÜZAYEDƏ</div>
-      <div class="hero-avatar big" id="heroAvatar" style="align-self:center;margin:0 auto;">?</div>
+      <div class="hero-avatar big" id="heroAvatar">?</div>
       <div class="hero-name-row" id="heroName">— <span class="tier-badge" id="heroTier"></span></div>
-      <div><span class="hero-franchise-tag" id="heroFranchise">—</span></div>
-      <div class="stats-row" id="heroStatsRow"></div>
       <div class="price-board">
         <span class="price-label">Hazırkı qiymət</span>
         <span class="price-amount mono" id="curPrice">$0</span>
       </div>
-      <div class="leader-note" id="leaderNote">Müzayidəyə başlamaq üçün təklif verin</div>
+      <div class="leader-note" id="leaderNote">Təklif gözlənilir</div>
       <div class="bid-row">
         <div class="bid-col p1">
-          <div class="bid-who" id="bidWho1">OYUNCU 1</div>
-          <button class="btn bid-btn-p1 btn" id="p1BidBtn">Təklif ver</button>
-          <button class="btn" id="p1PassBtn" style="color:var(--text-3);">Pas keç</button>
+          <button class="btn btn-primary" id="p1BidBtn" onclick="makeBid(1)">+5$ Təklif Ver</button>
+          <button class="btn" id="p1PassBtn" onclick="passBid(1)">Pas</button>
         </div>
         <div class="bid-col p2">
-          <div class="bid-who" id="bidWho2">OYUNCU 2</div>
-          <button class="btn bid-btn-p2 btn" id="p2BidBtn">Təklif ver</button>
-          <button class="btn" id="p2PassBtn" style="color:var(--text-3);">Pas keç</button>
+          <button class="btn btn-primary" id="p2BidBtn" onclick="makeBid(2)">+5$ Təklif Ver</button>
+          <button class="btn" id="p2PassBtn" onclick="passBid(2)">Pas</button>
         </div>
       </div>
-      <div class="flash-overlay" id="flash"><div class="flash-content" id="flashText"></div></div>
     </div>
     <div class="roster p2">
       <div class="roster-head"><div class="roster-pname" id="p2Name">OYUNCU 2</div><div class="roster-budget" id="p2Budget">$50</div></div>
@@ -983,1870 +524,585 @@ input[type=range]::-webkit-slider-thumb{
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════
-     WHEEL PAGE
-══════════════════════════════════════════════ -->
+<!-- WHEEL PAGE -->
 <div id="wheelPage">
   <div class="game-topbar">
     <div class="game-logo">🎡 KAHRAMAN ÇARXI</div>
-    <div class="lot-progress">LOT <b id="wheelLotIndex">1</b> / <b id="wheelLotTotal">10</b></div>
   </div>
-  <div class="game-hall">
-    <div class="roster p1">
-      <div class="roster-head"><div class="roster-pname" id="wheelP1Name">OYUNCU 1</div><div class="roster-budget" id="wheelP1Count">0/5</div></div>
-      <div class="roster-list" id="wheelP1List"><div class="roster-empty">Hələ kahraman alınmayıb</div></div>
+  <div class="wheel-stage">
+    <div class="wheel-turn-label" id="wheelTurnLabel">Oyuncu 1-in növbəsi</div>
+    <div class="wheel-outer">
+      <div class="wheel-pointer"></div>
+      <div class="wheel-hub"></div>
+      <div class="wheel-spinner" id="wheelSpinner"></div>
     </div>
-    <div class="wheel-stage">
-      <div class="wheel-turn-label" id="wheelTurnLabel">—</div>
-      <div class="wheel-progress-text" id="wheelProgress"></div>
-      <div class="wheel-outer">
-        <div class="wheel-pointer"></div>
-        <div class="wheel-hub"></div>
-        <div class="wheel-spinner" id="wheelSpinner"></div>
-      </div>
-      <button class="spin-btn" id="wheelSpinBtn" onclick="spinWheel()">ÇEVİR</button>
-      <div class="wheel-watching" id="wheelWatching">👁 Rəqib fırladır...</div>
-      <div class="wheel-result" id="wheelResult"></div>
-      <div class="flash-overlay" id="wheelFlash"><div class="flash-content" id="wheelFlashText"></div></div>
-    </div>
-    <div class="roster p2">
-      <div class="roster-head"><div class="roster-pname" id="wheelP2Name">OYUNCU 2</div><div class="roster-budget" id="wheelP2Count">0/5</div></div>
-      <div class="roster-list" id="wheelP2List"><div class="roster-empty">Hələ kahraman alınmayıb</div></div>
-    </div>
+    <button class="spin-btn" id="wheelSpinBtn" onclick="spinWheel()">ÇEVİR</button>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════
-     BATTLE PAGE
-══════════════════════════════════════════════ -->
+<!-- BATTLE PAGE -->
 <div id="battlePage">
   <div class="battle-wrap">
     <div class="battle-head">
-      <div class="battle-eyebrow">Bütün kahramanlar meydanda</div>
       <h1 class="battle-title">DÖYÜŞ ARENASI</h1>
     </div>
-    <div class="team-tally">
-      <span class="t1" id="t1Tally">Oyuncu 1: 5 kahraman</span>
-      <span class="t2" id="t2Tally">Oyuncu 2: 5 kahraman</span>
-    </div>
-    <div class="arena" id="arena">
+    <div class="arena">
       <div class="fighters-row">
         <div class="fighter left">
-          <div class="hero-avatar mid" id="leftAvatar" style="margin:0 auto;">?</div>
-          <div class="fighter-name" id="leftName">—</div>
-          <div class="fighter-fr" id="leftFranchise">—</div>
-          <div class="fighter-bio" id="leftBio"></div>
-          <div class="fighter-stats" id="leftStats"></div>
+          <div class="hero-avatar mid" id="leftAvatar">?</div>
+          <div class="fighter-name" id="leftName">Kahraman 1</div>
           <div class="hp-track"><div class="hp-fill" id="leftHpFill" style="width:100%"></div></div>
-          <div class="hp-label" id="leftHpLabel">CAN: 100%</div>
-          <div class="fighter-score" id="leftScore"></div>
         </div>
-        <div class="vs-mark">VS<span class="vscore" id="fightStatus">Növbəti döyüşə hazır</span></div>
+        <div class="vs-mark">VS</div>
         <div class="fighter right">
-          <div class="hero-avatar mid" id="rightAvatar" style="margin:0 auto;">?</div>
-          <div class="fighter-name" id="rightName">—</div>
-          <div class="fighter-fr" id="rightFranchise">—</div>
-          <div class="fighter-bio" id="rightBio"></div>
-          <div class="fighter-stats" id="rightStats"></div>
+          <div class="hero-avatar mid" id="rightAvatar">?</div>
+          <div class="fighter-name" id="rightName">Kahraman 2</div>
           <div class="hp-track"><div class="hp-fill" id="rightHpFill" style="width:100%"></div></div>
-          <div class="hp-label" id="rightHpLabel">CAN: 100%</div>
-          <div class="fighter-score" id="rightScore"></div>
         </div>
       </div>
       <button class="next-fight-btn" id="nextFightBtn" onclick="runFightRound()">DÖYÜŞÜ BAŞLAT</button>
-      <div class="champion-banner" id="championBanner">
-        <div class="cb-label">Meydanın Qalibi</div>
-        <h2 id="championText">—</h2>
-        <p id="championSub"></p>
-      </div>
       <div class="battle-log" id="battleLog"></div>
     </div>
-    <button class="btn btn-primary" id="toResultsBtn" style="display:none;margin:18px auto 0;display:none;" onclick="goToResults()">NƏTİCƏLƏRƏ BAX</button>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════
-     END PAGE
-══════════════════════════════════════════════ -->
+<!-- END PAGE -->
 <div id="endPage">
   <div class="end-wrap">
-    <h2 class="end-title" id="endTitle">MÜZAYİDƏ BİTDİ</h2>
+    <h2 class="end-title" id="endTitle">OYUN BİTDİ</h2>
     <p id="endSummary" style="color:var(--text-3);margin-top:6px;"></p>
-    <div id="coinRewardBanner" class="coin-reward-banner" style="display:none;">
-      🏆 Qalibliyə görə <span id="coinRewardAmount" style="color:var(--gold-3);margin:0 4px;"></span> qazandın!
-    </div>
     <div class="end-cols">
       <div class="roster p1">
-        <div class="roster-head"><div class="roster-pname">OYUNCU 1</div><div class="roster-budget" id="p1BudgetFinal">$0</div></div>
+        <div class="roster-head"><div class="roster-pname">OYUNCU 1</div></div>
         <div class="roster-list" id="p1ListFinal"></div>
       </div>
       <div class="roster p2">
-        <div class="roster-head"><div class="roster-pname" id="endP2Name">OYUNCU 2</div><div class="roster-budget" id="p2BudgetFinal">$0</div></div>
+        <div class="roster-head"><div class="roster-pname">OYUNCU 2</div></div>
         <div class="roster-list" id="p2ListFinal"></div>
       </div>
     </div>
-    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-      <button class="btn btn-primary" id="restartBtn" onclick="restartGame()">YENİDƏN OYNA</button>
-      <button class="btn" onclick="showPage('playPage')">Lobbyə Qayıt</button>
-    </div>
+    <button class="btn btn-primary" onclick="showPage('playPage')">Lobby-yə Qayıt</button>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════
-     PROFILE PAGE
-══════════════════════════════════════════════ -->
+<!-- PROFILE PAGE -->
 <div id="profilePage" class="page">
-  <div class="profile-wrap">
-    <div class="profile-header">
-      <div class="profile-avatar-wrap">
-        <div class="profile-big-avatar" id="profileBigAvatar">👤</div>
-        <div class="profile-frame-ring" id="profileFrameRing"></div>
-      </div>
-      <div class="profile-info">
-        <div class="profile-username" id="profileUsername">İstifadəçi</div>
-        <div class="profile-title-badge" id="profileTitleBadge"></div>
-        <div class="profile-stats-row">
-          <div class="profile-stat">
-            <div class="profile-stat-val" id="statWins">0</div>
-            <div class="profile-stat-label">Qalibiyyət</div>
-          </div>
-          <div class="profile-stat">
-            <div class="profile-stat-val" id="statGames">0</div>
-            <div class="profile-stat-label">Oyun</div>
-          </div>
-          <div class="profile-stat">
-            <div class="profile-stat-val coin-display" id="statCoins" style="font-size:18px;">🪙 0</div>
-            <div class="profile-stat-label">Coin</div>
-          </div>
-          <div class="profile-stat">
-            <div class="profile-stat-val" id="statHeroes">0</div>
-            <div class="profile-stat-label">Kahraman</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="profile-tabs">
-      <div class="profile-tab active" onclick="switchProfileTab('edit')">✏️ Düzənlə</div>
-      <div class="profile-tab" onclick="switchProfileTab('inventory')">🎒 İnventory</div>
-      <div class="profile-tab" onclick="switchProfileTab('logout')">🚪 Çıxış</div>
-    </div>
-
-    <div class="profile-panel active" id="profilePanelEdit">
-      <div class="edit-form">
-        <div>
-          <div class="label">İstifadəçi adı</div>
-          <input class="input" type="text" id="editUsername" placeholder="Adın...">
-        </div>
-        <div>
-          <div class="label">Avatar seç</div>
-          <div class="avatar-options" id="avatarOptions">
-            <div class="avatar-opt selected" data-emoji="👤">👤</div>
-            <div class="avatar-opt" data-emoji="⚔️">⚔️</div>
-            <div class="avatar-opt" data-emoji="🦸">🦸</div>
-            <div class="avatar-opt" data-emoji="🧙">🧙</div>
-            <div class="avatar-opt" data-emoji="🐉">🐉</div>
-            <div class="avatar-opt" data-emoji="🔥">🔥</div>
-            <div class="avatar-opt" data-emoji="⚡">⚡</div>
-            <div class="avatar-opt" data-emoji="💎">💎</div>
-            <div class="avatar-opt" data-emoji="🌙">🌙</div>
-            <div class="avatar-opt" data-emoji="🌟">🌟</div>
-          </div>
-        </div>
-        <button class="btn btn-primary" onclick="saveProfile()">Yadda saxla</button>
-      </div>
-    </div>
-
-    <div class="profile-panel" id="profilePanelInventory">
-      <div style="display:flex;flex-direction:column;gap:20px;">
-        <div>
-          <div class="label" style="margin-bottom:12px;">Çərçivələr</div>
-          <div class="shop-grid" id="inventoryFrames"></div>
-        </div>
-        <div>
-          <div class="label" style="margin-bottom:12px;">Başlıqlar</div>
-          <div class="shop-grid" id="inventoryTitles"></div>
-        </div>
-        <div>
-          <div class="label" style="margin-bottom:12px;">Effektlər</div>
-          <div class="shop-grid" id="inventoryEffects"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="profile-panel" id="profilePanelLogout">
-      <div style="padding:24px;text-align:center;">
-        <div style="font-size:14px;color:var(--text-3);margin-bottom:20px;">Çıxmağa əminsən?</div>
-        <button class="btn btn-danger" onclick="doLogout()">🚪 Hesabdan çıx</button>
-      </div>
-    </div>
+  <div class="play-wrap">
+    <h2>İstifadəçi Profili</h2>
+    <p id="profileUserText" style="margin-top:10px;">İstifadəçi adı: -</p>
+    <button class="btn btn-danger" style="margin-top:20px;" onclick="logout()">Çıxış Et</button>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════
-     SHOP PAGE
-══════════════════════════════════════════════ -->
+<!-- SHOP PAGE -->
 <div id="shopPage" class="page">
-  <div class="shop-wrap">
-    <div class="shop-header">
-      <h1 class="shop-title">🏪 Mağaza</h1>
-      <div class="coin-display" id="shopCoinDisplay"><span class="coin-icon">🪙</span><span id="shopCoins">0</span></div>
-    </div>
-    <div class="shop-tabs">
-      <div class="shop-tab active" onclick="switchShopTab('frames')">🖼️ Çərçivələr</div>
-      <div class="shop-tab" onclick="switchShopTab('titles')">🏅 Başlıqlar</div>
-      <div class="shop-tab" onclick="switchShopTab('effects')">✨ Effektlər</div>
-      <div class="shop-tab" onclick="switchShopTab('heroes')">🦸 Qəhrəmanlar</div>
-    </div>
-    <div class="shop-panel active" id="shopPanelFrames">
-      <div class="shop-grid" id="shopGridFrames"></div>
-    </div>
-    <div class="shop-panel" id="shopPanelTitles">
-      <div class="shop-grid" id="shopGridTitles"></div>
-    </div>
-    <div class="shop-panel" id="shopPanelEffects">
-      <div class="shop-grid" id="shopGridEffects"></div>
-    </div>
-    <div class="shop-panel" id="shopPanelHeroes">
-      <div style="margin-bottom:12px;padding:12px;background:var(--coin-bg);border:1px solid rgba(245,204,106,0.2);border-radius:var(--r);">
-        <div style="font-size:11px;color:var(--text-3);">Qəhrəmanları coin ilə al. Aldığın qəhrəmanlar kolleksiyanda görünər və oyunda istifadə edilər.</div>
-      </div>
-      <div class="hero-shop-grid" id="shopGridHeroes"></div>
-    </div>
+  <div class="play-wrap">
+    <h2>Mağaza</h2>
+    <p style="margin-top:10px;color:var(--text-3);">Tezliklə yeni skinlər əlavə olunacaq!</p>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════
-     COLLECTION PAGE
-══════════════════════════════════════════════ -->
+<!-- COLLECTION PAGE -->
 <div id="collectionPage" class="page">
-  <div class="collection-wrap">
-    <h1 class="collection-title">🗡️ Kolleksiyam</h1>
-    <div style="margin-bottom:16px;display:flex;align-items:center;gap:10px;">
-      <span style="font-size:12px;color:var(--text-3);" id="collectionCount">0 kahraman</span>
-    </div>
-    <div class="collection-grid" id="collectionGrid"></div>
+  <div class="play-wrap">
+    <h2>Kolleksiya</h2>
+    <p style="margin-top:10px;color:var(--text-3);">Qazandığın kahramanlar burada görünəcək.</p>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════
-     SCRIPT
-══════════════════════════════════════════════ -->
 <script>
-/* ════════════════════════════════════
-   I18N
-════════════════════════════════════ */
-let currentLang='az';
-const I18N={
-  az:{
-    navPlay:'⚔️ Oyna',navCollection:'🗡️ Kolleksiya',navShop:'🏪 Mağaza',navProfile:'👤 Profil',
-    authTitle:'HeroicTeamBattle',authSub:'Qeydiyyatdan keç, nəticələrini izlə',authLogin:'Giriş',authRegister:'Qeydiyyat',
-    authUsernameLabel:'İstifadəçi adı',authUsernamePh:'İstifadəçi adın...',authEmailLabel:'E-mail (Gmail)',
-    authPasswordLabel:'Şifrə',authGoogle:'Google ilə davam et',authOr:'və ya',
-    playHeroTitle:'KAHRAMAN<br>SAVAŞI',playHeroSub:'Rejim seç, kahramanları topla, zəfər qur',
-    modeLocalTitle:'EYNİ CİHAZ',modeLocalSub:'İki oyuncu eyni ekranda növbə ilə oynayır',
-    modeMatchTitle:'TEZ OYUN (RANDOM)',modeMatchSub:'Sistem sənə avtomatik rəqib tapsın',
-    modeCreateTitle:'OTAQ YARAT',modeCreateSub:'Sən Oyuncu 1 olursan, 4 rəqəmli kod yaradıb göndər',
-    modeJoinTitle:'OTAĞA QOŞUL',modeJoinSub:'Sənə göndərilən 4 rəqəmli koddan qoşul',
-    modeBotTitle:'BOTA QARŞI',modeBotSub:'Tək oyna, rəqibi süni intellekt idarə etsin',
-    copy:'Kopyala',back:'‹ Geri',joinCodeLabel:'Otaq kodu (4 rəqəm)',joinBtn:'QOŞUL',joinPh:'4 rəqəmli kod',
-    matchmakingText:'Rəqib axtarılır...',matchmakingSub:'Zəhmət olmasa gözlə, tapan kimi qoşulacaqsan',cancelMatch:'‹ İmtina et',
-    configTitle:'Oyun Tənzimləmələri',gameMode:'Oyun rejimi',modeAuction:'ARTIRMA',modeAuctionSub:'Büdcə ilə təklif ver',
-    modeWheel:'ÇARX',modeWheelSub:'Çarxı fırlat',startBudget:'Başlanğıc büdcə',bidStep:'Təklif artım addımı',
-    heroesPerPlayer:'Oyuncu başına kahraman',startGameBtn:'OYUNA BAŞLA',
-    lot:'LOT',auctionLabel:'MÜZAYEDƏ',curPriceLabel:'Hazırkı qiymət',bidBtn:'Təklif ver',passBtn:'Pas keç',
-    startAuctionMsg:'Müzayidəyə başlamaq üçün təklif verin',noHeroYet:'Hələ kahraman alınmayıb',
-    wheelTitle:'🎡 KAHRAMAN ÇARXI',spinBtn:'ÇEVİR',watchingOpp:'👁 Rəqib fırladır...',
-    battleEyebrow:'Bütün kahramanlar meydanda',battleTitle:'DÖYÜŞ ARENASI',startFightBtn:'DÖYÜŞÜ BAŞLAT',
-    resultsBtn:'NƏTİCƏLƏRƏ BAX',hpLabel:'CAN',championLabel:'Meydanın Qalibi',
-    endTitle:'MÜZAYİDƏ BİTDİ',restart:'YENİDƏN OYNA',backToLobby:'Lobbyə Qayıt',
-    profileEdit:'✏️ Düzənlə',profileInventory:'🎒 İnventory',profileLogout:'🚪 Çıxış',
-    wins:'Qalibiyyət',games:'Oyun',coins:'Coin',heroes:'Kahraman',
-    usernameLabel:'İstifadəçi adı',avatarLabel:'Avatar seç',save:'Yadda saxla',
-    frames:'Çərçivələr',titles:'Başlıqlar',effects:'Effektlər',logoutConfirm:'Çıxmağa əminsən?',logoutBtn:'🚪 Hesabdan çıx',
-    shopTitle:'🏪 Mağaza',shopHeroesNote:'Qəhrəmanları coin ilə al. Aldığın qəhrəmanlar kolleksiyanda görünər və oyunda istifadə edilər.',
-    shopHeroesTab:'🦸 Qəhrəmanlar',collectionTitle:'🗡️ Kolleksiyam',discover:'Kəşf et',heroCount:'kahraman',
-    chatTitle:'Söhbət',chatPh:'Mesaj yaz...',online:'Onlayn'
-  },
-  tr:{
-    navPlay:'⚔️ Oyna',navCollection:'🗡️ Koleksiyon',navShop:'🏪 Mağaza',navProfile:'👤 Profil',
-    authTitle:'HeroicTeamBattle',authSub:'Kayıt ol, sonuçlarını takip et',authLogin:'Giriş',authRegister:'Kayıt',
-    authUsernameLabel:'Kullanıcı adı',authUsernamePh:'Kullanıcı adın...',authEmailLabel:'E-posta (Gmail)',
-    authPasswordLabel:'Şifre',authGoogle:'Google ile devam et',authOr:'veya',
-    playHeroTitle:'KAHRAMAN<br>SAVAŞI',playHeroSub:'Mod seç, kahramanları topla, zafer kazan',
-    modeLocalTitle:'AYNI CİHAZ',modeLocalSub:'İki oyuncu aynı ekranda sırayla oynar',
-    modeMatchTitle:'HIZLI OYUN (RASTGELE)',modeMatchSub:'Sistem sana otomatik rakip bulsun',
-    modeCreateTitle:'ODA OLUŞTUR',modeCreateSub:'Sen Oyuncu 1 olursun, 4 haneli kod oluştur ve gönder',
-    modeJoinTitle:'ODAYA KATIL',modeJoinSub:'Sana gönderilen 4 haneli koddan katıl',
-    modeBotTitle:'BOTA KARŞI',modeBotSub:'Tek oyna, rakibi yapay zeka yönetsin',
-    copy:'Kopyala',back:'‹ Geri',joinCodeLabel:'Oda kodu (4 hane)',joinBtn:'KATIL',joinPh:'4 haneli kod',
-    matchmakingText:'Rakip aranıyor...',matchmakingSub:'Lütfen bekle, bulunduğunda otomatik katılacaksın',cancelMatch:'‹ Vazgeç',
-    configTitle:'Oyun Ayarları',gameMode:'Oyun modu',modeAuction:'AÇIK ARTIRMA',modeAuctionSub:'Bütçe ile teklif ver',
-    modeWheel:'ÇARK',modeWheelSub:'Çarkı çevir',startBudget:'Başlangıç bütçesi',bidStep:'Teklif artış adımı',
-    heroesPerPlayer:'Oyuncu başına kahraman',startGameBtn:'OYUNA BAŞLA',
-    lot:'LOT',auctionLabel:'AÇIK ARTIRMA',curPriceLabel:'Güncel fiyat',bidBtn:'Teklif ver',passBtn:'Pas geç',
-    startAuctionMsg:'Açık artırmayı başlatmak için teklif ver',noHeroYet:'Henüz kahraman alınmadı',
-    wheelTitle:'🎡 KAHRAMAN ÇARKI',spinBtn:'ÇEVİR',watchingOpp:'👁 Rakip çeviriyor...',
-    battleEyebrow:'Tüm kahramanlar meydanda',battleTitle:'DÖVÜŞ ARENASI',startFightBtn:'DÖVÜŞÜ BAŞLAT',
-    resultsBtn:'SONUÇLARA BAK',hpLabel:'CAN',championLabel:'Meydanın Galibi',
-    endTitle:'AÇIK ARTIRMA BİTTİ',restart:'YENİDEN OYNA',backToLobby:'Lobiye Dön',
-    profileEdit:'✏️ Düzenle',profileInventory:'🎒 Envanter',profileLogout:'🚪 Çıkış',
-    wins:'Galibiyet',games:'Oyun',coins:'Coin',heroes:'Kahraman',
-    usernameLabel:'Kullanıcı adı',avatarLabel:'Avatar seç',save:'Kaydet',
-    frames:'Çerçeveler',titles:'Unvanlar',effects:'Efektler',logoutConfirm:'Çıkmak istediğine emin misin?',logoutBtn:'🚪 Hesaptan çık',
-    shopTitle:'🏪 Mağaza',shopHeroesNote:'Kahramanları coin ile satın al. Aldığın kahramanlar koleksiyonunda görünür ve oyunda kullanılır.',
-    shopHeroesTab:'🦸 Kahramanlar',collectionTitle:'🗡️ Koleksiyonum',discover:'Keşfet',heroCount:'kahraman',
-    chatTitle:'Sohbet',chatPh:'Mesaj yaz...',online:'Çevrimiçi'
-  },
-  en:{
-    navPlay:'⚔️ Play',navCollection:'🗡️ Collection',navShop:'🏪 Shop',navProfile:'👤 Profile',
-    authTitle:'HeroicTeamBattle',authSub:'Sign up and track your results',authLogin:'Log In',authRegister:'Register',
-    authUsernameLabel:'Username',authUsernamePh:'Your username...',authEmailLabel:'Email (Gmail)',
-    authPasswordLabel:'Password',authGoogle:'Continue with Google',authOr:'or',
-    playHeroTitle:'HERO<br>BATTLE',playHeroSub:'Pick a mode, collect heroes, claim victory',
-    modeLocalTitle:'SAME DEVICE',modeLocalSub:'Two players take turns on the same screen',
-    modeMatchTitle:'QUICK PLAY (RANDOM)',modeMatchSub:'Let the system find you an opponent automatically',
-    modeCreateTitle:'CREATE ROOM',modeCreateSub:'You become Player 1, create a 4-digit code and share it',
-    modeJoinTitle:'JOIN ROOM',modeJoinSub:'Join with a 4-digit code sent to you',
-    modeBotTitle:'VS BOT',modeBotSub:'Play solo, the AI controls your opponent',
-    copy:'Copy',back:'‹ Back',joinCodeLabel:'Room code (4 digits)',joinBtn:'JOIN',joinPh:'4-digit code',
-    matchmakingText:'Finding an opponent...',matchmakingSub:'Please wait, you will join automatically once found',cancelMatch:'‹ Cancel',
-    configTitle:'Game Settings',gameMode:'Game mode',modeAuction:'AUCTION',modeAuctionSub:'Bid with a budget',
-    modeWheel:'WHEEL',modeWheelSub:'Spin the wheel',startBudget:'Starting budget',bidStep:'Bid increment',
-    heroesPerPlayer:'Heroes per player',startGameBtn:'START GAME',
-    lot:'LOT',auctionLabel:'AUCTION',curPriceLabel:'Current price',bidBtn:'Place bid',passBtn:'Pass',
-    startAuctionMsg:'Place a bid to start the auction',noHeroYet:'No heroes yet',
-    wheelTitle:'🎡 HERO WHEEL',spinBtn:'SPIN',watchingOpp:'👁 Opponent spinning...',
-    battleEyebrow:'All heroes on the field',battleTitle:'BATTLE ARENA',startFightBtn:'START FIGHT',
-    resultsBtn:'VIEW RESULTS',hpLabel:'HP',championLabel:'Champion of the Arena',
-    endTitle:'AUCTION FINISHED',restart:'PLAY AGAIN',backToLobby:'Back to Lobby',
-    profileEdit:'✏️ Edit',profileInventory:'🎒 Inventory',profileLogout:'🚪 Logout',
-    wins:'Wins',games:'Games',coins:'Coins',heroes:'Heroes',
-    usernameLabel:'Username',avatarLabel:'Choose avatar',save:'Save',
-    frames:'Frames',titles:'Titles',effects:'Effects',logoutConfirm:'Are you sure you want to log out?',logoutBtn:'🚪 Log out',
-    shopTitle:'🏪 Shop',shopHeroesNote:'Buy heroes with coins. Purchased heroes appear in your collection and can be used in games.',
-    shopHeroesTab:'🦸 Heroes',collectionTitle:'🗡️ My Collection',discover:'Discover',heroCount:'heroes',
-    chatTitle:'Chat',chatPh:'Type a message...',online:'Online'
-  }
-};
-
-function t(key){return (I18N[currentLang]&&I18N[currentLang][key])||I18N.az[key]||key;}
-
-function applyLanguage(lang){
-  if(!I18N[lang])return;
-  currentLang=lang;
-  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
-  document.documentElement.lang=lang;
-  localStorage.setItem('htb_lang',lang);
-
-  // Nav
-  const navPlay=document.getElementById('navPlay');if(navPlay)navPlay.textContent=t('navPlay');
-  const navCollection=document.getElementById('navCollection');if(navCollection)navCollection.textContent=t('navCollection');
-  const navShop=document.getElementById('navShop');if(navShop)navShop.textContent=t('navShop');
-  const navProfile=document.getElementById('navProfile');if(navProfile)navProfile.textContent=t('navProfile');
-
-  // Auth
-  const authTitle=document.querySelector('.auth-title');if(authTitle)authTitle.textContent=t('authTitle');
-  const authSub=document.querySelector('.auth-sub');if(authSub)authSub.textContent=t('authSub');
-  const authTabs=document.querySelectorAll('.auth-tab');
-  if(authTabs[0])authTabs[0].textContent=t('authLogin');
-  if(authTabs[1])authTabs[1].textContent=t('authRegister');
-  const authUserLbl=document.querySelector('#authForm > div:nth-child(1) .label');if(authUserLbl)authUserLbl.textContent=t('authUsernameLabel');
-  const authUserInp=document.getElementById('authUsername');if(authUserInp)authUserInp.placeholder=t('authUsernamePh');
-  const authEmailLbl=document.querySelector('#authEmailRow .label');if(authEmailLbl)authEmailLbl.textContent=t('authEmailLabel');
-  const authPwLbl=document.querySelector('#authForm > div:nth-child(3) .label');if(authPwLbl)authPwLbl.textContent=t('authPasswordLabel');
-  const authSubmitBtn=document.querySelector('.auth-form .btn-primary');if(authSubmitBtn)authSubmitBtn.textContent=authMode==='login'?t('authLogin').toUpperCase():t('authRegister').toUpperCase();
-  const authDivider=document.querySelector('.auth-divider');if(authDivider)authDivider.childNodes[0].nodeValue=t('authOr');
-  const authGoogleBtn=document.querySelector('.auth-google-btn');if(authGoogleBtn){const svg=authGoogleBtn.querySelector('svg');authGoogleBtn.innerHTML='';if(svg)authGoogleBtn.appendChild(svg);authGoogleBtn.appendChild(document.createTextNode(' '+t('authGoogle')));}
-
-  // Play page
-  const heroH1=document.querySelector('.play-hero h1');if(heroH1)heroH1.innerHTML=t('playHeroTitle');
-  const heroSub=document.querySelector('.play-hero .sub');if(heroSub)heroSub.textContent=t('playHeroSub');
-  const modes=document.querySelectorAll('.play-mode');
-  const modeKeys=[['modeLocalTitle','modeLocalSub'],['modeMatchTitle','modeMatchSub'],['modeCreateTitle','modeCreateSub'],['modeJoinTitle','modeJoinSub'],['modeBotTitle','modeBotSub']];
-  modes.forEach((m,i)=>{if(!modeKeys[i])return;const tt=m.querySelector('.play-mode-title'),ss=m.querySelector('.play-mode-sub');if(tt)tt.textContent=t(modeKeys[i][0]);if(ss)ss.textContent=t(modeKeys[i][1]);});
-  document.querySelectorAll('#copyLinkBtn,#hostCopyBtn').forEach(b=>b.textContent=t('copy'));
-  document.querySelectorAll('.back-link').forEach(b=>{if(b.getAttribute('onclick')==="cancelMatchmaking()")b.textContent=t('cancelMatch');else b.textContent=t('back');});
-  const joinLbl=document.querySelector('#joinPanel .label');if(joinLbl)joinLbl.textContent=t('joinCodeLabel');
-  const joinInp=document.getElementById('joinCodeInput');if(joinInp)joinInp.placeholder=t('joinPh');
-  const joinBtn=document.querySelector('#joinPanel .btn-primary');if(joinBtn)joinBtn.textContent=t('joinBtn');
-  const mmText=document.getElementById('matchmakingText');if(mmText)mmText.textContent=t('matchmakingText');
-  const mmSub=document.getElementById('matchmakingSub');if(mmSub)mmSub.textContent=t('matchmakingSub');
-
-  // Config
-  const configTitle=document.querySelector('.config-title');if(configTitle)configTitle.textContent=t('configTitle');
-  const gmLabel=document.querySelector('#gameConfig .field-group:nth-of-type(1) label');
-  const fieldLabels=document.querySelectorAll('#gameConfig .field-group > label');
-  if(fieldLabels[0])fieldLabels[0].childNodes[0].nodeValue=t('gameMode');
-  document.getElementById('gmAuction').querySelector('.mode-opt-title').textContent=t('modeAuction');
-  document.getElementById('gmAuction').querySelector('.mode-opt-sub').textContent=t('modeAuctionSub');
-  document.getElementById('gmWheel').querySelector('.mode-opt-title').textContent=t('modeWheel');
-  document.getElementById('gmWheel').querySelector('.mode-opt-sub').textContent=t('modeWheelSub');
-  const budgetLbl=document.querySelector('#budgetField .field-group:nth-child(1) label');
-  if(budgetLbl)budgetLbl.childNodes[0].nodeValue=t('startBudget')+' ';
-  const incLbl=document.querySelector('#budgetField .field-group:nth-child(2) label');
-  if(incLbl)incLbl.textContent=t('bidStep');
-  const maxHLbl=document.querySelector('#gameConfig .field-group:last-of-type label');
-  if(maxHLbl)maxHLbl.childNodes[0].nodeValue=t('heroesPerPlayer')+' ';
-  const startBtn=document.getElementById('startBtn');if(startBtn)startBtn.textContent=t('startGameBtn');
-
-  // Auction game
-  document.querySelectorAll('.lot-progress').forEach(el=>{el.childNodes[0].nodeValue=t('lot')+' ';});
-  const stageLabel=document.querySelector('.stage-label');if(stageLabel)stageLabel.textContent=t('auctionLabel');
-  const priceLabel=document.querySelector('.price-label');if(priceLabel)priceLabel.textContent=t('curPriceLabel');
-  document.querySelectorAll('#p1BidBtn,#p2BidBtn').forEach(b=>b.textContent=t('bidBtn'));
-  document.querySelectorAll('#p1PassBtn,#p2PassBtn').forEach(b=>b.textContent=t('passBtn'));
-  document.querySelectorAll('.roster-empty').forEach(el=>el.textContent=t('noHeroYet'));
-  if(state&&state.mode==='auction'&&!state.leader)document.getElementById('leaderNote').textContent=t('startAuctionMsg');
-
-  // Wheel
-  const wheelLogo=document.querySelector('#wheelPage .game-logo');if(wheelLogo)wheelLogo.textContent=t('wheelTitle');
-  const spinBtn=document.getElementById('wheelSpinBtn');if(spinBtn)spinBtn.textContent=t('spinBtn');
-  const wheelWatching=document.getElementById('wheelWatching');if(wheelWatching)wheelWatching.textContent=t('watchingOpp');
-
-  // Battle
-  const battleEyebrow=document.querySelector('.battle-eyebrow');if(battleEyebrow)battleEyebrow.textContent=t('battleEyebrow');
-  const battleTitleEl=document.querySelector('.battle-title');if(battleTitleEl)battleTitleEl.textContent=t('battleTitle');
-  const nextFightBtn=document.getElementById('nextFightBtn');if(nextFightBtn&&!battleState?.championDone)nextFightBtn.textContent=t('startFightBtn');
-  const toResultsBtn=document.getElementById('toResultsBtn');if(toResultsBtn)toResultsBtn.textContent=t('resultsBtn');
-  const cbLabel=document.querySelector('.cb-label');if(cbLabel)cbLabel.textContent=t('championLabel');
-  document.querySelectorAll('.hp-label').forEach(el=>{const pct=el.textContent.match(/\d+%/);el.textContent=t('hpLabel')+': '+(pct?pct[0]:'100%');});
-
-  // End
-  const endTitleEl=document.getElementById('endTitle');if(endTitleEl&&!battleState)endTitleEl.textContent=t('endTitle');
-  const restartBtn=document.querySelector('#endPage .btn-primary');if(restartBtn)restartBtn.textContent=t('restart');
-  const lobbyBtn=document.querySelector('#endPage .btn:not(.btn-primary)');if(lobbyBtn)lobbyBtn.textContent=t('backToLobby');
-
-  // Profile
-  const profTabs=document.querySelectorAll('.profile-tab');
-  if(profTabs[0])profTabs[0].textContent=t('profileEdit');
-  if(profTabs[1])profTabs[1].textContent=t('profileInventory');
-  if(profTabs[2])profTabs[2].textContent=t('profileLogout');
-  const statLabels=document.querySelectorAll('.profile-stat-label');
-  const statKeys=['wins','games','coins','heroes'];
-  statLabels.forEach((el,i)=>{if(statKeys[i])el.textContent=t(statKeys[i]);});
-  const editUserLbl=document.querySelector('.edit-form .label');if(editUserLbl)editUserLbl.textContent=t('usernameLabel');
-  const avatarLbl=document.querySelectorAll('.edit-form .label')[1];if(avatarLbl)avatarLbl.textContent=t('avatarLabel');
-  const saveBtn=document.querySelector('.edit-form .btn-primary');if(saveBtn)saveBtn.textContent=t('save');
-  const invLbls=document.querySelectorAll('#profilePanelInventory .label');
-  if(invLbls[0])invLbls[0].textContent=t('frames');
-  if(invLbls[1])invLbls[1].textContent=t('titles');
-  if(invLbls[2])invLbls[2].textContent=t('effects');
-  const logoutText=document.querySelector('#profilePanelLogout div div');if(logoutText)logoutText.textContent=t('logoutConfirm');
-  const logoutBtn=document.querySelector('#profilePanelLogout .btn-danger');if(logoutBtn)logoutBtn.textContent=t('logoutBtn');
-
-  // Shop
-  const shopTitleEl=document.querySelector('.shop-title');if(shopTitleEl)shopTitleEl.textContent=t('shopTitle');
-  const shopTabs=document.querySelectorAll('.shop-tab');
-  const shopTabKeys=['frames','titles','effects','shopHeroesTab'];
-  shopTabs.forEach((el,i)=>{if(shopTabKeys[i]){const icon=el.textContent.trim().split(' ')[0];el.textContent=t(shopTabKeys[i]);}});
-  const heroesNote=document.querySelector('#shopPanelHeroes div div');if(heroesNote)heroesNote.textContent=t('shopHeroesNote');
-
-  // Collection
-  const collTitleEl=document.querySelector('.collection-title');if(collTitleEl)collTitleEl.textContent=t('collectionTitle');
-
-  // Chat
-  const chatHeader=document.querySelector('.chat-header');if(chatHeader){const close=chatHeader.querySelector('.chat-close');chatHeader.childNodes[0].nodeValue=t('chatTitle')+' ';}
-  const chatInputEl=document.getElementById('chatInput');if(chatInputEl)chatInputEl.placeholder=t('chatPh');
-
-  // Re-render dynamic content that depends on language
-  if(document.getElementById('profilePage')&&document.getElementById('profilePage').classList.contains('active'))renderProfilePage();
-  if(document.getElementById('shopPage')&&document.getElementById('shopPage').classList.contains('active'))renderShopPage();
-  if(document.getElementById('collectionPage')&&document.getElementById('collectionPage').classList.contains('active'))renderCollectionPage();
-}
-
-document.querySelectorAll('.lang-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>applyLanguage(btn.dataset.lang));
-});
-
-/* ════════════════════════════════════
-   BIOS
-════════════════════════════════════ */
-const BIOS={
-  "Hades":{az:"Yeraltı dünyanın hökmdarı",en:"Ruler of the underworld",tr:"Yeraltı dünyanın hükümdarı"},
-  "Superman":{az:"Kriptonun son oğlu",en:"Last son of Krypton",tr:"Kripton'un son oğlu"},
-  "Wonder Woman":{az:"Amazon prinsesi, döyüş tanrıçası",en:"Amazon princess of war",tr:"Amazon prensesi"},
-  "Shazam":{az:"Sehrli söz ilə qəhrəmana çevrilir",en:"Transforms with a magic word",tr:"Sihirli sözle dönüşür"},
-  "Green Lantern":{az:"Enerji üzüyü ilə mühafizəçi",en:"Galactic guardian with power ring",tr:"Güç yüzüklü galaksi muhafızı"},
-  "Aquaman":{az:"Atlantisin kralı",en:"King of Atlantis",tr:"Atlantis'in kralı"},
-  "Flash":{az:"İşıq sürətindən sürətli",en:"Faster than light",tr:"Işıktan hızlı"},
-  "Cyborg":{az:"Yarı insan, yarı maşın",en:"Half-man half-machine",tr:"Yarı insan yarı makine"},
-  "Batman":{az:"Gecə qəhrəmanı, dahi stratej",en:"Dark knight, genius strategist",tr:"Gece kahramanı"},
-  "Nightwing":{az:"Batmanın ilk tərəfdaşı",en:"Batman's first partner",tr:"Batman'ın ilk ortağı"},
-  "Batgirl":{az:"Gothamı qoruyan qadın döyüşçü",en:"Fearless Gotham defender",tr:"Gotham'ı koruyan kadın"},
-  "Green Arrow":{az:"Kaman ustası milyarder",en:"Billionaire archer",tr:"Milyarder okçu"},
-  "Harley Quinn":{az:"Dəli, gözlənilməz anti-qəhrəman",en:"Chaotic anti-hero",tr:"Kaotik anti-kahraman"},
-  "Joker":{az:"Gothamın ən qorxunc cinayətkarı",en:"Gotham's most dangerous criminal",tr:"Gotham'ın en tehlikeli suçlusu"},
-  "Supergirl":{az:"Kriptondan gələn güclü qəhrəman",en:"Kryptonian hero",tr:"Kriptonyalı kahraman"},
-  "Black Adam":{az:"Qədim Misirdən qüdrətli anti-qəhrəman",en:"Ancient Egyptian anti-hero",tr:"Antik Mısır anti-kahramanı"},
-  "Red Hood":{az:"Sərt üsullarla ədalət axtaran keçmiş Robin",en:"Former Robin with harsh methods",tr:"Eski Robin"},
-  "Doctor Doom":{az:"Latverianın hökmdarı, dahi alim",en:"Latveria's sorcerer ruler",tr:"Latveria'nın hükümdarı"},
-  "Odin":{az:"Asqardın hökmdarı, tanrıların atası",en:"All-Father of Asgard",tr:"Asgard'ın babası"},
-  "Thanos":{az:"Kainatı təhdid edən Titan",en:"Universe-threatening Titan",tr:"Evreni tehdit eden Titan"},
-  "Silver Surfer":{az:"Kosmik güclü qalaktik qasid",en:"Cosmic herald of the galaxy",tr:"Kozmik evren habercisi"},
-  "Hulk":{az:"Qəzəbləndikcə gücü artan nəhəng",en:"Stronger as he gets angrier",tr:"Öfkelendikçe güçlenen dev"},
-  "Thor":{az:"İldırım tanrısı, Mjölnirin sahibi",en:"God of thunder",tr:"Gök gürültüsü tanrısı"},
-  "Scarlet Witch":{az:"Xaos sehri ilə reallığı dəyişir",en:"Reshapes reality with chaos magic",tr:"Kaos büyüsüyle gerçekliği değiştirir"},
-  "Doctor Strange":{az:"Ali Sehrbaz, mistik qoruyucu",en:"Sorcerer Supreme",tr:"Yüce Büyücü"},
-  "Iron Man":{az:"Dahi mühəndis, zirehli qəhrəman",en:"Genius armored hero",tr:"Dahi mühendis"},
-  "Wolverine":{az:"Adamantium caynaqlı mutant",en:"Adamantium-clawed mutant",tr:"Adamantiyum pençeli mutant"},
-  "Black Panther":{az:"Wakandanın vibranium zirehli kralı",en:"King of Wakanda",tr:"Wakanda'nın kralı"},
-  "Captain America":{az:"Super əsgər, ədalətin simvolu",en:"Super-soldier of justice",tr:"Süper asker"},
-  "Spider-Man":{az:"Hörümçək gücünə sahib gənc qəhrəman",en:"Young hero with spider-powers",tr:"Örümcek gücüne sahip genç"},
-  "Deadpool":{az:"Ölümsüz muzdlu döyüşçü",en:"Immortal mercenary",tr:"Ölümsüz paralı asker"},
-  "Loki":{az:"Fitnə tanrısı, hiyləgər",en:"God of mischief",tr:"Hile tanrısı"},
-  "Hela":{az:"Ölüm tanrıçası",en:"Goddess of death",tr:"Ölüm tanrıçası"},
-  "Venom":{az:"Qaranlıq simbiyot anti-qəhrəman",en:"Dark symbiote anti-hero",tr:"Karanlık simbiyot"},
-  "Carnage":{az:"Amansız simbiyot qatil",en:"Ruthless symbiote killer",tr:"Acımasız simbiyot katil"},
-  "Vision":{az:"Süni intellektli sintetik qəhrəman",en:"AI-powered synthetic hero",tr:"Yapay zeka androidi"},
-  "Ultron":{az:"Bəşəriyyəti təhdid edən robot",en:"Rogue AI robot",tr:"Yapay zeka robotu"},
-  "Captain Marvel":{az:"Kosmik enerjili pilot",en:"Cosmic energy pilot",tr:"Kozmik enerjili pilot"},
-  "Winter Soldier":{az:"Kiber qollu casus əsgər",en:"Cybernetic assassin",tr:"Sibernetik suikastçı"},
-  "Shang-Chi":{az:"Döyüş sənətləri ustası",en:"Master martial artist",tr:"Dövüş sanatları ustası"},
-  "Ghost Rider":{az:"Cəhənnəm alovlu intiqam mələyi",en:"Hellfire vengeance spirit",tr:"Cehennem ateşli intikam meleği"},
-  "Blade":{az:"Yarı vampir ovçusu",en:"Half-vampire hunter",tr:"Yarı vampir avcısı"},
-  "She-Hulk":{az:"Hüquqşünas nəhəng qəhrəman",en:"Lawyer turned green giant",tr:"Avukat kahraman"},
-  "Jean Grey":{az:"Telepatik qüdrətli mutant",en:"Powerful telepathic mutant",tr:"Güçlü telepatik mutant"},
-  "Magneto":{az:"Metalları idarə edən mutant lider",en:"Magnetic mutant master",tr:"Manyetik mutant"},
-  "Professor X":{az:"Dünyanın ən güclü telepatı",en:"World's strongest telepath",tr:"En güçlü telepath"},
-  "Iceman":{az:"Bədənini buza çevirən mutant",en:"Ice-body mutant",tr:"Buz mutantı"},
-  "Doctor Octopus":{az:"Dörd mexaniki qollu dahi alim",en:"Genius with four mechanical arms",tr:"Mekanik kollu dahi"},
-  "Ant-Man":{az:"Bədənini kiçildən qəhrəman",en:"Size-shifting hero",tr:"Boyut değiştiren kahraman"},
-  "Wasp":{az:"Uçan, atıcı, ölçü dəyişdirən",en:"Flying stinging hero",tr:"Uçan kahraman"},
-  "Hawkeye":{az:"Dünyanın ən yaxşı okçusu",en:"World's greatest archer",tr:"Dünyanın en iyi okçusu"},
-  "Black Widow":{az:"Casus, akrobat döyüş ustası",en:"Master spy and combatant",tr:"Usta casus"},
-  "Moon Knight":{az:"Gecə tanrısından güc alan sirli qəhrəman",en:"Moon god's mysterious avatar",tr:"Ay tanrısının avatarı"},
-  "Daredevil":{az:"Kor hüquqşünas, gecə döyüşçüsü",en:"Blind lawyer night vigilante",tr:"Kör avukat gece savaşçısı"},
-  "Punisher":{az:"Günahkarları cəzalandıran intiqamçı",en:"Lethal vigilante punisher",tr:"Ölümcül intikamcı"},
-  "Morbius":{az:"Vampirik həkim",en:"Living vampire doctor",tr:"Vampirik doktor"},
-  "Black Cat":{az:"Bədbəxtlik gücünə sahib cəsur oğru",en:"Cat burglar with bad luck powers",tr:"Şanssızlık güçlü hırsız"},
-  "Homelander":{az:"Ən güclü amma qeyri-sabit qəhrəman",en:"Most powerful but unstable hero",tr:"En güçlü ama dengesiz"},
-  "Queen Maeve":{az:"Güclü, sürətli, möhkəm super-qəhrəman",en:"Strong fast durable hero",tr:"Güçlü süper kahraman"},
-  "Soldier Boy":{az:"Köhnə nəsil super-əsgər",en:"Old-gen super-soldier",tr:"Eski nesil süper asker"}
-};
-
-/* ════════════════════════════════════
-   HEROES
-════════════════════════════════════ */
-const HEROES=[
-  {name:"Hades",fr:"Mythology",init:"HD",color:"#4A148C",tier:"S",power:97,speed:80,defense:95,health:98,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvBRSD4vBwIhu6sAYBQpgH57g2ur_TiPgci_q4lKGpfA&s=10"},
-  {name:"Superman",fr:"DC",init:"SU",color:"#4FA3E3",tier:"S",power:99,speed:92,defense:98,health:98,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgx9BS4HzHuFykljxgnr0rRm82ABPoUE_wdXLkI1V_BQ&s=10"},
-  {name:"Wonder Woman",fr:"DC",init:"WW",color:"#E3B23C",tier:"S",power:94,speed:83,defense:92,health:93,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZazh5VL-gTgCx75wAYPSr4P31MhjRM7votEzzrz6SUA&s=10"},
-  {name:"Shazam",fr:"DC",init:"SH",color:"#D9A441",tier:"S",power:91,speed:85,defense:86,health:88,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp5aALpEqIV2BMKdhQWNzBZBk22ds_9x-cjBgzAo02DQ&s=10"},
-  {name:"Green Lantern",fr:"DC",init:"GL",color:"#4CAF6D",tier:"A",power:87,speed:76,defense:80,health:78,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkPXwIu0zE9WAZWCEiZry_FLjcQaNP9rjFQEPGLlQsXQ&s=10"},
-  {name:"Aquaman",fr:"DC",init:"AQ",color:"#3CA9A0",tier:"A",power:81,speed:66,defense:77,health:83,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBdRhB-VY5ZlkdWFP8St5S8UweiSo0CqrCxeFfdQipeQ&s=10"},
-  {name:"Flash",fr:"DC",init:"FL",color:"#D64545",tier:"A",power:60,speed:99,defense:52,health:68,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDz_w-k00JVwtbdPjLvM0kcXlFdU3llIhDXSF7NbshaQ&s=10"},
-  {name:"Cyborg",fr:"DC",init:"CY",color:"#5C6BC0",tier:"B",power:70,speed:56,defense:76,health:80,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNB99FCMdEQAdWVebYcSg0bJr-6joE-Jd3-Xggr1Tdjw&s=10"},
-  {name:"Batman",fr:"DC",init:"BM",color:"#5B6472",tier:"C",power:38,speed:60,defense:60,health:58,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwOAYReBEB3NrXg0YpUgFS1hSHHpH5JavPM9hy2qh8Qw&s=10"},
-  {name:"Nightwing",fr:"DC",init:"NW",color:"#3A4A6B",tier:"C",power:40,speed:66,defense:48,health:54,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6Im9OADPC7SE_enWXsu773lfopb97etNP92ooKUNdNl6QBVB3Q9iNgW0&s=10"},
-  {name:"Batgirl",fr:"DC",init:"BG",color:"#8E7CC3",tier:"C",power:36,speed:60,defense:44,health:50,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDD84CLMly9sjO5DmHHoB3u2YIDjifHNKatBhMSZAyKw&s=10"},
-  {name:"Green Arrow",fr:"DC",init:"GA",color:"#4C8C4A",tier:"C",power:34,speed:56,defense:42,health:50,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTANj74o2Jrchx6CT8N0B1a1JjJT2butVl8mCy8CAc87Q&s=10"},
-  {name:"Harley Quinn",fr:"DC",init:"HQ",color:"#C959A0",tier:"C",power:40,speed:62,defense:40,health:54,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPkKMOfRolq_UdBtfWoNaIFO8-drB704yILE1pUufw5A&s=10"},
-  {name:"Joker",fr:"DC",init:"JK",color:"#7B1FA2",tier:"C",power:32,speed:56,defense:40,health:50,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlo06mcv4VMZLJ-f9timpKGOaFlsOSebispZZ1_JbgjA&s=10"},
-  {name:"Supergirl",fr:"DC",init:"SG",color:"#1976D2",tier:"S",power:96,speed:89,defense:95,health:95,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHO0mIcVSPlLmxQjCnzdvsIggPvXrCnIp3uLw8u6A5Lw&s=10"},
-  {name:"Black Adam",fr:"DC",init:"BA",color:"#FBC02D",tier:"S",power:96,speed:85,defense:93,health:93,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsKncTNtKh_DPLzPv9xiuIC1hHGvpOr3OZRqSgfjyj3A&s"},
-  {name:"Red Hood",fr:"DC",init:"RH",color:"#C62828",tier:"C",power:42,speed:64,defense:50,health:58,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHzKjwAbu396jAV6nU1AEF4lNJJeSgXhCUGJCBhQaxkA&s=10"},
-  {name:"Doctor Doom",fr:"Marvel",init:"DD",color:"#2E7D32",tier:"S",power:96,speed:75,defense:94,health:93,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn8L55m3D6UKmwYybQYXJApJwmLLd-bSKWzIA2lyqgJg&s=10"},
-  {name:"Odin",fr:"Marvel",init:"OD",color:"#D4A544",tier:"S",power:99,speed:80,defense:98,health:98,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR13qDmnzU3y8mOI5EoCez8LLsOQhWg-6SIwq7Xf9Nu3w&s=10"},
-  {name:"Thanos",fr:"Marvel",init:"TH",color:"#4A148C",tier:"S",power:99,speed:76,defense:97,health:99,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ayYxoYOizQVfpT1aQGGpkd_cBzK9ogXW4uN7kVCJZg&s"},
-  {name:"Silver Surfer",fr:"Marvel",init:"SS",color:"#78909C",tier:"S",power:97,speed:98,defense:94,health:95,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHICrVbH1SZERkLrnBaOC539cVnPrI48HuAQ5aOQ0CNA&s=10"},
-  {name:"Hulk",fr:"Marvel",init:"HU",color:"#5FA352",tier:"S",power:99,speed:52,defense:92,health:97,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkx26usqd_qKikqtQ1jA5QyiYOFpCj9_S-X4jwca0jGQ&s=10"},
-  {name:"Thor",fr:"Marvel",init:"TH",color:"#7B9FD1",tier:"S",power:97,speed:84,defense:93,health:94,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwZ44RpjZ1lUA77uMV-SaAjTklRR0sWr_ySjXPLwa17g&s=10"},
-  {name:"Scarlet Witch",fr:"Marvel",init:"SW",color:"#A6398F",tier:"S",power:97,speed:56,defense:66,health:70,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb-hVZWtHUaqJhjRGyyKk-9qlYOx2oA1HweW0mDqwcuw&s=10"},
-  {name:"Doctor Strange",fr:"Marvel",init:"DS",color:"#C0392B",tier:"A",power:86,speed:60,defense:70,health:72,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTop9O7TI2mXvI10Eu-tQiFfD4OosMxV0UrqZD0VU34VQ&s=10"},
-  {name:"Iron Man",fr:"Marvel",init:"IM",color:"#D9534F",tier:"A",power:85,speed:80,defense:83,health:76,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyB9F4FOOGkZUCe0wOhSr5qskIYHp3VElpmRlqqSxkyA&s=10"},
-  {name:"Wolverine",fr:"Marvel",init:"WV",color:"#E5B82A",tier:"A",power:74,speed:70,defense:83,health:91,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUNyAfpNXzngj2J5z7nLctDHMcrqkHbZHibsUb_AT7Gg&s=10"},
-  {name:"Black Panther",fr:"Marvel",init:"BP",color:"#2E2E38",tier:"B",power:68,speed:76,defense:73,health:70,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeUOX60uuwrF56xfjRzbu_eq1lUMD3gQivNW_NZswiSQ&s=10"},
-  {name:"Captain America",fr:"Marvel",init:"CA",color:"#4472C4",tier:"B",power:64,speed:68,defense:70,health:78,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRr1OnvauFD74Z2pzffNLEUwelPkP_RgUAzLZrSV647YkdksWhnxd6pOaw&s=10"},
-  {name:"Spider-Man",fr:"Marvel",init:"SM",color:"#C0392B",tier:"B",power:66,speed:84,defense:60,health:68,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsVzOcjJB2y9dAENqMikA77aIDUys5QHb3E3Kg0S9mUw&s"},
-  {name:"Deadpool",fr:"Marvel",init:"DP",color:"#B82626",tier:"B",power:66,speed:64,defense:78,health:96,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzEj3Ox7nzPzr89ThPTWLDb7pp-ycyxRwzosiHR0LWiQ&s"},
-  {name:"Loki",fr:"Marvel",init:"LK",color:"#2E7D32",tier:"A",power:78,speed:75,defense:70,health:80,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbM2sSCWz9rAEQ0HrxiuMkbHbMXjdqZBjWnDvUogy0mw&s=10"},
-  {name:"Hela",fr:"Marvel",init:"HL",color:"#1B5E20",tier:"S",power:96,speed:83,defense:91,health:94,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJeXMId5SF6X5nyBzH2C30_5ZG5FaTgplfEqs0N08dlw&s=10"},
-  {name:"Venom",fr:"Marvel",init:"VN",color:"#212121",tier:"A",power:83,speed:71,defense:81,health:89,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-ljEKUP1ZSlq6F2gSeYxt4TFFPBnLbvJcyXyr0YzjuA&s=10"},
-  {name:"Carnage",fr:"Marvel",init:"CN",color:"#B71C1C",tier:"A",power:85,speed:77,defense:79,health:86,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_9NC2BymUH4wD9D_Owoz9Gx2HYpvH-L4Sisc2YFcaRw&s=10"},
-  {name:"Vision",fr:"Marvel",init:"VS",color:"#00695C",tier:"A",power:89,speed:79,defense:89,health:85,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPxOUBnny3WpLocOHzqURM7iEiZAVBHWJJQkIaDymN1g&s"},
-  {name:"Ultron",fr:"Marvel",init:"UL",color:"#37474F",tier:"A",power:90,speed:73,defense:92,health:87,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiJmpsKmODsT4haccfCtkx1t4UnZlfkVSv7j72BCyKfg&s=10"},
-  {name:"Captain Marvel",fr:"Marvel",init:"CM",color:"#1565C0",tier:"S",power:80,speed:90,defense:80,health:90,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTQssTn-LFqnLv9H8Q_HJzfY06SfobpWocUler9Wy-cw&s=10"},
-  {name:"Winter Soldier",fr:"Marvel",init:"WS",color:"#424242",tier:"B",power:65,speed:68,defense:66,health:72,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqFI52ZzX_BxqSzvOzJ6INFuTXcXDBAkYuOr7NcDnLw&s=10"},
-  {name:"Shang-Chi",fr:"Marvel",init:"SC",color:"#C62828",tier:"B",power:64,speed:82,defense:64,health:68,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxuncmmuo2oiwPsD-SZYQCwx0CiRdPnFcMcA2KQYzjlw&s=10"},
-  {name:"Ghost Rider",fr:"Marvel",init:"GR",color:"#E65100",tier:"S",power:93,speed:79,defense:89,health:96,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQypGMGp7P8pJPixP-2dIutS4d8TfBgODZyKv8KFNKpFg&s=10"},
-  {name:"Blade",fr:"Marvel",init:"BL",color:"#212121",tier:"B",power:60,speed:70,defense:62,health:74,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtsYF5do6oclwduEzNeNJa6XOSjJXYfHADmnGDPrneZA&s=10"},
-  {name:"She-Hulk",fr:"Marvel",init:"SH",color:"#2E7D32",tier:"A",power:88,speed:62,defense:85,health:91,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiaQ-Rzk0PKFLlKa8kkEt8hw1xJVeOPR6P7RJmu-Kyzg&s=10"},
-  {name:"Jean Grey",fr:"Marvel",init:"JG",color:"#D84315",tier:"S",power:99,speed:76,defense:80,health:85,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpVDw2ntBd7k4kn1YbOnWW6_0xfpM9k11hxlK82idpZw&s"},
-  {name:"Magneto",fr:"Marvel",init:"MG",color:"#6A1B9A",tier:"A",power:91,speed:65,defense:87,health:80,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlFcxyp2nV-TPRE3ZY6_Vk_ER7_0HQUmGEdaCVL-kkVQ&s=10"},
-  {name:"Professor X",fr:"Marvel",init:"PX",color:"#283593",tier:"A",power:87,speed:50,defense:60,health:65,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJRU1dtsJBWsb-LHajcaoB4ROpG0ev444TgefoCwrr7g&s=10"},
-  {name:"Iceman",fr:"Marvel",init:"IM",color:"#0288D1",tier:"A",power:82,speed:72,defense:80,health:80,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8qNKebrxIr5UuQwkzpM0ARwyk_K8_-c8DoC2WT3Juqw&s=10"},
-  {name:"Doctor Octopus",fr:"Marvel",init:"DO",color:"#558B2F",tier:"B",power:64,speed:60,defense:68,health:70,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTajx99dBjKuXCx0awccK1Ox5JWNZL3X7HWHrcr5brliQ&s=10"},
-  {name:"Ant-Man",fr:"Marvel",init:"AM",color:"#E91E63",tier:"B",power:58,speed:74,defense:60,health:65,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5Mj7oZGI3hXKGU4_-M6_6pOEWLuTe2L3BTFfPdIPQ&s=10"},
-  {name:"Wasp",fr:"Marvel",init:"WP",color:"#FDD835",tier:"B",power:55,speed:80,defense:55,health:62,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnmrZDmCF0P-xCf_76HOmvWz6sQTp8n9LqXLHFt5YQBQ&s=10"},
-  {name:"Hawkeye",fr:"Marvel",init:"HE",color:"#78909C",tier:"C",power:36,speed:62,defense:44,health:56,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSHJrCHCAbGc4m4K-JUZ5fF2gtnFz1cSJPLpMSdSH2Rg&s=10"},
-  {name:"Black Widow",fr:"Marvel",init:"BW",color:"#212121",tier:"C",power:38,speed:68,defense:50,health:58,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXDzAOIEiHJ_0Afc-UUjhF5vXlgdBDW13DlnxiEXGKlA&s=10"},
-  {name:"Moon Knight",fr:"Marvel",init:"MK",color:"#EEEEEE",tier:"B",power:62,speed:66,defense:58,health:70,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqaVBJL_lk5-BI3tJ1d--gFJo7r1jl0W9L72Y9UKjMgw&s=10"},
-  {name:"Daredevil",fr:"Marvel",init:"DD",color:"#C62828",tier:"C",power:44,speed:70,defense:52,health:60,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSH7d17-vGOGgGnSqt2fP7DQQshzSmm6bRg2TOnMFOGXQ&s=10"},
-  {name:"Punisher",fr:"Marvel",init:"PU",color:"#424242",tier:"C",power:48,speed:58,defense:46,health:62,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7zRbzJjuSl8pCELOYL_yXmFWaWcpVd3g_8CqxELKjTA&s=10"},
-  {name:"Homelander",fr:"The Boys",init:"HL",color:"#0D47A1",tier:"S",power:95,speed:88,defense:92,health:92,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-_M5puEr7jvDEIMuZ_xAjzwxRdVVvQkXbHb5MpHnOoA&s=10"},
-  {name:"Queen Maeve",fr:"The Boys",init:"QM",color:"#8D6E63",tier:"A",power:80,speed:70,defense:78,health:82,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDjcvMUjGrc4AeSrwxTyCJHfJekLOzx3XjB3NKwo7bfLkQY-P_byagNsI&s=10"},
-  {name:"Soldier Boy",fr:"The Boys",init:"SB",color:"#33691E",tier:"A",power:86,speed:68,defense:87,health:88,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRaFlEQNVMrh4aBLjtxCAF6XbiqtnyvrPPMH2oaqs0Rw&s=10"},
-  {name:"Morbius",fr:"Marvel",init:"MB",color:"#4527A0",tier:"B",power:64,speed:72,defense:60,health:76,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqaVBJL_lk5-BI3tJ1d--gFJo7r1jl0W9L72Y9UKjMgw&s=10"},
-  {name:"Black Cat",fr:"Marvel",init:"BC",color:"#37474F",tier:"C",power:42,speed:74,defense:46,health:58,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7zRbzJjuSl8pCELOYL_yXmFWaWcpVd3g_8CqxELKjTA&s=10"}
+/* ═══════════════════════════════════════════
+   GAME DATA & LOGIC
+═══════════════════════════════════════════ */
+const HEROES = [
+  { id:1, name:'Superman', tier:'S', hp:120, atk:35, icon:'🦸‍♂️' },
+  { id:2, name:'Batman', tier:'A', hp:90, atk:28, icon:'🦇' },
+  { id:3, name:'Spider-Man', tier:'A', hp:85, atk:25, icon:'🕷️' },
+  { id:4, name:'Iron Man', tier:'S', hp:100, atk:32, icon:'🦾' },
+  { id:5, name:'Thor', tier:'S', hp:110, atk:30, icon:'⚡' },
+  { id:6, name:'Hulk', tier:'S', hp:130, atk:28, icon:'🟢' }
 ];
 
-/* ════════════════════════════════════
-   SHOP CATALOG
-════════════════════════════════════ */
-const SHOP_FRAMES=[
-  {id:'frame_none',name:'Standart',desc:'Əsas çərçivə',price:0,style:'',preview:'🎭'},
-  {id:'frame_bronze',name:'Tunc',desc:'Tunc çərçivəsi',price:50,style:'3px solid #CD7F32',preview:'🟤'},
-  {id:'frame_silver',name:'Gümüş',desc:'Gümüş çərçivəsi',price:100,style:'3px solid #C0C0C0',preview:'⚪'},
-  {id:'frame_gold',name:'Qızıl',desc:'Qızıl çərçivəsi',price:200,style:'3px solid #FFD700',preview:'🟡'},
-  {id:'frame_diamond',name:'Almaz',desc:'Almaz çərçivəsi',price:400,style:'3px solid #00E5FF',preview:'💠'},
-  {id:'frame_legendary',name:'Əfsanəvi',desc:'Əfsanəvi çərçivə',price:800,style:'3px solid #FF6B6B',preview:'🔴'},
-  {id:'frame_rainbow',name:'Göy qurşağı',desc:'Rəngli çərçivə',price:1200,style:'3px solid transparent',preview:'🌈',rainbow:true}
-];
-const SHOP_TITLES=[
-  {id:'title_none',name:'Adsız',desc:'Standart başlıq',price:0,badge:'badge-azure',text:'Novice'},
-  {id:'title_warrior',name:'Döyüşçü',desc:'Güclü döyüşçü',price:150,badge:'badge-mint',text:'Warrior'},
-  {id:'title_champion',name:'Çempion',desc:'Döyüş çempionu',price:300,badge:'badge-gold',text:'Champion'},
-  {id:'title_legend',name:'Əfsanə',desc:'Əfsanəvi oyunçu',price:600,badge:'badge-violet',text:'Legend'},
-  {id:'title_god',name:'Tanrı',desc:'Misilsiz güc',price:1200,badge:'badge-crimson',text:'God'}
-];
-const SHOP_EFFECTS=[
-  {id:'effect_none',name:'Effektsiz',desc:'Standart görünüş',price:0,glow:''},
-  {id:'effect_red',name:'Qırmızı Aura',desc:'Qırmızı parıltı',price:100,glow:'0 0 16px 4px rgba(255,80,80,0.55)'},
-  {id:'effect_blue',name:'Mavi Aura',desc:'Mavi parıltı',price:100,glow:'0 0 16px 4px rgba(80,140,255,0.55)'},
-  {id:'effect_gold',name:'Qızıl Aura',desc:'Qızıl parıltı',price:250,glow:'0 0 16px 4px rgba(255,200,80,0.6)'},
-  {id:'effect_violet',name:'Violet Aura',desc:'Violet parıltı',price:250,glow:'0 0 16px 4px rgba(180,80,255,0.55)'},
-  {id:'effect_rainbow',name:'Göy Qurşağı',desc:'Rəngli parıltı',price:500,glow:'0 0 20px 6px rgba(255,255,255,0.35)'}
-];
+let currentUser = null;
+let selectedMode = 'local'; // local, bot, create, join
+let gameMode = 'auction'; // auction, wheel
+let peer = null, conn = null;
+let roomCode = '';
 
-/* ════════════════════════════════════
-   HERO PRICES (by tier)
-════════════════════════════════════ */
-function heroCoinPrice(h){
-  if(h.tier==='S') return 800+Math.round((h.power+h.speed+h.defense+h.health-340)/4)*10;
-  if(h.tier==='A') return 400+Math.round((h.power+h.speed+h.defense+h.health-280)/4)*8;
-  if(h.tier==='B') return 200+Math.round((h.power+h.speed+h.defense+h.health-240)/4)*5;
-  return 80;
-}
+let p1Coins = 50, p2Coins = 50;
+let p1Team = [], p2Team = [];
+let currentLotIndex = 0;
+let currentBid = 0;
+let highestBidder = null;
+let passes = { 1: false, 2: false };
 
-/* ════════════════════════════════════
-   USER STORE (localStorage)
-════════════════════════════════════ */
-let currentUser=null;
+let wheelRotation = 0;
+let currentWheelTurn = 1;
 
-function loadUser(username){
-  const key='htb_user_'+username;
-  const raw=localStorage.getItem(key);
-  if(!raw) return null;
-  return JSON.parse(raw);
-}
-
-function saveUser(){
-  if(!currentUser) return;
-  localStorage.setItem('htb_user_'+currentUser.username, JSON.stringify(currentUser));
-  updateNavCoins();
-}
-
-function createUser(username,email,avatar){
-  return {
-    username,email,avatar:avatar||'👤',
-    coins:200,wins:0,games:0,
-    inventory:{frames:['frame_none'],titles:['title_none'],effects:['effect_none'],heroes:[]},
-    equipped:{frame:'frame_none',title:'title_none',effect:'effect_none'},
-    createdAt:Date.now()
-  };
-}
-
-function updateNavCoins(){
-  if(!currentUser) return;
-  document.getElementById('navCoins').textContent=currentUser.coins;
-  document.getElementById('shopCoins').textContent=currentUser.coins;
-  const sc=document.getElementById('statCoins');
-  if(sc) sc.textContent='🪙 '+currentUser.coins;
-}
-
-/* ════════════════════════════════════
-   AUTH
-════════════════════════════════════ */
-let authMode='login';
-function switchAuthTab(mode){
-  authMode=mode;
-  document.querySelectorAll('.auth-tab').forEach((tab,i)=>tab.classList.toggle('active',(i===0&&mode==='login')||(i===1&&mode==='register')));
-  document.getElementById('authEmailRow').style.display=mode==='register'?'block':'none';
-  document.querySelector('.auth-form .btn-primary').textContent=mode==='login'?t('authLogin').toUpperCase():t('authRegister').toUpperCase();
-}
-
-function handleAuth(){
-  const username=document.getElementById('authUsername').value.trim();
-  const password=document.getElementById('authPassword').value;
-  const err=document.getElementById('authError');
-  err.textContent='';
-  if(!username){err.textContent='İstifadəçi adı boş ola bilməz.';return;}
-  if(!password||password.length<4){err.textContent='Şifrə ən az 4 simvol olmalıdır.';return;}
-  if(authMode==='register'){
-    if(loadUser(username)){err.textContent='Bu istifadəçi adı artıq mövcuddur.';return;}
-    const email=document.getElementById('authEmail').value.trim();
-    currentUser=createUser(username,email,'👤');
-    currentUser._pw=btoa(password);
-    saveUser();
-    doLogin(username);
+// INITIALIZATION
+window.onload = function() {
+  const savedUser = localStorage.getItem('htb_user');
+  if(savedUser) {
+    currentUser = JSON.parse(savedUser);
+    showMainApp();
   } else {
-    const u=loadUser(username);
-    if(!u){err.textContent='İstifadəçi tapılmadı.';return;}
-    if(u._pw&&u._pw!==btoa(password)){err.textContent='Şifrə yanlışdır.';return;}
-    currentUser=u;
-    doLogin(username);
+    document.getElementById('authPage').style.display = 'flex';
   }
+};
+
+function setLang(lang) {
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`[onclick="setLang('${lang}')"]`).classList.add('active');
+  showToast('Dil dəyişdirildi: ' + lang.toUpperCase(), 'gold');
 }
 
-function handleGoogleAuth(){
-  const username='Hero_'+Math.floor(Math.random()*9000+1000);
-  let u=loadUser(username);
-  if(!u){u=createUser(username,'google@sim.com','🦸');}
-  currentUser=u;
-  doLogin(username);
+function showToast(text, type='gold') {
+  const t = document.getElementById('toast');
+  t.innerText = text;
+  t.className = `toast show ${type}`;
+  setTimeout(() => t.className = 'toast', 2500);
 }
 
-function doLogin(username){
-  localStorage.setItem('htb_current',username);
-  document.getElementById('authPage').style.display='none';
-  document.getElementById('navbar').classList.add('show');
-  updateNavCoins();
-  updateNavAvatar();
-  showPage('playPage');
-  checkDailyBonus();
-  showToast('Xoş gəldin, '+username+'! 🎮','green');
+// AUTHENTICATION
+function switchAuthTab(tab) {
+  document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+  document.getElementById('authEmailRow').style.display = tab === 'register' ? 'block' : 'none';
 }
 
-function doLogout(){
-  currentUser=null;
-  localStorage.removeItem('htb_current');
-  document.getElementById('navbar').classList.remove('none');
-  document.getElementById('navbar').classList.remove('show');
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('gamePage').style.display='none';
-  document.getElementById('wheelPage').style.display='none';
-  document.getElementById('battlePage').style.display='none';
-  document.getElementById('endPage').style.display='none';
-  document.getElementById('waitPage').classList.remove('show');
-  document.getElementById('authPage').style.display='flex';
-  showToast('Hesabdan çıxıldı.','');
-}
-
-function checkDailyBonus(){
-  if(!currentUser) return;
-  const today=new Date().toDateString();
-  if(currentUser.lastDaily!==today){
-    currentUser.lastDaily=today;
-    currentUser.coins+=20;
-    saveUser();
-    setTimeout(()=>showToast('🗓️ Gündəlik bonus: +20 🪙','gold'),1200);
-  }
-}
-
-function updateNavAvatar(){
-  if(!currentUser) return;
-  document.getElementById('navAvatar').textContent=currentUser.avatar||'👤';
-}
-
-/* ════════════════════════════════════
-   PAGE ROUTING
-════════════════════════════════════ */
-function showPage(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  const pg=document.getElementById(id);
-  if(pg){pg.classList.add('active');}
-  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
-  const map={playPage:'navPlay',profilePage:'navProfile',shopPage:'navShop',collectionPage:'navCollection'};
-  if(map[id]) document.getElementById(map[id]).classList.add('active');
-  if(id==='profilePage') renderProfilePage();
-  if(id==='shopPage') renderShopPage();
-  if(id==='collectionPage') renderCollectionPage();
-  // Hide game screens when going to a page
-  if(['playPage','profilePage','shopPage','collectionPage'].includes(id)){
-    document.getElementById('gamePage').style.display='none';
-    document.getElementById('wheelPage').style.display='none';
-    document.getElementById('battlePage').style.display='none';
-    document.getElementById('endPage').style.display='none';
-    document.getElementById('waitPage').classList.remove('show');
-  }
-}
-
-/* ════════════════════════════════════
-   PROFILE PAGE
-════════════════════════════════════ */
-function renderProfilePage(){
-  if(!currentUser) return;
-  document.getElementById('profileUsername').textContent=currentUser.username;
-  document.getElementById('profileBigAvatar').textContent=currentUser.avatar||'👤';
-  document.getElementById('statWins').textContent=currentUser.wins||0;
-  document.getElementById('statGames').textContent=currentUser.games||0;
-  document.getElementById('statCoins').textContent='🪙 '+(currentUser.coins||0);
-  document.getElementById('statHeroes').textContent=(currentUser.inventory?.heroes?.length||0);
-  // Title badge
-  const eqTitle=SHOP_TITLES.find(t=>t.id===(currentUser.equipped?.title||'title_none'));
-  const tb=document.getElementById('profileTitleBadge');
-  if(eqTitle) tb.innerHTML=`<span class="badge ${eqTitle.badge}">${eqTitle.text}</span>`;
-  // Frame ring
-  const eqFrame=SHOP_FRAMES.find(f=>f.id===(currentUser.equipped?.frame||'frame_none'));
-  const ring=document.getElementById('profileFrameRing');
-  if(eqFrame&&eqFrame.style) ring.style.border=eqFrame.style;
-  else ring.style.border='none';
-  // Edit form
-  document.getElementById('editUsername').value=currentUser.username;
-  // Avatar options
-  document.querySelectorAll('.avatar-opt').forEach(opt=>{
-    opt.classList.toggle('selected',opt.dataset.emoji===currentUser.avatar);
-  });
-  // Inventory
-  renderInventory();
-}
-
-function switchProfileTab(tab){
-  document.querySelectorAll('.profile-tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.profile-panel').forEach(p=>p.classList.remove('active'));
-  const tabIdx={edit:0,inventory:1,logout:2};
-  document.querySelectorAll('.profile-tab')[tabIdx[tab]].classList.add('active');
-  document.getElementById('profilePanel'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
-}
-
-document.querySelectorAll('.avatar-opt').forEach(opt=>{
-  opt.addEventListener('click',()=>{
-    document.querySelectorAll('.avatar-opt').forEach(o=>o.classList.remove('selected'));
-    opt.classList.add('selected');
-  });
-});
-
-function saveProfile(){
-  if(!currentUser) return;
-  const newName=document.getElementById('editUsername').value.trim();
-  if(!newName){showToast('Ad boş ola bilməz','red');return;}
-  const selAvatar=document.querySelector('.avatar-opt.selected');
-  currentUser.username=newName;
-  currentUser.avatar=selAvatar?selAvatar.dataset.emoji:'👤';
-  saveUser();
-  updateNavAvatar();
-  renderProfilePage();
-  showToast('Profil yeniləndi ✓','green');
-}
-
-function renderInventory(){
-  renderInventorySection('inventoryFrames',SHOP_FRAMES,'frame');
-  renderInventorySection('inventoryTitles',SHOP_TITLES,'title');
-  renderInventorySection('inventoryEffects',SHOP_EFFECTS,'effect');
-}
-
-function renderInventorySection(containerId,catalog,type){
-  const owned=currentUser.inventory?.[type+'s']||[];
-  const equipped=currentUser.equipped?.[type]||'';
-  const el=document.getElementById(containerId);
-  el.innerHTML=owned.map(id=>{
-    const item=catalog.find(c=>c.id===id);
-    if(!item) return '';
-    const isEquipped=equipped===id;
-    return `<div class="shop-item ${isEquipped?'equipped':'owned'}">
-      <div style="font-size:32px;">${item.preview||item.text||'?'}</div>
-      <div class="shop-item-name">${item.name}</div>
-      <div class="shop-item-desc">${item.desc}</div>
-      <button class="btn btn-sm ${isEquipped?'':'btn-azure'}" onclick="equipItem('${type}','${id}')">
-        ${isEquipped?'✓ Taxılıb':'Gey'}
-      </button>
-    </div>`;
-  }).join('');
-}
-
-function equipItem(type,id){
-  if(!currentUser.equipped) currentUser.equipped={};
-  currentUser.equipped[type]=id;
-  saveUser();
-  renderProfilePage();
-  showToast('Taxıldı!','gold');
-}
-
-/* ════════════════════════════════════
-   SHOP PAGE
-════════════════════════════════════ */
-function renderShopPage(){
-  updateNavCoins();
-  renderShopSection('shopGridFrames',SHOP_FRAMES,'frame');
-  renderShopSection('shopGridTitles',SHOP_TITLES,'title');
-  renderShopSection('shopGridEffects',SHOP_EFFECTS,'effect');
-  renderHeroShop();
-}
-
-function renderShopSection(containerId,catalog,type){
-  const owned=currentUser?.inventory?.[type+'s']||[];
-  const equipped=currentUser?.equipped?.[type]||'';
-  const el=document.getElementById(containerId);
-  el.innerHTML=catalog.map(item=>{
-    const isOwned=owned.includes(item.id);
-    const isEquipped=equipped===item.id;
-    let btn='';
-    if(isEquipped) btn=`<div class="shop-item-status equipped">✓ Taxılıb</div>`;
-    else if(isOwned) btn=`<button class="btn btn-sm btn-azure" onclick="equipItem('${type}','${item.id}')">Gey</button>`;
-    else btn=`<button class="btn btn-sm btn-primary" onclick="buyItem('${type}','${item.id}')">🪙 ${item.price}</button>`;
-    return `<div class="shop-item ${isEquipped?'equipped':isOwned?'owned':''}">
-      <div style="font-size:34px;${item.rainbow?'background:linear-gradient(90deg,red,orange,yellow,green,blue,violet);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;':''}">${item.preview||item.text||'✨'}</div>
-      <div class="shop-item-name">${item.name}</div>
-      <div class="shop-item-desc">${item.desc}</div>
-      ${item.price>0?`<div class="shop-item-price"><span>🪙</span>${item.price}</div>`:'<div class="shop-item-status owned">Pulsuz</div>'}
-      ${btn}
-    </div>`;
-  }).join('');
-}
-
-function renderHeroShop(){
-  const ownedHeroes=currentUser?.inventory?.heroes||[];
-  const el=document.getElementById('shopGridHeroes');
-  el.innerHTML=HEROES.map(h=>{
-    const isOwned=ownedHeroes.includes(h.name);
-    const price=heroCoinPrice(h);
-    return `<div class="hero-shop-card ${isOwned?'owned':''}">
-      <div class="hero-card-avatar" style="background:${h.color}">
-        ${h.img?`<img src="${h.img}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.style.display='none'">`:h.init}
-      </div>
-      <div class="hero-card-name">${h.name}</div>
-      <div class="hero-card-fr"><span class="badge ${frBadge(h.fr)}">${h.fr}</span></div>
-      <span class="tier-badge tier-${h.tier}">${h.tier}</span>
-      <div class="mini-stats" style="justify-content:center;gap:4px;">
-        <span class="mini-stat g">G:${h.power}</span>
-        <span class="mini-stat s">S:${h.speed}</span>
-        <span class="mini-stat m">M:${h.defense}</span>
-      </div>
-      ${isOwned
-        ?`<div class="shop-item-status owned">✓ Var</div>`
-        :`<div class="hero-card-price"><span>🪙</span>${price}</div>
-           <button class="btn btn-sm btn-primary" onclick="buyHero('${h.name}')">Al</button>`}
-    </div>`;
-  }).join('');
-}
-
-function frBadge(fr){
-  if(fr==='DC') return 'badge-azure';
-  if(fr==='The Boys') return 'badge-mint';
-  if(fr==='Mythology') return 'badge-violet';
-  return 'badge-crimson';
-}
-
-function buyItem(type,id){
-  if(!currentUser) return;
-  const catalog={frame:SHOP_FRAMES,title:SHOP_TITLES,effect:SHOP_EFFECTS}[type];
-  const item=catalog.find(c=>c.id===id);
-  if(!item) return;
-  if(currentUser.coins<item.price){showToast('Kifayət qədər coin yoxdur 😢','red');return;}
-  if(!currentUser.inventory[type+'s']) currentUser.inventory[type+'s']=[];
-  currentUser.coins-=item.price;
-  currentUser.inventory[type+'s'].push(id);
-  currentUser.equipped[type]=id;
-  saveUser();
-  renderShopPage();
-  showToast(`${item.name} alındı! 🎉`,'gold');
-}
-
-function buyHero(name){
-  if(!currentUser) return;
-  const h=HEROES.find(h=>h.name===name);
-  if(!h) return;
-  const price=heroCoinPrice(h);
-  if(currentUser.coins<price){showToast('Kifayət qədər coin yoxdur 😢','red');return;}
-  if(currentUser.inventory.heroes.includes(name)){showToast('Bu kahraman artıq var','');return;}
-  currentUser.coins-=price;
-  currentUser.inventory.heroes.push(name);
-  saveUser();
-  renderHeroShop();
-  updateNavCoins();
-  showToast(`${name} kolleksiyaya əlavə edildi! 🦸`,'gold');
-}
-
-function switchShopTab(tab){
-  document.querySelectorAll('.shop-tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.shop-panel').forEach(p=>p.classList.remove('active'));
-  const tabMap={frames:0,titles:1,effects:2,heroes:3};
-  document.querySelectorAll('.shop-tab')[tabMap[tab]].classList.add('active');
-  document.getElementById('shopPanel'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
-}
-
-/* ════════════════════════════════════
-   COLLECTION PAGE
-════════════════════════════════════ */
-function renderCollectionPage(){
-  if(!currentUser) return;
-  const owned=currentUser.inventory?.heroes||[];
-  document.getElementById('collectionCount').textContent=owned.length+' '+t('heroCount');
-  const el=document.getElementById('collectionGrid');
-  el.innerHTML=HEROES.map(h=>{
-    const isOwned=owned.includes(h.name);
-    return `<div class="collection-card ${isOwned?'':'empty'}">
-      <div class="hero-card-avatar" style="background:${h.color}">
-        ${isOwned&&h.img?`<img src="${h.img}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.style.display='none'">`:h.init}
-      </div>
-      <div class="hero-card-name">${h.name}</div>
-      <div class="hero-card-fr"><span class="badge ${frBadge(h.fr)}">${h.fr}</span></div>
-      <span class="tier-badge tier-${h.tier}">${h.tier}</span>
-      ${isOwned?'<div class="shop-item-status owned">✓</div>':`<div style="font-size:10px;color:var(--text-3);">${t('discover')}</div>`}
-    </div>`;
-  }).join('');
-}
-
-/* ════════════════════════════════════
-   TOAST
-════════════════════════════════════ */
-function showToast(msg,type=''){
-  const t=document.getElementById('toast');
-  t.textContent=msg;
-  t.className='toast show '+(type||'');
-  clearTimeout(t._t);
-  t._t=setTimeout(()=>t.classList.remove('show'),2600);
-}
-
-/* ════════════════════════════════════
-   ONLINE / P2P
-════════════════════════════════════ */
-let onlineMode=false,isHost=false,peer=null,conn=null,guestConnected=false,vsBotMode=false;
-
-/* ── Matchmaking (random auto-match) ──
-   Uses a shared PeerJS "lobby" id derived from a fixed public room prefix.
-   The first player to open the lobby id becomes the host; if that id is
-   taken, we fall back through a small pool of lobby slots until we either
-   claim an empty slot (and wait) or connect to someone already waiting. */
-let matchmakingActive=false,matchmakingPeer=null,matchmakingSlot=null,mmWatchdog=null;
-const MATCHMAKING_PREFIX='htb-mm-slot-';
-const MATCHMAKING_SLOTS=25;
-
-function selectMode(mode){
-  document.getElementById('createPanel').classList.remove('show');
-  document.getElementById('joinPanel').classList.remove('show');
-  document.getElementById('matchmakingPanel').classList.remove('show');
-  if(mode==='local'){onlineMode=false;vsBotMode=false;showConfigScreen();}
-  else if(mode==='bot'){onlineMode=false;vsBotMode=true;showConfigScreen();}
-  else if(mode==='create'){document.getElementById('createPanel').classList.add('show');startHostPeer();}
-  else if(mode==='join'){
-    document.getElementById('joinPanel').classList.add('show');
-    const params=new URLSearchParams(location.search);
-    const pre=params.get('room');
-    if(pre) document.getElementById('joinCodeInput').value=pre;
-  }
-  else if(mode==='matchmaking'){
-    document.getElementById('matchmakingPanel').classList.add('show');
-    startMatchmaking();
-  }
-}
-
-function startMatchmaking(){
-  if(matchmakingActive)return;
-  matchmakingActive=true;
-  onlineMode=true;
-  document.getElementById('matchmakingText').textContent=t('matchmakingText');
-  tryMatchmakingSlot(0);
-}
-
-function tryMatchmakingSlot(order){
-  if(!matchmakingActive)return;
-  // Deterministic ascending scan order so two people who click "quick play"
-  // around the same time converge on the SAME slot immediately: one of them
-  // claims it as host, the other sees it's taken half a second later and
-  // joins it as the guest right away, instead of drifting to different
-  // random slots and never finding each other.
-  const slots=Array.from({length:MATCHMAKING_SLOTS},(_,i)=>i);
-  attemptSlots(slots,0);
-}
-
-function attemptSlots(slots,idx){
-  if(!matchmakingActive)return;
-  if(idx>=slots.length){
-    // Went through every slot without landing a match — wait a moment then
-    // scan again from the top (slots may have freed up, or a new searcher
-    // may have just claimed slot 0).
-    setTimeout(()=>{if(matchmakingActive)attemptSlots(slots,0);},1200+Math.random()*800);
+function handleAuth() {
+  const username = document.getElementById('authUsername').value.trim();
+  if(!username) {
+    document.getElementById('authError').innerText = 'Zəhmət olmasa istifadəçi adını daxil edin!';
     return;
   }
-  const slotId=MATCHMAKING_PREFIX+slots[idx];
-  const p=new Peer(slotId);
-  let settled=false;
-  const timeout=setTimeout(()=>{
-    if(settled)return;
-    settled=true;
-    try{p.destroy();}catch(e){}
-    attemptSlots(slots,idx+1);
-  },2500);
-  p.on('open',id=>{
-    if(settled)return;
-    settled=true;clearTimeout(timeout);
-    // We claimed this slot as host — wait for a guest
-    matchmakingPeer=p;matchmakingSlot=slotId;
-    peer=p;isHost=true;
-    document.getElementById('matchmakingText').textContent=t('matchmakingText');
-    document.getElementById('matchmakingSub').textContent=t('matchmakingSub');
-    p.on('connection',c=>{
-      if(!matchmakingActive)return;
-      conn=c;guestConnected=true;setupConn();
-      matchmakingActive=false;
-      document.getElementById('matchmakingPanel').classList.remove('show');
-      showConfigScreen();
-      showOnlinePill(t('modeMatchTitle')+' — '+ (currentLang==='en'?'Player 1':'Oyuncu 1'));
-      showToast('🎲 '+(currentLang==='en'?'Opponent found!':currentLang==='tr'?'Rakip bulundu!':'Rəqib tapıldı!'),'gold');
-    });
-  });
-  p.on('error',err=>{
-    if(settled)return;
-    settled=true;clearTimeout(timeout);
-    try{p.destroy();}catch(e){}
-    if(err&&err.type==='unavailable-id'){
-      // Slot taken — try to join it as a guest instead
-      joinMatchmakingSlot(slotId,slots,idx);
-    } else {
-      attemptSlots(slots,idx+1);
-    }
-  });
+  currentUser = { username: username, coins: 100 };
+  localStorage.setItem('htb_user', JSON.stringify(currentUser));
+  showMainApp();
 }
 
-function joinMatchmakingSlot(slotId,slots,idx){
-  if(!matchmakingActive)return;
-  const p=new Peer();
-  let settled=false;
-  const timeout=setTimeout(()=>{
-    if(settled)return;
-    settled=true;
-    try{p.destroy();}catch(e){}
-    attemptSlots(slots,idx+1);
-  },2500);
-  p.on('open',()=>{
-    const c=p.connect(slotId,{reliable:true});
-    c.on('open',()=>{
-      if(settled)return;
-      settled=true;clearTimeout(timeout);
-      if(!matchmakingActive){try{p.destroy();}catch(e){}return;}
-      peer=p;conn=c;isHost=false;setupConn();
-      matchmakingActive=false;
-      document.getElementById('matchmakingPanel').classList.remove('show');
-      showOnlinePill(t('modeMatchTitle')+' — '+(currentLang==='en'?'Player 2':'Oyuncu 2'));
-      showToast('🎲 '+(currentLang==='en'?'Opponent found!':currentLang==='tr'?'Rakip bulundu!':'Rəqib tapıldı!'),'gold');
-      document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active'));
-      document.getElementById('waitPage').classList.add('show');
-      // Watchdog: the slot's host may already be paired with someone else
-      // (a rare 3-way collision). If we never receive game state within a
-      // few seconds, give up on this pairing and resume searching.
-      clearTimeout(mmWatchdog);
-      mmWatchdog=setTimeout(()=>{
-        if(document.getElementById('waitPage').classList.contains('show')&&!state){
-          try{c.close();}catch(e){}
-          try{p.destroy();}catch(e){}
-          peer=null;conn=null;onlineMode=true;
-          document.getElementById('waitPage').classList.remove('show');
-          matchmakingActive=true;
-          document.getElementById('matchmakingPanel').classList.add('show');
-          tryMatchmakingSlot(0);
-        }
-      },7000);
-    });
-    c.on('error',()=>{
-      if(settled)return;
-      settled=true;clearTimeout(timeout);
-      try{p.destroy();}catch(e){}
-      attemptSlots(slots,idx+1);
-    });
-  });
-  p.on('error',()=>{
-    if(settled)return;
-    settled=true;clearTimeout(timeout);
-    try{p.destroy();}catch(e){}
-    attemptSlots(slots,idx+1);
-  });
+function handleGoogleAuth() {
+  currentUser = { username: 'Google_User', coins: 100 };
+  localStorage.setItem('htb_user', JSON.stringify(currentUser));
+  showMainApp();
 }
 
-function cancelMatchmaking(){
-  matchmakingActive=false;
-  onlineMode=false;isHost=false;
-  clearTimeout(mmWatchdog);mmWatchdog=null;
-  if(matchmakingPeer){try{matchmakingPeer.destroy();}catch(e){}matchmakingPeer=null;}
-  if(peer){try{peer.destroy();}catch(e){}peer=null;}
-  conn=null;guestConnected=false;
-  document.getElementById('matchmakingPanel').classList.remove('show');
+function logout() {
+  localStorage.removeItem('htb_user');
+  location.reload();
 }
 
-function showConfigScreen(){
-  document.getElementById('lobbySelect').style.display='none';
-  document.getElementById('gameConfig').style.display='block';
-  if(onlineMode&&isHost){
-    document.getElementById('hostStatusArea').style.display='block';
-    document.getElementById('hostLinkInput').value=document.getElementById('roomLinkInput').value||'';
+function showMainApp() {
+  document.getElementById('authPage').style.display = 'none';
+  document.getElementById('navbar').classList.add('show');
+  document.getElementById('profileUserText').innerText = 'İstifadəçi adı: ' + currentUser.username;
+  document.getElementById('navCoins').innerText = currentUser.coins;
+  showPage('playPage');
+}
+
+// NAVIGATION
+function showPage(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active', 'show'));
+  const target = document.getElementById(pageId);
+  if(target) {
+    target.classList.add('active', 'show');
   }
 }
 
-function backToLobby(){
+// LOBBY & MODES
+function selectMode(mode) {
+  selectedMode = mode;
   document.getElementById('createPanel').classList.remove('show');
   document.getElementById('joinPanel').classList.remove('show');
-  document.getElementById('matchmakingPanel').classList.remove('show');
-  if(peer){peer.destroy();peer=null;}
-  onlineMode=false;
+
+  if(mode === 'create') {
+    document.getElementById('createPanel').classList.add('show');
+    initPeerHost();
+  } else if(mode === 'join') {
+    document.getElementById('joinPanel').classList.add('show');
+  } else {
+    document.getElementById('lobbySelect').style.display = 'none';
+    document.getElementById('gameConfig').style.display = 'block';
+  }
 }
 
-function startHostPeer(){
-  onlineMode=true;isHost=true;
-  attemptHostRoomCode();
+function backToLobby() {
+  document.getElementById('lobbySelect').style.display = 'block';
+  document.getElementById('gameConfig').style.display = 'none';
+  document.getElementById('createPanel').classList.remove('show');
+  document.getElementById('joinPanel').classList.remove('show');
 }
 
-function attemptHostRoomCode(attemptsLeft){
-  if(attemptsLeft===undefined)attemptsLeft=8;
-  const code=String(rand(1000,9999));
-  const p=new Peer('htb-room-'+code);
-  let settled=false;
-  p.on('open',()=>{
-    if(settled)return;settled=true;
-    peer=p;
-    document.getElementById('roomLinkInput').value=code;
-    document.getElementById('hostLinkInput').value=code;
-    document.getElementById('createStatusText').textContent='Otaq hazır — bu kodu Oyuncu 2-yə göndər: '+code;
+function selectGameMode(mode) {
+  gameMode = mode;
+  document.getElementById('gmAuction').classList.toggle('active', mode === 'auction');
+  document.getElementById('gmWheel').classList.toggle('active', mode === 'wheel');
+  document.getElementById('budgetField').style.display = mode === 'auction' ? 'block' : 'none';
+}
+
+// PEERJS P2P MULTIPLAYER
+function initPeerHost() {
+  roomCode = Math.floor(1000 + Math.random() * 9000).toString();
+  document.getElementById('roomLinkInput').value = roomCode;
+  
+  peer = new Peer('htb-' + roomCode);
+  peer.on('open', () => {
     document.getElementById('createDot').classList.add('on');
+    document.getElementById('createStatusText').innerText = 'Otaq hazırdır. Rəqib gözlənilir...';
   });
-  p.on('connection',c=>{
-    conn=c;guestConnected=true;setupConn();
-    document.getElementById('createStatusText').textContent='Oyuncu 2 qoşuldu!';
-    setTimeout(()=>{showConfigScreen();showOnlinePill('Sən Oyuncu 1-sən');},400);
-  });
-  p.on('error',err=>{
-    if(settled)return;
-    if(err&&err.type==='unavailable-id'&&attemptsLeft>0){
-      try{p.destroy();}catch(e){}
-      attemptHostRoomCode(attemptsLeft-1);
-      return;
-    }
-    settled=true;
-    document.getElementById('createStatusText').textContent='Xəta: '+(err?.type||'');
+
+  peer.on('connection', (c) => {
+    conn = c;
+    setupConnection();
+    showToast('Rəqib qoşuldu!', 'green');
+    document.getElementById('lobbySelect').style.display = 'none';
+    document.getElementById('gameConfig').style.display = 'block';
   });
 }
 
-function doJoin(){
-  const raw=document.getElementById('joinCodeInput').value.trim();
-  if(!raw){document.getElementById('joinStatusText').textContent='Kod boş ola bilməz';return;}
-  const digits=raw.replace(/\D/g,'').slice(0,4);
-  if(digits.length<4){document.getElementById('joinStatusText').textContent='4 rəqəmli kod daxil edin';return;}
-  const roomId='htb-room-'+digits;
-  onlineMode=true;isHost=false;
-  document.getElementById('joinStatusText').textContent='Qoşulur...';
-  peer=new Peer();
-  peer.on('open',()=>{
-    conn=peer.connect(roomId,{reliable:true});
-    conn.on('open',()=>{
-      setupConn();
-      document.getElementById('joinDot').classList.add('on');
-      document.getElementById('joinStatusText').textContent='Qoşuldu!';
-      showOnlinePill('Sən Oyuncu 2-sən');
-      setTimeout(()=>{
-        showPage('playPage'); // hide pages
-        document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-        document.getElementById('waitPage').classList.add('show');
-      },400);
-    });
-    conn.on('error',()=>document.getElementById('joinStatusText').textContent='Otağa qoşulmaq mümkün olmadı — kodu yoxlayın');
+function doJoin() {
+  const code = document.getElementById('joinCodeInput').value.trim();
+  if(code.length !== 4) {
+    showToast('4 rəqəmli kodu tam daxil edin!', 'red');
+    return;
+  }
+  peer = new Peer();
+  peer.on('open', () => {
+    conn = peer.connect('htb-' + code);
+    setupConnection();
   });
-  peer.on('error',()=>document.getElementById('joinStatusText').textContent='Xəta: bu koda uyğun otaq tapılmadı');
 }
 
-function showOnlinePill(text){
-  document.getElementById('onlinePillText').textContent=text;
-  document.getElementById('onlinePill').classList.add('show');
-}
-
-function setupConn(){
-  document.getElementById('chatToggle').style.display='flex';
-  conn.on('data',data=>{
-    if(!data||!data.type) return;
-    if(data.type==='chat'){appendChatMessage(data.text,false);return;}
-    if(isHost&&data.type==='action') handleGuestAction(data);
-    else if(!isHost&&data.type==='sync'){clearTimeout(mmWatchdog);mmWatchdog=null;applySync(data);}
-    else if(!isHost&&data.type==='reset'){
-      document.getElementById('endPage').style.display='none';
-      document.getElementById('battlePage').style.display='none';
-      document.getElementById('gamePage').style.display='none';
-      document.getElementById('waitPage').classList.add('show');
-      document.getElementById('waitText').textContent='Otaq sahibi yeni oyun hazırlayır...';
+function setupConnection() {
+  conn.on('open', () => {
+    document.getElementById('onlinePill').classList.add('show');
+    if(selectedMode === 'join') {
+      showPage('waitPage');
     }
   });
-  conn.on('close',()=>{guestConnected=false;alert('Bağlantı kəsildi. Səhifəni yeniləyin.');});
+
+  conn.on('data', (data) => {
+    handleNetworkData(data);
+  });
 }
 
-/* ════════════════════════════════════
-   COPY BUTTONS
-════════════════════════════════════ */
-document.getElementById('copyLinkBtn').onclick=()=>{
-  const v=document.getElementById('roomLinkInput').value;
-  navigator.clipboard?.writeText(v).catch(()=>{});
-  showToast('Kopyalandı!','gold');
-};
-document.getElementById('hostCopyBtn').onclick=()=>{
-  const v=document.getElementById('hostLinkInput').value;
-  navigator.clipboard?.writeText(v).catch(()=>{});
-  showToast('Kopyalandı!','gold');
-};
-
-/* ════════════════════════════════════
-   CHAT
-════════════════════════════════════ */
-document.getElementById('chatToggle').addEventListener('click',()=>{
-  document.getElementById('chatPanel').classList.toggle('open');
-  document.getElementById('chatToggle').classList.remove('unread');
-  document.getElementById('chatInput').focus();
-});
-document.getElementById('chatClose').addEventListener('click',()=>document.getElementById('chatPanel').classList.remove('open'));
-document.getElementById('chatSendBtn').addEventListener('click',sendChat);
-document.getElementById('chatInput').addEventListener('keydown',e=>{if(e.key==='Enter')sendChat();});
-function sendChat(){
-  const inp=document.getElementById('chatInput'),text=inp.value.trim();
-  if(!text)return;
-  appendChatMessage(text,true);
-  if(conn&&conn.open)conn.send({type:'chat',text});
-  inp.value='';
-}
-function appendChatMessage(text,mine){
-  const w=document.getElementById('chatMessages');
-  const el=document.createElement('div');
-  el.className='chat-msg '+(mine?'mine':'theirs');
-  el.textContent=text;
-  w.appendChild(el);w.scrollTop=w.scrollHeight;
-  if(!mine&&!document.getElementById('chatPanel').classList.contains('open'))
-    document.getElementById('chatToggle').classList.add('unread');
-}
-function sendAction(p){if(conn&&conn.open)conn.send(Object.assign({type:'action'},p));}
-function handleGuestAction(data){
-  if(data.action==='bid')makeBid(2);
-  else if(data.action==='pass')makePass(2);
-  else if(data.action==='spin')triggerWheelSpin();
+function sendData(data) {
+  if(conn && conn.open) {
+    conn.send(data);
+  }
 }
 
-/* ════════════════════════════════════
-   HOME CONFIG UI
-════════════════════════════════════ */
-const budgetRange=document.getElementById('budgetRange');
-budgetRange.addEventListener('input',()=>document.getElementById('budgetVal').textContent='$'+budgetRange.value);
-const incRow=document.getElementById('incRow');
-let selectedInc=1;
-for(let i=1;i<=10;i++){
-  const c=document.createElement('div');c.className='chip'+(i===1?' active':'');c.textContent='$'+i;
-  c.addEventListener('click',()=>{document.querySelectorAll('#incRow .chip').forEach(e=>e.classList.remove('active'));c.classList.add('active');selectedInc=i;});
-  incRow.appendChild(c);
-}
-const maxHeroesRow=document.getElementById('maxHeroesRow');
-let selectedMaxHeroes=5;
-for(let i=3;i<=10;i++){
-  const c=document.createElement('div');c.className='chip'+(i===5?' active':'');c.textContent=i;
-  c.addEventListener('click',()=>{document.querySelectorAll('#maxHeroesRow .chip').forEach(e=>e.classList.remove('active'));c.classList.add('active');selectedMaxHeroes=i;document.getElementById('maxHeroesVal').textContent=i;});
-  maxHeroesRow.appendChild(c);
-}
-let selectedGameMode='auction';
-function selectGameMode(mode){
-  selectedGameMode=mode;
-  document.getElementById('gmAuction').classList.toggle('active',mode==='auction');
-  document.getElementById('gmWheel').classList.toggle('active',mode==='wheel');
-  document.getElementById('budgetField').style.display=mode==='auction'?'':'none';
+function handleNetworkData(data) {
+  if(data.type === 'START_GAME') {
+    gameMode = data.gameMode;
+    p1Coins = data.budget;
+    p2Coins = data.budget;
+    if(gameMode === 'auction') startAuction();
+    else startWheel();
+  } else if(data.type === 'BID') {
+    applyBid(data.player, data.amount);
+  } else if(data.type === 'PASS') {
+    applyPass(data.player);
+  } else if(data.type === 'CHAT') {
+    receiveChatMessage(data.text);
+  }
 }
 
-/* ════════════════════════════════════
-   GAME STATE
-════════════════════════════════════ */
-let state=null,battleState=null,wheelState=null;
-
-function shuffle(arr){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function rand(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
-function clamp(v,mn,mx){return Math.max(mn,Math.min(mx,v));}
-function assignStats(h){return{...h,power:clamp(h.power+rand(-3,3),1,99),speed:clamp(h.speed+rand(-3,3),1,99),defense:clamp(h.defense+rand(-3,3),1,99),health:clamp(h.health+rand(-3,3),1,99)};}
-
-function startGame(){
-  if(onlineMode&&isHost&&!guestConnected){alert('Oyuncu 2 hələ qoşulmayıb.');return;}
-  if(selectedGameMode==='wheel'){startWheelGame(selectedMaxHeroes);return;}
-  const budget=parseInt(budgetRange.value,10);
-  const lotCount=Math.min(HEROES.length,selectedMaxHeroes*2);
-  const lots=shuffle(HEROES).slice(0,lotCount).map(assignStats);
-  state={mode:'auction',budget,inc:selectedInc,maxHeroes:selectedMaxHeroes,lots,lotIdx:0,price:0,leader:null,p1Passed:false,p2Passed:false,players:{1:{budget,heroes:[]},2:{budget,heroes:[]}}};
-  hideAllGameScreens();
-  document.getElementById('gamePage').style.display='block';
-  document.getElementById('lotTotal').textContent=lots.length;
-  if(currentUser) currentUser.games=(currentUser.games||0)+1,saveUser();
-  renderAuction();
+function copyCode() {
+  navigator.clipboard.writeText(roomCode);
+  showToast('Kod kopyalandı: ' + roomCode, 'green');
 }
 
-function hideAllGameScreens(){
-  document.getElementById('gamePage').style.display='none';
-  document.getElementById('wheelPage').style.display='none';
-  document.getElementById('battlePage').style.display='none';
-  document.getElementById('endPage').style.display='none';
-  document.getElementById('waitPage').classList.remove('show');
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+// GAME START
+function startGame() {
+  p1Coins = parseInt(document.getElementById('budgetRange').value) || 50;
+  p2Coins = p1Coins;
+
+  if(selectedMode === 'create') {
+    sendData({ type: 'START_GAME', gameMode: gameMode, budget: p1Coins });
+  }
+
+  if(gameMode === 'auction') {
+    startAuction();
+  } else {
+    startWheel();
+  }
 }
 
-/* ════════════════════════════════════
-   SYNC
-════════════════════════════════════ */
-function currentScreenName(){
-  if(document.getElementById('gamePage').style.display!=='none')return'game';
-  if(document.getElementById('wheelPage').style.display!=='none')return'wheel';
-  if(document.getElementById('battlePage').style.display!=='none')return'battle';
-  if(document.getElementById('endPage').style.display!=='none')return'end';
-  return'home';
-}
-function syncGuest(extra){
-  if(!(onlineMode&&isHost&&conn&&conn.open))return;
-  const fl=document.getElementById('flash'),wfl=document.getElementById('wheelFlash');
-  const p={type:'sync',screen:currentScreenName(),state,battleState,wheelState,
-    flashShow:fl.classList.contains('show'),flashText:document.getElementById('flashText').innerHTML,
-    wheelFlashShow:wfl.classList.contains('show'),wheelFlashText:document.getElementById('wheelFlashText').innerHTML};
-  if(extra)Object.assign(p,extra);
-  conn.send(p);
-}
-function applySync(payload){
-  state=payload.state;battleState=payload.battleState;wheelState=payload.wheelState;
-  hideAllGameScreens();
-  document.getElementById('waitPage').classList.remove('show');
-  if(payload.screen==='game'){document.getElementById('gamePage').style.display='block';document.getElementById('lotTotal').textContent=state.lots.length;renderAuction();const fl=document.getElementById('flash');document.getElementById('flashText').innerHTML=payload.flashText||'';fl.classList.toggle('show',!!payload.flashShow);}
-  else if(payload.screen==='wheel'){document.getElementById('wheelPage').style.display='block';document.getElementById('wheelLotTotal').textContent=wheelState.lots.length;if(payload.spinTarget!==undefined){const sp=document.getElementById('wheelSpinner');sp.style.transition='none';sp.innerHTML=buildWheelSVG(payload.spinRemainingSnapshot||wheelState.remaining);sp.style.transform='rotate(0deg)';void sp.offsetWidth;sp.style.transition='transform 3.2s cubic-bezier(0.15,0.85,0.25,1)';sp.style.transform='rotate('+payload.spinTarget+'deg)';const we=document.getElementById('wheelWatching');we.style.display='block';setTimeout(()=>{we.style.display='none';renderWheelScreen(true);const wfl=document.getElementById('wheelFlash');document.getElementById('wheelFlashText').innerHTML=payload.wheelFlashText||'';wfl.classList.toggle('show',!!payload.wheelFlashShow);},3400);}else{renderWheelScreen(!payload.skipRebuild);const wfl=document.getElementById('wheelFlash');document.getElementById('wheelFlashText').innerHTML=payload.wheelFlashText||'';wfl.classList.toggle('show',!!payload.wheelFlashShow);}}
-  else if(payload.screen==='battle'){document.getElementById('battlePage').style.display='block';renderBattleFromState();}
-  else if(payload.screen==='end'){document.getElementById('endPage').style.display='block';showFinalResults();}
+/* ═══════════════════════════════════════════
+   AUCTION LOGIC
+═══════════════════════════════════════════ */
+function startAuction() {
+  currentLotIndex = 0;
+  p1Team = []; p2Team = [];
+  showPage('gamePage');
+  loadLot();
 }
 
-/* ════════════════════════════════════
-   AUCTION
-════════════════════════════════════ */
-function renderAuction(){
-  if(state.lotIdx>=state.lots.length){finishAuction();return;}
-  const h=state.lots[state.lotIdx];
-  document.getElementById('lotIndex').textContent=state.lotIdx+1;
-  const av=document.getElementById('heroAvatar');
-  if(h.img)av.innerHTML=`<img src="${h.img}" onerror="this.style.display='none'">`;
-  else{av.innerHTML=h.init;av.style.background=h.color;}
-  document.getElementById('heroName').childNodes[0].nodeValue=h.name+' ';
-  const te=document.getElementById('heroTier');te.textContent=h.tier;te.className='tier-badge tier-'+h.tier;
-  const fe=document.getElementById('heroFranchise');fe.textContent=h.fr;fe.className='hero-franchise-tag tag-'+(h.fr==='DC'?'dc':h.fr==='The Boys'?'boys':h.fr==='Mythology'?'myth':'marvel');
-  document.getElementById('heroStatsRow').innerHTML=`<span class="mini-stat g">GÜC:${h.power}</span><span class="mini-stat s">SÜR:${h.speed}</span><span class="mini-stat m">MÜD:${h.defense}</span><span class="mini-stat c">CAN:${h.health}</span>`;
-  document.getElementById('curPrice').textContent='$'+state.price;
-  const ln=document.getElementById('leaderNote');
-  if(!state.leader){ln.innerHTML=t('startAuctionMsg');ln.className='leader-note';}
-  else{const pl=state.leader===1?'OYUNCU 1':(vsBotMode?'🤖 BOT':'OYUNCU 2');ln.innerHTML=`Ən yüksək təklif: <b>${pl}</b> ($${state.price})`;ln.className='leader-note';}
-  document.getElementById('p1Budget').textContent='$'+state.players[1].budget;
-  document.getElementById('p2Budget').textContent='$'+state.players[2].budget;
-  renderRoster(1,'p1List',false);renderRoster(2,'p2List',false);
-  const p1c=!state.p1Passed&&state.players[1].heroes.length<state.maxHeroes&&state.players[1].budget>=state.price+state.inc;
-  const p2c=!state.p2Passed&&state.players[2].heroes.length<state.maxHeroes&&state.players[2].budget>=state.price+state.inc;
-  document.getElementById('p1BidBtn').disabled=!p1c;
-  document.getElementById('p1PassBtn').disabled=state.p1Passed;
-  document.getElementById('p2BidBtn').disabled=!p2c;
-  document.getElementById('p2PassBtn').disabled=state.p2Passed;
-  if(onlineMode){if(isHost){document.getElementById('p2BidBtn').disabled=true;document.getElementById('p2PassBtn').disabled=true;}else{document.getElementById('p1BidBtn').disabled=true;document.getElementById('p1PassBtn').disabled=true;}}
-  if(vsBotMode){document.getElementById('p2BidBtn').style.display='none';document.getElementById('p2PassBtn').style.display='none';}
-  if(state.p1Passed&&state.p2Passed)resolveLot();
-  if(onlineMode&&isHost)syncGuest();
+function loadLot() {
+  if(currentLotIndex >= HEROES.length) {
+    finishAuction();
+    return;
+  }
+  const hero = HEROES[currentLotIndex];
+  document.getElementById('lotIndex').innerText = currentLotIndex + 1;
+  document.getElementById('heroAvatar').innerText = hero.icon;
+  document.getElementById('heroName').innerText = hero.name;
+  document.getElementById('heroTier').innerText = hero.tier;
+  
+  currentBid = 5;
+  highestBidder = null;
+  passes = { 1: false, 2: false };
+  
+  updateAuctionUI();
 }
 
-function renderRoster(pId,cId,wheel){
-  const c=document.getElementById(cId),heroes=state.players[pId].heroes;
-  if(!heroes.length){c.innerHTML='<div class="roster-empty">'+t('noHeroYet')+'</div>';return;}
-  c.innerHTML=heroes.map(h=>`<div class="roster-item">
-    <div class="hero-avatar" style="background:${h.color}">${h.img?`<img src="${h.img}" onerror="this.style.display='none'">`:h.init}</div>
-    <div><div class="hname">${h.name}</div><div class="hfr">${h.fr}</div></div>
-    ${h.boughtPrice!==undefined?`<div class="roster-price">$${h.boughtPrice}</div>`:''}
-  </div>`).join('');
+function updateAuctionUI() {
+  document.getElementById('curPrice').innerText = '$' + currentBid;
+  document.getElementById('p1Budget').innerText = '$' + p1Coins;
+  document.getElementById('p2Budget').innerText = '$' + p2Coins;
+  
+  document.getElementById('leaderNote').innerText = highestBidder 
+    ? `Lider: Oyuncu ${highestBidder}` 
+    : 'Təklif gözlənilir';
+
+  renderRosters();
 }
 
-document.getElementById('p1BidBtn').addEventListener('click',()=>triggerBid(1));
-document.getElementById('p2BidBtn').addEventListener('click',()=>triggerBid(2));
-document.getElementById('p1PassBtn').addEventListener('click',()=>triggerPass(1));
-document.getElementById('p2PassBtn').addEventListener('click',()=>triggerPass(2));
-
-function triggerBid(p){if(!onlineMode){makeBid(p);if(vsBotMode&&p===1)botMove();return;}if(isHost&&p===1)makeBid(1);else if(!isHost&&p===2)sendAction({action:'bid'});}
-function triggerPass(p){if(!onlineMode){makePass(p);if(vsBotMode&&p===1)botMove();return;}if(isHost&&p===1)makePass(1);else if(!isHost&&p===2)sendAction({action:'pass'});}
-function makeBid(p){state.price+=state.inc;state.leader=p;renderAuction();}
-function makePass(p){
-  if(p===1)state.p1Passed=true;else state.p2Passed=true;
-  if(state.p1Passed&&state.p2Passed)resolveLot();
-  else if(state.leader&&((state.leader===1&&state.p2Passed)||(state.leader===2&&state.p1Passed)))resolveLot();
-  else renderAuction();
+function renderRosters() {
+  document.getElementById('p1List').innerHTML = p1Team.length === 0 ? '<div class="roster-empty">Hələ kahraman alınmayıb</div>' : p1Team.map(h => `<div class="roster-item">${h.icon} ${h.name}</div>`).join('');
+  document.getElementById('p2List').innerHTML = p2Team.length === 0 ? '<div class="roster-empty">Hələ kahraman alınmayıb</div>' : p2Team.map(h => `<div class="roster-item">${h.icon} ${h.name}</div>`).join('');
 }
-function resolveLot(){
-  const h=state.lots[state.lotIdx];
-  const fl=document.getElementById('flash'),ft=document.getElementById('flashText');
-  if(state.leader){const w=state.leader;const wl=w===1?'OYUNCU 1':(vsBotMode?'🤖 BOT':'OYUNCU 2');state.players[w].budget-=state.price;state.players[w].heroes.push({...h,boughtPrice:state.price});ft.innerHTML=`${h.name}<br>SATILDI! <span class="small">${wl} — $${state.price}</span>`;}
-  else ft.innerHTML=`${h.name}<br>SATILMADI <span class="small">Heç kim təklif vermədi</span>`;
-  fl.classList.add('show');
-  if(onlineMode&&isHost)syncGuest();
-  setTimeout(()=>{fl.classList.remove('show');state.lotIdx++;state.price=0;state.leader=null;state.p1Passed=false;state.p2Passed=false;renderAuction();},1400);
+
+function makeBid(player) {
+  if(selectedMode === 'create' && player !== 1) return;
+  if(selectedMode === 'join' && player !== 2) return;
+
+  const nextBid = highestBidder ? currentBid + 5 : 5;
+  const playerBudget = player === 1 ? p1Coins : p2Coins;
+
+  if(playerBudget < nextBid) {
+    showToast('Kifayət qədər büdcə yoxdur!', 'red');
+    return;
+  }
+
+  applyBid(player, nextBid);
+
+  if(conn) {
+    sendData({ type: 'BID', player: player, amount: nextBid });
+  }
+
+  if(selectedMode === 'bot' && player === 1) {
+    setTimeout(botTurn, 1000);
+  }
 }
-function finishAuction(){document.getElementById('gamePage').style.display='none';if(state.players[1].heroes.length>0&&state.players[2].heroes.length>0)startBattle();else showFinalResults();}
 
-/* ════════════════════════════════════
-   BOT AI (bids based on hero power, then stops appropriately)
-════════════════════════════════════ */
-function botHV(h){return h.power*1.15+h.speed*0.7+h.defense*0.9+h.health*0.5;}
-function botMove(){
-  if(!vsBotMode||!state||state.mode!=='auction'||state.p2Passed||state.leader===2)return;
-  const needed=state.maxHeroes-state.players[2].heroes.length;
-  if(needed<=0){makePass(2);return;}
-  const remaining=state.lots.length-state.lotIdx;
-  const must=remaining<=needed;
-  const hero=state.lots[state.lotIdx];
-  const hv=botHV(hero);
-  const avgV=state.lots.slice(state.lotIdx).reduce((s,h)=>s+botHV(h),0)/Math.max(1,remaining);
-  const budget=state.players[2].budget;
-  const reserve=Math.max(0,(needed-1)*state.inc);
-  const next=state.price+state.inc;
+function applyBid(player, amount) {
+  currentBid = amount;
+  highestBidder = player;
+  passes = { 1: false, 2: false };
+  updateAuctionUI();
+}
 
-  // Max amount the bot is willing to pay for THIS hero, scaled by its
-  // power/speed/defense/health relative to the average hero left in the pool.
-  // Stronger heroes (higher relative value) get a bigger share of the
-  // remaining per-hero budget; weak heroes get proportionally less.
-  const perHeroBudget=budget/needed;
-  const strengthRatio=avgV>0?(hv/avgV):1;
-  let willing=perHeroBudget*strengthRatio*(0.85+Math.random()*0.3)-reserve;
-  if(must) willing=Math.max(willing,Math.max(state.price+state.inc,budget-reserve));
+function passBid(player) {
+  applyPass(player);
+  if(conn) {
+    sendData({ type: 'PASS', player: player });
+  }
+}
 
-  // Proper affordability check: after placing this bid the bot must still be
-  // able to afford at least the minimum increment for every OTHER hero it
-  // still needs to fill its roster. This is what makes it genuinely plan
-  // across the whole draft instead of blowing its whole budget on one hero
-  // and being unable to buy anything afterwards.
-  const afterBid=budget-next;
-  const canAfford=afterBid>=0&&(needed<=1||afterBid>=reserve);
-  const wantsToBid=next<=willing;
-
-  setTimeout(()=>{
-    if(!vsBotMode||!state||state.mode!=='auction')return;
-    // Bot bids only while it can afford the next step (leaving enough behind
-    // for its remaining needed heroes) AND the price still fits what this
-    // specific hero's stats justify relative to the pool. As soon as the
-    // price exceeds that value — or buying it would leave it unable to fill
-    // its roster — it stops and passes rather than bidding forever.
-    if(canAfford&&(wantsToBid||must)){
-      makeBid(2);
-      if(state.p1Passed)resolveLot();
+function applyPass(player) {
+  passes[player] = true;
+  if(passes[1] && passes[2]) {
+    // Both passed, lot awarded or skipped
+    if(highestBidder) {
+      awardLot(highestBidder);
     } else {
-      makePass(2);
+      currentLotIndex++;
+      loadLot();
     }
-  },500+Math.random()*600);
-}
-
-/* ════════════════════════════════════
-   WHEEL GAME
-════════════════════════════════════ */
-function startWheelGame(maxHeroes){
-  const lotCount=Math.min(HEROES.length,maxHeroes*3);
-  const lots=shuffle(HEROES).slice(0,lotCount).map(assignStats);
-  wheelState={lots,remaining:lots.slice(),turn:1,maxHeroes,spinning:false,lastAssigned:''};
-  state={mode:'wheel',maxHeroes,players:{1:{budget:0,heroes:[]},2:{budget:0,heroes:[]}}};
-  hideAllGameScreens();
-  document.getElementById('wheelPage').style.display='block';
-  document.getElementById('wheelLotTotal').textContent=lots.length;
-  if(currentUser)currentUser.games=(currentUser.games||0)+1,saveUser();
-  renderWheelScreen(true);
-}
-
-function escH(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function buildWheelSVG(items){
-  const sz=280,r=sz/2,cx=r,cy=r,n=items.length;
-  if(!n)return'';
-  const ap=360/n;
-  let svg=`<svg viewBox="0 0 ${sz} ${sz}" xmlns="http://www.w3.org/2000/svg">`;
-  items.forEach((h,i)=>{
-    const s=i*ap,e=s+ap,mid=s+ap/2,fc=h.color||'#2A3350';
-    if(n===1){svg+=`<circle cx="${cx}" cy="${cy}" r="${r-2}" fill="${fc}" stroke="#080C14" stroke-width="1"/>`;}
-    else{const la=ap>180?1:0,sx=cx+r*Math.cos(s*Math.PI/180),sy=cy+r*Math.sin(s*Math.PI/180),ex=cx+r*Math.cos(e*Math.PI/180),ey=cy+r*Math.sin(e*Math.PI/180);svg+=`<path d="M${cx},${cy} L${sx},${sy} A${r},${r} 0 ${la} 1 ${ex},${ey} Z" fill="${fc}" stroke="#080C14" stroke-width="1"/>`;}
-    const lr=r*0.62,tx=cx+lr*Math.cos(mid*Math.PI/180),ty=cy+lr*Math.sin(mid*Math.PI/180);
-    let la2=mid+90;if(mid>90&&mid<270)la2+=180;
-    const fs=n>16?7:(n>10?9:11),lbl=h.name.length>12?h.name.slice(0,11)+'…':h.name;
-    svg+=`<text x="${tx}" y="${ty}" fill="#fff" font-size="${fs}" font-family="Inter,sans-serif" font-weight="700" text-anchor="middle" dominant-baseline="middle" transform="rotate(${la2},${tx},${ty})">${escH(lbl)}</text>`;
-  });
-  return svg+'</svg>';
-}
-
-function renderWheelScreen(rebuild){
-  if(!wheelState)return;
-  const total=wheelState.lots.length,done=total-wheelState.remaining.length;
-  document.getElementById('wheelLotIndex').textContent=Math.min(done+1,total);
-  document.getElementById('wheelProgress').textContent=`${done} / ${total} kahraman bölüşdürüldü`;
-  const tl=wheelState.turn===1?'OYUNCU 1':(vsBotMode?'🤖 BOT':'OYUNCU 2');
-  const te=document.getElementById('wheelTurnLabel');te.textContent=tl+' növbəsi';te.className='wheel-turn-label p'+wheelState.turn;
-  document.getElementById('wheelP1Count').textContent=state.players[1].heroes.length+'/'+wheelState.maxHeroes;
-  document.getElementById('wheelP2Count').textContent=state.players[2].heroes.length+'/'+wheelState.maxHeroes;
-  renderWheelRoster(1,'wheelP1List');renderWheelRoster(2,'wheelP2List');
-  if(rebuild){const sp=document.getElementById('wheelSpinner');sp.style.transition='none';sp.innerHTML=buildWheelSVG(wheelState.remaining);sp.style.transform='rotate(0deg)';void sp.offsetWidth;sp.style.transition='';}
-  const sb=document.getElementById('wheelSpinBtn'),we=document.getElementById('wheelWatching');
-  if(onlineMode){const my=(isHost&&wheelState.turn===1)||(!isHost&&wheelState.turn===2);sb.style.display=my?'block':'none';we.style.display=(!my&&!wheelState.spinning)?'block':'none';if(wheelState.spinning){sb.style.display='none';we.style.display='block';}if(my&&!wheelState.spinning){sb.disabled=!wheelState.remaining.length;we.style.display='none';}}
-  else if(vsBotMode){if(wheelState.turn===2){sb.style.display='none';if(!wheelState.spinning){we.style.display='block';botWheelTick();}else we.style.display='block';}else{sb.style.display='block';we.style.display='none';sb.disabled=wheelState.spinning||!wheelState.remaining.length;}}
-  else{sb.style.display='block';we.style.display='none';sb.disabled=wheelState.spinning||!wheelState.remaining.length;}
-  document.getElementById('wheelResult').innerHTML=wheelState.lastAssigned||'';
-  if(onlineMode&&isHost)syncGuest();
-}
-
-function renderWheelRoster(pId,cId){
-  const c=document.getElementById(cId),heroes=state.players[pId].heroes;
-  if(!heroes.length){c.innerHTML='<div class="roster-empty">'+t('noHeroYet')+'</div>';return;}
-  c.innerHTML=heroes.map(h=>`<div class="roster-item"><div class="hero-avatar" style="background:${h.color}">${h.img?`<img src="${h.img}" onerror="this.style.display='none'">`:h.init}</div><div><div class="hname">${h.name}</div><div class="hfr">${h.fr}</div></div></div>`).join('');
-}
-
-function spinWheel(){
-  if(!wheelState||wheelState.spinning||!wheelState.remaining.length)return;
-  if(onlineMode){if(isHost&&wheelState.turn===1)triggerWheelSpin();else if(!isHost&&wheelState.turn===2){sendAction({action:'spin'});document.getElementById('wheelSpinBtn').disabled=true;}}
-  else if(vsBotMode){if(wheelState.turn===1)triggerWheelSpin();}
-  else triggerWheelSpin();
-}
-
-function triggerWheelSpin(){
-  if(!wheelState||wheelState.spinning||!wheelState.remaining.length)return;
-  wheelState.spinning=true;
-  const rem=wheelState.remaining,n=rem.length,wi=rand(0,n-1),ap=360/n,mid=wi*ap+ap/2,target=5*360+(((270-mid)%360)+360)%360;
-  const snap=rem.map(h=>({...h}));
-  const sp=document.getElementById('wheelSpinner');
-  sp.style.transition='none';sp.innerHTML=buildWheelSVG(rem);sp.style.transform='rotate(0deg)';void sp.offsetWidth;
-  sp.style.transition='transform 3.2s cubic-bezier(0.15,0.85,0.25,1)';sp.style.transform='rotate('+target+'deg)';
-  if(onlineMode&&isHost)syncGuest({spinTarget:target,spinRemainingSnapshot:snap});
-  document.getElementById('wheelSpinBtn').style.display='none';
-  setTimeout(()=>assignWheelHero(wi),3300);
-}
-
-function botWheelTick(){
-  if(!vsBotMode||!wheelState||wheelState.turn!==2||wheelState.spinning||!wheelState.remaining.length)return;
-  setTimeout(()=>{if(vsBotMode&&wheelState&&wheelState.turn===2&&!wheelState.spinning)triggerWheelSpin();},700+Math.random()*700);
-}
-
-function computeNextWheelTurn(p){
-  const other=p===1?2:1;
-  const om=state.players[other].heroes.length>=wheelState.maxHeroes,sm=state.players[p].heroes.length>=wheelState.maxHeroes;
-  if(om&&sm)return null;if(om)return p;return other;
-}
-
-function assignWheelHero(wi){
-  const h=wheelState.remaining[wi];wheelState.remaining.splice(wi,1);
-  const p=wheelState.turn;state.players[p].heroes.push({...h});
-  const pl=p===1?'OYUNCU 1':(vsBotMode?'🤖 BOT':'OYUNCU 2');
-  const wfl=document.getElementById('wheelFlash'),wft=document.getElementById('wheelFlashText');
-  wft.innerHTML=`${h.name}<br><span class="small">${pl}</span>`;wfl.classList.add('show');
-  wheelState.lastAssigned=`${h.name} → ${pl}`;wheelState.spinning=false;
-  const nt=computeNextWheelTurn(p);if(nt)wheelState.turn=nt;
-  if(onlineMode&&isHost)syncGuest();
-  setTimeout(()=>{wfl.classList.remove('show');if(!nt||!wheelState.remaining.length)finishWheelDraft();else renderWheelScreen(true);},1400);
-}
-
-function finishWheelDraft(){
-  document.getElementById('wheelPage').style.display='none';
-  if(state.players[1].heroes.length>0&&state.players[2].heroes.length>0)startBattle();else showFinalResults();
-}
-
-/* ════════════════════════════════════
-   BATTLE
-════════════════════════════════════ */
-function startBattle(){
-  document.getElementById('battlePage').style.display='block';
-  const prep=team=>team.map(h=>({...h,curHp:h.health*10,maxHp:h.health*10,eliminated:false,wins:0}));
-  battleState={t1:prep(state.players[1].heroes),t2:prep(state.players[2].heroes),idx1:0,idx2:0,history:[],status:'',championDone:false,championText:'',championSub:'',championColor:''};
-  updateTally();setupPair();
-}
-
-function updateTally(){
-  const a1=battleState.t1.filter(h=>!h.eliminated).length,a2=battleState.t2.filter(h=>!h.eliminated).length;
-  document.getElementById('t1Tally').textContent='Oyuncu 1: '+a1+' kahraman qaldı';
-  document.getElementById('t2Tally').textContent='Oyuncu 2: '+a2+' kahraman qaldı';
-}
-
-function setupPair(){
-  const h1=battleState.t1[battleState.idx1],h2=battleState.t2[battleState.idx2];
-  if(!h1||!h2){endBattle();return;}
-  renderFighter('left',h1);renderFighter('right',h2);
-  battleState.status='Növbəti döyüşə hazır';document.getElementById('fightStatus').textContent=battleState.status;
-  document.getElementById('nextFightBtn').disabled=false;document.getElementById('nextFightBtn').style.display='block';
-  if(onlineMode&&isHost)syncGuest();
-}
-
-function renderFighter(side,h){
-  const p=side==='left'?'left':'right';
-  const av=document.getElementById(p+'Avatar');
-  if(h.img)av.innerHTML=`<img src="${h.img}" onerror="this.style.display='none'">`;else av.innerHTML=h.init;
-  document.getElementById(p+'Name').textContent=h.name;
-  document.getElementById(p+'Franchise').textContent=h.fr;
-  document.getElementById(p+'Bio').textContent=(BIOS[h.name]||{})[currentLang]||(BIOS[h.name]||{}).az||'';
-  document.getElementById(p+'Stats').innerHTML=`<div class="mini-stats" style="justify-content:center;gap:4px;display:flex;"><span class="mini-stat g">G:${h.power}</span><span class="mini-stat s">S:${h.speed}</span><span class="mini-stat m">M:${h.defense}</span></div>`;
-  const pct=Math.max(0,Math.round((h.curHp/h.maxHp)*100));
-  document.getElementById(p+'HpFill').style.width=pct+'%';
-  document.getElementById(p+'HpLabel').textContent=t('hpLabel')+': '+pct+'%';
-  document.getElementById(p+'Score').textContent=h.wins>0?'Qalibiyyət: '+h.wins:'';
-}
-
-function renderBattleFromState(){
-  updateTally();document.getElementById('nextFightBtn').style.display='none';
-  document.getElementById('fightStatus').textContent=battleState?.status||'';
-  const log=document.getElementById('battleLog');log.innerHTML='';
-  (battleState?.history||[]).slice().reverse().forEach(item=>{
-    const el=document.createElement('div');el.className='log-item';
-    el.innerHTML=`<span><b>${item.n1}</b> (-${item.d1})</span><span><b>${item.n2}</b> (-${item.d2})</span>`;
-    log.appendChild(el);
-  });
-  const ban=document.getElementById('championBanner');
-  if(battleState?.championDone){ban.style.display='block';document.getElementById('championText').textContent=battleState.championText;document.getElementById('championText').style.color=battleState.championColor||'';document.getElementById('championSub').textContent=battleState.championSub;}
-  else{ban.style.display='none';const h1=battleState.t1[battleState.idx1],h2=battleState.t2[battleState.idx2];if(h1)renderFighter('left',h1);if(h2)renderFighter('right',h2);}
-}
-
-function runFightRound(){
-  if(onlineMode&&!isHost)return;
-  document.getElementById('nextFightBtn').disabled=true;
-  battleState.status='Döyüşür...';document.getElementById('fightStatus').textContent=battleState.status;
-  simStep();
-}
-
-function simStep(){
-  const h1=battleState.t1[battleState.idx1],h2=battleState.t2[battleState.idx2];if(!h1||!h2)return;
-  const s1=h1.speed>=h2.speed?1.1:0.9,s2=h2.speed>=h1.speed?1.1:0.9;
-  const d2=Math.max(10,Math.round((h1.power*1.5-h2.defense*0.8)*s1+rand(-5,5)));
-  const d1=Math.max(10,Math.round((h2.power*1.5-h1.defense*0.8)*s2+rand(-5,5)));
-  h2.curHp-=d2;h1.curHp-=d1;renderFighter('left',h1);renderFighter('right',h2);
-  const log=document.getElementById('battleLog'),le=document.createElement('div');le.className='log-item';
-  le.innerHTML=`<span><b>${h1.name}</b> (-${d1})</span><span><b>${h2.name}</b> (-${d2})</span>`;
-  log.prepend(le);battleState.history.push({n1:h1.name,n2:h2.name,d1,d2});
-  if(onlineMode&&isHost)syncGuest();
-  if(h1.curHp<=0||h2.curHp<=0)setTimeout(()=>resolveWinner(h1,h2),700);
-  else setTimeout(simStep,700);
-}
-
-function resolveWinner(h1,h2){
-  if(h1.curHp<=0&&h2.curHp<=0){battleState.status='BƏRABƏRƏ!';h1.eliminated=true;h2.eliminated=true;battleState.idx1++;battleState.idx2++;}
-  else if(h1.curHp<=0){battleState.status=h2.name+' QALİB GƏLDİ!';h1.eliminated=true;h2.wins++;battleState.idx1++;}
-  else{battleState.status=h1.name+' QALİB GƏLDİ!';h2.eliminated=true;h1.wins++;battleState.idx2++;}
-  document.getElementById('fightStatus').textContent=battleState.status;
-  updateTally();if(onlineMode&&isHost)syncGuest();
-  setTimeout(()=>{if(battleState.idx1<battleState.t1.length&&battleState.idx2<battleState.t2.length)setupPair();else endBattle();},1200);
-}
-
-function endBattle(){
-  document.getElementById('nextFightBtn').style.display='none';
-  const a1=battleState.t1.filter(h=>!h.eliminated).length,a2=battleState.t2.filter(h=>!h.eliminated).length;
-  const ban=document.getElementById('championBanner');ban.style.display='block';battleState.championDone=true;
-  let coinReward=0;
-  if(a1>a2){battleState.championText='OYUNCU 1 QALİB GƏLDİ!';battleState.championColor='var(--azure-2)';battleState.championSub='Oyuncu 1-in komandası üstünlük əldə etdi!';
-    if(currentUser){coinReward=a1===battleState.t1.length?80:50;currentUser.wins=(currentUser.wins||0)+1;currentUser.coins+=coinReward;saveUser();}}
-  else if(a2>a1){battleState.championText='OYUNCU 2 QALİB GƏLDİ!';battleState.championColor='var(--crimson-2)';battleState.championSub='Oyuncu 2-nin komandası döyüşü qazandı!';}
-  else{battleState.championText='BƏRABƏRLİK!';battleState.championColor='';battleState.championSub='Hər iki tərəf cəsarətlə döyüşdü!';}
-  document.getElementById('championText').textContent=battleState.championText;
-  document.getElementById('championText').style.color=battleState.championColor;
-  document.getElementById('championSub').textContent=battleState.championSub;
-  const trb=document.getElementById('toResultsBtn');trb.style.display=(!onlineMode||isHost)?'block':'none';
-  if(coinReward>0)setTimeout(()=>showToast('🏆 +'+coinReward+' 🪙 qazandın!','gold'),600);
-  if(onlineMode&&isHost)syncGuest();
-}
-
-function goToResults(){document.getElementById('battlePage').style.display='none';showFinalResults();}
-
-/* ════════════════════════════════════
-   FINAL RESULTS
-════════════════════════════════════ */
-function showFinalResults(){
-  document.getElementById('endPage').style.display='block';
-  document.getElementById('p1BudgetFinal').textContent='$'+state.players[1].budget;
-  document.getElementById('p2BudgetFinal').textContent='$'+state.players[2].budget;
-  document.getElementById('endP2Name').textContent=vsBotMode?'🤖 BOT':'OYUNCU 2';
-  const a1=battleState?battleState.t1.filter(h=>!h.eliminated).length:0;
-  const a2=battleState?battleState.t2.filter(h=>!h.eliminated).length:0;
-  if(battleState&&a1>a2&&currentUser){
-    document.getElementById('coinRewardBanner').style.display='flex';
-    document.getElementById('coinRewardAmount').textContent='🪙 '+(a1===battleState.t1.length?80:50);
-  } else document.getElementById('coinRewardBanner').style.display='none';
-  renderFinalList(1,'p1ListFinal');renderFinalList(2,'p2ListFinal');
-  const rb=document.getElementById('restartBtn');if(rb)rb.style.display=(!onlineMode||isHost)?'inline-flex':'none';
-  if(onlineMode&&isHost)syncGuest();
-}
-
-function renderFinalList(pId,cId){
-  const c=document.getElementById(cId),heroes=state.players[pId].heroes;
-  if(!heroes.length){c.innerHTML='<div class="roster-empty">'+t('noHeroYet')+'</div>';return;}
-  c.innerHTML=heroes.map(h=>{
-    const bh=battleState?(pId===1?battleState.t1:battleState.t2).find(b=>b.name===h.name):null;
-    const wb=bh&&bh.wins>0?`<div style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold-2);">🏆${bh.wins}</div>`:'';
-    const pb=h.boughtPrice!==undefined?`<div class="roster-price">$${h.boughtPrice}</div>`:`<div class="roster-price">🎡</div>`;
-    return `<div class="roster-item${bh&&bh.eliminated?' eliminated':''}">
-      <div class="hero-avatar" style="background:${h.color}">${h.img?`<img src="${h.img}" onerror="this.style.display='none'">`:h.init}</div>
-      <div><div class="hname">${h.name}</div><div class="hfr">${h.fr}</div></div>
-      ${wb||pb}
-    </div>`;
-  }).join('');
-}
-
-function restartGame(){
-  if(onlineMode&&!isHost)return;
-  document.getElementById('endPage').style.display='none';
-  document.getElementById('gamePage').style.display='none';
-  document.getElementById('battlePage').style.display='none';
-  document.getElementById('wheelPage').style.display='none';
-  state=null;battleState=null;wheelState=null;
-  showPage('playPage');
-  showConfigScreen();
-  if(onlineMode&&isHost&&conn&&conn.open)conn.send({type:'reset'});
-}
-
-/* ════════════════════════════════════
-   INIT
-════════════════════════════════════ */
-window.addEventListener('DOMContentLoaded',()=>{
-  const savedLang=localStorage.getItem('htb_lang');
-  if(savedLang&&I18N[savedLang])applyLanguage(savedLang);
-  const params=new URLSearchParams(location.search);
-  if(params.get('room')){
-    // Auto-join flow: show auth first
-    document.getElementById('joinCodeInput').value=location.search;
+  } else if(highestBidder && passes[player === 1 ? 2 : 1]) {
+    awardLot(highestBidder);
   }
-  const saved=localStorage.getItem('htb_current');
-  if(saved){
-    const u=loadUser(saved);
-    if(u){currentUser=u;doLogin(saved);return;}
+}
+
+function botTurn() {
+  if(passes[2]) return;
+  if(p2Coins >= currentBid + 5 && Math.random() > 0.4) {
+    applyBid(2, currentBid + 5);
+  } else {
+    applyPass(2);
   }
-  // Show auth
-  document.getElementById('authPage').style.display='flex';
-  switchAuthTab('login');
-});
+}
 
-/* ════════════════════════════════════
-   SOUND FX
-════════════════════════════════════ */
-(function(){
-const SFX=(function(){
-  let ctx=null,muted=false,master=null;
-  function ensureCtx(){if(!ctx){ctx=new(window.AudioContext||window.webkitAudioContext)();master=ctx.createGain();master.gain.value=0.5;master.connect(ctx.destination);}if(ctx.state==='suspended')ctx.resume();return ctx;}
-  function env(g,t0,att,dec,pk,su){g.gain.cancelScheduledValues(t0);g.gain.setValueAtTime(0.0001,t0);g.gain.exponentialRampToValueAtTime(pk,t0+att);g.gain.exponentialRampToValueAtTime(Math.max(su,0.0001),t0+att+dec);}
-  function tone(f,t0,dur,type,pk,pt){const o=ctx.createOscillator(),g=ctx.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f,t0);if(pt)o.frequency.exponentialRampToValueAtTime(pt,t0+dur);o.connect(g);g.connect(master);env(g,t0,0.008,dur,pk||0.3,0.0001);o.start(t0);o.stop(t0+dur+0.05);}
-  function noise(t0,dur,pk,ff,ft){const buf=ctx.createBuffer(1,Math.max(1,Math.floor(ctx.sampleRate*dur)),ctx.sampleRate),d=buf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*(1-i/d.length);const s=ctx.createBufferSource();s.buffer=buf;const fl=ctx.createBiquadFilter();fl.type=ft||'bandpass';fl.frequency.value=ff||1200;const g=ctx.createGain();g.gain.setValueAtTime(pk||0.3,t0);g.gain.exponentialRampToValueAtTime(0.0001,t0+dur);s.connect(fl);fl.connect(g);g.connect(master);s.start(t0);s.stop(t0+dur+0.02);}
-  function safe(fn){return function(){if(muted)return;try{ensureCtx();fn.apply(null,arguments);}catch(e){}};}
-  return{setMuted:v=>{muted=v;},isMuted:()=>muted,unlock(){try{ensureCtx();}catch(e){}},
-    click:safe(()=>{const t=ctx.currentTime;tone(720,t,0.06,'square',0.12);tone(1180,t+0.01,0.05,'sine',0.08);}),
-    bid:safe(()=>{const t=ctx.currentTime;tone(300,t,0.05,'square',0.1);tone(900,t+0.02,0.09,'triangle',0.16,1300);noise(t,0.05,0.08,3000,'highpass');}),
-    pass:safe(()=>{const t=ctx.currentTime;tone(340,t,0.14,'sine',0.13,180);}),
-    sold:safe(()=>{const t=ctx.currentTime;[523.25,659.25,783.99,1046.5].forEach((f,i)=>tone(f,t+i*0.09,0.28,'triangle',0.2));noise(t+0.02,0.3,0.05,6000,'highpass');}),
-    unsold:safe(()=>{const t=ctx.currentTime;[440,349.23,293.66].forEach((f,i)=>tone(f,t+i*0.12,0.24,'sawtooth',0.12));}),
-    wheelTick:safe(()=>{const t=ctx.currentTime;tone(1400,t,0.02,'square',0.09);}),
-    wheelLand:safe(()=>{const t=ctx.currentTime;[660,880,1108.73].forEach((f,i)=>tone(f,t+i*0.07,0.22,'triangle',0.2));noise(t,0.15,0.06,4000,'highpass');}),
-    fightHit:safe(()=>{const t=ctx.currentTime;noise(t,0.12,0.28,700,'lowpass');tone(120,t,0.1,'square',0.22,60);}),
-    fightKO:safe(()=>{const t=ctx.currentTime;noise(t,0.3,0.3,500,'lowpass');tone(180,t,0.35,'sawtooth',0.25,40);}),
-    champion:safe(()=>{const t=ctx.currentTime;[523.25,659.25,783.99,1046.5,1318.51].forEach((f,i)=>tone(f,t+i*0.11,0.4,'triangle',0.22));noise(t+0.05,0.5,0.08,7000,'highpass');}),
-    whoosh:safe(()=>{const t=ctx.currentTime;noise(t,0.22,0.1,1800,'bandpass');})
-  };
-})();
-window.SFX=SFX;
-['pointerdown','keydown'].forEach(evt=>{window.addEventListener(evt,function once(){SFX.unlock();window.removeEventListener(evt,once);},{once:true});});
-const sb=document.getElementById('soundToggle');
-sb.addEventListener('click',()=>{SFX.unlock();const m=!SFX.isMuted();SFX.setMuted(m);sb.textContent=m?'🔇':'🔊';sb.classList.toggle('muted',m);if(!m)SFX.click();});
-document.addEventListener('click',e=>{
-  const el=e.target.closest('button,.play-mode,.lang-btn,.chip,.mode-opt,.btn,.nav-link,.profile-tab,.shop-tab,.auth-tab');
-  if(!el)return;
-  if(el.id==='wheelSpinBtn'||el.id==='soundToggle')return;
-  SFX.click();
-},true);
+function awardLot(winner) {
+  const hero = HEROES[currentLotIndex];
+  if(winner === 1) {
+    p1Coins -= currentBid;
+    p1Team.push(hero);
+  } else {
+    p2Coins -= currentBid;
+    p2Team.push(hero);
+  }
+  showToast(`Oyuncu ${winner} ${hero.name} kahramanını aldı!`, 'green');
+  currentLotIndex++;
+  loadLot();
+}
 
-function wrap(name,before){const orig=window[name];if(typeof orig!=='function')return;window[name]=function(){if(before)before.apply(null,arguments);return orig.apply(this,arguments);};}
-wrap('makeBid',()=>SFX.bid());
-wrap('makePass',()=>SFX.pass());
-wrap('startGame',()=>SFX.whoosh());
-wrap('startBattle',()=>SFX.whoosh());
-wrap('sendChat',()=>{try{const t=window.SFX._ctx?window.SFX._ctx.currentTime:0;SFX.click();}catch(e){}});
-wrap('endBattle',()=>SFX.champion());
-wrap('resolveLot',function(){try{if(window.state&&window.state.leader)SFX.sold();else SFX.unsold();}catch(e){}});
-wrap('triggerWheelSpin',function(){if(!window.wheelState||window.wheelState.spinning||!window.wheelState.remaining.length)return;SFX.whoosh();let tc=0;(function st(){if(tc>=28)return;const p=tc/28,d=40+Math.pow(p,2.2)*260;setTimeout(()=>{if(window.wheelState&&window.wheelState.spinning)SFX.wheelTick();tc++;st();},d);})();});
-wrap('assignWheelHero',()=>SFX.wheelLand());
-wrap('simStep',function(){const h1=window.battleState&&window.battleState.t1[window.battleState.idx1];const h2=window.battleState&&window.battleState.t2[window.battleState.idx2];if(h1&&h2)SFX.fightHit();});
-wrap('resolveWinner',function(){SFX.fightKO();setTimeout(()=>SFX.whoosh(),300);});
-wrap('setupConn',()=>SFX.whoosh());
-})();
+function finishAuction() {
+  startBattle();
+}
+
+/* ═══════════════════════════════════════════
+   WHEEL LOGIC
+═══════════════════════════════════════════ */
+function startWheel() {
+  p1Team = []; p2Team = [];
+  currentWheelTurn = 1;
+  showPage('wheelPage');
+}
+
+function spinWheel() {
+  const deg = 1800 + Math.floor(Math.random() * 360);
+  wheelRotation += deg;
+  const spinner = document.getElementById('wheelSpinner');
+  spinner.style.transform = `rotate(${wheelRotation}deg)`;
+
+  document.getElementById('wheelSpinBtn').disabled = true;
+
+  setTimeout(() => {
+    document.getElementById('wheelSpinBtn').disabled = false;
+    const randomHero = HEROES[Math.floor(Math.random() * HEROES.length)];
+    if(currentWheelTurn === 1) {
+      p1Team.push(randomHero);
+      currentWheelTurn = 2;
+    } else {
+      p2Team.push(randomHero);
+      currentWheelTurn = 1;
+    }
+
+    document.getElementById('wheelTurnLabel').innerText = `Oyuncu ${currentWheelTurn}-in növbəsi`;
+    showToast(`Qazanılan Kahraman: ${randomHero.name}`, 'gold');
+
+    if(p1Team.length + p2Team.length >= 6) {
+      startBattle();
+    }
+  }, 3000);
+}
+
+/* ═══════════════════════════════════════════
+   BATTLE LOGIC
+═══════════════════════════════════════════ */
+function startBattle() {
+  showPage('battlePage');
+  document.getElementById('battleLog').innerHTML = '';
+  
+  if(p1Team.length === 0) p1Team.push(HEROES[0]);
+  if(p2Team.length === 0) p2Team.push(HEROES[1]);
+
+  setupFightRound();
+}
+
+let f1, f2, hp1, hp2;
+
+function setupFightRound() {
+  f1 = p1Team[0] || HEROES[0];
+  f2 = p2Team[0] || HEROES[1];
+  hp1 = f1.hp;
+  hp2 = f2.hp;
+
+  document.getElementById('leftName').innerText = f1.name;
+  document.getElementById('leftAvatar').innerText = f1.icon;
+  document.getElementById('leftHpFill').style.width = '100%';
+
+  document.getElementById('rightName').innerText = f2.name;
+  document.getElementById('rightAvatar').innerText = f2.icon;
+  document.getElementById('rightHpFill').style.width = '100%';
+}
+
+function runFightRound() {
+  const btn = document.getElementById('nextFightBtn');
+  btn.disabled = true;
+
+  const timer = setInterval(() => {
+    const dmg1 = Math.floor(Math.random() * f1.atk) + 5;
+    const dmg2 = Math.floor(Math.random() * f2.atk) + 5;
+
+    hp2 -= dmg1;
+    hp1 -= dmg2;
+
+    if(hp1 < 0) hp1 = 0;
+    if(hp2 < 0) hp2 = 0;
+
+    document.getElementById('leftHpFill').style.width = (hp1 / f1.hp * 100) + '%';
+    document.getElementById('rightHpFill').style.width = (hp2 / f2.hp * 100) + '%';
+
+    addLog(`${f1.name} ${dmg1} zərbə vurdu | ${f2.name} ${dmg2} zərbə vurdu`);
+
+    if(hp1 <= 0 || hp2 <= 0) {
+      clearInterval(timer);
+      btn.disabled = false;
+      let winnerText = 'Bərabərə!';
+      if(hp1 > hp2) winnerText = 'Oyuncu 1 Qalib Gəldi!';
+      else if(hp2 > hp1) winnerText = 'Oyuncu 2 Qalib Gəldi!';
+
+      showToast(winnerText, 'gold');
+      setTimeout(showEndPage, 2000);
+    }
+  }, 1000);
+}
+
+function addLog(msg) {
+  const log = document.getElementById('battleLog');
+  const div = document.createElement('div');
+  div.className = 'log-item';
+  div.innerText = msg;
+  log.prepend(div);
+}
+
+function showEndPage() {
+  showPage('endPage');
+  document.getElementById('p1ListFinal').innerHTML = p1Team.map(h => `<div class="roster-item">${h.icon} ${h.name}</div>`).join('');
+  document.getElementById('p2ListFinal').innerHTML = p2Team.map(h => `<div class="roster-item">${h.icon} ${h.name}</div>`).join('');
+}
+
+/* ═══════════════════════════════════════════
+   CHAT SYSTEM
+═══════════════════════════════════════════ */
+function toggleChat() {
+  document.getElementById('chatPanel').classList.toggle('open');
+}
+
+function sendChatMessage() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if(!msg) return;
+
+  appendChat(msg, 'mine');
+  if(conn) {
+    sendData({ type: 'CHAT', text: msg });
+  }
+  input.value = '';
+}
+
+function receiveChatMessage(msg) {
+  appendChat(msg, 'theirs');
+  showToast('Yeni mesaj var!', 'gold');
+}
+
+function appendChat(msg, type) {
+  const container = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = `chat-msg ${type}`;
+  div.innerText = msg;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function toggleSound() {
+  const s = document.getElementById('soundToggle');
+  s.innerText = s.innerText === '🔊' ? '🔇' : '🔊';
+}
 </script>
 </body>
 </html>

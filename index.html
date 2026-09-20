@@ -675,10 +675,10 @@ input[type=range]::-webkit-slider-thumb{
   <div class="nav-logo">HTB</div>
   <div class="nav-spacer"></div>
   <div class="nav-links">
-    <div class="nav-link" id="navPlay" onclick="showPage('playPage')">⚔️ Oyna</div>
-    <div class="nav-link" id="navCollection" onclick="showPage('collectionPage')">🗡️ Kolleksiya</div>
-    <div class="nav-link" id="navShop" onclick="showPage('shopPage')">🏪 Mağaza</div>
-    <div class="nav-link" id="navProfile" onclick="showPage('profilePage')">👤 Profil</div>
+    <div class="nav-link" id="navPlay" onclick="showPage('playPage')" data-i18n="nav.play">⚔️ Oyna</div>
+    <div class="nav-link" id="navCollection" onclick="showPage('collectionPage')" data-i18n="nav.collection">🗡️ Kolleksiya</div>
+    <div class="nav-link" id="navShop" onclick="showPage('shopPage')" data-i18n="nav.shop">🏪 Mağaza</div>
+    <div class="nav-link" id="navProfile" onclick="showPage('profilePage')" data-i18n="nav.profile">👤 Profil</div>
   </div>
   <div id="navCoinDisplay" class="coin-display" style="margin-left:10px;">
     <span class="coin-icon">🪙</span><span id="navCoins">0</span>
@@ -687,22 +687,22 @@ input[type=range]::-webkit-slider-thumb{
 </nav>
 
 <!-- ONLINE PILL -->
-<div class="online-pill" id="onlinePill">🟢 <span id="onlinePillText">Onlayn</span></div>
+<div class="online-pill" id="onlinePill">🟢 <span id="onlinePillText" data-i18n="online.text">Onlayn</span></div>
 
 <!-- LANG SWITCH -->
 <div class="lang-switch" id="langSwitch">
-  <button class="lang-btn active" data-lang="az">AZ</button>
-  <button class="lang-btn" data-lang="tr">TR</button>
-  <button class="lang-btn" data-lang="en">EN</button>
+  <button class="lang-btn active" data-lang="az" onclick="setLanguage('az')">AZ</button>
+  <button class="lang-btn" data-lang="tr" onclick="setLanguage('tr')">TR</button>
+  <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
 </div>
 
 <!-- CHAT -->
 <div class="chat-toggle" id="chatToggle">💬</div>
 <div class="chat-panel" id="chatPanel">
-  <div class="chat-header">Söhbət <span class="chat-close" id="chatClose">✕</span></div>
+  <div class="chat-header"><span data-i18n="chat.title">Söhbət</span> <span class="chat-close" id="chatClose">✕</span></div>
   <div class="chat-messages" id="chatMessages"></div>
   <div class="chat-input-row">
-    <input type="text" id="chatInput" placeholder="Mesaj yaz..." maxlength="300">
+    <input type="text" id="chatInput" data-i18n-placeholder="chat.placeholder" placeholder="Mesaj yaz..." maxlength="300">
     <button id="chatSendBtn">→</button>
   </div>
 </div>
@@ -719,31 +719,31 @@ input[type=range]::-webkit-slider-thumb{
     <div class="auth-logo-row">
       <div class="auth-logo">⚔️</div>
       <div class="auth-title">HeroicTeamBattle</div>
-      <div class="auth-sub">Qeydiyyatdan keç, nəticələrini izlə</div>
+      <div class="auth-sub" data-i18n="auth.sub">Qeydiyyatdan keç, nəticələrini izlə</div>
     </div>
     <div class="auth-tabs">
-      <div class="auth-tab active" onclick="switchAuthTab('login')">Giriş</div>
-      <div class="auth-tab" onclick="switchAuthTab('register')">Qeydiyyat</div>
+      <div class="auth-tab active" id="authTabLogin" onclick="switchAuthTab('login')" data-i18n="auth.login">Giriş</div>
+      <div class="auth-tab" id="authTabRegister" onclick="switchAuthTab('register')" data-i18n="auth.register">Qeydiyyat</div>
     </div>
     <div class="auth-form" id="authForm">
       <div>
-        <div class="label">İstifadəçi adı</div>
-        <input class="input" type="text" id="authUsername" placeholder="İstifadəçi adın...">
+        <div class="label" data-i18n="auth.username">İstifadəçi adı</div>
+        <input class="input" type="text" id="authUsername" data-i18n-placeholder="auth.username.placeholder" placeholder="İstifadəçi adın...">
       </div>
-      <div id="authEmailRow">
-        <div class="label">E-mail (Gmail)</div>
+      <div id="authEmailRow" style="display:none;">
+        <div class="label" data-i18n="auth.email">E-mail (Gmail)</div>
         <input class="input" type="email" id="authEmail" placeholder="sən@gmail.com">
       </div>
       <div>
-        <div class="label">Şifrə</div>
+        <div class="label" data-i18n="auth.password">Şifrə</div>
         <input class="input" type="password" id="authPassword" placeholder="••••••••">
       </div>
       <div id="authError" class="auth-error"></div>
-      <button class="btn btn-primary btn-full" onclick="handleAuth()">GİRİŞ</button>
-      <div class="auth-divider">və ya</div>
+      <button class="btn btn-primary btn-full" id="authSubmitBtn" onclick="handleAuth()" data-i18n="auth.submit.login">GİRİŞ</button>
+      <div class="auth-divider" data-i18n="auth.or">və ya</div>
       <button class="auth-google-btn" onclick="handleGoogleAuth()">
         <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.3 29.3 35 24 35c-6.1 0-11-4.9-11-11s4.9-11 11-11c2.8 0 5.3 1 7.2 2.7l5.7-5.7C33.5 7.3 29 5.5 24 5.5 13.2 5.5 4.5 14.2 4.5 25S13.2 44.5 24 44.5 43.5 35.8 43.5 25c0-1.7-.2-3.3-.5-4.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16.1 19 13 24 13c2.8 0 5.3 1 7.2 2.7l5.7-5.7C33.5 7.3 29 5.5 24 5.5c-7.7 0-14.3 4.4-17.7 10.9v-.7z"/><path fill="#4CAF50" d="M24 44.5c4.9 0 9.3-1.8 12.7-4.7l-6.2-5.2C28.8 36.3 26.5 37 24 37c-5.3 0-9.7-3.5-11.3-8.3l-6.6 5.1C9.5 40 16.2 44.5 24 44.5z"/><path fill="#1565C0" d="M43.6 20.1H42V20H24v8h11.3c-.7 2.1-2 3.9-3.7 5.2l6.2 5.2C37.5 39.5 43.5 33 43.5 25c0-1.7-.2-3.3-.5-4.9z"/></svg>
-        Google ilə davam et
+        <span data-i18n="auth.google">Google ilə davam et</span>
       </button>
     </div>
   </div>
@@ -756,110 +756,110 @@ input[type=range]::-webkit-slider-thumb{
       <!-- Lobby select -->
       <div id="lobbySelect">
         <div class="play-hero">
-          <h1>KAHRAMAN<br>SAVAŞI</h1>
-          <div class="sub">Rejim seç, kahramanları topla, zəfər qur</div>
+          <h1 data-i18n="play.title">KAHRAMAN<br>SAVAŞI</h1>
+          <div class="sub" data-i18n="play.subtitle">Rejim seç, kahramanları topla, zəfər qur</div>
         </div>
         <div class="play-modes">
           <div class="play-mode" onclick="selectMode('local')">
             <div class="play-mode-icon">🖥️</div>
             <div class="play-mode-info">
-              <div class="play-mode-title">EYNİ CİHAZ</div>
-              <div class="play-mode-sub">İki oyuncu eyni ekranda növbə ilə oynayır</div>
+              <div class="play-mode-title" data-i18n="mode.local.title">EYNİ CİHAZ</div>
+              <div class="play-mode-sub" data-i18n="mode.local.sub">İki oyuncu eyni ekranda növbə ilə oynayır</div>
             </div>
           </div>
           <div class="play-mode" onclick="selectMode('matchmaking')">
             <div class="play-mode-icon">🎲</div>
             <div class="play-mode-info">
-              <div class="play-mode-title">TEZ OYUN (RANDOM)</div>
-              <div class="play-mode-sub">Sistem sənə avtomatik rəqib tapsın</div>
+              <div class="play-mode-title" data-i18n="mode.mm.title">TEZ OYUN (RANDOM)</div>
+              <div class="play-mode-sub" data-i18n="mode.mm.sub">Sistem sənə avtomatik rəqib tapsın</div>
             </div>
           </div>
           <div class="play-mode" onclick="selectMode('create')">
             <div class="play-mode-icon">🔗</div>
             <div class="play-mode-info">
-              <div class="play-mode-title">OTAQ YARAT</div>
-              <div class="play-mode-sub">Sən Oyuncu 1 olursan, 4 rəqəmli kod yaradıb göndər</div>
+              <div class="play-mode-title" data-i18n="mode.create.title">OTAQ YARAT</div>
+              <div class="play-mode-sub" data-i18n="mode.create.sub">Sən Oyuncu 1 olursan, 4 rəqəmli kod yaradıb göndər</div>
             </div>
           </div>
           <div class="play-mode" onclick="selectMode('join')">
             <div class="play-mode-icon">📎</div>
             <div class="play-mode-info">
-              <div class="play-mode-title">OTAĞA QOŞUL</div>
-              <div class="play-mode-sub">Sənə göndərilən 4 rəqəmli koddan qoşul</div>
+              <div class="play-mode-title" data-i18n="mode.join.title">OTAĞA QOŞUL</div>
+              <div class="play-mode-sub" data-i18n="mode.join.sub">Sənə göndərilən 4 rəqəmli koddan qoşul</div>
             </div>
           </div>
           <div class="play-mode" onclick="selectMode('bot')">
             <div class="play-mode-icon">🤖</div>
             <div class="play-mode-info">
-              <div class="play-mode-title">BOTA QARŞI</div>
-              <div class="play-mode-sub">Tək oyna, rəqibi süni intellekt idarə etsin</div>
+              <div class="play-mode-title" data-i18n="mode.bot.title">BOTA QARŞI</div>
+              <div class="play-mode-sub" data-i18n="mode.bot.sub">Tək oyna, rəqibi süni intellekt idarə etsin</div>
             </div>
           </div>
         </div>
 
         <!-- Create panel -->
         <div class="panel-section" id="createPanel">
-          <div class="status-row"><span class="dot" id="createDot"></span><span id="createStatusText">Otaq yaradılır...</span></div>
-          <div class="room-link-row"><input type="text" id="roomLinkInput" readonly style="text-align:center;letter-spacing:0.4em;font-size:20px;font-weight:700;"><button class="btn btn-sm" id="copyLinkBtn">Kopyala</button></div>
-          <div class="back-link" onclick="backToLobby()">‹ Geri</div>
+          <div class="status-row"><span class="dot" id="createDot"></span><span id="createStatusText" data-i18n="create.status.creating">Otaq yaradılır...</span></div>
+          <div class="room-link-row"><input type="text" id="roomLinkInput" readonly style="text-align:center;letter-spacing:0.4em;font-size:20px;font-weight:700;"><button class="btn btn-sm" id="copyLinkBtn" data-i18n="btn.copy">Kopyala</button></div>
+          <div class="back-link" onclick="backToLobby()" data-i18n="btn.back">‹ Geri</div>
         </div>
 
         <!-- Join panel -->
         <div class="panel-section" id="joinPanel">
-          <div class="label">Otaq kodu (4 rəqəm)</div>
-          <input type="text" class="input" id="joinCodeInput" placeholder="4 rəqəmli kod" maxlength="4" inputmode="numeric" style="margin-top:4px;text-align:center;letter-spacing:0.3em;font-family:'JetBrains Mono',monospace;font-size:20px;">
-          <button class="btn btn-primary btn-full" onclick="doJoin()" style="margin-top:10px;">QOŞUL</button>
-          <div class="status-row" style="margin-top:8px;"><span class="dot" id="joinDot"></span><span id="joinStatusText">Kod daxil edin</span></div>
-          <div class="back-link" onclick="backToLobby()">‹ Geri</div>
+          <div class="label" data-i18n="join.label">Otaq kodu (4 rəqəm)</div>
+          <input type="text" class="input" id="joinCodeInput" data-i18n-placeholder="join.placeholder" placeholder="4 rəqəmli kod" maxlength="4" inputmode="numeric" style="margin-top:4px;text-align:center;letter-spacing:0.3em;font-family:'JetBrains Mono',monospace;font-size:20px;">
+          <button class="btn btn-primary btn-full" onclick="doJoin()" style="margin-top:10px;" data-i18n="btn.join">QOŞUL</button>
+          <div class="status-row" style="margin-top:8px;"><span class="dot" id="joinDot"></span><span id="joinStatusText" data-i18n="join.status.idle">Kod daxil edin</span></div>
+          <div class="back-link" onclick="backToLobby()" data-i18n="btn.back">‹ Geri</div>
         </div>
 
         <!-- Matchmaking panel -->
         <div class="panel-section" id="matchmakingPanel">
           <div style="text-align:center;">
             <div class="spinner" style="margin:6px auto 14px;"></div>
-            <div style="font-size:14px;font-weight:600;" id="matchmakingText">Rəqib axtarılır...</div>
-            <div style="font-size:11px;color:var(--text-3);margin-top:6px;" id="matchmakingSub">Zəhmət olmasa gözlə, tapan kimi qoşulacaqsan</div>
+            <div style="font-size:14px;font-weight:600;" id="matchmakingText" data-i18n="mm.searching">Rəqib axtarılır...</div>
+            <div style="font-size:11px;color:var(--text-3);margin-top:6px;" id="matchmakingSub" data-i18n="mm.wait">Zəhmət olmasa gözlə, tapan kimi qoşulacaqsan</div>
           </div>
-          <div class="back-link" onclick="cancelMatchmaking()">‹ İmtina et</div>
+          <div class="back-link" onclick="cancelMatchmaking()" data-i18n="btn.cancel">‹ İmtina et</div>
         </div>
       </div>
 
       <!-- Game config -->
       <div id="gameConfig" style="display:none;">
         <div class="config-card">
-          <div class="config-title">Oyun Tənzimləmələri</div>
+          <div class="config-title" data-i18n="config.title">Oyun Tənzimləmələri</div>
           <div id="hostStatusArea" style="display:none;margin-bottom:18px;">
-            <div class="status-row"><span class="dot on" id="hostDot"></span><span id="hostStatusText">Oyuncu 2 gözlənilir...</span></div>
-            <div class="room-link-row" style="margin-top:8px;"><input type="text" id="hostLinkInput" readonly style="text-align:center;letter-spacing:0.4em;font-size:20px;font-weight:700;"><button class="btn btn-sm" id="hostCopyBtn">Kopyala</button></div>
+            <div class="status-row"><span class="dot on" id="hostDot"></span><span id="hostStatusText" data-i18n="host.waiting">Oyuncu 2 gözlənilir...</span></div>
+            <div class="room-link-row" style="margin-top:8px;"><input type="text" id="hostLinkInput" readonly style="text-align:center;letter-spacing:0.4em;font-size:20px;font-weight:700;"><button class="btn btn-sm" id="hostCopyBtn" data-i18n="btn.copy">Kopyala</button></div>
           </div>
           <div class="field-group">
-            <label>Oyun rejimi</label>
+            <label data-i18n="config.mode">Oyun rejimi</label>
             <div class="mode-toggle">
               <div class="mode-opt active" id="gmAuction" onclick="selectGameMode('auction')">
-                <div class="mode-opt-title">ARTIRMA</div>
-                <div class="mode-opt-sub">Büdcə ilə təklif ver</div>
+                <div class="mode-opt-title" data-i18n="config.mode.auction">ARTIRMA</div>
+                <div class="mode-opt-sub" data-i18n="config.mode.auction.sub">Büdcə ilə təklif ver</div>
               </div>
               <div class="mode-opt" id="gmWheel" onclick="selectGameMode('wheel')">
-                <div class="mode-opt-title">ÇARX</div>
-                <div class="mode-opt-sub">Çarxı fırlat</div>
+                <div class="mode-opt-title" data-i18n="config.mode.wheel">ÇARX</div>
+                <div class="mode-opt-sub" data-i18n="config.mode.wheel.sub">Çarxı fırlat</div>
               </div>
             </div>
           </div>
           <div id="budgetField">
             <div class="field-group">
-              <label>Başlanğıc büdcə <span class="val mono" id="budgetVal">$50</span></label>
+              <label><span data-i18n="config.budget">Başlanğıc büdcə</span> <span class="val mono" id="budgetVal">$50</span></label>
               <input type="range" id="budgetRange" min="10" max="100" step="10" value="50">
             </div>
             <div class="field-group">
-              <label>Təklif artım addımı</label>
+              <label data-i18n="config.increment">Təklif artım addımı</label>
               <div class="chip-row" id="incRow"></div>
             </div>
           </div>
           <div class="field-group">
-            <label>Oyuncu başına kahraman <span class="val mono" id="maxHeroesVal">5</span></label>
+            <label><span data-i18n="config.maxheroes">Oyuncu başına kahraman</span> <span class="val mono" id="maxHeroesVal">5</span></label>
             <div class="chip-row" id="maxHeroesRow"></div>
           </div>
-          <button class="btn btn-primary btn-full" id="startBtn" onclick="startGame()">OYUNA BAŞLA</button>
+          <button class="btn btn-primary btn-full" id="startBtn" onclick="startGame()" data-i18n="btn.start">OYUNA BAŞLA</button>
         </div>
       </div>
     </div>
@@ -869,52 +869,52 @@ input[type=range]::-webkit-slider-thumb{
 <!-- WAIT PAGE -->
 <div id="waitPage">
   <div style="text-align:center;">
-    <div style="font-size:12px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);font-weight:700;">Qoşuldun</div>
-    <h1 style="font-size:34px;margin-top:8px;">OYUNCU 2</h1>
+    <div style="font-size:12px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);font-weight:700;" data-i18n="wait.joined">Qoşuldun</div>
+    <h1 style="font-size:34px;margin-top:8px;" data-i18n="wait.player2">OYUNCU 2</h1>
     <div class="spinner" style="margin:20px auto;"></div>
-    <div style="color:var(--text-3);font-size:13px;" id="waitText">Otaq sahibinin oyunu qurmasını gözləyin...</div>
+    <div style="color:var(--text-3);font-size:13px;" id="waitText" data-i18n="wait.text">Otaq sahibinin oyunu qurmasını gözləyin...</div>
   </div>
 </div>
 
 <!-- GAME PAGE (Auction) -->
 <div id="gamePage">
   <div class="game-topbar">
-    <div class="game-logo">⚔️ KAHRAMAN SAVAŞI</div>
-    <div class="lot-progress">LOT <b id="lotIndex">1</b> / <b id="lotTotal">10</b></div>
+    <div class="game-logo">⚔️ <span data-i18n="game.title">KAHRAMAN SAVAŞI</span></div>
+    <div class="lot-progress"><span data-i18n="game.lot">LOT</span> <b id="lotIndex">1</b> / <b id="lotTotal">10</b></div>
   </div>
   <div class="game-hall">
     <div class="roster p1">
       <div class="roster-head"><div class="roster-pname" id="p1Name">OYUNCU 1</div><div class="roster-budget" id="p1Budget">$50</div></div>
-      <div class="roster-list" id="p1List"><div class="roster-empty">Hələ kahraman alınmayıb</div></div>
+      <div class="roster-list" id="p1List"><div class="roster-empty" data-i18n="roster.empty">Hələ kahraman alınmayıb</div></div>
     </div>
     <div class="stage" id="stage">
-      <div class="stage-label">MÜZAYEDƏ</div>
+      <div class="stage-label" data-i18n="stage.label">MÜZAYEDƏ</div>
       <div class="hero-avatar big" id="heroAvatar" style="align-self:center;margin:0 auto;">?</div>
       <div class="hero-name-row" id="heroName">— <span class="tier-badge" id="heroTier"></span></div>
       <div><span class="hero-franchise-tag" id="heroFranchise">—</span></div>
       <div class="stats-row" id="heroStatsRow"></div>
       <div class="price-board">
-        <span class="price-label">Hazırkı qiymət</span>
+        <span class="price-label" data-i18n="stage.currentprice">Hazırkı qiymət</span>
         <span class="price-amount mono" id="curPrice">$0</span>
       </div>
-      <div class="leader-note" id="leaderNote">Müzayidəyə başlamaq üçün təklif verin</div>
+      <div class="leader-note" id="leaderNote" data-i18n="stage.startbid">Müzayidəyə başlamaq üçün təklif verin</div>
       <div class="bid-row">
         <div class="bid-col p1">
           <div class="bid-who" id="bidWho1">OYUNCU 1</div>
-          <button class="btn bid-btn-p1 btn" id="p1BidBtn">Təklif ver</button>
-          <button class="btn" id="p1PassBtn" style="color:var(--text-3);">Pas keç</button>
+          <button class="btn bid-btn-p1 btn" id="p1BidBtn" data-i18n="btn.bid">Təklif ver</button>
+          <button class="btn" id="p1PassBtn" style="color:var(--text-3);" data-i18n="btn.pass">Pas keç</button>
         </div>
         <div class="bid-col p2">
           <div class="bid-who" id="bidWho2">OYUNCU 2</div>
-          <button class="btn bid-btn-p2 btn" id="p2BidBtn">Təklif ver</button>
-          <button class="btn" id="p2PassBtn" style="color:var(--text-3);">Pas keç</button>
+          <button class="btn bid-btn-p2 btn" id="p2BidBtn" data-i18n="btn.bid">Təklif ver</button>
+          <button class="btn" id="p2PassBtn" style="color:var(--text-3);" data-i18n="btn.pass">Pas keç</button>
         </div>
       </div>
       <div class="flash-overlay" id="flash"><div class="flash-content" id="flashText"></div></div>
     </div>
     <div class="roster p2">
       <div class="roster-head"><div class="roster-pname" id="p2Name">OYUNCU 2</div><div class="roster-budget" id="p2Budget">$50</div></div>
-      <div class="roster-list" id="p2List"><div class="roster-empty">Hələ kahraman alınmayıb</div></div>
+      <div class="roster-list" id="p2List"><div class="roster-empty" data-i18n="roster.empty">Hələ kahraman alınmayıb</div></div>
     </div>
   </div>
 </div>
@@ -922,13 +922,13 @@ input[type=range]::-webkit-slider-thumb{
 <!-- WHEEL PAGE -->
 <div id="wheelPage">
   <div class="game-topbar">
-    <div class="game-logo">🎡 KAHRAMAN ÇARXI</div>
-    <div class="lot-progress">LOT <b id="wheelLotIndex">1</b> / <b id="wheelLotTotal">10</b></div>
+    <div class="game-logo">🎡 <span data-i18n="wheel.title">KAHRAMAN ÇARXI</span></div>
+    <div class="lot-progress"><span data-i18n="game.lot">LOT</span> <b id="wheelLotIndex">1</b> / <b id="wheelLotTotal">10</b></div>
   </div>
   <div class="game-hall">
     <div class="roster p1">
       <div class="roster-head"><div class="roster-pname" id="wheelP1Name">OYUNCU 1</div><div class="roster-budget" id="wheelP1Count">0/5</div></div>
-      <div class="roster-list" id="wheelP1List"><div class="roster-empty">Hələ kahraman alınmayıb</div></div>
+      <div class="roster-list" id="wheelP1List"><div class="roster-empty" data-i18n="roster.empty">Hələ kahraman alınmayıb</div></div>
     </div>
     <div class="wheel-stage">
       <div class="wheel-turn-label" id="wheelTurnLabel">—</div>
@@ -938,14 +938,14 @@ input[type=range]::-webkit-slider-thumb{
         <div class="wheel-hub"></div>
         <div class="wheel-spinner" id="wheelSpinner"></div>
       </div>
-      <button class="spin-btn" id="wheelSpinBtn" onclick="spinWheel()">ÇEVİR</button>
-      <div class="wheel-watching" id="wheelWatching">👁 Rəqib fırladır...</div>
+      <button class="spin-btn" id="wheelSpinBtn" onclick="spinWheel()" data-i18n="btn.spin">ÇEVİR</button>
+      <div class="wheel-watching" id="wheelWatching" data-i18n="wheel.watching">👁 Rəqib fırladır...</div>
       <div class="wheel-result" id="wheelResult"></div>
       <div class="flash-overlay" id="wheelFlash"><div class="flash-content" id="wheelFlashText"></div></div>
     </div>
     <div class="roster p2">
       <div class="roster-head"><div class="roster-pname" id="wheelP2Name">OYUNCU 2</div><div class="roster-budget" id="wheelP2Count">0/5</div></div>
-      <div class="roster-list" id="wheelP2List"><div class="roster-empty">Hələ kahraman alınmayıb</div></div>
+      <div class="roster-list" id="wheelP2List"><div class="roster-empty" data-i18n="roster.empty">Hələ kahraman alınmayıb</div></div>
     </div>
   </div>
 </div>
@@ -954,8 +954,8 @@ input[type=range]::-webkit-slider-thumb{
 <div id="battlePage">
   <div class="battle-wrap">
     <div class="battle-head">
-      <div class="battle-eyebrow">Bütün kahramanlar meydanda</div>
-      <h1 class="battle-title">DÖYÜŞ ARENASI</h1>
+      <div class="battle-eyebrow" data-i18n="battle.eyebrow">Bütün kahramanlar meydanda</div>
+      <h1 class="battle-title" data-i18n="battle.title">DÖYÜŞ ARENASI</h1>
     </div>
     <div class="team-tally">
       <span class="t1" id="t1Tally">Oyuncu 1: 5 kahraman</span>
@@ -973,7 +973,7 @@ input[type=range]::-webkit-slider-thumb{
           <div class="hp-label" id="leftHpLabel">CAN: 100%</div>
           <div class="fighter-score" id="leftScore"></div>
         </div>
-        <div class="vs-mark">VS<span class="vscore" id="fightStatus">Növbəti döyüşə hazır</span></div>
+        <div class="vs-mark">VS<span class="vscore" id="fightStatus" data-i18n="battle.ready">Növbəti döyüşə hazır</span></div>
         <div class="fighter right">
           <div class="hero-avatar mid" id="rightAvatar" style="margin:0 auto;">?</div>
           <div class="fighter-name" id="rightName">—</div>
@@ -985,25 +985,25 @@ input[type=range]::-webkit-slider-thumb{
           <div class="fighter-score" id="rightScore"></div>
         </div>
       </div>
-      <button class="next-fight-btn" id="nextFightBtn" onclick="runFightRound()">DÖYÜŞÜ BAŞLAT</button>
+      <button class="next-fight-btn" id="nextFightBtn" onclick="runFightRound()" data-i18n="btn.startfight">DÖYÜŞÜ BAŞLAT</button>
       <div class="champion-banner" id="championBanner">
-        <div class="cb-label">Meydanın Qalibi</div>
+        <div class="cb-label" data-i18n="battle.champion">Meydanın Qalibi</div>
         <h2 id="championText">—</h2>
         <p id="championSub"></p>
       </div>
       <div class="battle-log" id="battleLog"></div>
     </div>
-    <button class="btn btn-primary" id="toResultsBtn" style="display:none;margin:18px auto 0;display:none;" onclick="goToResults()">NƏTİCƏLƏRƏ BAX</button>
+    <button class="btn btn-primary" id="toResultsBtn" style="display:none;margin:18px auto 0;" onclick="goToResults()" data-i18n="btn.results">NƏTİCƏLƏRƏ BAX</button>
   </div>
 </div>
 
 <!-- END PAGE -->
 <div id="endPage">
   <div class="end-wrap">
-    <h2 class="end-title" id="endTitle">MÜZAYİDƏ BİTDİ</h2>
+    <h2 class="end-title" id="endTitle" data-i18n="end.title">MÜZAYİDƏ BİTDİ</h2>
     <p id="endSummary" style="color:var(--text-3);margin-top:6px;"></p>
     <div id="coinRewardBanner" class="coin-reward-banner" style="display:none;">
-      🏆 Qalibliyə görə <span id="coinRewardAmount" style="color:var(--gold-3);margin:0 4px;"></span> qazandın!
+      🏆 <span data-i18n="end.wonprefix">Qalibliyə görə</span> <span id="coinRewardAmount" style="color:var(--gold-3);margin:0 4px;"></span> <span data-i18n="end.wonsuffix">qazandın!</span>
     </div>
     <div class="end-cols">
       <div class="roster p1">
@@ -1016,8 +1016,8 @@ input[type=range]::-webkit-slider-thumb{
       </div>
     </div>
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-      <button class="btn btn-primary" id="restartBtn" onclick="restartGame()">YENİDƏN OYNA</button>
-      <button class="btn" onclick="showPage('playPage')">Lobbyə Qayıt</button>
+      <button class="btn btn-primary" id="restartBtn" onclick="restartGame()" data-i18n="btn.restart">YENİDƏN OYNA</button>
+      <button class="btn" onclick="showPage('playPage')" data-i18n="btn.lobby">Lobbyə Qayıt</button>
     </div>
   </div>
 </div>
@@ -1036,38 +1036,38 @@ input[type=range]::-webkit-slider-thumb{
         <div class="profile-stats-row">
           <div class="profile-stat">
             <div class="profile-stat-val" id="statWins">0</div>
-            <div class="profile-stat-label">Qalibiyyət</div>
+            <div class="profile-stat-label" data-i18n="profile.wins">Qalibiyyət</div>
           </div>
           <div class="profile-stat">
             <div class="profile-stat-val" id="statGames">0</div>
-            <div class="profile-stat-label">Oyun</div>
+            <div class="profile-stat-label" data-i18n="profile.games">Oyun</div>
           </div>
           <div class="profile-stat">
             <div class="profile-stat-val coin-display" id="statCoins" style="font-size:18px;">🪙 0</div>
-            <div class="profile-stat-label">Coin</div>
+            <div class="profile-stat-label" data-i18n="profile.coins">Coin</div>
           </div>
           <div class="profile-stat">
             <div class="profile-stat-val" id="statHeroes">0</div>
-            <div class="profile-stat-label">Kahraman</div>
+            <div class="profile-stat-label" data-i18n="profile.heroes">Kahraman</div>
           </div>
         </div>
       </div>
     </div>
 
     <div class="profile-tabs">
-      <div class="profile-tab active" onclick="switchProfileTab('edit')">✏️ Düzənlə</div>
-      <div class="profile-tab" onclick="switchProfileTab('inventory')">🎒 İnventory</div>
-      <div class="profile-tab" onclick="switchProfileTab('logout')">🚪 Çıxış</div>
+      <div class="profile-tab active" onclick="switchProfileTab('edit')">✏️ <span data-i18n="profile.tab.edit">Düzənlə</span></div>
+      <div class="profile-tab" onclick="switchProfileTab('inventory')">🎒 <span data-i18n="profile.tab.inventory">İnventory</span></div>
+      <div class="profile-tab" onclick="switchProfileTab('logout')">🚪 <span data-i18n="profile.tab.logout">Çıxış</span></div>
     </div>
 
     <div class="profile-panel active" id="profilePanelEdit">
       <div class="edit-form">
         <div>
-          <div class="label">İstifadəçi adı</div>
-          <input class="input" type="text" id="editUsername" placeholder="Adın...">
+          <div class="label" data-i18n="profile.username">İstifadəçi adı</div>
+          <input class="input" type="text" id="editUsername" data-i18n-placeholder="profile.username.placeholder" placeholder="Adın...">
         </div>
         <div>
-          <div class="label">Avatar seç</div>
+          <div class="label" data-i18n="profile.avatar">Avatar seç</div>
           <div class="avatar-options" id="avatarOptions">
             <div class="avatar-opt selected" data-emoji="👤">👤</div>
             <div class="avatar-opt" data-emoji="⚔️">⚔️</div>
@@ -1081,22 +1081,22 @@ input[type=range]::-webkit-slider-thumb{
             <div class="avatar-opt" data-emoji="🌟">🌟</div>
           </div>
         </div>
-        <button class="btn btn-primary" onclick="saveProfile()">Yadda saxla</button>
+        <button class="btn btn-primary" onclick="saveProfile()" data-i18n="btn.save">Yadda saxla</button>
       </div>
     </div>
 
     <div class="profile-panel" id="profilePanelInventory">
       <div style="display:flex;flex-direction:column;gap:20px;">
         <div>
-          <div class="label" style="margin-bottom:12px;">Çərçivələr</div>
+          <div class="label" style="margin-bottom:12px;" data-i18n="inv.frames">Çərçivələr</div>
           <div class="shop-grid" id="inventoryFrames"></div>
         </div>
         <div>
-          <div class="label" style="margin-bottom:12px;">Başlıqlar</div>
+          <div class="label" style="margin-bottom:12px;" data-i18n="inv.titles">Başlıqlar</div>
           <div class="shop-grid" id="inventoryTitles"></div>
         </div>
         <div>
-          <div class="label" style="margin-bottom:12px;">Effektlər</div>
+          <div class="label" style="margin-bottom:12px;" data-i18n="inv.effects">Effektlər</div>
           <div class="shop-grid" id="inventoryEffects"></div>
         </div>
       </div>
@@ -1104,8 +1104,8 @@ input[type=range]::-webkit-slider-thumb{
 
     <div class="profile-panel" id="profilePanelLogout">
       <div style="padding:24px;text-align:center;">
-        <div style="font-size:14px;color:var(--text-3);margin-bottom:20px;">Çıxmağa əminsən?</div>
-        <button class="btn btn-danger" onclick="doLogout()">🚪 Hesabdan çıx</button>
+        <div style="font-size:14px;color:var(--text-3);margin-bottom:20px;" data-i18n="logout.confirm">Çıxmağa əminsən?</div>
+        <button class="btn btn-danger" onclick="doLogout()">🚪 <span data-i18n="logout.btn">Hesabdan çıx</span></button>
       </div>
     </div>
   </div>
@@ -1115,14 +1115,14 @@ input[type=range]::-webkit-slider-thumb{
 <div id="shopPage" class="page">
   <div class="shop-wrap">
     <div class="shop-header">
-      <h1 class="shop-title">🏪 Mağaza</h1>
+      <h1 class="shop-title">🏪 <span data-i18n="shop.title">Mağaza</span></h1>
       <div class="coin-display" id="shopCoinDisplay"><span class="coin-icon">🪙</span><span id="shopCoins">0</span></div>
     </div>
     <div class="shop-tabs">
-      <div class="shop-tab active" onclick="switchShopTab('frames')">🖼️ Çərçivələr</div>
-      <div class="shop-tab" onclick="switchShopTab('titles')">🏅 Başlıqlar</div>
-      <div class="shop-tab" onclick="switchShopTab('effects')">✨ Effektlər</div>
-      <div class="shop-tab" onclick="switchShopTab('heroes')">🦸 Qəhrəmanlar</div>
+      <div class="shop-tab active" onclick="switchShopTab('frames')">🖼️ <span data-i18n="shop.tab.frames">Çərçivələr</span></div>
+      <div class="shop-tab" onclick="switchShopTab('titles')">🏅 <span data-i18n="shop.tab.titles">Başlıqlar</span></div>
+      <div class="shop-tab" onclick="switchShopTab('effects')">✨ <span data-i18n="shop.tab.effects">Effektlər</span></div>
+      <div class="shop-tab" onclick="switchShopTab('heroes')">🦸 <span data-i18n="shop.tab.heroes">Qəhrəmanlar</span></div>
     </div>
     <div class="shop-panel active" id="shopPanelFrames">
       <div class="shop-grid" id="shopGridFrames"></div>
@@ -1135,7 +1135,7 @@ input[type=range]::-webkit-slider-thumb{
     </div>
     <div class="shop-panel" id="shopPanelHeroes">
       <div style="margin-bottom:12px;padding:12px;background:var(--coin-bg);border:1px solid rgba(245,204,106,0.2);border-radius:var(--r);">
-        <div style="font-size:11px;color:var(--text-3);">Qəhrəmanları coin ilə al. Aldığın qəhrəmanlar kolleksiyanda görünər və oyunda istifadə edilər.</div>
+        <div style="font-size:11px;color:var(--text-3);" data-i18n="shop.heroes.hint">Qəhrəmanları coin ilə al. Aldığın qəhrəmanlar kolleksiyanda görünər.</div>
       </div>
       <div class="hero-shop-grid" id="shopGridHeroes"></div>
     </div>
@@ -1145,10 +1145,1151 @@ input[type=range]::-webkit-slider-thumb{
 <!-- COLLECTION PAGE -->
 <div id="collectionPage" class="page">
   <div class="collection-wrap">
-    <h1 class="collection-title">🗡️ Kolleksiyam</h1>
+    <h1 class="collection-title">🗡️ <span data-i18n="collection.title">Kolleksiyam</span></h1>
     <div style="margin-bottom:16px;display:flex;align-items:center;gap:10px;">
       <span style="font-size:12px;color:var(--text-3);" id="collectionCount">0 kahraman</span>
     </div>
     <div class="collection-grid" id="collectionGrid"></div>
   </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script>
+/* =====================================================================
+   HeroicTeamBattle — Full application logic
+   ===================================================================== */
+
+/* ---------- 1. I18N ---------- */
+const I18N = {
+  az: {
+    "nav.play":"⚔️ Oyna","nav.collection":"🗡️ Kolleksiya","nav.shop":"🏪 Mağaza","nav.profile":"👤 Profil",
+    "online.text":"Onlayn","chat.title":"Söhbət","chat.placeholder":"Mesaj yaz...",
+    "auth.sub":"Qeydiyyatdan keç, nəticələrini izlə","auth.login":"Giriş","auth.register":"Qeydiyyat",
+    "auth.username":"İstifadəçi adı","auth.username.placeholder":"İstifadəçi adın...",
+    "auth.email":"E-mail (Gmail)","auth.password":"Şifrə","auth.submit.login":"GİRİŞ","auth.submit.register":"QEYDİYYATDAN KEÇ",
+    "auth.or":"və ya","auth.google":"Google ilə davam et",
+    "play.title":"KAHRAMAN<br>SAVAŞI","play.subtitle":"Rejim seç, kahramanları topla, zəfər qur",
+    "mode.local.title":"EYNİ CİHAZ","mode.local.sub":"İki oyuncu eyni ekranda növbə ilə oynayır",
+    "mode.mm.title":"TEZ OYUN (RANDOM)","mode.mm.sub":"Sistem sənə avtomatik rəqib tapsın",
+    "mode.create.title":"OTAQ YARAT","mode.create.sub":"Sən Oyuncu 1 olursan, 4 rəqəmli kod yaradıb göndər",
+    "mode.join.title":"OTAĞA QOŞUL","mode.join.sub":"Sənə göndərilən 4 rəqəmli koddan qoşul",
+    "mode.bot.title":"BOTA QARŞI","mode.bot.sub":"Tək oyna, rəqibi süni intellekt idarə etsin",
+    "create.status.creating":"Otaq yaradılır...","create.status.ready":"Otaq hazırdır, kodu göndər",
+    "btn.copy":"Kopyala","btn.back":"‹ Geri","btn.cancel":"‹ İmtina et","btn.join":"QOŞUL",
+    "join.label":"Otaq kodu (4 rəqəm)","join.placeholder":"4 rəqəmli kod","join.status.idle":"Kod daxil edin",
+    "join.status.connecting":"Qoşulur...","join.status.failed":"Qoşulma alınmadı",
+    "mm.searching":"Rəqib axtarılır...","mm.wait":"Zəhmət olmasa gözlə, tapan kimi qoşulacaqsan",
+    "config.title":"Oyun Tənzimləmələri","host.waiting":"Oyuncu 2 gözlənilir...",
+    "config.mode":"Oyun rejimi","config.mode.auction":"ARTIRMA","config.mode.auction.sub":"Büdcə ilə təklif ver",
+    "config.mode.wheel":"ÇARX","config.mode.wheel.sub":"Çarxı fırlat",
+    "config.budget":"Başlanğıc büdcə","config.increment":"Təklif artım addımı","config.maxheroes":"Oyuncu başına kahraman",
+    "btn.start":"OYUNA BAŞLA","wait.joined":"Qoşuldun","wait.player2":"OYUNCU 2","wait.text":"Otaq sahibinin oyunu qurmasını gözləyin...",
+    "game.title":"KAHRAMAN SAVAŞI","game.lot":"LOT","roster.empty":"Hələ kahraman alınmayıb",
+    "stage.label":"MÜZAYEDƏ","stage.currentprice":"Hazırkı qiymət","stage.startbid":"Müzayidəyə başlamaq üçün təklif verin",
+    "btn.bid":"Təklif ver","btn.pass":"Pas keç",
+    "wheel.title":"KAHRAMAN ÇARXI","btn.spin":"ÇEVİR","wheel.watching":"👁 Rəqib fırladır...",
+    "battle.eyebrow":"Bütün kahramanlar meydanda","battle.title":"DÖYÜŞ ARENASI","battle.ready":"Növbəti döyüşə hazır",
+    "btn.startfight":"DÖYÜŞÜ BAŞLAT","battle.champion":"Meydanın Qalibi","btn.results":"NƏTİCƏLƏRƏ BAX",
+    "end.title":"OYUN BİTDİ","end.wonprefix":"Qalibliyə görə","end.wonsuffix":"qazandın!",
+    "btn.restart":"YENİDƏN OYNA","btn.lobby":"Lobbyə Qayıt",
+    "profile.wins":"Qalibiyyət","profile.games":"Oyun","profile.coins":"Coin","profile.heroes":"Kahraman",
+    "profile.tab.edit":"Düzənlə","profile.tab.inventory":"İnventory","profile.tab.logout":"Çıxış",
+    "profile.username":"İstifadəçi adı","profile.username.placeholder":"Adın...","profile.avatar":"Avatar seç",
+    "btn.save":"Yadda saxla","inv.frames":"Çərçivələr","inv.titles":"Başlıqlar","inv.effects":"Effektlər",
+    "logout.confirm":"Çıxmağa əminsən?","logout.btn":"Hesabdan çıx",
+    "shop.title":"Mağaza","shop.tab.frames":"Çərçivələr","shop.tab.titles":"Başlıqlar","shop.tab.effects":"Effektlər","shop.tab.heroes":"Qəhrəmanlar",
+    "shop.heroes.hint":"Qəhrəmanları coin ilə al. Aldığın qəhrəmanlar kolleksiyanda görünər.",
+    "collection.title":"Kolleksiyam",
+    "toast.notenough":"Kifayət qədər coin yoxdur","toast.bought":"Alındı!","toast.equipped":"Taxıldı!",
+    "toast.saved":"Yadda saxlanıldı","toast.userexists":"Bu istifadəçi adı artıq var","toast.badlogin":"Ad və ya şifrə səhvdir",
+    "toast.fillfields":"Bütün xanaları doldurun","toast.roomnotfound":"Otaq tapılmadı","toast.p2joined":"Oyuncu 2 qoşuldu!",
+    "toast.copied":"Kopyalandı","toast.sold":"Sold — heç kim almadı","toast.win":"Sən qazandın!","toast.lose":"Sən uduzdun",
+    "toast.draw":"Bərabərə","bid.leader":"Öndədir","tier.S":"S","tier.A":"A","tier.B":"B","tier.C":"C",
+  },
+  tr: {
+    "nav.play":"⚔️ Oyna","nav.collection":"🗡️ Koleksiyon","nav.shop":"🏪 Mağaza","nav.profile":"👤 Profil",
+    "online.text":"Çevrimiçi","chat.title":"Sohbet","chat.placeholder":"Mesaj yaz...",
+    "auth.sub":"Kayıt ol, sonuçlarını takip et","auth.login":"Giriş","auth.register":"Kayıt Ol",
+    "auth.username":"Kullanıcı adı","auth.username.placeholder":"Kullanıcı adın...",
+    "auth.email":"E-posta (Gmail)","auth.password":"Şifre","auth.submit.login":"GİRİŞ YAP","auth.submit.register":"KAYIT OL",
+    "auth.or":"veya","auth.google":"Google ile devam et",
+    "play.title":"KAHRAMAN<br>SAVAŞI","play.subtitle":"Mod seç, kahramanları topla, zafer kazan",
+    "mode.local.title":"AYNI CİHAZ","mode.local.sub":"İki oyuncu aynı ekranda sırayla oynar",
+    "mode.mm.title":"HIZLI OYUN (RASTGELE)","mode.mm.sub":"Sistem sana otomatik rakip bulsun",
+    "mode.create.title":"ODA OLUŞTUR","mode.create.sub":"Sen 1. Oyuncu olursun, 4 haneli kod oluştur ve gönder",
+    "mode.join.title":"ODAYA KATIL","mode.join.sub":"Sana gönderilen 4 haneli koddan katıl",
+    "mode.bot.title":"BOTA KARŞI","mode.bot.sub":"Tek oyna, rakibi yapay zeka yönetsin",
+    "create.status.creating":"Oda oluşturuluyor...","create.status.ready":"Oda hazır, kodu gönder",
+    "btn.copy":"Kopyala","btn.back":"‹ Geri","btn.cancel":"‹ İptal et","btn.join":"KATIL",
+    "join.label":"Oda kodu (4 hane)","join.placeholder":"4 haneli kod","join.status.idle":"Kod girin",
+    "join.status.connecting":"Bağlanıyor...","join.status.failed":"Bağlantı başarısız",
+    "mm.searching":"Rakip aranıyor...","mm.wait":"Lütfen bekleyin, bulunca otomatik katılacaksın",
+    "config.title":"Oyun Ayarları","host.waiting":"Oyuncu 2 bekleniyor...",
+    "config.mode":"Oyun modu","config.mode.auction":"AÇIK ARTIRMA","config.mode.auction.sub":"Bütçeyle teklif ver",
+    "config.mode.wheel":"ÇARK","config.mode.wheel.sub":"Çarkı çevir",
+    "config.budget":"Başlangıç bütçesi","config.increment":"Teklif artış adımı","config.maxheroes":"Oyuncu başına kahraman",
+    "btn.start":"OYUNA BAŞLA","wait.joined":"Katıldın","wait.player2":"OYUNCU 2","wait.text":"Oda sahibinin oyunu kurmasını bekleyin...",
+    "game.title":"KAHRAMAN SAVAŞI","game.lot":"LOT","roster.empty":"Henüz kahraman alınmadı",
+    "stage.label":"AÇIK ARTIRMA","stage.currentprice":"Güncel fiyat","stage.startbid":"Açık artırmayı başlatmak için teklif verin",
+    "btn.bid":"Teklif ver","btn.pass":"Pas geç",
+    "wheel.title":"KAHRAMAN ÇARKI","btn.spin":"ÇEVİR","wheel.watching":"👁 Rakip çeviriyor...",
+    "battle.eyebrow":"Tüm kahramanlar sahada","battle.title":"SAVAŞ ARENASI","battle.ready":"Sıradaki savaşa hazır",
+    "btn.startfight":"SAVAŞI BAŞLAT","battle.champion":"Sahanın Şampiyonu","btn.results":"SONUÇLARA BAK",
+    "end.title":"OYUN BİTTİ","end.wonprefix":"Galibiyet için","end.wonsuffix":"kazandın!",
+    "btn.restart":"TEKRAR OYNA","btn.lobby":"Lobiye Dön",
+    "profile.wins":"Galibiyet","profile.games":"Oyun","profile.coins":"Coin","profile.heroes":"Kahraman",
+    "profile.tab.edit":"Düzenle","profile.tab.inventory":"Envanter","profile.tab.logout":"Çıkış",
+    "profile.username":"Kullanıcı adı","profile.username.placeholder":"Adın...","profile.avatar":"Avatar seç",
+    "btn.save":"Kaydet","inv.frames":"Çerçeveler","inv.titles":"Unvanlar","inv.effects":"Efektler",
+    "logout.confirm":"Çıkmak istediğine emin misin?","logout.btn":"Hesaptan çık",
+    "shop.title":"Mağaza","shop.tab.frames":"Çerçeveler","shop.tab.titles":"Unvanlar","shop.tab.effects":"Efektler","shop.tab.heroes":"Kahramanlar",
+    "shop.heroes.hint":"Kahramanları coin ile satın al. Satın aldıkların koleksiyonunda görünür.",
+    "collection.title":"Koleksiyonum",
+    "toast.notenough":"Yeterli coin yok","toast.bought":"Satın alındı!","toast.equipped":"Takıldı!",
+    "toast.saved":"Kaydedildi","toast.userexists":"Bu kullanıcı adı zaten var","toast.badlogin":"Ad veya şifre hatalı",
+    "toast.fillfields":"Tüm alanları doldurun","toast.roomnotfound":"Oda bulunamadı","toast.p2joined":"Oyuncu 2 katıldı!",
+    "toast.copied":"Kopyalandı","toast.sold":"Satılmadı — kimse almadı","toast.win":"Kazandın!","toast.lose":"Kaybettin",
+    "toast.draw":"Berabere","bid.leader":"Önde","tier.S":"S","tier.A":"A","tier.B":"B","tier.C":"C",
+  },
+  en: {
+    "nav.play":"⚔️ Play","nav.collection":"🗡️ Collection","nav.shop":"🏪 Shop","nav.profile":"👤 Profile",
+    "online.text":"Online","chat.title":"Chat","chat.placeholder":"Type a message...",
+    "auth.sub":"Sign up and track your results","auth.login":"Login","auth.register":"Register",
+    "auth.username":"Username","auth.username.placeholder":"Your username...",
+    "auth.email":"Email (Gmail)","auth.password":"Password","auth.submit.login":"LOG IN","auth.submit.register":"SIGN UP",
+    "auth.or":"or","auth.google":"Continue with Google",
+    "play.title":"HERO<br>BATTLE","play.subtitle":"Pick a mode, collect heroes, claim victory",
+    "mode.local.title":"SAME DEVICE","mode.local.sub":"Two players take turns on one screen",
+    "mode.mm.title":"QUICK MATCH (RANDOM)","mode.mm.sub":"Let the system find you an opponent automatically",
+    "mode.create.title":"CREATE ROOM","mode.create.sub":"You become Player 1 — create a 4-digit code and send it",
+    "mode.join.title":"JOIN ROOM","mode.join.sub":"Join with the 4-digit code you were sent",
+    "mode.bot.title":"VS BOT","mode.bot.sub":"Play solo — the AI controls your opponent",
+    "create.status.creating":"Creating room...","create.status.ready":"Room ready, send the code",
+    "btn.copy":"Copy","btn.back":"‹ Back","btn.cancel":"‹ Cancel","btn.join":"JOIN",
+    "join.label":"Room code (4 digits)","join.placeholder":"4-digit code","join.status.idle":"Enter a code",
+    "join.status.connecting":"Connecting...","join.status.failed":"Connection failed",
+    "mm.searching":"Searching for opponent...","mm.wait":"Please wait, you'll join automatically once found",
+    "config.title":"Game Settings","host.waiting":"Waiting for Player 2...",
+    "config.mode":"Game mode","config.mode.auction":"AUCTION","config.mode.auction.sub":"Bid with a budget",
+    "config.mode.wheel":"WHEEL","config.mode.wheel.sub":"Spin the wheel",
+    "config.budget":"Starting budget","config.increment":"Bid increment","config.maxheroes":"Heroes per player",
+    "btn.start":"START GAME","wait.joined":"Joined","wait.player2":"PLAYER 2","wait.text":"Waiting for the host to set up the game...",
+    "game.title":"HERO BATTLE","game.lot":"LOT","roster.empty":"No heroes acquired yet",
+    "stage.label":"AUCTION","stage.currentprice":"Current price","stage.startbid":"Place a bid to start the auction",
+    "btn.bid":"Bid","btn.pass":"Pass",
+    "wheel.title":"HERO WHEEL","btn.spin":"SPIN","wheel.watching":"👁 Opponent is spinning...",
+    "battle.eyebrow":"All heroes on the field","battle.title":"BATTLE ARENA","battle.ready":"Ready for the next fight",
+    "btn.startfight":"START FIGHT","battle.champion":"Champion of the Arena","btn.results":"VIEW RESULTS",
+    "end.title":"GAME OVER","end.wonprefix":"You earned","end.wonsuffix":"for winning!",
+    "btn.restart":"PLAY AGAIN","btn.lobby":"Back to Lobby",
+    "profile.wins":"Wins","profile.games":"Games","profile.coins":"Coins","profile.heroes":"Heroes",
+    "profile.tab.edit":"Edit","profile.tab.inventory":"Inventory","profile.tab.logout":"Logout",
+    "profile.username":"Username","profile.username.placeholder":"Your name...","profile.avatar":"Choose avatar",
+    "btn.save":"Save","inv.frames":"Frames","inv.titles":"Titles","inv.effects":"Effects",
+    "logout.confirm":"Are you sure you want to log out?","logout.btn":"Log out",
+    "shop.title":"Shop","shop.tab.frames":"Frames","shop.tab.titles":"Titles","shop.tab.effects":"Effects","shop.tab.heroes":"Heroes",
+    "shop.heroes.hint":"Buy heroes with coins. Purchased heroes appear in your collection.",
+    "collection.title":"My Collection",
+    "toast.notenough":"Not enough coins","toast.bought":"Purchased!","toast.equipped":"Equipped!",
+    "toast.saved":"Saved","toast.userexists":"This username already exists","toast.badlogin":"Wrong username or password",
+    "toast.fillfields":"Please fill in all fields","toast.roomnotfound":"Room not found","toast.p2joined":"Player 2 joined!",
+    "toast.copied":"Copied","toast.sold":"Unsold — no bids","toast.win":"You won!","toast.lose":"You lost",
+    "toast.draw":"Draw","bid.leader":"Leading","tier.S":"S","tier.A":"A","tier.B":"B","tier.C":"C",
+  }
+};
+let currentLang = localStorage.getItem('htb_lang') || 'az';
+
+function t(key){ return (I18N[currentLang] && I18N[currentLang][key]) || (I18N.az[key]) || key; }
+
+function applyLanguage(){
+  document.documentElement.lang = currentLang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    el.innerHTML = t(key);
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    const key = el.getAttribute('data-i18n-placeholder');
+    el.setAttribute('placeholder', t(key));
+  });
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active', b.dataset.lang===currentLang));
+  // dynamic re-renders that depend on language
+  if(document.getElementById('authTabLogin')) refreshAuthSubmitLabel();
+  if(state.currentPageId==='shopPage') renderShop();
+  if(state.currentPageId==='profilePage') renderProfileInventory();
+  if(state.currentPageId==='collectionPage') renderCollection();
+}
+function setLanguage(lang){
+  currentLang = lang;
+  localStorage.setItem('htb_lang', lang);
+  applyLanguage();
+}
+
+/* ---------- 2. HERO DATABASE ---------- */
+const HEROES = [
+  {id:'h1',  name:'Ironclad',   franchise:'marvel', tier:'S', str:9,spd:6,mag:3,cha:8, emoji:'🦾', bio:'Zirehli dahi mühəndis.'},
+  {id:'h2',  name:'Thunderfist',franchise:'marvel', tier:'A', str:8,spd:5,mag:6,cha:6, emoji:'🔨', bio:'Göy gurultusunun sahibi.'},
+  {id:'h3',  name:'Widowline',  franchise:'marvel', tier:'B', str:5,spd:9,mag:2,cha:7, emoji:'🕷️', bio:'Sürətli casus-döyüşçü.'},
+  {id:'h4',  name:'Greenrage',  franchise:'marvel', tier:'S', str:10,spd:3,mag:1,cha:4,emoji:'💚', bio:'İdarəolunmaz güc canavarı.'},
+  {id:'h5',  name:'Skyshield',  franchise:'marvel', tier:'A', str:7,spd:6,mag:4,cha:9, emoji:'🛡️', bio:'Vətənin əfsanəvi sərkərdəsi.'},
+  {id:'h6',  name:'Batwing',    franchise:'dc',     tier:'S', str:6,spd:7,mag:2,cha:8, emoji:'🦇', bio:'Gecənin qaranlıq gözətçisi.'},
+  {id:'h7',  name:'Steelman',   franchise:'dc',     tier:'S', str:10,spd:8,mag:5,cha:9,emoji:'🦸', bio:'Səmadan gələn qoruyucu.'},
+  {id:'h8',  name:'Wondergirl', franchise:'dc',     tier:'A', str:8,spd:7,mag:6,cha:8, emoji:'⭐', bio:'Amazon döyüşçüsü.'},
+  {id:'h9',  name:'Flashbolt',  franchise:'dc',     tier:'B', str:4,spd:10,mag:2,cha:6,emoji:'⚡', bio:'İşıq sürətli qaçışçı.'},
+  {id:'h10', name:'Aquatide',   franchise:'dc',     tier:'C', str:6,spd:5,mag:4,cha:5, emoji:'🔱', bio:'Okeanların hökmdarı.'},
+  {id:'h11', name:'Homelander-X',franchise:'boys',  tier:'S', str:9,spd:8,mag:7,cha:3, emoji:'😈', bio:'Qorxulu və qeyri-sabit qəhrəman.'},
+  {id:'h12', name:'The Deep-X', franchise:'boys',   tier:'C', str:3,spd:4,mag:2,cha:2, emoji:'🐟', bio:'Suyun altında zəif güc.'},
+  {id:'h13', name:'Starfire-X', franchise:'boys',   tier:'B', str:5,spd:6,mag:3,cha:7, emoji:'✨', bio:'Media ulduzu qəhrəman.'},
+  {id:'h14', name:'Butcher-Z',  franchise:'boys',   tier:'A', str:7,spd:5,mag:1,cha:5, emoji:'🔪', bio:'Qəhrəman ovçusu.'},
+  {id:'h15', name:'Zeus Prime', franchise:'myth',   tier:'S', str:10,spd:6,mag:10,cha:9,emoji:'⚡', bio:'İldırımların ali tanrısı.'},
+  {id:'h16', name:'Athena Wise',franchise:'myth',   tier:'A', str:6,spd:6,mag:8,cha:8, emoji:'🦉', bio:'Müharibə strategiyası tanrıçası.'},
+  {id:'h17', name:'Hades Dark', franchise:'myth',   tier:'A', str:7,spd:4,mag:9,cha:5, emoji:'💀', bio:'Yeraltı dünyanın hökmdarı.'},
+  {id:'h18', name:'Loki Trick', franchise:'myth',   tier:'B', str:4,spd:8,mag:8,cha:7, emoji:'🎭', bio:'Hiylənin tanrısı.'},
+  {id:'h19', name:'Anansi Web', franchise:'myth',   tier:'C', str:3,spd:7,mag:5,cha:6, emoji:'🕸️', bio:'Hekayələr hörümçəyi.'},
+  {id:'h20', name:'Odin Allfather',franchise:'myth',tier:'S', str:9,spd:5,mag:10,cha:10,emoji:'👁️', bio:'Bütün tanrıların atası.'},
+];
+function heroById(id){ return HEROES.find(h=>h.id===id); }
+function franchiseTagClass(f){ return {marvel:'tag-marvel',dc:'tag-dc',boys:'tag-boys',myth:'tag-myth'}[f]||''; }
+function franchiseLabel(f){ return {marvel:'Marvel',dc:'DC',boys:'The Boys',myth:'Mythology'}[f]||f; }
+
+/* ---------- 3. SHOP CATALOG ---------- */
+const SHOP_FRAMES = [
+  {id:'frame_gold', name:{az:'Qızıl Çərçivə',tr:'Altın Çerçeve',en:'Gold Frame'}, price:150, color:'#E4B04A', emoji:'🖼️'},
+  {id:'frame_crimson', name:{az:'Qırmızı Çərçivə',tr:'Kırmızı Çerçeve',en:'Crimson Frame'}, price:120, color:'#D44040', emoji:'🖼️'},
+  {id:'frame_azure', name:{az:'Mavi Çərçivə',tr:'Mavi Çerçeve',en:'Azure Frame'}, price:120, color:'#4478C4', emoji:'🖼️'},
+  {id:'frame_violet', name:{az:'Bənövşəyi Çərçivə',tr:'Mor Çerçeve',en:'Violet Frame'}, price:180, color:'#6C5FC7', emoji:'🖼️'},
+];
+const SHOP_TITLES = [
+  {id:'title_champion', name:{az:'🏆 Çempion',tr:'🏆 Şampiyon',en:'🏆 Champion'}, price:200},
+  {id:'title_collector', name:{az:'🗡️ Kolleksiyaçı',tr:'🗡️ Koleksiyoncu',en:'🗡️ Collector'}, price:100},
+  {id:'title_legend', name:{az:'🌟 Əfsanə',tr:'🌟 Efsane',en:'🌟 Legend'}, price:300},
+];
+const SHOP_EFFECTS = [
+  {id:'fx_sparkle', name:{az:'Parıltı Effekti',tr:'Parıltı Efekti',en:'Sparkle Effect'}, price:90, emoji:'✨'},
+  {id:'fx_flame', name:{az:'Alov Effekti',tr:'Alev Efekti',en:'Flame Effect'}, price:110, emoji:'🔥'},
+  {id:'fx_frost', name:{az:'Şaxta Effekti',tr:'Buz Efekti',en:'Frost Effect'}, price:110, emoji:'❄️'},
+];
+function shopHeroPrice(h){ return {S:220,A:150,B:100,C:60}[h.tier]||80; }
+
+/* ---------- 4. STATE / STORAGE ---------- */
+const state = {
+  currentPageId: null,
+  user: null,             // {username}
+  mode: null,             // local | matchmaking | create | join | bot
+  isHost: true,
+  peer: null, conn: null,
+  gameMode: 'auction',
+  budget: 50,
+  increment: 5,
+  maxHeroes: 5,
+  pool: [],                // heroes available to draft this match
+  lotIndex: 0,
+  lots: [],
+  p1: {name:'', budget:0, heroes:[], passed:false},
+  p2: {name:'', budget:0, heroes:[], passed:false},
+  curBid: 0, curLeader: null, myRole: 'p1', // 'p1' or 'p2' — which seat *this* client controls
+  vsBot: false,
+  wheelIndex: 1, wheelTurn: 'p1',
+  fightIndex: 0, fightOrderP1: [], fightOrderP2: [], leftHp:100, rightHp:100, p1Wins:0, p2Wins:0,
+  soundOn: true,
+};
+
+function usersDB(){ return JSON.parse(localStorage.getItem('htb_users')||'{}'); }
+function saveUsersDB(db){ localStorage.setItem('htb_users', JSON.stringify(db)); }
+function profileKey(u){ return 'htb_profile_'+u; }
+function defaultProfile(username){
+  return {username, password:null, avatar:'👤', coins:50, wins:0, games:0,
+    ownedFrames:[], ownedTitles:[], ownedEffects:[], ownedHeroes:[],
+    equippedFrame:null, equippedTitle:null, equippedEffect:null};
+}
+function getProfile(username){
+  const raw = localStorage.getItem(profileKey(username));
+  if(raw) return JSON.parse(raw);
+  const p = defaultProfile(username);
+  localStorage.setItem(profileKey(username), JSON.stringify(p));
+  return p;
+}
+function saveProfileData(p){ localStorage.setItem(profileKey(p.username), JSON.stringify(p)); }
+function currentProfile(){ return state.user ? getProfile(state.user.username) : null; }
+
+/* ---------- 5. TOAST ---------- */
+let toastTimer=null;
+function showToast(msg, kind){
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast show'+(kind?(' '+kind):'');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>{ el.classList.remove('show'); }, 2600);
+}
+
+/* ---------- 6. AUTH ---------- */
+let authMode = 'login';
+function switchAuthTab(mode){
+  authMode = mode;
+  document.getElementById('authTabLogin').classList.toggle('active', mode==='login');
+  document.getElementById('authTabRegister').classList.toggle('active', mode==='register');
+  document.getElementById('authEmailRow').style.display = mode==='register' ? 'block' : 'none';
+  document.getElementById('authError').textContent='';
+  refreshAuthSubmitLabel();
+}
+function refreshAuthSubmitLabel(){
+  const btn = document.getElementById('authSubmitBtn');
+  if(!btn) return;
+  btn.textContent = t(authMode==='login' ? 'auth.submit.login' : 'auth.submit.register');
+}
+function handleAuth(){
+  const username = document.getElementById('authUsername').value.trim();
+  const password = document.getElementById('authPassword').value;
+  const errEl = document.getElementById('authError');
+  errEl.textContent='';
+  if(!username || !password){ errEl.textContent = t('toast.fillfields'); return; }
+  const db = usersDB();
+  if(authMode==='register'){
+    if(db[username]){ errEl.textContent = t('toast.userexists'); return; }
+    db[username] = {password};
+    saveUsersDB(db);
+    getProfile(username); // create profile record
+    loginAs(username);
+  } else {
+    if(!db[username] || db[username].password !== password){ errEl.textContent = t('toast.badlogin'); return; }
+    loginAs(username);
+  }
+}
+function handleGoogleAuth(){
+  // Demo-mode Google auth: generates a stable local account keyed by a guest id.
+  let gid = localStorage.getItem('htb_google_demo_id');
+  if(!gid){ gid = 'google_' + Math.random().toString(36).slice(2,8); localStorage.setItem('htb_google_demo_id', gid); }
+  const db = usersDB();
+  if(!db[gid]){ db[gid] = {password:null, google:true}; saveUsersDB(db); getProfile(gid); }
+  loginAs(gid);
+}
+function loginAs(username){
+  state.user = {username};
+  localStorage.setItem('htb_session', username);
+  document.getElementById('authPage').style.display='none';
+  document.getElementById('navbar').classList.add('show');
+  refreshTopbar();
+  showPage('playPage');
+}
+function doLogout(){
+  state.user = null;
+  localStorage.removeItem('htb_session');
+  document.getElementById('navbar').classList.remove('show');
+  document.getElementById('authPage').style.display='flex';
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+}
+function tryAutoLogin(){
+  const saved = localStorage.getItem('htb_session');
+  if(saved && usersDB()[saved]){ loginAs(saved); }
+}
+
+/* ---------- 7. NAVIGATION ---------- */
+function showPage(pageId){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const pg = document.getElementById(pageId);
+  if(pg) pg.classList.add('active');
+  state.currentPageId = pageId;
+  document.querySelectorAll('.nav-link').forEach(n=>n.classList.remove('active'));
+  const map = {playPage:'navPlay', collectionPage:'navCollection', shopPage:'navShop', profilePage:'navProfile'};
+  if(map[pageId]) document.getElementById(map[pageId]).classList.add('active');
+  if(pageId==='playPage'){ backToLobby(); }
+  if(pageId==='shopPage'){ renderShop(); }
+  if(pageId==='profilePage'){ renderProfilePage(); }
+  if(pageId==='collectionPage'){ renderCollection(); }
+  refreshTopbar();
+}
+function refreshTopbar(){
+  const p = currentProfile();
+  if(!p) return;
+  document.getElementById('navCoins').textContent = p.coins;
+  document.getElementById('navAvatar').textContent = p.avatar;
+}
+
+/* ---------- 8. LOBBY / MODE SELECT ---------- */
+function backToLobby(){
+  document.getElementById('lobbySelect').style.display='block';
+  document.getElementById('gameConfig').style.display='none';
+  ['createPanel','joinPanel','matchmakingPanel'].forEach(id=>document.getElementById(id).classList.remove('show'));
+  cleanupPeer();
+}
+function selectMode(mode){
+  state.mode = mode;
+  ['createPanel','joinPanel','matchmakingPanel'].forEach(id=>document.getElementById(id).classList.remove('show'));
+  if(mode==='local'){ state.vsBot=false; state.isHost=true; openGameConfig(); }
+  else if(mode==='bot'){ state.vsBot=true; state.isHost=true; openGameConfig(); }
+  else if(mode==='create'){ state.vsBot=false; state.isHost=true; document.getElementById('createPanel').classList.add('show'); startHostPeer(); }
+  else if(mode==='join'){ state.vsBot=false; state.isHost=false; document.getElementById('joinPanel').classList.add('show'); }
+  else if(mode==='matchmaking'){ state.vsBot=false; document.getElementById('matchmakingPanel').classList.add('show'); startMatchmaking(); }
+}
+function openGameConfig(){
+  document.getElementById('lobbySelect').style.display='none';
+  document.getElementById('gameConfig').style.display='block';
+  document.getElementById('hostStatusArea').style.display='none';
+  buildConfigChips();
+}
+function buildConfigChips(){
+  const incRow = document.getElementById('incRow');
+  incRow.innerHTML='';
+  [1,5,10,20].forEach(v=>{
+    const c = document.createElement('div');
+    c.className='chip'+(v===state.increment?' active':'');
+    c.textContent='$'+v;
+    c.onclick=()=>{ state.increment=v; buildConfigChips(); };
+    incRow.appendChild(c);
+  });
+  const maxRow = document.getElementById('maxHeroesRow');
+  maxRow.innerHTML='';
+  [3,5,7,10].forEach(v=>{
+    const c = document.createElement('div');
+    c.className='chip'+(v===state.maxHeroes?' active':'');
+    c.textContent=v;
+    c.onclick=()=>{ state.maxHeroes=v; document.getElementById('maxHeroesVal').textContent=v; buildConfigChips(); };
+    maxRow.appendChild(c);
+  });
+  document.getElementById('budgetVal').textContent = '$'+state.budget;
+}
+document.addEventListener('input', e=>{
+  if(e.target && e.target.id==='budgetRange'){
+    state.budget = parseInt(e.target.value,10);
+    document.getElementById('budgetVal').textContent = '$'+state.budget;
+  }
+});
+function selectGameMode(mode){
+  state.gameMode = mode;
+  document.getElementById('gmAuction').classList.toggle('active', mode==='auction');
+  document.getElementById('gmWheel').classList.toggle('active', mode==='wheel');
+  document.getElementById('budgetField').style.display = mode==='auction' ? 'block' : 'none';
+}
+
+/* ---------- 9. PEERJS NETWORKING ---------- */
+function cleanupPeer(){
+  if(state.conn){ try{state.conn.close();}catch(e){} state.conn=null; }
+  if(state.peer){ try{state.peer.destroy();}catch(e){} state.peer=null; }
+  document.getElementById('onlinePill').classList.remove('show');
+  document.getElementById('chatToggle').style.display='none';
+}
+function roomIdFor(code){ return 'htb-room-'+code; }
+function genCode(){ return String(Math.floor(1000+Math.random()*9000)); }
+
+function startHostPeer(){
+  const code = genCode();
+  document.getElementById('roomLinkInput').value = code;
+  document.getElementById('createStatusText').textContent = t('create.status.creating');
+  document.getElementById('createDot').classList.remove('on');
+  try{
+    state.peer = new Peer(roomIdFor(code));
+  }catch(e){ showToast('PeerJS error', 'red'); return; }
+  state.peer.on('open', ()=>{
+    document.getElementById('createStatusText').textContent = t('create.status.ready');
+    document.getElementById('createDot').classList.add('on');
+  });
+  state.peer.on('connection', c=>{
+    state.conn = c;
+    wireConn();
+    state.myRole = 'p1';
+    document.getElementById('lobbySelect').style.display='none';
+    document.getElementById('gameConfig').style.display='block';
+    document.getElementById('hostStatusArea').style.display='block';
+    document.getElementById('hostLinkInput').value = code;
+    buildConfigChips();
+    c.on('open', ()=>{
+      document.getElementById('hostStatusText').textContent = t('toast.p2joined');
+      setOnlinePill(true);
+      document.getElementById('chatToggle').style.display='flex';
+    });
+  });
+  state.peer.on('error', err=>{ showToast(String(err.type||err), 'red'); });
+}
+document.addEventListener('click', e=>{
+  if(e.target && (e.target.id==='copyLinkBtn' || e.target.id==='hostCopyBtn')){
+    const input = e.target.id==='copyLinkBtn' ? document.getElementById('roomLinkInput') : document.getElementById('hostLinkInput');
+    input.select();
+    try{ navigator.clipboard.writeText(input.value); showToast(t('toast.copied'),'gold'); }catch(err){}
+  }
+});
+
+function doJoin(){
+  const code = document.getElementById('joinCodeInput').value.trim();
+  if(code.length!==4){ return; }
+  document.getElementById('joinStatusText').textContent = t('join.status.connecting');
+  document.getElementById('joinDot').classList.remove('on');
+  try{ state.peer = new Peer(); }catch(e){ showToast('PeerJS error','red'); return; }
+  state.peer.on('open', ()=>{
+    const c = state.peer.connect(roomIdFor(code));
+    state.conn = c;
+    wireConn();
+    state.myRole = 'p2';
+    c.on('open', ()=>{
+      document.getElementById('joinDot').classList.add('on');
+      document.getElementById('joinStatusText').textContent = t('toast.p2joined');
+      setOnlinePill(true);
+      document.getElementById('chatToggle').style.display='flex';
+      showWaitPage();
+    });
+  });
+  state.peer.on('error', err=>{
+    document.getElementById('joinStatusText').textContent = t('join.status.failed');
+    showToast(t('toast.roomnotfound'),'red');
+  });
+}
+
+let mmPeer=null, mmTimer=null;
+function startMatchmaking(){
+  // Simple public 1-slot matchmaking queue via PeerJS cloud broker.
+  const QUEUE_ID = 'htb-mm-queue-slot';
+  try{ mmPeer = new Peer(QUEUE_ID); }
+  catch(e){ becomeMMJoiner(); return; }
+  mmPeer.on('open', ()=>{
+    // We got the queue slot -> become host, wait for a joiner.
+    state.peer = mmPeer; state.isHost = true; state.vsBot=false;
+    mmPeer.on('connection', c=>{
+      state.conn=c; wireConn(); state.myRole='p1';
+      c.on('open', ()=>{
+        cancelMatchmaking(true);
+        openGameConfig();
+        document.getElementById('hostStatusArea').style.display='block';
+        document.getElementById('hostStatusText').textContent = t('toast.p2joined');
+        setOnlinePill(true);
+        document.getElementById('chatToggle').style.display='flex';
+      });
+    });
+  });
+  mmPeer.on('error', err=>{
+    if(err.type==='unavailable-id'){ becomeMMJoiner(); }
+  });
+}
+function becomeMMJoiner(){
+  try{ mmPeer = new Peer(); }catch(e){ return; }
+  mmPeer.on('open', ()=>{
+    const c = mmPeer.connect('htb-mm-queue-slot');
+    c.on('open', ()=>{
+      state.peer=mmPeer; state.conn=c; wireConn(); state.myRole='p2'; state.isHost=false; state.vsBot=false;
+      cancelMatchmaking(true);
+      setOnlinePill(true);
+      document.getElementById('chatToggle').style.display='flex';
+      showWaitPage();
+    });
+    c.on('error', ()=>{ mmTimer = setTimeout(startMatchmaking, 1500); });
+  });
+  mmPeer.on('error', ()=>{ mmTimer = setTimeout(startMatchmaking, 1500); });
+}
+function cancelMatchmaking(silent){
+  clearTimeout(mmTimer);
+  if(!silent){
+    if(mmPeer){ try{mmPeer.destroy();}catch(e){} mmPeer=null; }
+    backToLobby();
+  }
+}
+
+function wireConn(){
+  state.conn.on('data', data=>{ handleNetMessage(data); });
+  state.conn.on('close', ()=>{ setOnlinePill(false); showToast('Connection lost','red'); });
+}
+function netSend(obj){ if(state.conn && state.conn.open){ state.conn.send(obj); } }
+function setOnlinePill(on){
+  document.getElementById('onlinePill').classList.toggle('show', on);
+}
+function showWaitPage(){
+  document.getElementById('waitPage').classList.add('show');
+}
+function hideWaitPage(){
+  document.getElementById('waitPage').classList.remove('show');
+}
+
+function handleNetMessage(msg){
+  switch(msg.type){
+    case 'config':
+      state.gameMode=msg.gameMode; state.budget=msg.budget; state.increment=msg.increment; state.maxHeroes=msg.maxHeroes;
+      state.pool = msg.pool; state.lots = msg.lots;
+      hideWaitPage();
+      beginMatch(false);
+      break;
+    case 'bid': applyRemoteBid(msg.role); break;
+    case 'pass': applyRemotePass(msg.role); break;
+    case 'wheelSpin': applyRemoteWheelResult(msg.result); break;
+    case 'fightNext': runFightRound(true); break;
+    case 'chat': appendChatMsg(msg.text, false); break;
+    case 'restart': restartGame(true); break;
+  }
+}
+
+/* Chat UI */
+document.getElementById('chatToggle').addEventListener('click', ()=>{
+  document.getElementById('chatPanel').classList.toggle('open');
+  document.getElementById('chatToggle').classList.remove('unread');
+});
+document.getElementById('chatClose').addEventListener('click', ()=> document.getElementById('chatPanel').classList.remove('open'));
+document.getElementById('chatSendBtn').addEventListener('click', sendChat);
+document.getElementById('chatInput').addEventListener('keydown', e=>{ if(e.key==='Enter') sendChat(); });
+function sendChat(){
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if(!text) return;
+  appendChatMsg(text, true);
+  netSend({type:'chat', text});
+  input.value='';
+}
+function appendChatMsg(text, mine){
+  const box = document.getElementById('chatMessages');
+  const d = document.createElement('div');
+  d.className = 'chat-msg '+(mine?'mine':'theirs');
+  d.textContent = text;
+  box.appendChild(d);
+  box.scrollTop = box.scrollHeight;
+  if(!mine && !document.getElementById('chatPanel').classList.contains('open')){
+    document.getElementById('chatToggle').classList.add('unread');
+  }
+}
+
+/* ---------- 10. STARTING A MATCH ---------- */
+function shuffledPool(n){
+  const copy = [...HEROES];
+  for(let i=copy.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [copy[i],copy[j]]=[copy[j],copy[i]]; }
+  return copy.slice(0, n);
+}
+function startGame(){
+  const lotCount = state.maxHeroes*2;
+  state.pool = shuffledPool(Math.min(lotCount, HEROES.length)).map(h=>h.id);
+  state.lots = [...state.pool];
+  if(state.conn && state.conn.open){
+    netSend({type:'config', gameMode:state.gameMode, budget:state.budget, increment:state.increment, maxHeroes:state.maxHeroes, pool:state.pool, lots:state.lots});
+  }
+  beginMatch(true);
+}
+function beginMatch(isInitiator){
+  const p = currentProfile();
+  state.p1 = {name: state.myRole==='p1' ? (p?p.username:'P1') : 'Opponent', budget: state.budget, heroes:[], passed:false};
+  state.p2 = {name: state.myRole==='p2' ? (p?p.username:'P2') : (state.vsBot?'BOT':'Opponent'), budget: state.budget, heroes:[], passed:false};
+  if(!state.conn && !state.vsBot){
+    // local hotseat: both named generically
+    state.p1.name='OYUNCU 1'; state.p2.name='OYUNCU 2';
+  }
+  state.lotIndex = 0;
+  if(state.gameMode==='auction'){ startAuctionPage(); }
+  else { startWheelPage(); }
+}
+
+/* ---------- 11. AUCTION MODE ---------- */
+function startAuctionPage(){
+  showRawPage('gamePage');
+  document.getElementById('lotTotal').textContent = state.lots.length;
+  document.getElementById('p1Name').textContent = state.p1.name;
+  document.getElementById('p2Name').textContent = state.p2.name;
+  document.getElementById('bidWho1').textContent = state.p1.name;
+  document.getElementById('bidWho2').textContent = state.p2.name;
+  renderRoster('p1'); renderRoster('p2');
+  wireBidButtons();
+  nextLot();
+}
+function showRawPage(id){
+  ['authPage','waitPage'].forEach(x=>{});
+  ['gamePage','wheelPage','battlePage','endPage'].forEach(pid=>{
+    document.getElementById(pid).classList.toggle('show', pid===id);
+  });
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  hideWaitPage();
+}
+function wireBidButtons(){
+  document.getElementById('p1BidBtn').onclick = ()=> playerAction('p1','bid');
+  document.getElementById('p1PassBtn').onclick = ()=> playerAction('p1','pass');
+  document.getElementById('p2BidBtn').onclick = ()=> playerAction('p2','bid');
+  document.getElementById('p2PassBtn').onclick = ()=> playerAction('p2','pass');
+}
+function nextLot(){
+  if(state.lotIndex >= state.lots.length || (state.p1.heroes.length>=state.maxHeroes && state.p2.heroes.length>=state.maxHeroes)){
+    goToBattle(); return;
+  }
+  document.getElementById('lotIndex').textContent = state.lotIndex+1;
+  const heroId = state.lots[state.lotIndex];
+  const hero = heroById(heroId);
+  state.curBid = 0; state.curLeader=null; state.p1.passed=false; state.p2.passed=false;
+  renderHeroOnStage(hero);
+  document.getElementById('curPrice').textContent = '$'+state.curBid;
+  document.getElementById('leaderNote').textContent = t('stage.startbid');
+  updateBidButtonsAvailability();
+}
+function renderHeroOnStage(hero){
+  document.getElementById('heroAvatar').textContent = hero.emoji;
+  document.getElementById('heroName').innerHTML = hero.name+' <span class="tier-badge tier-'+hero.tier+'">'+hero.tier+'</span>';
+  const frEl = document.getElementById('heroFranchise');
+  frEl.textContent = franchiseLabel(hero.franchise);
+  frEl.className = 'hero-franchise-tag '+franchiseTagClass(hero.franchise);
+  document.getElementById('heroStatsRow').innerHTML =
+    '<span class="mini-stat g">STR '+hero.str+'</span><span class="mini-stat s">SPD '+hero.spd+'</span>'+
+    '<span class="mini-stat m">MAG '+hero.mag+'</span><span class="mini-stat c">CHA '+hero.cha+'</span>';
+}
+function updateBidButtonsAvailability(){
+  const nextPrice = state.curBid + state.increment;
+  document.getElementById('p1BidBtn').disabled = state.p1.passed || state.p1.budget<nextPrice || state.p1.heroes.length>=state.maxHeroes || state.curLeader==='p1';
+  document.getElementById('p2BidBtn').disabled = state.p2.passed || state.p2.budget<nextPrice || state.p2.heroes.length>=state.maxHeroes || state.curLeader==='p2';
+  document.getElementById('p1PassBtn').disabled = state.p1.passed;
+  document.getElementById('p2PassBtn').disabled = state.p2.passed;
+}
+function isLocalOrBotOrMine(role){
+  if(!state.conn) return true; // local hotseat or bot: both seats are local
+  return state.myRole === role;
+}
+function playerAction(role, action){
+  if(state.conn && state.myRole!==role) return; // guard: only control own seat online
+  if(action==='bid') doBid(role); else doPass(role);
+  if(state.conn && state.conn.open){ netSend({type:action, role}); }
+  if(state.vsBot && role==='p1') setTimeout(botAuctionMove, 700);
+}
+function applyRemoteBid(role){ doBid(role); }
+function applyRemotePass(role){ doPass(role); }
+function doBid(role){
+  const p = state[role];
+  const price = state.curBid + state.increment;
+  if(p.passed || p.budget<price || p.heroes.length>=state.maxHeroes || state.curLeader===role) return;
+  state.curBid = price; state.curLeader = role;
+  document.getElementById('curPrice').textContent = '$'+state.curBid;
+  document.getElementById('leaderNote').innerHTML = '<b>'+state[role].name+'</b> '+t('bid.leader');
+  // a bid reopens the other side's pass
+  const other = role==='p1'?'p2':'p1';
+  state[other].passed = false;
+  updateBidButtonsAvailability();
+}
+function doPass(role){
+  state[role].passed = true;
+  updateBidButtonsAvailability();
+  checkAuctionResolution();
+}
+function checkAuctionResolution(){
+  const bothPassed = state.p1.passed && state.p2.passed;
+  const oneLeaderOtherPassed = state.curLeader && state[state.curLeader==='p1'?'p2':'p1'].passed;
+  if(bothPassed || oneLeaderOtherPassed){
+    resolveLot();
+  }
+}
+function resolveLot(){
+  const heroId = state.lots[state.lotIndex];
+  const hero = heroById(heroId);
+  const flash = document.getElementById('flash'), flashText = document.getElementById('flashText');
+  if(state.curLeader){
+    const winner = state[state.curLeader];
+    winner.budget -= state.curBid;
+    winner.heroes.push({id:hero.id, price:state.curBid});
+    flashText.innerHTML = winner.name+'<span class="small">'+hero.name+' — $'+state.curBid+'</span>';
+    renderRoster(state.curLeader);
+    updateBudgetDisplays();
+  } else {
+    flashText.innerHTML = hero.name+'<span class="small">'+t('toast.sold')+'</span>';
+  }
+  flash.classList.add('show');
+  setTimeout(()=>{
+    flash.classList.remove('show');
+    state.lotIndex++;
+    nextLot();
+  }, 1300);
+}
+function updateBudgetDisplays(){
+  document.getElementById('p1Budget').textContent = '$'+state.p1.budget;
+  document.getElementById('p2Budget').textContent = '$'+state.p2.budget;
+}
+function renderRoster(role){
+  const listEl = document.getElementById(role+'List');
+  const p = state[role];
+  if(p.heroes.length===0){ listEl.innerHTML = '<div class="roster-empty">'+t('roster.empty')+'</div>'; return; }
+  listEl.innerHTML = p.heroes.map(h=>{
+    const hero = heroById(h.id);
+    return '<div class="roster-item"><div class="hero-avatar">'+hero.emoji+'</div><div class="hname">'+hero.name+'</div><div class="roster-price">$'+h.price+'</div></div>';
+  }).join('');
+}
+function botAuctionMove(){
+  // Simple AI for p2 when vsBot: random chance to bid based on remaining budget/tier.
+  if(!state.vsBot) return;
+  const hero = heroById(state.lots[state.lotIndex]);
+  if(!hero) return;
+  const tierWeight = {S:0.85,A:0.6,B:0.4,C:0.25}[hero.tier];
+  const nextPrice = state.curBid + state.increment;
+  const canBid = !state.p2.passed && state.p2.budget>=nextPrice && state.p2.heroes.length<state.maxHeroes && state.curLeader!=='p2';
+  if(canBid && Math.random() < tierWeight && nextPrice <= state.p2.budget*0.8){
+    doBid('p2'); updateBidButtonsAvailability();
+  } else if(canBid===false || Math.random()>tierWeight){
+    doPass('p2');
+  }
+}
+
+/* ---------- 12. WHEEL MODE ---------- */
+function startWheelPage(){
+  showRawPage('wheelPage');
+  document.getElementById('wheelLotTotal').textContent = state.lots.length;
+  document.getElementById('wheelP1Name').textContent = state.p1.name;
+  document.getElementById('wheelP2Name').textContent = state.p2.name;
+  state.wheelIndex = 0; state.wheelTurn='p1';
+  renderWheelRoster('p1'); renderWheelRoster('p2');
+  buildWheelSVG();
+  updateWheelTurn();
+}
+function buildWheelSVG(){
+  const heroId = state.lots[state.wheelIndex];
+  const remaining = state.lots.slice(state.wheelIndex, state.wheelIndex+6);
+  const n = Math.max(remaining.length,1);
+  const colors = ['#C9912A','#2E5FA3','#B83232','#2A8A6A','#6C5FC7','#5C6680'];
+  let svg = '<svg viewBox="0 0 200 200">';
+  for(let i=0;i<n;i++){
+    const a0 = (360/n)*i - 90, a1 = (360/n)*(i+1) - 90;
+    const x0 = 100+90*Math.cos(a0*Math.PI/180), y0 = 100+90*Math.sin(a0*Math.PI/180);
+    const x1 = 100+90*Math.cos(a1*Math.PI/180), y1 = 100+90*Math.sin(a1*Math.PI/180);
+    const large = (a1-a0)>180 ? 1:0;
+    svg += '<path d="M100,100 L'+x0+','+y0+' A90,90 0 '+large+',1 '+x1+','+y1+' Z" fill="'+colors[i%colors.length]+'" stroke="#080C14" stroke-width="2"/>';
+  }
+  svg += '</svg>';
+  document.getElementById('wheelSpinner').innerHTML = svg;
+  document.getElementById('wheelSpinner').style.transform='rotate(0deg)';
+  document.getElementById('wheelSpinner').style.transition='none';
+}
+function updateWheelTurn(){
+  document.getElementById('wheelProgress').textContent = 'LOT '+(state.wheelIndex+1)+' / '+state.lots.length;
+  const label = document.getElementById('wheelTurnLabel');
+  label.className = 'wheel-turn-label '+state.wheelTurn;
+  label.textContent = state[state.wheelTurn].name;
+  const myTurn = isLocalOrBotOrMine(state.wheelTurn) && (!state.vsBot || state.wheelTurn==='p1');
+  document.getElementById('wheelSpinBtn').style.display = myTurn ? 'inline-flex' : 'none';
+  document.getElementById('wheelWatching').style.display = myTurn ? 'none' : 'block';
+  if(state.wheelIndex>=state.lots.length || (state.p1.heroes.length>=state.maxHeroes && state.p2.heroes.length>=state.maxHeroes)){
+    goToBattle(); return;
+  }
+  if(state.vsBot && state.wheelTurn==='p2'){ setTimeout(spinWheel, 900); }
+}
+function spinWheel(){
+  if(state.wheelIndex>=state.lots.length) return;
+  const heroId = state.lots[state.wheelIndex];
+  const spins = 4 + Math.floor(Math.random()*3);
+  const finalDeg = spins*360 + Math.floor(Math.random()*360);
+  const wheelEl = document.getElementById('wheelSpinner');
+  wheelEl.style.transition='transform 2.4s cubic-bezier(.17,.67,.32,1.02)';
+  wheelEl.style.transform='rotate('+finalDeg+'deg)';
+  document.getElementById('wheelSpinBtn').disabled=true;
+  playBeep();
+  if(state.conn && state.conn.open){ netSend({type:'wheelSpin', result:heroId}); }
+  setTimeout(()=>{ finishWheelSpin(heroId); }, 2500);
+}
+function applyRemoteWheelResult(heroId){ finishWheelSpin(heroId); }
+function finishWheelSpin(heroId){
+  const hero = heroById(heroId);
+  const role = state.wheelTurn;
+  state[role].heroes.push({id:hero.id, price:0});
+  renderWheelRoster(role);
+  const flash = document.getElementById('wheelFlash'), flashText = document.getElementById('wheelFlashText');
+  flashText.innerHTML = hero.emoji+' '+hero.name+'<span class="small">'+state[role].name+'</span>';
+  flash.classList.add('show');
+  document.getElementById('wheelSpinBtn').disabled=false;
+  setTimeout(()=>{
+    flash.classList.remove('show');
+    state.wheelIndex++;
+    state.wheelTurn = role==='p1' ? 'p2' : 'p1';
+    buildWheelSVG();
+    updateWheelTurn();
+  }, 1300);
+}
+function renderWheelRoster(role){
+  const listEl = document.getElementById('wheel'+(role==='p1'?'P1':'P2')+'List');
+  const countEl = document.getElementById('wheel'+(role==='p1'?'P1':'P2')+'Count');
+  const p = state[role];
+  countEl.textContent = p.heroes.length+'/'+state.maxHeroes;
+  if(p.heroes.length===0){ listEl.innerHTML = '<div class="roster-empty">'+t('roster.empty')+'</div>'; return; }
+  listEl.innerHTML = p.heroes.map(h=>{
+    const hero = heroById(h.id);
+    return '<div class="roster-item"><div class="hero-avatar">'+hero.emoji+'</div><div class="hname">'+hero.name+'</div></div>';
+  }).join('');
+}
+
+/* ---------- 13. BATTLE ---------- */
+function goToBattle(){
+  showRawPage('battlePage');
+  document.getElementById('t1Tally').textContent = state.p1.name+': '+state.p1.heroes.length;
+  document.getElementById('t2Tally').textContent = state.p2.name+': '+state.p2.heroes.length;
+  state.fightIndex=0; state.p1Wins=0; state.p2Wins=0;
+  document.getElementById('battleLog').innerHTML='';
+  document.getElementById('championBanner').style.display='none';
+  document.getElementById('toResultsBtn').style.display='none';
+  document.getElementById('nextFightBtn').style.display='inline-block';
+  document.getElementById('nextFightBtn').disabled=false;
+  setupFightUI();
+}
+function setupFightUI(){
+  const n = Math.min(state.p1.heroes.length, state.p2.heroes.length);
+  if(state.fightIndex>=n){ endBattle(); return; }
+  const leftHero = heroById(state.p1.heroes[state.fightIndex].id);
+  const rightHero = heroById(state.p2.heroes[state.fightIndex].id);
+  fillFighter('left', leftHero); fillFighter('right', rightHero);
+  state.leftHp=100; state.rightHp=100;
+  document.getElementById('leftHpFill').style.width='100%';
+  document.getElementById('rightHpFill').style.width='100%';
+  document.getElementById('leftHpLabel').textContent='CAN: 100%';
+  document.getElementById('rightHpLabel').textContent='CAN: 100%';
+  document.getElementById('leftScore').textContent='';
+  document.getElementById('rightScore').textContent='';
+  document.getElementById('fightStatus').textContent = t('battle.ready');
+}
+function fillFighter(side, hero){
+  document.getElementById(side+'Avatar').textContent = hero.emoji;
+  document.getElementById(side+'Name').textContent = hero.name;
+  document.getElementById(side+'Franchise').textContent = franchiseLabel(hero.franchise);
+  document.getElementById(side+'Bio').textContent = hero.bio;
+  document.getElementById(side+'Stats').innerHTML =
+    '<div class="stats-row"><span class="mini-stat g">STR '+hero.str+'</span><span class="mini-stat s">SPD '+hero.spd+'</span>'+
+    '<span class="mini-stat m">MAG '+hero.mag+'</span><span class="mini-stat c">CHA '+hero.cha+'</span></div>';
+}
+function runFightRound(fromNet){
+  if(state.conn && state.conn.open && !fromNet){ netSend({type:'fightNext'}); }
+  const leftHero = heroById(state.p1.heroes[state.fightIndex].id);
+  const rightHero = heroById(state.p2.heroes[state.fightIndex].id);
+  const leftPower = leftHero.str*1.2 + leftHero.spd + leftHero.mag*0.8 + Math.random()*8;
+  const rightPower = rightHero.str*1.2 + rightHero.spd + rightHero.mag*0.8 + Math.random()*8;
+  const total = leftPower+rightPower;
+  const dmgToRight = Math.round((leftPower/total)*55);
+  const dmgToLeft = Math.round((rightPower/total)*55);
+  state.leftHp = Math.max(0, state.leftHp-dmgToLeft);
+  state.rightHp = Math.max(0, state.rightHp-dmgToRight);
+  document.getElementById('leftHpFill').style.width=state.leftHp+'%';
+  document.getElementById('rightHpFill').style.width=state.rightHp+'%';
+  document.getElementById('leftHpLabel').textContent='CAN: '+state.leftHp+'%';
+  document.getElementById('rightHpLabel').textContent='CAN: '+state.rightHp+'%';
+  playBeep();
+  let winnerSide=null;
+  if(state.leftHp<=0 && state.rightHp<=0){ winnerSide = leftPower>=rightPower?'left':'right'; }
+  else if(state.leftHp<=0){ winnerSide='right'; }
+  else if(state.rightHp<=0){ winnerSide='left'; }
+  const logBox = document.getElementById('battleLog');
+  const row = document.createElement('div');
+  row.className='log-item';
+  row.innerHTML = '<span><b>'+leftHero.name+'</b> vs <b>'+rightHero.name+'</b></span><span>-'+dmgToLeft+' / -'+dmgToRight+'</span>';
+  logBox.prepend(row);
+  if(winnerSide){
+    if(winnerSide==='left') state.p1Wins++; else state.p2Wins++;
+    document.getElementById(winnerSide+'Score').textContent = '🏆 '+t('toast.win');
+    document.getElementById('fightStatus').textContent = (winnerSide==='left'?leftHero.name:rightHero.name)+' won this fight';
+    document.getElementById('nextFightBtn').textContent = (state.fightIndex+1 < Math.min(state.p1.heroes.length,state.p2.heroes.length)) ? t('btn.startfight') : t('btn.results');
+    document.getElementById('nextFightBtn').onclick = ()=>{
+      state.fightIndex++;
+      const n = Math.min(state.p1.heroes.length, state.p2.heroes.length);
+      if(state.fightIndex>=n){ endBattle(); } else { setupFightUI(); document.getElementById('nextFightBtn').onclick=()=>runFightRound(false); document.getElementById('nextFightBtn').textContent=t('btn.startfight'); }
+    };
+  } else {
+    document.getElementById('fightStatus').textContent = 'Round continues...';
+  }
+}
+function endBattle(){
+  document.getElementById('nextFightBtn').style.display='none';
+  document.getElementById('championBanner').style.display='block';
+  document.getElementById('toResultsBtn').style.display='inline-block';
+  const winner = state.p1Wins>state.p2Wins ? state.p1 : (state.p2Wins>state.p1Wins ? state.p2 : null);
+  document.getElementById('championText').textContent = winner ? winner.name : t('toast.draw');
+  document.getElementById('championSub').textContent = state.p1.name+' '+state.p1Wins+' — '+state.p2Wins+' '+state.p2.name;
+}
+function goToResults(){
+  showRawPage('endPage');
+  const winner = state.p1Wins>state.p2Wins ? 'p1' : (state.p2Wins>state.p1Wins ? 'p2' : null);
+  document.getElementById('endTitle').textContent = t('end.title');
+  document.getElementById('endSummary').textContent = state.p1.name+' '+state.p1Wins+' — '+state.p2Wins+' '+state.p2.name;
+  document.getElementById('p1BudgetFinal').textContent = state.gameMode==='auction' ? '$'+state.p1.budget : (state.p1.heroes.length+' heroes');
+  document.getElementById('endP2Name').textContent = state.p2.name;
+  document.getElementById('p2BudgetFinal').textContent = state.gameMode==='auction' ? '$'+state.p2.budget : (state.p2.heroes.length+' heroes');
+  document.getElementById('p1ListFinal').innerHTML = state.p1.heroes.map(h=>{const hero=heroById(h.id);return '<div class="roster-item"><div class="hero-avatar">'+hero.emoji+'</div><div class="hname">'+hero.name+'</div></div>';}).join('') || ('<div class="roster-empty">'+t('roster.empty')+'</div>');
+  document.getElementById('p2ListFinal').innerHTML = state.p2.heroes.map(h=>{const hero=heroById(h.id);return '<div class="roster-item"><div class="hero-avatar">'+hero.emoji+'</div><div class="hname">'+hero.name+'</div></div>';}).join('') || ('<div class="roster-empty">'+t('roster.empty')+'</div>');
+
+  // reward coins + save stats only for the local human player's own role
+  const p = currentProfile();
+  if(p){
+    p.games++;
+    let coinsWon = 0;
+    const myRole = state.conn ? state.myRole : 'p1'; // local hotseat / bot -> player 1 seat is "me"
+    if(winner===myRole){ p.wins++; coinsWon = 40; }
+    else if(winner===null){ coinsWon = 15; }
+    else { coinsWon = 5; }
+    p.coins += coinsWon;
+    saveProfileData(p);
+    if(coinsWon>0){
+      document.getElementById('coinRewardBanner').style.display='flex';
+      document.getElementById('coinRewardAmount').textContent = '🪙 '+coinsWon;
+    } else {
+      document.getElementById('coinRewardBanner').style.display='none';
+    }
+    refreshTopbar();
+  }
+}
+function restartGame(fromNet){
+  if(state.conn && state.conn.open && !fromNet){ netSend({type:'restart'}); }
+  cleanupPeer();
+  showPage('playPage');
+}
+
+/* ---------- 14. SHOP ---------- */
+let activeShopTab='frames';
+function switchShopTab(tab){
+  activeShopTab=tab;
+  document.querySelectorAll('.shop-tab').forEach((el,i)=>el.classList.toggle('active', ['frames','titles','effects','heroes'][i]===tab));
+  document.querySelectorAll('.shop-panel').forEach(el=>el.classList.remove('active'));
+  document.getElementById('shopPanel'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
+}
+function renderShop(){
+  const p = currentProfile(); if(!p) return;
+  document.getElementById('shopCoins').textContent = p.coins;
+  document.getElementById('shopGridFrames').innerHTML = SHOP_FRAMES.map(f=>{
+    const owned = p.ownedFrames.includes(f.id), equipped = p.equippedFrame===f.id;
+    return shopItemHtml(f.id,'frame',f.emoji,f.name[currentLang]||f.name.az,f.price,owned,equipped,'border-color:'+f.color);
+  }).join('');
+  document.getElementById('shopGridTitles').innerHTML = SHOP_TITLES.map(f=>{
+    const owned = p.ownedTitles.includes(f.id), equipped = p.equippedTitle===f.id;
+    return shopItemHtml(f.id,'title','🏅',f.name[currentLang]||f.name.az,f.price,owned,equipped,'');
+  }).join('');
+  document.getElementById('shopGridEffects').innerHTML = SHOP_EFFECTS.map(f=>{
+    const owned = p.ownedEffects.includes(f.id), equipped = p.equippedEffect===f.id;
+    return shopItemHtml(f.id,'effect',f.emoji,f.name[currentLang]||f.name.az,f.price,owned,equipped,'');
+  }).join('');
+  document.getElementById('shopGridHeroes').innerHTML = HEROES.map(h=>{
+    const owned = p.ownedHeroes.includes(h.id);
+    return '<div class="hero-shop-card'+(owned?' owned':'')+'">'+
+      '<div class="hero-card-avatar" style="background:var(--ink-4);">'+h.emoji+'</div>'+
+      '<div class="hero-card-name">'+h.name+'</div><div class="hero-card-fr">'+franchiseLabel(h.franchise)+' · '+h.tier+'</div>'+
+      (owned ? '<div class="shop-item-status owned">✓ '+t('toast.bought')+'</div>' :
+        '<div class="hero-card-price"><span class="coin-icon">🪙</span>'+shopHeroPrice(h)+'</div><button class="btn btn-sm btn-primary" onclick="buyHero(\''+h.id+'\')">'+t('btn.save')+'</button>')+
+      '</div>';
+  }).join('');
+}
+function shopItemHtml(id,kind,emoji,name,price,owned,equipped,extraStyle){
+  return '<div class="shop-item'+(owned?' owned':'')+(equipped?' equipped':'')+'">'+
+    '<div class="shop-item-preview" style="background:var(--ink-4);'+extraStyle+'">'+emoji+'</div>'+
+    '<div class="shop-item-name">'+name+'</div>'+
+    (owned ?
+      ('<div class="shop-item-status '+(equipped?'equipped':'owned')+'">'+(equipped? '✓ '+t('toast.equipped') : '✓ '+t('toast.bought'))+'</div>'+
+       (!equipped ? '<button class="btn btn-sm" onclick="equipItem(\''+id+'\',\''+kind+'\')">'+t('btn.save')+'</button>' : ''))
+      :
+      ('<div class="shop-item-price"><span class="coin-icon">🪙</span>'+price+'</div>'+
+       '<button class="btn btn-sm btn-primary" onclick="buyItem(\''+id+'\',\''+kind+'\')">'+t('btn.save')+'</button>'))+
+    '</div>';
+}
+function catalogFind(kind,id){
+  const list = kind==='frame'?SHOP_FRAMES:kind==='title'?SHOP_TITLES:SHOP_EFFECTS;
+  return list.find(x=>x.id===id);
+}
+function buyItem(id,kind){
+  const p = currentProfile();
+  const item = catalogFind(kind,id);
+  if(!item) return;
+  const ownedKey = kind==='frame'?'ownedFrames':kind==='title'?'ownedTitles':'ownedEffects';
+  if(p[ownedKey].includes(id)) return;
+  if(p.coins < item.price){ showToast(t('toast.notenough'),'red'); return; }
+  p.coins -= item.price; p[ownedKey].push(id);
+  saveProfileData(p); refreshTopbar(); renderShop();
+  showToast(t('toast.bought'),'gold');
+}
+function equipItem(id,kind){
+  const p = currentProfile();
+  if(kind==='frame') p.equippedFrame=id; else if(kind==='title') p.equippedTitle=id; else p.equippedEffect=id;
+  saveProfileData(p); renderShop(); renderProfilePage();
+  showToast(t('toast.equipped'),'gold');
+}
+function buyHero(id){
+  const p = currentProfile();
+  if(p.ownedHeroes.includes(id)) return;
+  const hero = heroById(id); const price = shopHeroPrice(hero);
+  if(p.coins < price){ showToast(t('toast.notenough'),'red'); return; }
+  p.coins -= price; p.ownedHeroes.push(id);
+  saveProfileData(p); refreshTopbar(); renderShop();
+  showToast(t('toast.bought'),'gold');
+}
+
+/* ---------- 15. PROFILE ---------- */
+function switchProfileTab(tab){
+  document.querySelectorAll('.profile-tab').forEach((el,i)=>el.classList.toggle('active', ['edit','inventory','logout'][i]===tab));
+  document.querySelectorAll('.profile-panel').forEach(el=>el.classList.remove('active'));
+  document.getElementById('profilePanel'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
+  if(tab==='inventory') renderProfileInventory();
+}
+function renderProfilePage(){
+  const p = currentProfile(); if(!p) return;
+  document.getElementById('profileBigAvatar').textContent = p.avatar;
+  document.getElementById('profileUsername').textContent = p.username;
+  document.getElementById('statWins').textContent = p.wins;
+  document.getElementById('statGames').textContent = p.games;
+  document.getElementById('statCoins').innerHTML = '🪙 '+p.coins;
+  document.getElementById('statHeroes').textContent = p.ownedHeroes.length;
+  document.getElementById('editUsername').value = p.username;
+  document.querySelectorAll('.avatar-opt').forEach(el=>el.classList.toggle('selected', el.dataset.emoji===p.avatar));
+  const ring = document.getElementById('profileFrameRing');
+  if(p.equippedFrame){ const f = catalogFind('frame',p.equippedFrame); ring.style.borderColor = f?f.color:'transparent'; }
+  else ring.style.borderColor='transparent';
+  const badge = document.getElementById('profileTitleBadge');
+  if(p.equippedTitle){ const ti = catalogFind('title',p.equippedTitle); badge.innerHTML='<span class="badge badge-gold">'+(ti?(ti.name[currentLang]||ti.name.az):'')+'</span>'; }
+  else badge.innerHTML='';
+}
+document.getElementById('avatarOptions').addEventListener('click', e=>{
+  const opt = e.target.closest('.avatar-opt'); if(!opt) return;
+  document.querySelectorAll('.avatar-opt').forEach(el=>el.classList.remove('selected'));
+  opt.classList.add('selected');
+});
+function saveProfile(){
+  const p = currentProfile(); if(!p) return;
+  const newName = document.getElementById('editUsername').value.trim();
+  const selectedAvatar = document.querySelector('.avatar-opt.selected');
+  if(selectedAvatar) p.avatar = selectedAvatar.dataset.emoji;
+  if(newName && newName!==p.username){
+    // rename: move storage keys
+    const db = usersDB();
+    if(db[newName]){ showToast(t('toast.userexists'),'red'); return; }
+    const oldName = p.username;
+    db[newName] = db[oldName]; delete db[oldName]; saveUsersDB(db);
+    p.username = newName;
+    localStorage.removeItem(profileKey(oldName));
+    localStorage.setItem('htb_session', newName);
+    state.user.username = newName;
+  }
+  saveProfileData(p);
+  renderProfilePage(); refreshTopbar();
+  showToast(t('toast.saved'),'gold');
+}
+function renderProfileInventory(){
+  const p = currentProfile(); if(!p) return;
+  document.getElementById('inventoryFrames').innerHTML = SHOP_FRAMES.filter(f=>p.ownedFrames.includes(f.id)).map(f=>
+    shopItemHtml(f.id,'frame',f.emoji,f.name[currentLang]||f.name.az,f.price,true,p.equippedFrame===f.id,'border-color:'+f.color)
+  ).join('') || '<div class="roster-empty">—</div>';
+  document.getElementById('inventoryTitles').innerHTML = SHOP_TITLES.filter(f=>p.ownedTitles.includes(f.id)).map(f=>
+    shopItemHtml(f.id,'title','🏅',f.name[currentLang]||f.name.az,f.price,true,p.equippedTitle===f.id,'')
+  ).join('') || '<div class="roster-empty">—</div>';
+  document.getElementById('inventoryEffects').innerHTML = SHOP_EFFECTS.filter(f=>p.ownedEffects.includes(f.id)).map(f=>
+    shopItemHtml(f.id,'effect',f.emoji,f.name[currentLang]||f.name.az,f.price,true,p.equippedEffect===f.id,'')
+  ).join('') || '<div class="roster-empty">—</div>';
+}
+
+/* ---------- 16. COLLECTION ---------- */
+function renderCollection(){
+  const p = currentProfile(); if(!p) return;
+  document.getElementById('collectionCount').textContent = p.ownedHeroes.length+' / '+HEROES.length;
+  document.getElementById('collectionGrid').innerHTML = HEROES.map(h=>{
+    const owned = p.ownedHeroes.includes(h.id);
+    return '<div class="collection-card'+(owned?'':' empty')+'">'+
+      '<div class="hero-card-avatar" style="background:var(--ink-4);">'+(owned?h.emoji:'❓')+'</div>'+
+      '<div class="hero-card-name">'+(owned?h.name:'???')+'</div>'+
+      '<div class="hero-card-fr">'+(owned?(franchiseLabel(h.franchise)+' · '+h.tier):'—')+'</div>'+
+      '</div>';
+  }).join('');
+}
+
+/* ---------- 17. SOUND ---------- */
+let audioCtx=null;
+function playBeep(){
+  if(!state.soundOn) return;
+  try{
+    audioCtx = audioCtx || new (window.AudioContext||window.webkitAudioContext)();
+    const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+    o.type='sine'; o.frequency.value=520; g.gain.value=0.05;
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start(); o.stop(audioCtx.currentTime+0.08);
+  }catch(e){}
+}
+document.getElementById('soundToggle').addEventListener('click', ()=>{
+  state.soundOn = !state.soundOn;
+  document.getElementById('soundToggle').textContent = state.soundOn ? '🔊' : '🔇';
+  document.getElementById('soundToggle').classList.toggle('muted', !state.soundOn);
+});
+
+/* ---------- 18. INIT ---------- */
+window.addEventListener('DOMContentLoaded', ()=>{
+  applyLanguage();
+  tryAutoLogin();
+});
+</script>
+</body>
+</html>

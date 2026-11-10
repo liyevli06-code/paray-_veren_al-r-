@@ -1,0 +1,181 @@
+/* ═══ Hero data, bios, shop catalogs — logic/stat values unchanged from the original game ═══ */
+const BIOS={
+  "Hades":{az:"Yeraltı dünyanın hökmdarı",en:"Ruler of the underworld",tr:"Yeraltı dünyanın hükümdarı"},
+  "Superman":{az:"Kriptonun son oğlu",en:"Last son of Krypton",tr:"Kripton'un son oğlu"},
+  "Wonder Woman":{az:"Amazon prinsesi, döyüş tanrıçası",en:"Amazon princess of war",tr:"Amazon prensesi"},
+  "Shazam":{az:"Sehrli söz ilə qəhrəmana çevrilir",en:"Transforms with a magic word",tr:"Sihirli sözle dönüşür"},
+  "Green Lantern":{az:"Enerji üzüyü ilə mühafizəçi",en:"Galactic guardian with power ring",tr:"Güç yüzüklü galaksi muhafızı"},
+  "Aquaman":{az:"Atlantisin kralı",en:"King of Atlantis",tr:"Atlantis'in kralı"},
+  "Flash":{az:"İşıq sürətindən sürətli",en:"Faster than light",tr:"Işıktan hızlı"},
+  "Cyborg":{az:"Yarı insan, yarı maşın",en:"Half-man half-machine",tr:"Yarı insan yarı makine"},
+  "Batman":{az:"Gecə qəhrəmanı, dahi stratej",en:"Dark knight, genius strategist",tr:"Gece kahramanı"},
+  "Nightwing":{az:"Batmanın ilk tərəfdaşı",en:"Batman's first partner",tr:"Batman'ın ilk ortağı"},
+  "Batgirl":{az:"Gothamı qoruyan qadın döyüşçü",en:"Fearless Gotham defender",tr:"Gotham'ı koruyan kadın"},
+  "Green Arrow":{az:"Kaman ustası milyarder",en:"Billionaire archer",tr:"Milyarder okçu"},
+  "Harley Quinn":{az:"Dəli, gözlənilməz anti-qəhrəman",en:"Chaotic anti-hero",tr:"Kaotik anti-kahraman"},
+  "Joker":{az:"Gothamın ən qorxunc cinayətkarı",en:"Gotham's most dangerous criminal",tr:"Gotham'ın en tehlikeli suçlusu"},
+  "Supergirl":{az:"Kriptondan gələn güclü qəhrəman",en:"Kryptonian hero",tr:"Kriptonyalı kahraman"},
+  "Black Adam":{az:"Qədim Misirdən qüdrətli anti-qəhrəman",en:"Ancient Egyptian anti-hero",tr:"Antik Mısır anti-kahramanı"},
+  "Red Hood":{az:"Sərt üsullarla ədalət axtaran keçmiş Robin",en:"Former Robin with harsh methods",tr:"Eski Robin"},
+  "Doctor Doom":{az:"Latverianın hökmdarı, dahi alim",en:"Latveria's sorcerer ruler",tr:"Latveria'nın hükümdarı"},
+  "Odin":{az:"Asqardın hökmdarı, tanrıların atası",en:"All-Father of Asgard",tr:"Asgard'ın babası"},
+  "Thanos":{az:"Kainatı təhdid edən Titan",en:"Universe-threatening Titan",tr:"Evreni tehdit eden Titan"},
+  "Silver Surfer":{az:"Kosmik güclü qalaktik qasid",en:"Cosmic herald of the galaxy",tr:"Kozmik evren habercisi"},
+  "Hulk":{az:"Qəzəbləndikcə gücü artan nəhəng",en:"Stronger as he gets angrier",tr:"Öfkelendikçe güçlenen dev"},
+  "Thor":{az:"İldırım tanrısı, Mjölnirin sahibi",en:"God of thunder",tr:"Gök gürültüsü tanrısı"},
+  "Scarlet Witch":{az:"Xaos sehri ilə reallığı dəyişir",en:"Reshapes reality with chaos magic",tr:"Kaos büyüsüyle gerçekliği değiştirir"},
+  "Doctor Strange":{az:"Ali Sehrbaz, mistik qoruyucu",en:"Sorcerer Supreme",tr:"Yüce Büyücü"},
+  "Iron Man":{az:"Dahi mühəndis, zirehli qəhrəman",en:"Genius armored hero",tr:"Dahi mühendis"},
+  "Wolverine":{az:"Adamantium caynaqlı mutant",en:"Adamantium-clawed mutant",tr:"Adamantiyum pençeli mutant"},
+  "Black Panther":{az:"Wakandanın vibranium zirehli kralı",en:"King of Wakanda",tr:"Wakanda'nın kralı"},
+  "Captain America":{az:"Super əsgər, ədalətin simvolu",en:"Super-soldier of justice",tr:"Süper asker"},
+  "Spider-Man":{az:"Hörümçək gücünə sahib gənc qəhrəman",en:"Young hero with spider-powers",tr:"Örümcek gücüne sahip genç"},
+  "Deadpool":{az:"Ölümsüz muzdlu döyüşçü",en:"Immortal mercenary",tr:"Ölümsüz paralı asker"},
+  "Loki":{az:"Fitnə tanrısı, hiyləgər",en:"God of mischief",tr:"Hile tanrısı"},
+  "Hela":{az:"Ölüm tanrıçası",en:"Goddess of death",tr:"Ölüm tanrıçası"},
+  "Venom":{az:"Qaranlıq simbiyot anti-qəhrəman",en:"Dark symbiote anti-hero",tr:"Karanlık simbiyot"},
+  "Carnage":{az:"Amansız simbiyot qatil",en:"Ruthless symbiote killer",tr:"Acımasız simbiyot katil"},
+  "Vision":{az:"Süni intellektli sintetik qəhrəman",en:"AI-powered synthetic hero",tr:"Yapay zeka androidi"},
+  "Ultron":{az:"Bəşəriyyəti təhdid edən robot",en:"Rogue AI robot",tr:"Yapay zeka robotu"},
+  "Captain Marvel":{az:"Kosmik enerjili pilot",en:"Cosmic energy pilot",tr:"Kozmik enerjili pilot"},
+  "Winter Soldier":{az:"Kiber qollu casus əsgər",en:"Cybernetic assassin",tr:"Sibernetik suikastçı"},
+  "Shang-Chi":{az:"Döyüş sənətləri ustası",en:"Master martial artist",tr:"Dövüş sanatları ustası"},
+  "Ghost Rider":{az:"Cəhənnəm alovlu intiqam mələyi",en:"Hellfire vengeance spirit",tr:"Cehennem ateşli intikam meleği"},
+  "Blade":{az:"Yarı vampir ovçusu",en:"Half-vampire hunter",tr:"Yarı vampir avcısı"},
+  "She-Hulk":{az:"Hüquqşünas nəhəng qəhrəman",en:"Lawyer turned green giant",tr:"Avukat kahraman"},
+  "Jean Grey":{az:"Telepatik qüdrətli mutant",en:"Powerful telepathic mutant",tr:"Güçlü telepatik mutant"},
+  "Magneto":{az:"Metalları idarə edən mutant lider",en:"Magnetic mutant master",tr:"Manyetik mutant"},
+  "Professor X":{az:"Dünyanın ən güclü telepatı",en:"World's strongest telepath",tr:"En güçlü telepath"},
+  "Iceman":{az:"Bədənini buza çevirən mutant",en:"Ice-body mutant",tr:"Buz mutantı"},
+  "Doctor Octopus":{az:"Dörd mexaniki qollu dahi alim",en:"Genius with four mechanical arms",tr:"Mekanik kollu dahi"},
+  "Ant-Man":{az:"Bədənini kiçildən qəhrəman",en:"Size-shifting hero",tr:"Boyut değiştiren kahraman"},
+  "Wasp":{az:"Uçan, atıcı, ölçü dəyişdirən",en:"Flying stinging hero",tr:"Uçan kahraman"},
+  "Hawkeye":{az:"Dünyanın ən yaxşı okçusu",en:"World's greatest archer",tr:"Dünyanın en iyi okçusu"},
+  "Black Widow":{az:"Casus, akrobat döyüş ustası",en:"Master spy and combatant",tr:"Usta casus"},
+  "Moon Knight":{az:"Gecə tanrısından güc alan sirli qəhrəman",en:"Moon god's mysterious avatar",tr:"Ay tanrısının avatarı"},
+  "Daredevil":{az:"Kor hüquqşünas, gecə döyüşçüsü",en:"Blind lawyer night vigilante",tr:"Kör avukat gece savaşçısı"},
+  "Punisher":{az:"Günahkarları cəzalandıran intiqamçı",en:"Lethal vigilante punisher",tr:"Ölümcül intikamcı"},
+  "Morbius":{az:"Vampirik həkim",en:"Living vampire doctor",tr:"Vampirik doktor"},
+  "Black Cat":{az:"Bədbəxtlik gücünə sahib cəsur oğru",en:"Cat burglar with bad luck powers",tr:"Şanssızlık güçlü hırsız"},
+  "Homelander":{az:"Ən güclü amma qeyri-sabit qəhrəman",en:"Most powerful but unstable hero",tr:"En güçlü ama dengesiz"},
+  "Queen Maeve":{az:"Güclü, sürətli, möhkəm super-qəhrəman",en:"Strong fast durable hero",tr:"Güçlü süper kahraman"},
+  "Soldier Boy":{az:"Köhnə nəsil super-əsgər",en:"Old-gen super-soldier",tr:"Eski nesil süper asker"}
+};
+
+const HEROES=[
+  {name:"Hades",fr:"Mythology",init:"HD",color:"#4A148C",tier:"S",power:97,speed:80,defense:95,health:98,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvBRSD4vBwIhu6sAYBQpgH57g2ur_TiPgci_q4lKGpfA&s=10"},
+  {name:"Superman",fr:"DC",init:"SU",color:"#4FA3E3",tier:"S",power:99,speed:92,defense:98,health:98,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgx9BS4HzHuFykljxgnr0rRm82ABPoUE_wdXLkI1V_BQ&s=10"},
+  {name:"Wonder Woman",fr:"DC",init:"WW",color:"#E3B23C",tier:"S",power:94,speed:83,defense:92,health:93,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZazh5VL-gTgCx75wAYPSr4P31MhjRM7votEzzrz6SUA&s=10"},
+  {name:"Shazam",fr:"DC",init:"SH",color:"#D9A441",tier:"S",power:91,speed:85,defense:86,health:88,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp5aALpEqIV2BMKdhQWNzBZBk22ds_9x-cjBgzAo02DQ&s=10"},
+  {name:"Green Lantern",fr:"DC",init:"GL",color:"#4CAF6D",tier:"A",power:87,speed:76,defense:80,health:78,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkPXwIu0zE9WAZWCEiZry_FLjcQaNP9rjFQEPGLlQsXQ&s=10"},
+  {name:"Aquaman",fr:"DC",init:"AQ",color:"#3CA9A0",tier:"A",power:81,speed:66,defense:77,health:83,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBdRhB-VY5ZlkdWFP8St5S8UweiSo0CqrCxeFfdQipeQ&s=10"},
+  {name:"Flash",fr:"DC",init:"FL",color:"#D64545",tier:"A",power:60,speed:99,defense:52,health:68,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDz_w-k00JVwtbdPjLvM0kcXlFdU3llIhDXSF7NbshaQ&s=10"},
+  {name:"Cyborg",fr:"DC",init:"CY",color:"#5C6BC0",tier:"B",power:70,speed:56,defense:76,health:80,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNB99FCMdEQAdWVebYcSg0bJr-6joE-Jd3-Xggr1Tdjw&s=10"},
+  {name:"Batman",fr:"DC",init:"BM",color:"#5B6472",tier:"C",power:38,speed:60,defense:60,health:58,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwOAYReBEB3NrXg0YpUgFS1hSHHpH5JavPM9hy2qh8Qw&s=10"},
+  {name:"Nightwing",fr:"DC",init:"NW",color:"#3A4A6B",tier:"C",power:40,speed:66,defense:48,health:54,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6Im9OADPC7SE_enWXsu773lfopb97etNP92ooKUNdNl6QBVB3Q9iNgW0&s=10"},
+  {name:"Batgirl",fr:"DC",init:"BG",color:"#8E7CC3",tier:"C",power:36,speed:60,defense:44,health:50,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDD84CLMly9sjO5DmHHoB3u2YIDjifHNKatBhMSZAyKw&s=10"},
+  {name:"Green Arrow",fr:"DC",init:"GA",color:"#4C8C4A",tier:"C",power:34,speed:56,defense:42,health:50,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTANj74o2Jrchx6CT8N0B1a1JjJT2butVl8mCy8CAc87Q&s=10"},
+  {name:"Harley Quinn",fr:"DC",init:"HQ",color:"#C959A0",tier:"C",power:40,speed:62,defense:40,health:54,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPkKMOfRolq_UdBtfWoNaIFO8-drB704yILE1pUufw5A&s=10"},
+  {name:"Joker",fr:"DC",init:"JK",color:"#7B1FA2",tier:"C",power:32,speed:56,defense:40,health:50,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlo06mcv4VMZLJ-f9timpKGOaFlsOSebispZZ1_JbgjA&s=10"},
+  {name:"Supergirl",fr:"DC",init:"SG",color:"#1976D2",tier:"S",power:96,speed:89,defense:95,health:95,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHO0mIcVSPlLmxQjCnzdvsIggPvXrCnIp3uLw8u6A5Lw&s=10"},
+  {name:"Black Adam",fr:"DC",init:"BA",color:"#FBC02D",tier:"S",power:96,speed:85,defense:93,health:93,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsKncTNtKh_DPLzPv9xiuIC1hHGvpOr3OZRqSgfjyj3A&s"},
+  {name:"Red Hood",fr:"DC",init:"RH",color:"#C62828",tier:"C",power:42,speed:64,defense:50,health:58,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHzKjwAbu396jAV6nU1AEF4lNJJeSgXhCUGJCBhQaxkA&s=10"},
+  {name:"Doctor Doom",fr:"Marvel",init:"DD",color:"#2E7D32",tier:"S",power:96,speed:75,defense:94,health:93,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn8L55m3D6UKmwYybQYXJApJwmLLd-bSKWzIA2lyqgJg&s=10"},
+  {name:"Odin",fr:"Marvel",init:"OD",color:"#D4A544",tier:"S",power:99,speed:80,defense:98,health:98,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR13qDmnzU3y8mOI5EoCez8LLsOQhWg-6SIwq7Xf9Nu3w&s=10"},
+  {name:"Thanos",fr:"Marvel",init:"TH",color:"#4A148C",tier:"S",power:99,speed:76,defense:97,health:99,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ayYxoYOizQVfpT1aQGGpkd_cBzK9ogXW4uN7kVCJZg&s"},
+  {name:"Silver Surfer",fr:"Marvel",init:"SS",color:"#78909C",tier:"S",power:97,speed:98,defense:94,health:95,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHICrVbH1SZERkLrnBaOC539cVnPrI48HuAQ5aOQ0CNA&s=10"},
+  {name:"Hulk",fr:"Marvel",init:"HU",color:"#5FA352",tier:"S",power:99,speed:52,defense:92,health:97,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkx26usqd_qKikqtQ1jA5QyiYOFpCj9_S-X4jwca0jGQ&s=10"},
+  {name:"Thor",fr:"Marvel",init:"TH",color:"#7B9FD1",tier:"S",power:97,speed:84,defense:93,health:94,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwZ44RpjZ1lUA77uMV-SaAjTklRR0sWr_ySjXPLwa17g&s=10"},
+  {name:"Scarlet Witch",fr:"Marvel",init:"SW",color:"#A6398F",tier:"S",power:97,speed:56,defense:66,health:70,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb-hVZWtHUaqJhjRGyyKk-9qlYOx2oA1HweW0mDqwcuw&s=10"},
+  {name:"Doctor Strange",fr:"Marvel",init:"DS",color:"#C0392B",tier:"A",power:86,speed:60,defense:70,health:72,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTop9O7TI2mXvI10Eu-tQiFfD4OosMxV0UrqZD0VU34VQ&s=10"},
+  {name:"Iron Man",fr:"Marvel",init:"IM",color:"#D9534F",tier:"A",power:85,speed:80,defense:83,health:76,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyB9F4FOOGkZUCe0wOhSr5qskIYHp3VElpmRlqqSxkyA&s=10"},
+  {name:"Wolverine",fr:"Marvel",init:"WV",color:"#E5B82A",tier:"A",power:74,speed:70,defense:83,health:91,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUNyAfpNXzngj2J5z7nLctDHMcrqkHbZHibsUb_AT7Gg&s=10"},
+  {name:"Black Panther",fr:"Marvel",init:"BP",color:"#2E2E38",tier:"B",power:68,speed:76,defense:73,health:70,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeUOX60uuwrF56xfjRzbu_eq1lUMD3gQivNW_NZswiSQ&s=10"},
+  {name:"Captain America",fr:"Marvel",init:"CA",color:"#4472C4",tier:"B",power:64,speed:68,defense:70,health:78,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRr1OnvauFD74Z2pzffNLEUwelPkP_RgUAzLZrSV647YkdksWhnxd6pOaw&s=10"},
+  {name:"Spider-Man",fr:"Marvel",init:"SM",color:"#C0392B",tier:"B",power:66,speed:84,defense:60,health:68,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsVzOcjJB2y9dAENqMikA77aIDUys5QHb3E3Kg0S9mUw&s"},
+  {name:"Deadpool",fr:"Marvel",init:"DP",color:"#B82626",tier:"B",power:66,speed:64,defense:78,health:96,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzEj3Ox7nzPzr89ThPTWLDb7pp-ycyxRwzosiHR0LWiQ&s"},
+  {name:"Loki",fr:"Marvel",init:"LK",color:"#2E7D32",tier:"A",power:78,speed:75,defense:70,health:80,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbM2sSCWz9rAEQ0HrxiuMkbHbMXjdqZBjWnDvUogy0mw&s=10"},
+  {name:"Hela",fr:"Marvel",init:"HL",color:"#1B5E20",tier:"S",power:96,speed:83,defense:91,health:94,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJeXMId5SF6X5nyBzH2C30_5ZG5FaTgplfEqs0N08dlw&s=10"},
+  {name:"Venom",fr:"Marvel",init:"VN",color:"#212121",tier:"A",power:83,speed:71,defense:81,health:89,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-ljEKUP1ZSlq6F2gSeYxt4TFFPBnLbvJcyXyr0YzjuA&s=10"},
+  {name:"Carnage",fr:"Marvel",init:"CN",color:"#B71C1C",tier:"A",power:85,speed:77,defense:79,health:86,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_9NC2BymUH4wD9D_Owoz9Gx2HYpvH-L4Sisc2YFcaRw&s=10"},
+  {name:"Vision",fr:"Marvel",init:"VS",color:"#00695C",tier:"A",power:89,speed:79,defense:89,health:85,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPxOUBnny3WpLocOHzqURM7iEiZAVBHWJJQkIaDymN1g&s"},
+  {name:"Ultron",fr:"Marvel",init:"UL",color:"#37474F",tier:"A",power:90,speed:73,defense:92,health:87,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiJmpsKmODsT4haccfCtkx1t4UnZlfkVSv7j72BCyKfg&s=10"},
+  {name:"Captain Marvel",fr:"Marvel",init:"CM",color:"#1565C0",tier:"S",power:80,speed:90,defense:80,health:90,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTQssTn-LFqnLv9H8Q_HJzfY06SfobpWocUler9Wy-cw&s=10"},
+  {name:"Winter Soldier",fr:"Marvel",init:"WS",color:"#424242",tier:"B",power:65,speed:68,defense:66,health:72,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqFI52ZzX_BxqSzvOzJ6INFuTXcXDBAkYuOr7NcDnLw&s=10"},
+  {name:"Shang-Chi",fr:"Marvel",init:"SC",color:"#C62828",tier:"B",power:64,speed:82,defense:64,health:68,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxuncmmuo2oiwPsD-SZYQCwx0CiRdPnFcMcA2KQYzjlw&s=10"},
+  {name:"Ghost Rider",fr:"Marvel",init:"GR",color:"#E65100",tier:"S",power:93,speed:79,defense:89,health:96,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQypGMGp7P8pJPixP-2dIutS4d8TfBgODZyKv8KFNKpFg&s=10"},
+  {name:"Blade",fr:"Marvel",init:"BL",color:"#212121",tier:"B",power:60,speed:70,defense:62,health:74,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtsYF5do6oclwduEzNeNJa6XOSjJXYfHADmnGDPrneZA&s=10"},
+  {name:"She-Hulk",fr:"Marvel",init:"SH",color:"#2E7D32",tier:"A",power:88,speed:62,defense:85,health:91,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiaQ-Rzk0PKFLlKa8kkEt8hw1xJVeOPR6P7RJmu-Kyzg&s=10"},
+  {name:"Jean Grey",fr:"Marvel",init:"JG",color:"#D84315",tier:"S",power:99,speed:76,defense:80,health:85,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpVDw2ntBd7k4kn1YbOnWW6_0xfpM9k11hxlK82idpZw&s"},
+  {name:"Magneto",fr:"Marvel",init:"MG",color:"#6A1B9A",tier:"A",power:91,speed:65,defense:87,health:80,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlFcxyp2nV-TPRE3ZY6_Vk_ER7_0HQUmGEdaCVL-kkVQ&s=10"},
+  {name:"Professor X",fr:"Marvel",init:"PX",color:"#283593",tier:"A",power:87,speed:50,defense:60,health:65,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJRU1dtsJBWsb-LHajcaoB4ROpG0ev444TgefoCwrr7g&s=10"},
+  {name:"Iceman",fr:"Marvel",init:"IM",color:"#0288D1",tier:"A",power:82,speed:72,defense:80,health:80,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8qNKebrxIr5UuQwkzpM0ARwyk_K8_-c8DoC2WT3Juqw&s=10"},
+  {name:"Doctor Octopus",fr:"Marvel",init:"DO",color:"#558B2F",tier:"B",power:64,speed:60,defense:68,health:70,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTajx99dBjKuXCx0awccK1Ox5JWNZL3X7HWHrcr5brliQ&s=10"},
+  {name:"Ant-Man",fr:"Marvel",init:"AM",color:"#E91E63",tier:"B",power:58,speed:74,defense:60,health:65,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5Mj7oZGI3hXKGU4_-M6_6pOEWLuTe2L3BTFfPdIPQ&s=10"},
+  {name:"Wasp",fr:"Marvel",init:"WP",color:"#FDD835",tier:"B",power:55,speed:80,defense:55,health:62,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnmrZDmCF0P-xCf_76HOmvWz6sQTp8n9LqXLHFt5YQBQ&s=10"},
+  {name:"Hawkeye",fr:"Marvel",init:"HE",color:"#78909C",tier:"C",power:36,speed:62,defense:44,health:56,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSHJrCHCAbGc4m4K-JUZ5fF2gtnFz1cSJPLpMSdSH2Rg&s=10"},
+  {name:"Black Widow",fr:"Marvel",init:"BW",color:"#212121",tier:"C",power:38,speed:68,defense:50,health:58,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXDzAOIEiHJ_0Afc-UUjhF5vXlgdBDW13DlnxiEXGKlA&s=10"},
+  {name:"Moon Knight",fr:"Marvel",init:"MK",color:"#EEEEEE",tier:"B",power:62,speed:66,defense:58,health:70,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqaVBJL_lk5-BI3tJ1d--gFJo7r1jl0W9L72Y9UKjMgw&s=10"},
+  {name:"Daredevil",fr:"Marvel",init:"DD",color:"#C62828",tier:"C",power:44,speed:70,defense:52,health:60,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSH7d17-vGOGgGnSqt2fP7DQQshzSmm6bRg2TOnMFOGXQ&s=10"},
+  {name:"Punisher",fr:"Marvel",init:"PU",color:"#424242",tier:"C",power:48,speed:58,defense:46,health:62,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7zRbzJjuSl8pCELOYL_yXmFWaWcpVd3g_8CqxELKjTA&s=10"},
+  {name:"Homelander",fr:"The Boys",init:"HL",color:"#0D47A1",tier:"S",power:95,speed:88,defense:92,health:92,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-_M5puEr7jvDEIMuZ_xAjzwxRdVVvQkXbHb5MpHnOoA&s=10"},
+  {name:"Queen Maeve",fr:"The Boys",init:"QM",color:"#8D6E63",tier:"A",power:80,speed:70,defense:78,health:82,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDjcvMUjGrc4AeSrwxTyCJHfJekLOzx3XjB3NKwo7bfLkQY-P_byagNsI&s=10"},
+  {name:"Soldier Boy",fr:"The Boys",init:"SB",color:"#33691E",tier:"A",power:86,speed:68,defense:87,health:88,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRaFlEQNVMrh4aBLjtxCAF6XbiqtnyvrPPMH2oaqs0Rw&s=10"},
+  {name:"Morbius",fr:"Marvel",init:"MB",color:"#4527A0",tier:"B",power:64,speed:72,defense:60,health:76,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqaVBJL_lk5-BI3tJ1d--gFJo7r1jl0W9L72Y9UKjMgw&s=10"},
+  {name:"Black Cat",fr:"Marvel",init:"BC",color:"#37474F",tier:"C",power:42,speed:74,defense:46,health:58,img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7zRbzJjuSl8pCELOYL_yXmFWaWcpVd3g_8CqxELKjTA&s=10"}
+];
+
+const SHOP_FRAMES=[
+  {id:'frame_none',name:'Standart',desc:'Əsas çərçivə',price:0,style:'',preview:'🎭'},
+  {id:'frame_bronze',name:'Tunc',desc:'Tunc çərçivəsi',price:50,style:'3px solid #CD7F32',preview:'🟤'},
+  {id:'frame_silver',name:'Gümüş',desc:'Gümüş çərçivəsi',price:100,style:'3px solid #C0C0C0',preview:'⚪'},
+  {id:'frame_gold',name:'Qızıl',desc:'Qızıl çərçivəsi',price:200,style:'3px solid #FFD700',preview:'🟡'},
+  {id:'frame_diamond',name:'Almaz',desc:'Almaz çərçivəsi',price:400,style:'3px solid #00E5FF',preview:'💠'},
+  {id:'frame_legendary',name:'Əfsanəvi',desc:'Əfsanəvi çərçivə',price:800,style:'3px solid #FF6B6B',preview:'🔴'},
+  {id:'frame_rainbow',name:'Göy qurşağı',desc:'Rəngli çərçivə',price:1200,style:'3px solid transparent',preview:'🌈',rainbow:true}
+];
+const SHOP_TITLES=[
+  {id:'title_none',name:'Adsız',desc:'Standart başlıq',price:0,badge:'badge-azure',text:'Novice'},
+  {id:'title_warrior',name:'Döyüşçü',desc:'Güclü döyüşçü',price:150,badge:'badge-mint',text:'Warrior'},
+  {id:'title_champion',name:'Çempion',desc:'Döyüş çempionu',price:300,badge:'badge-gold',text:'Champion'},
+  {id:'title_legend',name:'Əfsanə',desc:'Əfsanəvi oyunçu',price:600,badge:'badge-violet',text:'Legend'},
+  {id:'title_god',name:'Tanrı',desc:'Misilsiz güc',price:1200,badge:'badge-crimson',text:'God'}
+];
+const SHOP_EFFECTS=[
+  {id:'effect_none',name:'Effektsiz',desc:'Standart görünüş',price:0,glow:''},
+  {id:'effect_red',name:'Qırmızı Aura',desc:'Qırmızı parıltı',price:100,glow:'0 0 16px 4px rgba(255,80,80,0.55)'},
+  {id:'effect_blue',name:'Mavi Aura',desc:'Mavi parıltı',price:100,glow:'0 0 16px 4px rgba(80,140,255,0.55)'},
+  {id:'effect_gold',name:'Qızıl Aura',desc:'Qızıl parıltı',price:250,glow:'0 0 16px 4px rgba(255,200,80,0.6)'},
+  {id:'effect_violet',name:'Violet Aura',desc:'Violet parıltı',price:250,glow:'0 0 16px 4px rgba(180,80,255,0.55)'},
+  {id:'effect_rainbow',name:'Göy Qurşağı',desc:'Rəngli parıltı',price:500,glow:'0 0 20px 6px rgba(255,255,255,0.35)'}
+];
+
+/* ═══ Vizual/səs üslubu: hər kahramanın hücum effekti (yalnız animasiya + səs, statlara təsir etmir) ═══ */
+const FX_STYLE={
+  "Hades":"shadow","Superman":"energy","Wonder Woman":"slash","Shazam":"lightning","Green Lantern":"energy","Aquaman":"water",
+  "Flash":"lightning","Cyborg":"tech","Batman":"slash","Nightwing":"slash","Batgirl":"slash","Green Arrow":"arrow",
+  "Harley Quinn":"impact","Joker":"shadow","Supergirl":"energy","Black Adam":"lightning","Red Hood":"tech","Doctor Doom":"magic",
+  "Odin":"lightning","Thanos":"impact","Silver Surfer":"energy","Hulk":"impact","Thor":"lightning","Scarlet Witch":"magic",
+  "Doctor Strange":"magic","Iron Man":"tech","Wolverine":"slash","Black Panther":"slash","Captain America":"impact","Spider-Man":"impact",
+  "Deadpool":"slash","Loki":"magic","Hela":"shadow","Venom":"shadow","Carnage":"slash","Vision":"energy","Ultron":"tech",
+  "Captain Marvel":"energy","Winter Soldier":"tech","Shang-Chi":"impact","Ghost Rider":"fire","Blade":"slash","She-Hulk":"impact",
+  "Jean Grey":"magic","Magneto":"tech","Professor X":"magic","Iceman":"ice","Doctor Octopus":"tech","Ant-Man":"impact","Wasp":"energy",
+  "Hawkeye":"arrow","Black Widow":"tech","Moon Knight":"slash","Daredevil":"impact","Punisher":"tech","Homelander":"energy",
+  "Queen Maeve":"impact","Soldier Boy":"energy","Morbius":"shadow","Black Cat":"slash"
+};
+
+/* Tier → nadirlik adı (zip dizaynındakı "MYTHIC ★★★★★" üslubu) */
+const TIER_META={
+  S:{key:'mythic',stars:5,color:'#FFD700'},
+  A:{key:'legendary',stars:4,color:'#00F0FF'},
+  B:{key:'epic',stars:3,color:'#B388FF'},
+  C:{key:'rare',stars:2,color:'#8FA3BF'}
+};
+
+/* ═══ YEREL ŞƏKİLLƏR ═══
+   Kahramanın şəklini özün əlavə etmək üçün faylı assets/heroes/ qovluğuna at və bura yaz, məsələn:
+   HERO_LOCAL['superman']='assets/heroes/superman.webp';
+   Yerli şəkil olmasa orijinal "img" linki yoxlanılır, o da açılmasa avtomatik HUD portreti göstərilir. */
+const HERO_LOCAL={
+  // 'superman':'assets/heroes/superman.webp',
+};

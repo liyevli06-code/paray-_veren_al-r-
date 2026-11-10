@@ -17,3 +17,8 @@ Kahraman toplama (artırma və ya çarx) + komanda döyüşü oyunu. Heç bir bu
 Şəkli `assets/heroes/` qovluğuna at və `js/data.js`-də `HERO_LOCAL` obyektinə yaz:
 `HERO_LOCAL['superman']='assets/heroes/superman.webp';`
 Şəkil tapılmasa orijinal `img` linki, o da açılmasa avtomatik HUD portreti göstərilir.
+
+## Giriş, reytinq, liqalar
+- Google/Apple girişi və ümumi reytinq üçün `FIREBASE_SETUP.md`-ni izlə. Konfiqurasiya boşdursa oyun yerli demo rejimdə işləyir.
+- Reytinq yalnız Tez Oyun qələbələrini (qələbə / oyun / WR%) sayır.
+- Saxlama: liqalar (Bürünc→Əfsanə), qələbə seriyası bonusu, gündəlik giriş seriyası bonusu.

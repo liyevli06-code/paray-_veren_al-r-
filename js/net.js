@@ -2,7 +2,7 @@
    ONLINE (PeerJS P2P) — otaq kodu, sürətli oyun (matchmaking), söhbət
    Qaydalar köhnə oyunla eynidir: host (Oyuncu 1) oyunu idarə edir, qonaq (Oyuncu 2) vəziyyəti alır.
    ══════════════════════════════════════════════════════════════ */
-let onlineMode=false,isHost=false,peer=null,conn=null,guestConnected=false,vsBotMode=false;
+let quickMatch=false,onlineMode=false,isHost=false,peer=null,conn=null,guestConnected=false,vsBotMode=false;
 let matchmakingActive=false,matchmakingPeer=null,mmWatchdog=null;
 const MATCHMAKING_PREFIX='htb-mm-slot-',MATCHMAKING_SLOTS=25;
 
@@ -17,6 +17,7 @@ function leaveOnline(){
 }
 
 ACT.selectMode=mode=>{
+  quickMatch=(mode==='matchmaking');
   ['createPanel','joinPanel','matchmakingPanel'].forEach(id=>$('#'+id).classList.remove('show'));
   if(mode==='local'){onlineMode=false;vsBotMode=false;showConfigScreen();}
   else if(mode==='bot'){onlineMode=false;vsBotMode=true;showConfigScreen();}

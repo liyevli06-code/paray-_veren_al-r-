@@ -9,6 +9,7 @@ const SCREEN_META={
   endScreen:{title:'title_end',nav:null,music:'lobby'},
   collectionScreen:{title:'title_collection',nav:'collection',music:'lobby'},
   storeScreen:{title:'title_store',nav:'store',music:'lobby'},
+  leaderboardScreen:{title:'title_rank',nav:'leaderboard',music:'lobby'},
   profileScreen:{title:'title_profile',nav:'profile',music:'lobby'}
 };
 let activeScreenId='authScreen';
@@ -22,12 +23,13 @@ function showScreen(id){
   if(id==='profileScreen')renderProfile();
   if(id==='storeScreen')renderShop();
   if(id==='collectionScreen')renderCollection();
+  if(id==='leaderboardScreen')renderLeaderboard();
   Music.set(m.music);
   window.scrollTo({top:0});
 }
 const GAME_SCREENS=['draftScreen','wheelScreen','arenaScreen','endScreen'];
 ACT.nav=target=>{
-  const map={lobby:'lobbyScreen',collection:'collectionScreen',store:'storeScreen',profile:'profileScreen'};
+  const map={leaderboard:'leaderboardScreen',lobby:'lobbyScreen',collection:'collectionScreen',store:'storeScreen',profile:'profileScreen'};
   const id=map[target];if(!id)return;
   if(GAME_SCREENS.includes(activeScreenId)&&activeScreenId!=='endScreen'&&state){
     if(!confirm(t('leaveConfirm')))return;

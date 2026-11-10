@@ -57,10 +57,15 @@
         <div id="authError" class="auth-error" role="alert"></div>
         <button type="submit" class="btn btn-primary btn-full" id="authSubmit" data-i18n="authLogin">GİRİŞ</button>
         <div class="divider"><span data-i18n="authOr">və ya</span></div>
-        <button type="button" class="btn btn-ghost btn-full" data-act="googleAuth">
-          <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.3 29.3 35 24 35c-6.1 0-11-4.9-11-11s4.9-11 11-11c2.8 0 5.3 1 7.2 2.7l5.7-5.7C33.5 7.3 29 5.5 24 5.5 13.2 5.5 4.5 14.2 4.5 25S13.2 44.5 24 44.5 43.5 35.8 43.5 25c0-1.7-.2-3.3-.5-4.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16.1 19 13 24 13c2.8 0 5.3 1 7.2 2.7l5.7-5.7C33.5 7.3 29 5.5 24 5.5c-7.7 0-14.3 4.4-17.7 10.9v-.7z"/><path fill="#4CAF50" d="M24 44.5c4.9 0 9.3-1.8 12.7-4.7l-6.2-5.2C28.8 36.3 26.5 37 24 37c-5.3 0-9.7-3.5-11.3-8.3l-6.6 5.1C9.5 40 16.2 44.5 24 44.5z"/><path fill="#1565C0" d="M43.6 20.1H42V20H24v8h11.3c-.7 2.1-2 3.9-3.7 5.2l6.2 5.2C37.5 39.5 43.5 33 43.5 25c0-1.7-.2-3.3-.5-4.9z"/></svg>
-          <span data-i18n="authGoogle">Google ilə davam et</span>
-        </button>
+        <div class="social-row">
+          <button type="button" class="btn btn-ghost" data-act="socialAuth" data-arg="google">
+            <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.3 29.3 35 24 35c-6.1 0-11-4.9-11-11s4.9-11 11-11c2.8 0 5.3 1 7.2 2.7l5.7-5.7C33.5 7.3 29 5.5 24 5.5 13.2 5.5 4.5 14.2 4.5 25S13.2 44.5 24 44.5 43.5 35.8 43.5 25c0-1.7-.2-3.3-.5-4.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16.1 19 13 24 13c2.8 0 5.3 1 7.2 2.7l5.7-5.7C33.5 7.3 29 5.5 24 5.5c-7.7 0-14.3 4.4-17.7 10.9v-.7z"/><path fill="#4CAF50" d="M24 44.5c4.9 0 9.3-1.8 12.7-4.7l-6.2-5.2C28.8 36.3 26.5 37 24 37c-5.3 0-9.7-3.5-11.3-8.3l-6.6 5.1C9.5 40 16.2 44.5 24 44.5z"/><path fill="#1565C0" d="M43.6 20.1H42V20H24v8h11.3c-.7 2.1-2 3.9-3.7 5.2l6.2 5.2C37.5 39.5 43.5 33 43.5 25c0-1.7-.2-3.3-.5-4.9z"/></svg>
+            <span>Google / Gmail</span></button>
+          <button type="button" class="btn btn-ghost" data-act="socialAuth" data-arg="apple">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="#fff"><path d="M16.4 12.6c0-2.4 2-3.5 2.1-3.6-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.8-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.3 1.2 9.7.8 1.2 1.800 2.500 3.100 2.400 1.200-.1 1.700-.8 3.200-.8 1.500 0 1.900.8 3.200.8 1.300 0 2.200-1.200 3-2.400.9-1.300 1.300-2.700 1.300-2.700s-2.500-1-2.500-3.900zM14 5.500c.7-.8 1.100-1.900 1-3-1 0-2.100.7-2.800 1.500-.6.700-1.200 1.800-1 2.900 1.100.1 2.100-.6 2.800-1.400z"/></svg>
+            <span>Apple</span></button>
+        </div>
+        <p class="demo-note" id="demoNote" data-i18n="demoNote"></p>
       </form>
       <div class="seg seg-sm auth-lang" id="authLang">
         <button class="seg-btn" data-act="setLang" data-arg="az">AZ</button>
@@ -323,13 +328,23 @@
   <div class="shop-grid" id="shopGrid"></div>
 </section>
 
+<!-- ═════════ LEADERBOARD ═════════ -->
+<section id="leaderboardScreen" class="screen">
+  <div class="page-head"><h1 class="h-display"><span class="ms big">leaderboard</span> <span data-i18n="lbTitle">REYTİNQ</span></h1><span class="chip chip-cyan" data-i18n="lbQuickOnly">YALNIZ TEZ OYUN</span></div>
+  <p class="dim note" id="lbNote"></p>
+  <div class="lb-me card" id="lbMe"></div>
+  <div class="lb-head"><span>#</span><span data-i18n="lbPlayer">Oyunçu</span><span data-i18n="lbWins">Qələbə</span><span data-i18n="lbGames">Oyun</span><span>WR</span></div>
+  <div class="lb-list" id="lbList"></div>
+  <div class="leagues card"><div class="label" data-i18n="lbLeagues">Liqalar</div><div id="leagueInfo" class="league-info"></div></div>
+</section>
+
 <!-- ═════════ PROFILE ═════════ -->
 <section id="profileScreen" class="screen">
   <div class="profile-card card chamfer">
     <div class="profile-av" id="profileAvatar"></div>
     <div class="profile-info">
       <div class="profile-name"><h1 class="h-display" id="profileUsername">—</h1></div>
-      <div id="profileTitleBadge"></div>
+      <div id="profileTitleBadge"></div><div id="profileLeague" class="profile-league"></div>
       <div class="pstats">
         <div><small data-i18n="wins">Qalibiyyət</small><b class="num" id="statWins">0</b></div>
         <div><small data-i18n="games">Oyun</small><b class="num" id="statGames">0</b><em class="num" id="statWR"></em></div>
@@ -369,6 +384,7 @@
 <nav id="bottomnav" class="hidden">
   <button data-act="nav" data-arg="lobby" data-nav="lobby"><span class="ms">sports_esports</span><i data-i18n="navPlay">Oyna</i></button>
   <button data-act="nav" data-arg="collection" data-nav="collection"><span class="ms">military_tech</span><i data-i18n="navCollection">Kolleksiya</i></button>
+  <button data-act="nav" data-arg="leaderboard" data-nav="leaderboard"><span class="ms">leaderboard</span><i data-i18n="navRank">Reytinq</i></button>
   <button data-act="nav" data-arg="store" data-nav="store"><span class="ms">storefront</span><i data-i18n="navShop">Mağaza</i></button>
   <button data-act="nav" data-arg="profile" data-nav="profile"><span class="ms">person</span><i data-i18n="navProfile">Profil</i></button>
 </nav>
@@ -383,12 +399,17 @@
 
 <div class="toast" id="toast" role="status"></div>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
 <script src="js/data.js"></script>
 <script src="js/util.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/audio.js"></script>
 <script src="js/portrait.js"></script>
 <script src="js/fx.js"></script>
+<script src="js/cloud.js"></script>
 <script src="js/store.js"></script>
 <script src="js/bot.js"></script>
 <script src="js/net.js"></script>

@@ -284,7 +284,7 @@ function startBattle(){
   const prep=team=>team.map(h=>({...h,curHp:h.health*10,maxHp:h.health*10,eliminated:false,wins:0}));
   battleState={t1:prep(state.players[1].heroes),t2:prep(state.players[2].heroes),idx1:0,idx2:0,history:[],results:[],
     status:'',championDone:false,championText:'',championSub:'',championColor:'',speed:battleState&&battleState.speed||1,seq:0,fx:{id:0},ko:{id:0},round:1};
-  ui.pair='';ui.lastFx=0;ui.lastKo=0;ui.histLen=-1;ui.rewarded=false;ui.matchStart=Date.now();
+  ui.pair='';ui.lastFx=0;ui.lastKo=0;ui.histLen=-1;ui.rewarded=false;ui.recorded=false;ui.matchStart=Date.now();
   showScreen('arenaScreen');
   $('#championBanner').style.display='none';$('#toResultsBtn').style.display='none';$('#battleLog').innerHTML='';
   SFX.whoosh();
@@ -490,6 +490,7 @@ function endBattle(){
   }else{battleState.championText=t('tie');battleState.championColor='var(--gold)';battleState.championSub=t('tieSub');}
   battleState.winner=a1>a2?1:a2>a1?2:0;
   ui.rewarded=true;
+  if(quickMatch&&onlineMode&&!ui.recorded){ui.recorded=true;recordQuickResult(battleState.winner===myPlayer());}
   showChampion(false,reward);
   if(onlineMode&&isHost)syncGuest();
 }
@@ -502,6 +503,7 @@ function showChampion(fromSync,reward=0){
   if(!fromSync||!ui.rewarded){
     ui.rewarded=true;
     const me=myPlayer();
+    if(fromSync&&quickMatch&&onlineMode&&!ui.recorded){ui.recorded=true;recordQuickResult(bs.winner===me);}
     later(()=>{
       if(bs.winner===0)SFX.draw();else if(bs.winner===me)SFX.victory();else SFX.defeat();
       if(bs.winner){FX.confetti(bs.winner===me?160:50);}
@@ -590,7 +592,7 @@ function applySync(pl){
       renderWheelScreen(!pl.skipRebuild&&!pl.wheelFlashShow);showFlash();
     }
   }else if(pl.screen==='battle'){
-    if(prevScreen!=='battle'){ui.pair='';ui.lastFx=0;ui.lastKo=0;ui.histLen=-1;ui.rewarded=false;ui.matchStart=Date.now();}
+    if(prevScreen!=='battle'){ui.pair='';ui.lastFx=0;ui.lastKo=0;ui.histLen=-1;ui.rewarded=false;ui.recorded=false;ui.matchStart=Date.now();}
     showScreen('arenaScreen');renderBattleFromState();
   }else if(pl.screen==='end'){showFinalResults();}
 }

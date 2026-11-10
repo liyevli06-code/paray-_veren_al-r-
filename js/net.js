@@ -127,6 +127,7 @@ ACT.cancelMatchmaking=()=>{
 };
 
 function showConfigScreen(){
+  $('#gmBlind').style.display=(onlineMode&&!vsBotMode)?'':'none';
   $('#lobbySelect').style.display='none';$('#gameConfig').style.display='block';
   $('#botLevelField').style.display=vsBotMode?'block':'none';
   const host=onlineMode&&isHost;
@@ -201,7 +202,7 @@ function setupConn(){
 }
 function sendAction(p){if(conn&&conn.open)conn.send(Object.assign({type:'action'},p));}
 function handleGuestAction(d){
-  if(d.action==='bid')makeBid(2);else if(d.action==='pass')makePass(2);else if(d.action==='spin')triggerWheelSpin();
+  if(d.action==='blindbid')blindLockFor(2,+d.amount);else if(d.action==='bid')makeBid(2);else if(d.action==='pass')makePass(2);else if(d.action==='spin')triggerWheelSpin();
 }
 
 /* ── Söhbət ── */

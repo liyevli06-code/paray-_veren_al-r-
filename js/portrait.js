@@ -51,5 +51,8 @@ function avatarHTML(user,size=40){
 }
 
 /* CSP üçün inline onload/onerror əvəzinə: şəkil hadisələri capture ilə dinlənir */
-document.addEventListener('load',e=>{const i=e.target;if(i&&i.tagName==='IMG'&&i.closest('.portrait'))i.classList.add('ok');},true);
+document.addEventListener('load',e=>{const i=e.target;if(i&&i.tagName==='IMG'&&i.closest('.portrait')){i.classList.add('ok');
+  /* çox enli şəkil portret qutuya cover ilə sığmır → baş kəsilməsin deyə tam göstər */
+  const box=i.parentElement.getBoundingClientRect(),r=i.naturalWidth/Math.max(1,i.naturalHeight);
+  if(box.height&&r>(box.width/box.height)*1.7)i.classList.add('wide');}},true);
 document.addEventListener('error',e=>{const i=e.target;if(i&&i.tagName==='IMG'&&i.closest('.portrait'))i.remove();},true);

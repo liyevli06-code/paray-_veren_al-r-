@@ -164,7 +164,7 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;background:var(--cyan
 .portrait{position:relative;overflow:hidden;background:var(--s2);border-radius:inherit}
 .portrait .pf,.portrait img{position:absolute;inset:0;width:100%;height:100%}
 .portrait .pf svg{display:block;width:100%;height:100%}
-.portrait img{object-fit:cover;object-position:50% 20%;opacity:0;transition:opacity .35s}
+.portrait img{object-fit:cover;object-position:50% 0%;opacity:0;transition:opacity .35s}
 .portrait img.ok{opacity:1}
 .av{display:inline-grid;place-items:center;border-radius:50%;background:var(--s2);flex:none;line-height:1;position:relative}
 .av.rainbow{border-color:transparent!important;background:linear-gradient(var(--s2),var(--s2)) padding-box,conic-gradient(from var(--rot,0deg),#ff3b6b,#ffb020,#2ee6a6,#00f0ff,#8b5cff,#ff3b6b) border-box;animation:rot 4s linear infinite}
@@ -588,3 +588,23 @@ body{max-width:100vw;overflow-x:hidden}
 .blind-reveal b{font-size:22px;color:#fff}
 
 #gameModeField .opt-grid{grid-template-columns:repeat(auto-fit,minmax(96px,1fr))}
+
+/* ══ Tam uyğunlaşma: telefon + kompüter, baş həmişə görünür ══ */
+.portrait img{object-position:50% 0%}                       /* kəsiləndə yuxarı (baş) qalır */
+.portrait img.wide{object-fit:contain;object-position:50% 50%;background:radial-gradient(circle at 50% 35%,color-mix(in srgb,var(--hc,#00F0FF) 35%,#0b0e14),#0b0e14)}
+.lot-art{aspect-ratio:4/4.3;max-height:58vh}
+.arena-stage{max-width:960px;margin-left:auto;margin-right:auto}
+#main>.screen,.screen{max-width:1100px;margin-left:auto;margin-right:auto}
+@media (min-width:700px){
+  .lot-art{aspect-ratio:auto;max-height:none;min-height:440px}
+  .coll-grid,.shop-grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+}
+@media (min-width:1200px){
+  .arena-stage{max-width:1000px}
+}
+@media (max-height:700px) and (orientation:landscape){
+  .f-art{height:min(125cqw,62vh)}.lot-art{min-height:300px}
+}
+.fcard{container-type:inline-size}
+.f-art{width:100%;height:min(125cqw,46vh)}
+@media (min-width:700px){.f-art{height:min(125cqw,42vh)}}

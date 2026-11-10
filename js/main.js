@@ -41,7 +41,7 @@ ACT.nav=target=>{
     ['createPanel','joinPanel','matchmakingPanel'].forEach(i=>$('#'+i).classList.remove('show'));
   }
   if(target==='lobby'&&!state&&!onlineMode&&$('#gameConfig').style.display!=='none'&&activeScreenId==='lobbyScreen'){
-    $('#gameConfig').style.display='none';$('#lobbySelect').style.display='block';vsBotMode=false;
+    $('#gameConfig').style.display='none';$('#lobbySelect').style.display='block';vsBotMode=false;quickBot=false;
   }
   SFX.nav();showScreen(id);
 };

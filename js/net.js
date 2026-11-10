@@ -2,13 +2,13 @@
    ONLINE (PeerJS P2P) — otaq kodu, sürətli oyun (matchmaking), söhbət
    Qaydalar köhnə oyunla eynidir: host (Oyuncu 1) oyunu idarə edir, qonaq (Oyuncu 2) vəziyyəti alır.
    ══════════════════════════════════════════════════════════════ */
-let quickMatch=false,onlineMode=false,isHost=false,peer=null,conn=null,guestConnected=false,vsBotMode=false;
+let quickBot=false,quickMatch=false,mmBotTimer=null,onlineMode=false,isHost=false,peer=null,conn=null,guestConnected=false,vsBotMode=false;
 let matchmakingActive=false,matchmakingPeer=null,mmWatchdog=null;
 const MATCHMAKING_PREFIX='htb-mm-slot-',MATCHMAKING_SLOTS=25;
 
 function hasPeer(){if(typeof Peer==='undefined'){toast(t('noNet'),'red');SFX.error();return false;}return true;}
 function leaveOnline(){
-  matchmakingActive=false;clearTimeout(mmWatchdog);mmWatchdog=null;
+  matchmakingActive=false;clearTimeout(mmWatchdog);mmWatchdog=null;clearTimeout(mmBotTimer);mmBotTimer=null;
   try{conn&&conn.close();}catch(e){}
   try{matchmakingPeer&&matchmakingPeer.destroy();}catch(e){}
   try{peer&&peer.destroy();}catch(e){}
@@ -17,7 +17,7 @@ function leaveOnline(){
 }
 
 ACT.selectMode=mode=>{
-  quickMatch=(mode==='matchmaking');
+  quickMatch=(mode==='matchmaking');quickBot=false;if(mode!=='bot')vsBotMode=false;
   ['createPanel','joinPanel','matchmakingPanel'].forEach(id=>$('#'+id).classList.remove('show'));
   if(mode==='local'){onlineMode=false;vsBotMode=false;showConfigScreen();}
   else if(mode==='bot'){onlineMode=false;vsBotMode=true;showConfigScreen();}
@@ -36,9 +36,31 @@ ACT.selectMode=mode=>{
 /* ── Sürətli oyun ── */
 function startMatchmaking(){
   if(matchmakingActive)return;
-  matchmakingActive=true;onlineMode=true;
+  matchmakingActive=true;onlineMode=true;armBotFallback(10000);
   $('#matchmakingText').textContent=t('matchmakingText');$('#matchmakingSub').textContent=t('matchmakingSub');
   attemptSlots(Array.from({length:MATCHMAKING_SLOTS},(_,i)=>i),0);
+}
+/* 10 san. ərzində rəqib tapılmazsa: güclü bot, adı adi oyunçu kimi görünür */
+const FAKE_NAMES=['Kenan','Aysel','Murad','Leyla','Elvin','Nigar','Tural','Sevinc','Rauf','Gunel','Orxan','Fidan','Samir','Nurlan','Ceyhun','Aydan','Emin','Konul','Ramin','Zaur','Ulvi','Lale','Vüsal','Aytac','Rəşad','Səbinə','Cavid','Nərmin','Ali','Mehmet','Burak','Zeynep','Emre','Deniz','Arda','Selin','Kaan','Ece','Mert','Defne','Alex','Mia','Leo','Nora','Max','Sam','Eli','Ryu','Kai','Yuki'];
+const FAKE_TAGS=['','','','_'+'07','xx','_az','TR','_pro','99','_gg','_x'];
+function fakeName(){const n=FAKE_NAMES[rand(0,FAKE_NAMES.length-1)],g=FAKE_TAGS[rand(0,FAKE_TAGS.length-1)];return (g.startsWith('_')||/^\d/.test(g)||g==='xx'||g==='TR'?n+g:n).slice(0,14);}
+function armBotFallback(ms){clearTimeout(mmBotTimer);mmBotTimer=setTimeout(botFallback,ms);}
+function botFallback(){
+  if(!matchmakingActive||conn)return;
+  matchmakingActive=false;clearTimeout(mmWatchdog);mmWatchdog=null;
+  try{matchmakingPeer&&matchmakingPeer.destroy();}catch(e){}try{peer&&peer.destroy();}catch(e){}
+  matchmakingPeer=null;peer=null;conn=null;guestConnected=false;isHost=false;
+  onlineMode=false;vsBotMode=true;quickBot=true;quickMatch=true;BOT.level='hard';quickBotName=fakeName();
+  $('#matchmakingPanel').classList.remove('show');
+  toast('🎲 '+t('oppFound'),'gold');SFX.ready();
+  later(startQuickGame,700);
+}
+let quickBotName='';
+/* Tez oyun standartı: 5 qəhrəman, $20 büdcə, hərrac, $1 addım — seçim ekranı yoxdur */
+function startQuickGame(){
+  selectedGameMode='auction';selectedMaxHeroes=5;selectedInc=1;
+  $('#budgetRange').value=20;$('#budgetVal').textContent='$20';
+  showScreen('lobbyScreen');ACT.startGame();
 }
 function attemptSlots(slots,idx){
   if(!matchmakingActive)return;
@@ -47,12 +69,14 @@ function attemptSlots(slots,idx){
   const timeout=setTimeout(()=>{if(settled)return;settled=true;try{p.destroy();}catch(e){}attemptSlots(slots,idx+1);},2500);
   p.on('open',()=>{
     if(settled)return;settled=true;clearTimeout(timeout);
+    if(!matchmakingActive){try{p.destroy();}catch(e){}return;}
     matchmakingPeer=p;peer=p;isHost=true;
     p.on('connection',c=>{
       if(!matchmakingActive)return;
-      conn=c;guestConnected=true;setupConn();matchmakingActive=false;
-      $('#matchmakingPanel').classList.remove('show');showConfigScreen();
+      conn=c;guestConnected=true;setupConn();matchmakingActive=false;clearTimeout(mmBotTimer);
+      $('#matchmakingPanel').classList.remove('show');
       showOnlinePill(t('modeMatchTitle')+' — '+t('player1'));toast('🎲 '+t('oppFound'),'gold');SFX.ready();
+      later(startQuickGame,1200);
     });
   });
   p.on('error',err=>{
@@ -70,7 +94,7 @@ function joinMatchmakingSlot(slotId,slots,idx){
     c.on('open',()=>{
       if(settled)return;settled=true;clearTimeout(timeout);
       if(!matchmakingActive){try{p.destroy();}catch(e){}return;}
-      peer=p;conn=c;isHost=false;setupConn();matchmakingActive=false;
+      peer=p;conn=c;isHost=false;setupConn();matchmakingActive=false;clearTimeout(mmBotTimer);
       $('#matchmakingPanel').classList.remove('show');
       showOnlinePill(t('modeMatchTitle')+' — '+t('player2'));toast('🎲 '+t('oppFound'),'gold');SFX.ready();
       showScreen('waitScreen');
@@ -81,7 +105,7 @@ function joinMatchmakingSlot(slotId,slots,idx){
           try{c.close();}catch(e){}try{p.destroy();}catch(e){}
           peer=null;conn=null;onlineMode=true;matchmakingActive=true;
           showScreen('lobbyScreen');$('#matchmakingPanel').classList.add('show');
-          attemptSlots(slots,0);
+          armBotFallback(5000);attemptSlots(slots,0);
         }
       },7000);
     });
@@ -90,7 +114,7 @@ function joinMatchmakingSlot(slotId,slots,idx){
   p.on('error',next);
 }
 ACT.cancelMatchmaking=()=>{
-  matchmakingActive=false;clearTimeout(mmWatchdog);mmWatchdog=null;
+  clearTimeout(mmBotTimer);mmBotTimer=null;matchmakingActive=false;clearTimeout(mmWatchdog);mmWatchdog=null;
   try{matchmakingPeer&&matchmakingPeer.destroy();}catch(e){}
   try{peer&&peer.destroy();}catch(e){}
   matchmakingPeer=null;peer=null;conn=null;guestConnected=false;onlineMode=false;isHost=false;

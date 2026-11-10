@@ -11,7 +11,7 @@ const ui={lotIdx:-1,price:0,logLen:0,pair:'',lastFx:0,lastKo:0,histLen:-1,counte
 
 /* ── köməkçilər ── */
 function assignStats(h){return{...h,power:clamp(h.power+rand(-3,3),1,99),speed:clamp(h.speed+rand(-3,3),1,99),defense:clamp(h.defense+rand(-3,3),1,99),health:clamp(h.health+rand(-3,3),1,99)};}
-function pname(p){return p===1?t('player1'):(vsBotMode?'🤖 BOT':t('player2'));}
+function pname(p){return p===1?t('player1'):(quickBot?quickBotName:vsBotMode?'🤖 BOT':t('player2'));}
 function myPlayer(){return onlineMode&&!isHost?2:1;}
 function hideAllGameScreens(){$$('.screen').forEach(s=>s.classList.remove('active'));}
 function tm(h){return TIER_META[h.tier]||TIER_META.C;}
@@ -103,7 +103,7 @@ function renderAuction(){
   }
   const bot=vsBotMode;
   $('#p2BidBtn').style.display=bot?'none':'';$('#p2PassBtn').style.display=bot?'none':'';
-  $('#botThink').style.display=bot?'':'none';
+  $('#botThink').style.display=bot&&!quickBot?'':'none';
   /* bid log */
   const feed=$('#bidFeed');
   feed.innerHTML=state.bidLog.length?state.bidLog.slice().reverse().slice(0,14).map(e=>{
@@ -173,7 +173,7 @@ function finishAuction(){
 function botMove(){
   if(!vsBotMode||!state||state.mode!=='auction'||state.p2Passed||state.leader===2||state.resolving)return;
   const lot=state.lotIdx;
-  $('#botThink').classList.add('show');
+  if(!quickBot)$('#botThink').classList.add('show');
   later(()=>{
     $('#botThink').classList.remove('show');
     if(!vsBotMode||!state||state.mode!=='auction'||state.lotIdx!==lot||state.resolving||state.p2Passed||state.leader===2)return;
@@ -303,7 +303,7 @@ function renderStrips(){
 }
 function fighterHTML(side,h){
   const p=side==='left'?1:2,pct=Math.max(0,Math.round(h.curHp/h.maxHp*100));
-  const tag=side==='left'?`<span class="tag tag-cyan">P1 ${t('ally')}</span>`:`<span class="tag tag-red">${vsBotMode?'BOT':'P2'} ${t('enemy')}</span>`;
+  const tag=side==='left'?`<span class="tag tag-cyan">P1 ${t('ally')}</span>`:`<span class="tag tag-red">${quickBot?esc(quickBotName):vsBotMode?'BOT':'P2'} ${t('enemy')}</span>`;
   const st=(l,v,c)=>`<div class="fc-stat"><span>${l}</span><div class="gauge thin" style="--v:${v}%;--gc:${c}"><i></i></div><b class="num">${v}</b></div>`;
   return `<div class="fc-top">${tag}<span class="fc-lvl">${t('tierWord')} ${h.tier} · ${esc(h.fr)}</span></div>
     <div class="f-art" style="--tc:${tm(h).color}">${portrait(h)}<div class="f-hit"></div><div class="f-name">${esc(h.name)}</div></div>
@@ -490,7 +490,7 @@ function endBattle(){
   }else{battleState.championText=t('tie');battleState.championColor='var(--gold)';battleState.championSub=t('tieSub');}
   battleState.winner=a1>a2?1:a2>a1?2:0;
   ui.rewarded=true;
-  if(quickMatch&&onlineMode&&!ui.recorded){ui.recorded=true;recordQuickResult(battleState.winner===myPlayer());}
+  if(quickMatch&&(onlineMode||quickBot)&&!ui.recorded){ui.recorded=true;recordQuickResult(battleState.winner===myPlayer());}
   showChampion(false,reward);
   if(onlineMode&&isHost)syncGuest();
 }
@@ -547,6 +547,11 @@ function renderFinalList(p,sel){
 }
 ACT.restart=()=>{
   if(onlineMode&&!isHost)return;
+  if(quickMatch){                                   // Tez oyun: yenidən rəqib axtarışına qayıt
+    gameEpoch++;state=null;battleState=null;wheelState=null;ui.lotIdx=-1;
+    leaveOnline();quickBot=false;vsBotMode=false;quickMatch=false;
+    $('#gameConfig').style.display='none';$('#lobbySelect').style.display='block';showScreen('lobbyScreen');return;
+  }
   gameEpoch++;state=null;battleState=null;wheelState=null;ui.lotIdx=-1;
   $('#gameConfig').style.display='block';$('#lobbySelect').style.display='none';
   showScreen('lobbyScreen');showConfigScreen();

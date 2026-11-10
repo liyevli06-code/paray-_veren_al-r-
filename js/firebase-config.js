@@ -2,7 +2,7 @@
    Boş qalarsa oyun "yerli rejim"də işləyir (giriş və reytinq yalnız bu cihazda). */
 const FIREBASE_CONFIG={
   apiKey:"",
-  authDomain:"",
-  projectId:"",
+  authDomain:"heroicteambatle.firebaseapp.com",
+  projectId:"heroicteambatle",
   appId:""
 };

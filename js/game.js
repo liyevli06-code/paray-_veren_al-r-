@@ -333,13 +333,15 @@ function updateWins(){
 }
 
 function setupPair(){
+  ui.fighting=false;
   const h1=battleState.t1[battleState.idx1],h2=battleState.t2[battleState.idx2];
   if(!h1||!h2){endBattle();return;}
   renderPair(true);
   battleState.status=t('readyNext');$('#fightStatus').textContent=battleState.status;
-  const b=$('#nextFightBtn');b.disabled=false;b.style.display=(!onlineMode||isHost)?'flex':'none';
+  const b=$('#nextFightBtn');b.disabled=true;b.style.display='none';   // düymə yoxdur: döyüş avtomatik başlayır
   $('#clashText').textContent=t('clashIdle');
   if(onlineMode&&isHost)syncGuest();
+  if(!onlineMode||isHost)later(()=>{if(battleState&&!battleState.championDone)ACT.runFight();},1500/(battleState.speed||1));
 }
 function renderPair(animate){
   const h1=battleState.t1[battleState.idx1],h2=battleState.t2[battleState.idx2];if(!h1||!h2)return;
@@ -363,7 +365,8 @@ ACT.toggleMusic=()=>{SFX.setMusic(!SFX.settings.music);$('#muteMusicBtn').classL
 
 ACT.runFight=()=>{
   if(onlineMode&&!isHost)return;
-  if(!battleState||battleState.championDone)return;
+  if(!battleState||battleState.championDone||ui.fighting)return;
+  ui.fighting=true;
   const b=$('#nextFightBtn');b.disabled=true;
   battleState.status=t('fighting');$('#fightStatus').textContent=battleState.status;
   const k=1/(battleState.speed||1);

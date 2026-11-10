@@ -1,0 +1,12 @@
+name: Firebase keep-alive
+on:
+  schedule:
+    - cron: '0 6 * * *'   # hər gün 06:00 UTC (Bakı 10:00)
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Firestore
+        run: |
+          curl -fsS "https://firestore.googleapis.com/v1/projects/heroicteambatle/databases/(default)/documents/players?pageSize=1&key=AIzaSyBxVjo5SSaPkMrYUNW80iWtPpFxfGl9ZFI" | head -c 300

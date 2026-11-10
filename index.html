@@ -118,6 +118,11 @@
         <span class="mode-body"><span class="mode-head"><b data-i18n="modeBotTitle">BOTA QARŞI</b><em class="tag tag-steel">SOLO AI</em></span>
           <span class="mode-sub" data-i18n="modeBotSub">...</span></span>
       </button>
+      <button class="mode-card m-red" data-act="selectMode" data-arg="blind">
+        <span class="mode-ico"><span class="ms">visibility_off</span></span>
+        <span class="mode-body"><span class="mode-head"><b data-i18n="modeBlindTitle">GİZLİ TƏKLİF</b><em class="tag tag-red" data-i18n="tagBlind">YENİ</em></span>
+          <span class="mode-sub" data-i18n="modeBlindSub">...</span></span>
+      </button>
     </div>
 
     <div class="panel-section card" id="createPanel">
@@ -146,7 +151,7 @@
       <div class="status-row"><span class="dot on"></span><span id="hostStatusText"></span></div>
       <div class="code-row"><input type="text" id="hostLinkInput" readonly aria-label="Room code"><button class="btn btn-sm btn-ghost" data-act="copyCode" data-arg="hostLinkInput" data-i18n="copy">Kopyala</button></div>
     </div>
-    <div class="field">
+    <div class="field" id="gameModeField">
       <span class="label" data-i18n="gameMode">Oyun rejimi</span>
       <div class="opt-grid">
         <button class="opt active" id="gmAuction" data-act="gameMode" data-arg="auction"><b data-i18n="modeAuction">ARTIRMA</b><small data-i18n="modeAuctionSub">Büdcə ilə təklif ver</small></button>
@@ -158,7 +163,7 @@
         <span class="label"><span data-i18n="startBudget">Başlanğıc büdcə</span><b class="val num" id="budgetVal">$50</b></span>
         <input type="range" id="budgetRange" min="10" max="100" step="10" value="50">
       </div>
-      <div class="field">
+      <div class="field" id="incField">
         <span class="label" data-i18n="bidStep">Təklif artım addımı</span>
         <div class="chip-row" id="incRow"></div>
       </div>
@@ -209,6 +214,22 @@
         <div><small class="label cyan"><span class="ms">gavel</span> <span data-i18n="curPriceLabel">Hazırkı qiymət</span></small>
           <div class="bid-price"><span class="num" id="curPrice">$0</span><em id="leaderNote"></em></div></div>
         <div class="bot-think" id="botThink"><i></i><i></i><i></i><span data-i18n="botThinking">BOT düşünür</span></div>
+      </div>
+      <div class="blind-box" id="blindBox" style="display:none">
+        <div class="blind-row">
+          <button class="btn btn-ghost blind-step" data-act="blindStep" data-arg="-5">−5</button>
+          <button class="btn btn-ghost blind-step" data-act="blindStep" data-arg="-1">−1</button>
+          <div class="blind-val"><small data-i18n="blindYours">Gizli təklifin</small><b class="num" id="blindVal">$0</b></div>
+          <button class="btn btn-ghost blind-step" data-act="blindStep" data-arg="1">+1</button>
+          <button class="btn btn-ghost blind-step" data-act="blindStep" data-arg="5">+5</button>
+        </div>
+        <div class="blind-chips">
+          <button class="chip-btn" data-act="blindSet" data-arg="half">½</button>
+          <button class="chip-btn" data-act="blindSet" data-arg="max">MAX</button>
+          <button class="chip-btn" data-act="blindSet" data-arg="zero" data-i18n="passBtn">Pas keç</button>
+        </div>
+        <button class="btn btn-primary btn-lg btn-full" id="blindLockBtn" data-act="blindLock"><span class="ms">lock</span> <span data-i18n="blindLock">TƏSDİQLƏ</span></button>
+        <small class="dim" data-i18n="blindRule">Ən yüksək gizli təklif qalib olur və öz təklifini ödəyir. Bərabərlikdə qəhrəman satılmır.</small>
       </div>
       <div class="bid-actions">
         <div class="bid-col p1"><span class="bid-who" id="bidWho1">OYUNCU 1</span>

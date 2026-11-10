@@ -17,9 +17,14 @@ function leaveOnline(){
 }
 
 ACT.selectMode=mode=>{
-  quickMatch=(mode==='matchmaking');quickBot=false;if(mode!=='bot')vsBotMode=false;
+  quickMatch=(mode==='matchmaking');quickBot=false;if(mode!=='bot'&&mode!=='blind')vsBotMode=false;
   ['createPanel','joinPanel','matchmakingPanel'].forEach(id=>$('#'+id).classList.remove('show'));
-  if(mode==='local'){onlineMode=false;vsBotMode=false;showConfigScreen();}
+  const blind=mode==='blind';
+  selectedGameMode=blind?'blind':'auction';
+  $('#gameModeField').style.display=blind?'none':'';$('#incField').style.display=blind?'none':'';$('#budgetField').style.display='';
+  $('#gmAuction').classList.add('active');$('#gmWheel').classList.remove('active');
+  if(blind){onlineMode=false;vsBotMode=true;showConfigScreen();}
+  else if(mode==='local'){onlineMode=false;vsBotMode=false;showConfigScreen();}
   else if(mode==='bot'){onlineMode=false;vsBotMode=true;showConfigScreen();}
   else if(mode==='create'){if(!hasPeer())return;$('#createPanel').classList.add('show');startHostPeer();}
   else if(mode==='join'){
@@ -30,7 +35,7 @@ ACT.selectMode=mode=>{
     setTimeout(()=>$('#joinCodeInput').focus(),50);
   }
   else if(mode==='matchmaking'){if(!hasPeer())return;$('#matchmakingPanel').classList.add('show');startMatchmaking();}
-  if(mode!=='bot'&&mode!=='local'){const p=$('#'+({create:'createPanel',join:'joinPanel',matchmaking:'matchmakingPanel'})[mode]);p&&p.scrollIntoView({behavior:'smooth',block:'center'});}
+  if(mode!=='bot'&&mode!=='local'&&!blind){const p=$('#'+({create:'createPanel',join:'joinPanel',matchmaking:'matchmakingPanel'})[mode]);p&&p.scrollIntoView({behavior:'smooth',block:'center'});}
 };
 
 /* ── Sürətli oyun ── */

@@ -35,7 +35,8 @@ ACT.startGame=()=>{
   if(selectedGameMode==='wheel'){startWheelGame(selectedMaxHeroes);return;}
   const budget=parseInt($('#budgetRange').value,10),lotCount=Math.min(HEROES.length,selectedMaxHeroes*2);
   const lots=shuffle(HEROES).slice(0,lotCount).map(assignStats);
-  state={mode:'auction',budget,inc:selectedInc,maxHeroes:selectedMaxHeroes,lots,lotIdx:0,price:0,leader:null,p1Passed:false,p2Passed:false,resolving:false,
+  const blind=selectedGameMode==='blind';
+  state={mode:'auction',blind,budget,inc:blind?1:selectedInc,maxHeroes:selectedMaxHeroes,lots,lotIdx:0,price:0,leader:null,p1Passed:false,p2Passed:false,resolving:false,
     t0:Date.now(),bidLog:[],players:{1:{budget,heroes:[]},2:{budget,heroes:[]}}};
   battleState=null;wheelState=null;
   SFX.whoosh();
@@ -97,6 +98,7 @@ function renderAuction(){
   $('#p2BidBtn').innerHTML=$('#p1BidBtn').innerHTML;
   $('#p1BidBtn').disabled=!can(1);$('#p1PassBtn').disabled=state.p1Passed||state.resolving;
   $('#p2BidBtn').disabled=!can(2);$('#p2PassBtn').disabled=state.p2Passed||state.resolving;
+  renderBlind(newLot);
   if(onlineMode){
     if(isHost){$('#p2BidBtn').disabled=true;$('#p2PassBtn').disabled=true;}
     else{$('#p1BidBtn').disabled=true;$('#p1PassBtn').disabled=true;}
@@ -162,12 +164,70 @@ function resolveLot(){
     fl.classList.remove('show');
     state.lotIdx++;state.price=0;state.leader=null;state.p1Passed=false;state.p2Passed=false;state.resolving=false;
     renderAuction();
-  },1700);
+  },state.blind?2600:1700);
 }
 function finishAuction(){
   if(onlineMode&&!isHost)return;
   if(state.players[1].heroes.length>0&&state.players[2].heroes.length>0)startBattle();else showFinalResults();
 }
+
+
+/* ═══════════════════════ GİZLİ TƏKLİF (Blind Bid) ═══════════════════════
+   Hər lot üçün hər oyunçu gizli bir qiymət yazır. Ən yüksək qiymət qalib olur və öz təklifini ödəyir.
+   Bərabərlikdə qəhrəman satılmır. Qalan hər şey (komandalar, döyüş) əvvəlki kimidir. */
+function blindMax(p){
+  const pl=state.players[p],need=state.maxHeroes-pl.heroes.length;
+  if(need<=0)return 0;
+  return Math.max(0,pl.budget-(need-1));          // qalan hər yer üçün ən azı $1 ehtiyat
+}
+function renderBlind(newLot){
+  const on=!!(state&&state.blind);
+  $('#blindBox').style.display=on?'block':'none';
+  $('.bid-actions').style.display=on?'none':'';
+  if(!on)return;
+  $('#botThink').style.display='none';
+  $('#curPrice').textContent='?';$('#leaderNote').textContent=t('blindHint');
+  const max=blindMax(1),need=state.maxHeroes-state.players[1].heroes.length;
+  if(newLot){ui.blindBid=need>0?clamp(Math.round(state.players[1].budget/need),1,Math.max(1,max)):0;}
+  ui.blindBid=clamp(ui.blindBid||0,0,max);
+  drawBlind();
+  /* ikisinin də yeri dolubsa → birbaşa döyüşə */
+  if(need<=0&&state.maxHeroes-state.players[2].heroes.length<=0&&!state.resolving){later(finishAuction,300);return;}
+  /* yalnız bot yer axtarırsa: öz təklifimiz yoxdur → avtomatik pas */
+  if(need<=0&&!state.resolving)later(ACT.blindLock,700);
+}
+function drawBlind(){
+  $('#blindVal').textContent='$'+ui.blindBid;
+  const b=$('#blindLockBtn');b.disabled=!!state.resolving;
+}
+ACT.blindStep=v=>{if(!state||!state.blind||state.resolving)return;ui.blindBid=clamp((ui.blindBid||0)+(+v),0,blindMax(1));drawBlind();SFX.click();};
+ACT.blindSet=v=>{if(!state||!state.blind||state.resolving)return;const m=blindMax(1);ui.blindBid=v==='max'?m:v==='half'?Math.round(m/2):0;drawBlind();SFX.click();};
+function botBlindBid(){
+  const me=state.players[2],need=state.maxHeroes-me.heroes.length,max=blindMax(2);
+  if(need<=0||max<=0)return 0;
+  const lotsLeft=state.lots.length-state.lotIdx;
+  state.price=0;state.leader=null;state.p1Passed=false;state.p2Passed=false;
+  let base=botMaxPrice(state);                                  // açıq hərracda ödəyəcəyi yuxarı hədd
+  const v=botHeroValue(state.lots[state.lotIdx]);
+  /* qalib lənəti: biraz aşağı yaz, amma yaxşı qəhrəmana qarşı cəsarətli ol */
+  const lo=BOT.level==='easy'?.5:.8,hi=BOT.level==='easy'?1.3:1.02;
+  let b=base*(lo+Math.random()*(hi-lo))*(1+(v-.5)*.35);
+  if(lotsLeft<=need)b=Math.max(b,max*.8);                       // qalan lotlar azdır → mütləq al
+  b=Math.round(clamp(b,0,max));
+  if(b<1&&lotsLeft<=need)b=1;
+  return b;
+}
+ACT.blindLock=()=>{
+  if(!state||!state.blind||state.resolving||state.mode!=='auction')return;
+  const b1=clamp(ui.blindBid||0,0,blindMax(1)),b2=botBlindBid();
+  SFX.bid(clamp(Math.max(b1,b2)/Math.max(1,state.budget),0,1));
+  if(b1>0)logBid('bid',1,b1);else logBid('pass',1,0);
+  if(b2>0)logBid('bid',2,b2);else logBid('pass',2,0);
+  if(b1>b2){state.leader=1;state.price=b1;}else if(b2>b1){state.leader=2;state.price=b2;}else{state.leader=null;state.price=0;}
+  resolveLot();
+  const ft=$('#flashText');
+  ft.insertAdjacentHTML('beforeend',`<div class="blind-reveal"><span class="p1">${esc(pname(1))} <b class="num">$${b1}</b></span><i>VS</i><span class="p2">${esc(pname(2))} <b class="num">$${b2}</b></span></div>${b1&&b1===b2?`<div class="small dim">${t('blindTie')}</div>`:''}`);
+};
 
 /* ── Bot hərəkəti (qərarı bot.js verir) ── */
 function botMove(){

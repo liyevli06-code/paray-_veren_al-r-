@@ -36,7 +36,7 @@ function fallbackSVG(h){
 /* Portret elementi (HTML string). Ölçünü parent CSS-i verir. */
 function portrait(h,cls=''){
   const src=heroSrc(h);
-  const img=src?`<img src="${esc(src)}" alt="${esc(h.name)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onload="this.classList.add('ok')" onerror="this.remove()">`:'';
+  const img=src?`<img src="${esc(src)}" alt="${esc(h.name)}" loading="lazy" decoding="async" referrerpolicy="no-referrer">`:'';
   return `<div class="portrait ${cls}" style="--hc:${h.color};--tc:${tierColor(h)}"><div class="pf">${fallbackSVG(h)}</div>${img}</div>`;
 }
 
@@ -49,3 +49,7 @@ function avatarHTML(user,size=40){
   const glow=eqE&&eqE.glow?`box-shadow:${eqE.glow};`:'';
   return `<span class="av${rb?' rainbow':''}" style="width:${size}px;height:${size}px;font-size:${Math.round(size*.52)}px;border:${border};${glow}">${esc(user?.avatar||'👤')}</span>`;
 }
+
+/* CSP üçün inline onload/onerror əvəzinə: şəkil hadisələri capture ilə dinlənir */
+document.addEventListener('load',e=>{const i=e.target;if(i&&i.tagName==='IMG'&&i.closest('.portrait'))i.classList.add('ok');},true);
+document.addEventListener('error',e=>{const i=e.target;if(i&&i.tagName==='IMG'&&i.closest('.portrait'))i.remove();},true);

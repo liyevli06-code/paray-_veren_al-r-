@@ -706,3 +706,6 @@ button,[data-act],.opt,.chip-btn,.mode-card{touch-action:manipulation;-webkit-us
   #draftScreen .blind-box>small{display:none}
   #draftScreen .blind-step{padding:8px 0}
 }
+
+.emo{display:inline-block;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;font-style:normal;font-size:1em;line-height:1;vertical-align:middle}
+.chip .emo{font-size:14px}.btn-bid .emo{font-size:18px}

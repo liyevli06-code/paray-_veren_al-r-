@@ -8,7 +8,7 @@ const MATCHMAKING_PREFIX='htb-mm-slot-',MATCHMAKING_SLOTS=25;
 
 function hasPeer(){if(typeof Peer==='undefined'){toast(t('noNet'),'red');SFX.error();return false;}return true;}
 function leaveOnline(){
-  matchmakingActive=false;clearTimeout(mmWatchdog);mmWatchdog=null;clearTimeout(mmBotTimer);mmBotTimer=null;
+  matchmakingActive=false;clearTimeout(mmWatchdog);mmWatchdog=null;clearTimeout(mmBotTimer);mmBotTimer=null;stopHeartbeat();
   try{conn&&conn.close();}catch(e){}
   try{matchmakingPeer&&matchmakingPeer.destroy();}catch(e){}
   try{peer&&peer.destroy();}catch(e){}
@@ -186,25 +186,47 @@ ACT.copyCode=id=>{
   toast(t('copied'),'gold');
 };
 
+let hbTimer=null,lastSeen=0;
+function stopHeartbeat(){clearInterval(hbTimer);hbTimer=null;}
+function startHeartbeat(){
+  stopHeartbeat();lastSeen=Date.now();
+  hbTimer=setInterval(()=>{
+    if(!conn||!conn.open){return;}
+    try{conn.send({type:'ping'});}catch(e){}
+    /* iki tərəf də hər 3 san. ping göndərir; 30 san. səs yoxdursa bağlantı ölüb */
+    if(!document.hidden&&Date.now()-lastSeen>30000){stopHeartbeat();connectionLost();}
+  },3000);
+}
+function connectionLost(){
+  if(!conn)return;                      // qəsdən çıxışdan sonra gələn 'close' hadisəsi
+  guestConnected=false;toast(t('connLost'),'red');SFX.error();
+  leaveOnline();state=null;battleState=null;wheelState=null;gameEpoch++;showScreen('lobbyScreen');
+  $('#gameConfig').style.display='none';$('#lobbySelect').style.display='block';
+}
 function setupConn(){
-  $('#chatToggle').style.display='grid';
+  $('#chatToggle').style.display='grid';startHeartbeat();
   conn.on('data',data=>{
-    if(!data||!data.type)return;
+    lastSeen=Date.now();
+    if(!data||!data.type||data.type==='ping')return;
     if(data.type==='chat'){appendChat(data.text,false);return;}
     if(data.type==='deck'){receiveDeckImages(data.imgs);return;}
     if(isHost&&data.type==='action')handleGuestAction(data);
     else if(!isHost&&data.type==='sync'){clearTimeout(mmWatchdog);mmWatchdog=null;applySync(data);}
     else if(!isHost&&data.type==='reset'){hideAllGameScreens();showScreen('waitScreen');$('#waitText').textContent=t('hostPreparing');}
   });
-  conn.on('close',()=>{
-    guestConnected=false;toast(t('connLost'),'red');SFX.error();
-    leaveOnline();state=null;battleState=null;wheelState=null;showScreen('lobbyScreen');
-    $('#gameConfig').style.display='none';$('#lobbySelect').style.display='block';
-  });
+  conn.on('close',connectionLost);
+  conn.on('error',()=>{});
 }
 function sendAction(p){if(conn&&conn.open)conn.send(Object.assign({type:'action'},p));}
 function handleGuestAction(d){
-  if(d.action==='blindbid')blindLockFor(2,+d.amount);else if(d.action==='bid')makeBid(2);else if(d.action==='pass')makePass(2);else if(d.action==='spin')triggerWheelSpin();
+  if(!state&&!battleState)return;
+  /* köhnəlmiş (başqa lota aid) hərəkətləri rədd et */
+  if((d.action==='bid'||d.action==='pass'||d.action==='blindbid')&&d.lot!==undefined&&state&&d.lot!==state.lotIdx)return;
+  if(d.action==='blindbid')blindLockFor(2,+d.amount);
+  else if(d.action==='bid')makeBid(2);
+  else if(d.action==='pass')makePass(2);
+  else if(d.action==='spin'){if(wheelState&&wheelState.turn===2)triggerWheelSpin();}
+  else if(d.action==='speed')ACT.toggleSpeed();
 }
 
 /* ── Söhbət ── */

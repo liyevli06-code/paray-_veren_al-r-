@@ -96,7 +96,7 @@ function renderAuction(){
   $('#bidWho1').textContent=pname(1);$('#bidWho2').textContent=pname(2);
   renderTeams('#draftTeams','auction');
   const next=state.price+state.inc;
-  const can=p=>{const pl=state.players[p];return !state[`p${p}Passed`]&&pl.heroes.length<state.maxHeroes&&pl.budget>=next&&!state.resolving;};
+  const can=p=>!state.resolving&&canBid(p);
   $('#p1BidBtn').innerHTML=`<span class="ms">gavel</span> ${t('bidBtn')} <span class="num">$${next}</span>`;
   $('#p2BidBtn').innerHTML=$('#p1BidBtn').innerHTML;
   $('#p1BidBtn').disabled=!can(1);$('#p1PassBtn').disabled=state.p1Passed||state.resolving;
@@ -123,23 +123,27 @@ function logBid(k,p,price,hero){state.bidLog.push({k,p,price,hero,s:elapsed()});
 
 function triggerBid(p){
   if(!onlineMode){makeBid(p);if(vsBotMode&&p===1)botMove();return;}
-  if(isHost&&p===1)makeBid(1);else if(!isHost&&p===2)sendAction({action:'bid'});
+  if(isHost&&p===1)makeBid(1);else if(!isHost&&p===2)sendAction({action:'bid',lot:state.lotIdx});
 }
 function triggerPass(p){
   if(!onlineMode){makePass(p);if(vsBotMode&&p===1)botMove();return;}
-  if(isHost&&p===1)makePass(1);else if(!isHost&&p===2)sendAction({action:'pass'});
+  if(isHost&&p===1)makePass(1);else if(!isHost&&p===2)sendAction({action:'pass',lot:state.lotIdx});
 }
 $('#p1BidBtn').addEventListener('click',()=>triggerBid(1));
 $('#p2BidBtn').addEventListener('click',()=>triggerBid(2));
 $('#p1PassBtn').addEventListener('click',()=>triggerPass(1));
 $('#p2PassBtn').addEventListener('click',()=>triggerPass(2));
 
+function canBid(p){
+  const pl=state.players[p];
+  return !state[`p${p}Passed`]&&state.leader!==p&&pl.heroes.length<state.maxHeroes&&pl.budget>=state.price+state.inc;
+}
 function makeBid(p){
-  if(!state||state.mode!=='auction'||state.resolving)return;
+  if(!state||state.mode!=='auction'||state.resolving||state.blind||!canBid(p))return;
   state.price+=state.inc;state.leader=p;logBid('bid',p,state.price);renderAuction();
 }
 function makePass(p){
-  if(!state||state.mode!=='auction'||state.resolving)return;
+  if(!state||state.mode!=='auction'||state.resolving||state.blind||state[`p${p}Passed`])return;
   if(p===1)state.p1Passed=true;else state.p2Passed=true;
   logBid('pass',p,state.price);
   if(state.p1Passed&&state.p2Passed)resolveLot();
@@ -241,10 +245,9 @@ function blindLockFor(p,amount){
 }
 ACT.blindLock=()=>{
   if(!blindOK())return;
-  const me=myPlayer();
   if(onlineMode&&!isHost){
     if(ui.blindSent===state.lotIdx)return;
-    ui.blindSent=state.lotIdx;sendAction({action:'blindbid',amount:clamp(ui.blindBid||0,0,blindMax(2))});drawBlind();SFX.click();
+    ui.blindSent=state.lotIdx;sendAction({action:'blindbid',lot:state.lotIdx,amount:clamp(ui.blindBid||0,0,blindMax(2))});drawBlind();SFX.click();
     $('#leaderNote').textContent=t('blindWaiting');return;
   }
   blindLockFor(1,clamp(ui.blindBid||0,0,blindMax(1)));
@@ -410,7 +413,8 @@ function renderFighter(side,h,enter){
   el.innerHTML=fighterHTML(side,h);
   if(enter){el.classList.add(side==='left'?'enter-l':'enter-r');}
 }
-function hpOf(side){return side==='left'?battleState.t1[battleState.idx1]:battleState.t2[battleState.idx2];}
+const vIdx=()=>[battleState.v1!==undefined?battleState.v1:battleState.idx1,battleState.v2!==undefined?battleState.v2:battleState.idx2];
+function hpOf(side){const [a,b]=vIdx();return side==='left'?battleState.t1[a]:battleState.t2[b];}
 function updateHp(side){
   const h=hpOf(side);if(!h)return;
   const el=$(side==='left'?'#fLeft':'#fRight'),pct=Math.max(0,Math.round(h.curHp/h.maxHp*100));
@@ -424,7 +428,7 @@ function updateWins(){
 }
 
 function setupPair(){
-  ui.fighting=false;
+  ui.fighting=false;battleState.v1=battleState.idx1;battleState.v2=battleState.idx2;
   const h1=battleState.t1[battleState.idx1],h2=battleState.t2[battleState.idx2];
   if(!h1||!h2){endBattle();return;}
   renderPair(true);
@@ -435,8 +439,8 @@ function setupPair(){
   if(!onlineMode||isHost)later(()=>{if(battleState&&!battleState.championDone)ACT.runFight();},1500/(battleState.speed||1));
 }
 function renderPair(animate){
-  const h1=battleState.t1[battleState.idx1],h2=battleState.t2[battleState.idx2];if(!h1||!h2)return;
-  ui.pair=battleState.idx1+'-'+battleState.idx2;
+  const [a,b]=vIdx(),h1=battleState.t1[a],h2=battleState.t2[b];if(!h1||!h2)return;
+  ui.pair=a+'-'+b;
   renderFighter('left',h1,animate);renderFighter('right',h2,animate);
   renderStrips();
   if(animate){
@@ -449,7 +453,8 @@ function setBanner(html,ms=1300){
   setTimeout(()=>b.classList.remove('show'),ms);
 }
 ACT.toggleSpeed=()=>{
-  if(!battleState)return;battleState.speed=battleState.speed===1?2:1;
+  if(!battleState)return;
+  if(onlineMode&&!isHost){sendAction({action:'speed'});return;}battleState.speed=battleState.speed===1?2:1;
   $('#speedVal').textContent=battleState.speed+'X';SFX.toggle();if(onlineMode&&isHost)syncGuest();
 };
 ACT.toggleMusic=()=>{SFX.setMusic(!SFX.settings.music);$('#muteMusicBtn').classList.toggle('off',!SFX.settings.music);SFX.toggle();};
@@ -560,9 +565,9 @@ function renderBattleFromState(){
   const bs=battleState;if(!bs)return;
   $('#fightStatus').textContent=bs.status||'';$('#speedVal').textContent=(bs.speed||1)+'X';
   $('#nextFightBtn').style.display='none';
-  const pair=bs.idx1+'-'+bs.idx2;
+  const [va,vb]=vIdx(),pair=va+'-'+vb;
   if(!bs.championDone){
-    if(ui.pair!==pair&&bs.t1[bs.idx1]&&bs.t2[bs.idx2]){renderPair(true);}
+    if(ui.pair!==pair&&bs.t1[va]&&bs.t2[vb]){renderPair(true);}
     else if(!ui.pair)renderPair(false);
   }
   renderStrips();renderBattleLog();
@@ -676,7 +681,9 @@ function applySync(pl){
     countGuestGame();
     showScreen('draftScreen');$('#lotTotal').textContent=state.lots.length;
     renderAuction();
-    const fl=$('#flash');$('#flashText').innerHTML=pl.flashText||'';fl.classList.toggle('show',!!pl.flashShow);
+    const fl=$('#flash');
+    if(pl.flashShow&&!fl.classList.contains('show'))(/stamp no/.test(pl.flashText||'')?SFX.unsold:SFX.sold)();
+    $('#flashText').innerHTML=pl.flashText||'';fl.classList.toggle('show',!!pl.flashShow);
   }else if(pl.screen==='wheel'){
     countGuestGame();
     showScreen('wheelScreen');$('#wheelLotTotal').textContent=wheelState.lots.length;

@@ -103,32 +103,49 @@ function receiveDeckImages(imgs){
 }
 
 /* ── İnternetdən şəkil axtarışı (Vikipediya, açar tələb etmir) ── */
-let webTimer=null;
+let lastWebQuery='',lastWebTitle='';
+const WIKI_OK=/^https:\/\/upload\.wikimedia\.org\//;
+const plain=x=>String(x).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 ]+/g,' ').trim();
+async function wikiJSON(host,params){
+  const u=`https://${host}/w/api.php?${new URLSearchParams({format:'json',origin:'*',...params})}`;
+  const r=await fetch(u);return r.json();
+}
+/* 1) yazı səhvini düzəldib ən uyğun məqalə adını tap  2) həmin şəxsin Vikipediya əsas şəkli  3) Commons-dan adında bu adı daşıyan şəkillər */
 async function wikiSearch(q){
-  const out=[];
+  let title='';
   for(const lang of ['en',currentLang==='tr'?'tr':'az']){
-    const u=`https://${lang}.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(q)}&gsrlimit=6&prop=pageimages&piprop=thumbnail&pithumbsize=480&format=json&origin=*`;
-    try{
-      const r=await fetch(u);const j=await r.json();
-      Object.values((j.query&&j.query.pages)||{}).sort((a,b)=>a.index-b.index).forEach(pg=>{
-        if(pg.thumbnail&&/^https:\/\/upload\.wikimedia\.org\//.test(pg.thumbnail.source)&&!out.some(o=>o.url===pg.thumbnail.source))out.push({url:pg.thumbnail.source,title:pg.title});});
-    }catch(e){}
-    if(out.length>=6)break;
+    try{const j=await wikiJSON(lang+'.wikipedia.org',{action:'query',list:'search',srsearch:q,srlimit:'1',srenablerewrites:'1'});
+      const top=j.query&&j.query.search&&j.query.search[0];if(top){title=top.title;if(lang==='en')break;}}catch(e){}
+    if(title)break;
   }
-  return out.slice(0,8);
+  if(!title)return{title:'',items:[]};
+  const items=[];const add=(url,label)=>{if(WIKI_OK.test(url)&&!items.some(i=>i.url===url))items.push({url,title:label});};
+  try{const j=await wikiJSON('en.wikipedia.org',{action:'query',titles:title,prop:'pageimages',piprop:'thumbnail',pithumbsize:'480',redirects:'1'});
+    Object.values((j.query&&j.query.pages)||{}).forEach(pg=>{if(pg.thumbnail)add(pg.thumbnail.source,title);});}catch(e){}
+  try{
+    const j=await wikiJSON('commons.wikimedia.org',{action:'query',generator:'search',gsrnamespace:'6',gsrsearch:title,gsrlimit:'24',prop:'imageinfo',iiprop:'url|mime',iiurlwidth:'480'});
+    const need=plain(title).split(' ').filter(w=>w.length>1);
+    Object.values((j.query&&j.query.pages)||{}).sort((a,b)=>a.index-b.index).forEach(pg=>{
+      const ii=pg.imageinfo&&pg.imageinfo[0];if(!ii||!/^image\/(jpeg|png|webp)$/.test(ii.mime||''))return;
+      const name=plain(pg.title.replace(/^File:/,''));
+      if(need.every(w=>name.includes(w)))add(ii.thumburl||ii.url,pg.title);});
+  }catch(e){}
+  return{title,items:items.slice(0,8)};
 }
 ACT.deckWeb=async()=>{
   const q=$('#deckName').value.trim();
   if(!q){toast(t('deckNameNeed'),'red');SFX.error();return;}
   const box=$('#deckWeb');box.style.display='block';box.innerHTML='<div class="spinner"></div>';
-  const res=await wikiSearch(q);
-  box.innerHTML=res.length?res.map(r=>`<button type="button" class="web-img" data-act="deckWebPick" data-arg="${esc(r.url)}" title="${esc(r.title)}"><img src="${esc(r.url)}" alt=""></button>`).join('')
+  const {title:found,items:res}=await wikiSearch(q);lastWebQuery=q;lastWebTitle=found;
+  box.innerHTML=res.length?`<div class="web-found">${t('deckWebFound')}: <b>${esc(found)}</b></div>`+res.map(r=>`<button type="button" class="web-img" data-act="deckWebPick" data-arg="${esc(r.url)}" title="${esc(r.title)}"><img src="${esc(r.url)}" alt=""></button>`).join('')
     :`<div class="dim" style="padding:10px;text-align:center;grid-column:1/-1">${t('deckWebNone')}</div>`;
 };
 ACT.deckWebPick=async url=>{
   if(!/^https:\/\/upload\.wikimedia\.org\//.test(url))return;
   try{
     const r=await fetch(url);const b=await r.blob();
-    deckDraft.img=await processImage(b);renderDraft();$('#deckWeb').style.display='none';SFX.click();
+    deckDraft.img=await processImage(b);
+    if(lastWebTitle&&$('#deckName').value.trim()===lastWebQuery)$('#deckName').value=lastWebTitle.slice(0,16);   // yazı səhvini düzəlt
+    renderDraft();$('#deckWeb').style.display='none';SFX.click();
   }catch(e){toast(t('deckImgErr'),'red');SFX.error();}
 };

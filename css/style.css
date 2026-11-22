@@ -707,3 +707,5 @@ button,[data-act],.opt,.chip-btn,.mode-card{touch-action:manipulation;-webkit-us
   #draftScreen .blind-box>small{display:none}
   #draftScreen .blind-step{padding:8px 0}
 }
+
+.bid-actions.solo{grid-template-columns:1fr}

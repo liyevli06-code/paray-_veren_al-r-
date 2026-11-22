@@ -108,6 +108,11 @@ function renderAuction(){
   }
   const bot=vsBotMode;
   $('#p2BidBtn').style.display=bot?'none':'';$('#p2PassBtn').style.display=bot?'none':'';
+  /* yalnız öz təklif düymələri: botla və onlayn oyunda qarşı tərəfin sütunu gizlədilir */
+  const solo=bot||onlineMode, mine=(onlineMode&&!isHost)?2:1;
+  $('#draftScreen .bid-col.p1').style.display=(solo&&mine!==1)?'none':'';
+  $('#draftScreen .bid-col.p2').style.display=(solo&&mine!==2)?'none':'';
+  $('#draftScreen .bid-actions').classList.toggle('solo',!!solo);
   $('#botThink').style.display=bot&&!quickBot?'':'none';
   /* bid log */
   const feed=$('#bidFeed');

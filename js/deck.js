@@ -101,3 +101,34 @@ function receiveDeckImages(imgs){
   if(!imgs||typeof imgs!=='object')return;
   Object.keys(imgs).slice(0,DECK_MAX*2).forEach(id=>{const v=imgs[id];if(/^c[a-z0-9]{3,24}$/.test(id)&&typeof v==='string'&&v.length<220000&&IMG_OK.test(v))CUSTOM_IMG[id]=v;});
 }
+
+/* ── İnternetdən şəkil axtarışı (Vikipediya, açar tələb etmir) ── */
+let webTimer=null;
+async function wikiSearch(q){
+  const out=[];
+  for(const lang of ['en',currentLang==='tr'?'tr':'az']){
+    const u=`https://${lang}.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(q)}&gsrlimit=6&prop=pageimages&piprop=thumbnail&pithumbsize=480&format=json&origin=*`;
+    try{
+      const r=await fetch(u);const j=await r.json();
+      Object.values((j.query&&j.query.pages)||{}).sort((a,b)=>a.index-b.index).forEach(pg=>{
+        if(pg.thumbnail&&/^https:\/\/upload\.wikimedia\.org\//.test(pg.thumbnail.source)&&!out.some(o=>o.url===pg.thumbnail.source))out.push({url:pg.thumbnail.source,title:pg.title});});
+    }catch(e){}
+    if(out.length>=6)break;
+  }
+  return out.slice(0,8);
+}
+ACT.deckWeb=async()=>{
+  const q=$('#deckName').value.trim();
+  if(!q){toast(t('deckNameNeed'),'red');SFX.error();return;}
+  const box=$('#deckWeb');box.style.display='block';box.innerHTML='<div class="spinner"></div>';
+  const res=await wikiSearch(q);
+  box.innerHTML=res.length?res.map(r=>`<button type="button" class="web-img" data-act="deckWebPick" data-arg="${esc(r.url)}" title="${esc(r.title)}"><img src="${esc(r.url)}" alt=""></button>`).join('')
+    :`<div class="dim" style="padding:10px;text-align:center;grid-column:1/-1">${t('deckWebNone')}</div>`;
+};
+ACT.deckWebPick=async url=>{
+  if(!/^https:\/\/upload\.wikimedia\.org\//.test(url))return;
+  try{
+    const r=await fetch(url);const b=await r.blob();
+    deckDraft.img=await processImage(b);renderDraft();$('#deckWeb').style.display='none';SFX.click();
+  }catch(e){toast(t('deckImgErr'),'red');SFX.error();}
+};

@@ -3,7 +3,7 @@
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' https://unpkg.com https://www.gstatic.com https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://encrypted-tbn0.gstatic.com https://*.googleusercontent.com; media-src 'self' data: blob:; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://0.peerjs.com wss://0.peerjs.com; frame-src https://*.firebaseapp.com https://accounts.google.com https://apis.google.com https://appleid.apple.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' https://unpkg.com https://www.gstatic.com https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://upload.wikimedia.org https://encrypted-tbn0.gstatic.com https://*.googleusercontent.com; media-src 'self' data: blob:; connect-src 'self' https://*.wikipedia.org https://upload.wikimedia.org https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://0.peerjs.com wss://0.peerjs.com; frame-src https://*.firebaseapp.com https://accounts.google.com https://apis.google.com https://appleid.apple.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "X-Frame-Options", "value": "DENY" },

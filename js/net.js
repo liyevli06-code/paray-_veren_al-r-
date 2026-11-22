@@ -127,6 +127,7 @@ ACT.cancelMatchmaking=()=>{
 };
 
 function showConfigScreen(){
+  const dk=onlineMode&&isHost&&!vsBotMode&&!quickMatch;$('#deckField').style.display=dk?'':'none';if(!dk)ACT.deckMode('std');
   $('#gmBlind').style.display=(onlineMode&&!vsBotMode)?'':'none';
   $('#lobbySelect').style.display='none';$('#gameConfig').style.display='block';
   $('#botLevelField').style.display=vsBotMode?'block':'none';
@@ -190,6 +191,7 @@ function setupConn(){
   conn.on('data',data=>{
     if(!data||!data.type)return;
     if(data.type==='chat'){appendChat(data.text,false);return;}
+    if(data.type==='deck'){receiveDeckImages(data.imgs);return;}
     if(isHost&&data.type==='action')handleGuestAction(data);
     else if(!isHost&&data.type==='sync'){clearTimeout(mmWatchdog);mmWatchdog=null;applySync(data);}
     else if(!isHost&&data.type==='reset'){hideAllGameScreens();showScreen('waitScreen');$('#waitText').textContent=t('hostPreparing');}

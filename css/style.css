@@ -608,3 +608,21 @@ body{max-width:100vw;overflow-x:hidden}
 .fcard{container-type:inline-size}
 .f-art{width:100%;height:min(125cqw,46vh)}
 @media (min-width:700px){.f-art{height:min(125cqw,42vh)}}
+
+/* ── Öz destəm ── */
+.deck-form{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:start}
+.deck-prev{grid-row:span 2;aspect-ratio:4/5;border:2px dashed var(--line2);border-radius:10px;background:var(--s2);color:var(--slate);display:grid;place-items:center;overflow:hidden;cursor:pointer;padding:0}
+.deck-prev img{width:100%;height:100%;object-fit:cover;object-position:50% 0}
+.deck-prev .ms{font-size:30px}
+.deck-fields{display:flex;flex-direction:column;gap:8px;min-width:0}
+.deck-sliders{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}
+.deck-sliders label{display:grid;grid-template-columns:34px 1fr 28px;align-items:center;gap:6px;font-size:11px;letter-spacing:.08em;color:var(--slate)}
+.deck-sliders label b{color:#fff;text-align:right}
+.deck-sliders small{grid-column:1/-1}
+#deckPointsLeft{color:var(--gold)}#deckPointsLeft.neg{color:var(--crimson)}
+#deckSaveBtn{grid-column:1/-1}
+.deck-list{display:flex;flex-direction:column;gap:6px}
+.deck-row{display:flex;align-items:center;gap:10px;padding:6px;border-left:3px solid var(--tc);background:rgba(255,255,255,.04);border-radius:6px}
+.deck-row img{width:44px;height:55px;object-fit:cover;object-position:50% 0;border-radius:6px;flex:none}
+.dr-info{flex:1;min-width:0;display:flex;flex-direction:column}.dr-info b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dr-info small{color:var(--slate);font-size:10px}

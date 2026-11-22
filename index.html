@@ -152,6 +152,15 @@
       <div class="status-row"><span class="dot on"></span><span id="hostStatusText"></span></div>
       <div class="code-row"><input type="text" id="hostLinkInput" readonly aria-label="Room code"><button class="btn btn-sm btn-ghost" data-act="copyCode" data-arg="hostLinkInput" data-i18n="copy">Kopyala</button></div>
     </div>
+    <div class="field" id="deckField" style="display:none">
+      <span class="label" data-i18n="deckLabel">Kart dəstəsi</span>
+      <div class="opt-grid">
+        <button class="opt active" id="dkStd" data-act="deckMode" data-arg="std"><b data-i18n="deckStd">STANDART</b><small data-i18n="deckStdSub">60 hazır qəhrəman</small></button>
+        <button class="opt" id="dkCustom" data-act="deckMode" data-arg="custom"><b data-i18n="deckCustom">ÖZ DESTƏM</b><small data-i18n="deckCustomSub">Öz şəkil və adların</small></button>
+      </div>
+      <small class="dim" id="deckHint"></small>
+      <button class="btn btn-ghost btn-sm" id="deckEditBtn" data-act="openDeck" style="display:none;margin-top:6px"><span class="ms">edit</span> <span data-i18n="deckEdit">Destəni düzəlt</span></button>
+    </div>
     <div class="field" id="gameModeField">
       <span class="label" data-i18n="gameMode">Oyun rejimi</span>
       <div class="opt-grid">
@@ -362,6 +371,32 @@
 </section>
 
 <!-- ═════════ PROFILE ═════════ -->
+<!-- ═════════ DECK EDITOR ═════════ -->
+<section id="deckScreen" class="screen">
+  <div class="page-head"><h1 class="h-display"><span class="ms big">style</span> <span data-i18n="deckTitle">ÖZ DESTƏM</span></h1><span class="chip chip-cyan num" id="deckCount">0 / 14</span></div>
+  <p class="dim" data-i18n="deckIntro">Qalereyadan şəkil seç, ad yaz, 300 xalı 4 göstəricə böl. Kartlar yalnız otaq oyununda işlədilir və serverə yüklənmir.</p>
+  <div class="card" id="deckAddCard" style="padding:14px;margin-bottom:12px">
+    <div id="deckForm" class="deck-form">
+      <button class="deck-prev" id="deckPrev" data-act="deckPick" type="button"></button>
+      <input type="file" id="deckFile" accept="image/*" hidden>
+      <div class="deck-fields">
+        <input class="input" id="deckName" maxlength="16" data-i18n-ph="deckName" placeholder="Ad">
+        <input class="input" id="deckGroup" maxlength="16" data-i18n-ph="deckGroup" placeholder="Qrup (məs. Futbol)">
+      </div>
+      <div class="deck-sliders">
+        <label>PWR <input type="range" id="ds_power" min="30" max="99"><b class="num" id="dv_power"></b></label>
+        <label>SPD <input type="range" id="ds_speed" min="30" max="99"><b class="num" id="dv_speed"></b></label>
+        <label>DEF <input type="range" id="ds_defense" min="30" max="99"><b class="num" id="dv_defense"></b></label>
+        <label>HP <input type="range" id="ds_health" min="30" max="99"><b class="num" id="dv_health"></b></label>
+        <small class="dim"><span data-i18n="deckPoints">Qalan xal</span>: <b class="num" id="deckPointsLeft">0</b></small>
+      </div>
+      <button class="btn btn-primary btn-full" id="deckSaveBtn" data-act="deckSave" data-i18n="deckSave">KARTI ƏLAVƏ ET</button>
+    </div>
+  </div>
+  <div class="card" style="padding:8px"><div id="deckList" class="deck-list"></div></div>
+  <button class="link-btn" data-act="deckBack" data-i18n="back">‹ Geri</button>
+</section>
+
 <section id="profileScreen" class="screen">
   <div class="profile-card card chamfer">
     <div class="profile-av" id="profileAvatar"></div>
@@ -434,6 +469,7 @@
 <script src="js/fx.js"></script>
 <script src="js/cloud.js"></script>
 <script src="js/store.js"></script>
+<script src="js/deck.js"></script>
 <script src="js/bot.js"></script>
 <script src="js/net.js"></script>
 <script src="js/game.js"></script>

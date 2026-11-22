@@ -10,6 +10,7 @@ const SCREEN_META={
   collectionScreen:{title:'title_collection',nav:'collection',music:'lobby'},
   storeScreen:{title:'title_store',nav:'store',music:'lobby'},
   leaderboardScreen:{title:'title_rank',nav:'leaderboard',music:'lobby'},
+  deckScreen:{title:'title_deck',nav:null,music:'lobby'},
   profileScreen:{title:'title_profile',nav:'profile',music:'lobby'}
 };
 let activeScreenId='authScreen';

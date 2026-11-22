@@ -25,16 +25,17 @@ function elapsed(){return state&&state.t0?Math.floor((Date.now()-state.t0)/1000)
   $('#hbHeroes').textContent=HEROES.length;
 })();
 ACT.pickInc=(v,el)=>{$$('#incRow .chip-btn').forEach(e=>e.classList.remove('active'));el.classList.add('active');selectedInc=+v;};
-ACT.pickMax=(v,el)=>{$$('#maxHeroesRow .chip-btn').forEach(e=>e.classList.remove('active'));el.classList.add('active');selectedMaxHeroes=+v;$('#maxHeroesVal').textContent=v;};
+ACT.pickMax=(v,el)=>{$$('#maxHeroesRow .chip-btn').forEach(e=>e.classList.remove('active'));el.classList.add('active');selectedMaxHeroes=+v;$('#maxHeroesVal').textContent=v;if(typeof ACT.deckMode==='function')ACT.deckMode(selectedDeck);};
 ACT.gameMode=mode=>{selectedGameMode=mode;['Auction','Wheel','Blind'].forEach(k=>$('#gm'+k).classList.toggle('active',mode===k.toLowerCase()));$('#budgetField').style.display=mode==='wheel'?'none':'';$('#incField').style.display=mode==='auction'?'':'none';};
 ACT.botLevel=(lvl,el)=>{BOT.level=lvl;$$('#botLevelRow .opt').forEach(e=>e.classList.remove('active'));el.classList.add('active');};
 
 ACT.startGame=()=>{
   if(onlineMode&&isHost&&!guestConnected){toast(t('p2NotJoined'),'red');SFX.error();return;}
+  if(!prepareCustomDeck())return;
   gameEpoch++;ui.lotIdx=-1;ui.rewarded=false;
   if(selectedGameMode==='wheel'){startWheelGame(selectedMaxHeroes);return;}
-  const budget=parseInt($('#budgetRange').value,10),lotCount=Math.min(HEROES.length,selectedMaxHeroes*2);
-  const lots=shuffle(HEROES).slice(0,lotCount).map(assignStats);
+  const budget=parseInt($('#budgetRange').value,10),pool=heroPool(),lotCount=Math.min(pool.length,selectedMaxHeroes*2);
+  const lots=shuffle(pool).slice(0,lotCount).map(assignStats);
   const blind=selectedGameMode==='blind';
   blindSecret={1:null,2:null};
   state={mode:'auction',blind,locked:{1:false,2:false},budget,inc:blind?1:selectedInc,maxHeroes:selectedMaxHeroes,lots,lotIdx:0,price:0,leader:null,p1Passed:false,p2Passed:false,resolving:false,
@@ -63,7 +64,8 @@ function statGauges(h){
   const rows=[['PWR',h.power,'var(--crimson)'],['SPD',h.speed,'var(--gold)'],['DEF',h.defense,'var(--cyan)'],['HP',h.health,'var(--green)']];
   return rows.map(([l,v,c])=>`<div class="g4"><small><span>${l}</span><b class="num">${v}</b></small><div class="gauge thin" style="--v:${v}%;--gc:${c}"><i></i></div></div>`).join('');
 }
-function bioOf(h){const b=BIOS[h.name]||{};return b[currentLang]||b.az||'';}
+function bioOf(h){if(h.custom)return h.bio||'';
+  const b=BIOS[h.name]||{};return b[currentLang]||b.az||'';}
 function bidIcon(k){return {bid:'gavel',pass:'block',sold:'check_circle',unsold:'cancel'}[k]||'circle';}
 
 function renderAuction(){
@@ -273,7 +275,7 @@ function botMove(){
 
 /* ═══════════════════════════ ÇARX ═══════════════════════════ */
 function startWheelGame(maxHeroes){
-  const lotCount=Math.min(HEROES.length,maxHeroes*3),lots=shuffle(HEROES).slice(0,lotCount).map(assignStats);
+  const pool=heroPool(),lotCount=Math.min(pool.length,maxHeroes*3),lots=shuffle(pool).slice(0,lotCount).map(assignStats);
   wheelState={lots,remaining:lots.slice(),turn:1,maxHeroes,spinning:false,lastAssigned:''};
   state={mode:'wheel',maxHeroes,t0:Date.now(),bidLog:[],players:{1:{budget:0,heroes:[]},2:{budget:0,heroes:[]}}};
   battleState=null;

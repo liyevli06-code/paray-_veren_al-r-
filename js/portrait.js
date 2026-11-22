@@ -9,7 +9,11 @@ function shade(hex,amt){
   const r=clamp(((n>>16)&255)+amt,0,255),g=clamp(((n>>8)&255)+amt,0,255),b=clamp((n&255)+amt,0,255);
   return '#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1);
 }
-function heroSrc(h){return HERO_LOCAL[slug(h.name)]||h.img||'';}
+const CUSTOM_IMG={};                       // öz kartların şəkilləri (id → data URL)
+function heroSrc(h){
+  if(h.custom||(h.img&&h.img.startsWith('custom:')))return CUSTOM_IMG[String(h.img).slice(7)]||'';
+  return HERO_LOCAL[slug(h.name)]||h.img||'';
+}
 function tierColor(h){return (TIER_META[h.tier]||TIER_META.C).color;}
 
 /* Orijinal, ümumi HUD portreti: rəngli işıq, şüalar, silueti, baş hərflər, tier ulduzları */

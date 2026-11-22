@@ -15,7 +15,8 @@ const STYLE_META={
   impact:   {c:['#FFD700','#FF9F1C','#FFFFFF'],icon:'sports_mma',    ranged:false},
   arrow:    {c:['#C8FFB0','#FFFFFF','#6BFF8C'],icon:'arrow_forward', ranged:true}
 };
-function heroStyle(h){return FX_STYLE[h.name]||(h.fr==='Marvel'?'impact':h.fr==='DC'?'energy':'slash');}
+function heroStyle(h){if(h.custom){const k=Object.keys(STYLE_META);let n=0;for(const ch of h.name)n+=ch.charCodeAt(0);return k[n%k.length];}
+  return FX_STYLE[h.name]||(h.fr==='Marvel'?'impact':h.fr==='DC'?'energy':'slash');}
 
 const FX=(function(){
   const cv=$('#fxLayer'),g=cv.getContext('2d');

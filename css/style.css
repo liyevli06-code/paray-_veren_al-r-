@@ -669,3 +669,40 @@ button,[data-act],.opt,.chip-btn,.mode-card{touch-action:manipulation;-webkit-us
 @media (max-height:640px){
   .toast{bottom:calc(var(--botnav) + 8px + env(safe-area-inset-bottom))}
 }
+
+/* ══ Telefon: hərrac ekranında təklif paneli həmişə aşağıda görünür (kompüterdə dəyişmir) ══ */
+@media (max-width:699px){
+  #draftScreen,#draftScreen.active{padding-bottom:var(--bidh,170px);animation:none;transform:none}
+  #draftScreen .phase-row{margin-bottom:6px}#draftScreen .phase{display:none}
+  #draftScreen .bid-actions{gap:8px}
+  #draftScreen .bid-col{display:grid;grid-template-columns:1fr auto;gap:5px;align-items:stretch}
+  #draftScreen .bid-col .bid-who{grid-column:1/-1;margin:0;line-height:1}
+  #draftScreen .bid-col .btn-sm{padding:6px 8px;font-size:11px}
+  #draftScreen .teams-bar{margin-bottom:8px;gap:6px}
+  #draftScreen .team-mini{padding:8px 10px}
+  #draftScreen .tm-count{margin:0 0 4px;font-size:14px}
+  #draftScreen .tm-budget{margin-bottom:4px}#draftScreen .tm-budget b{font-size:18px}
+  #draftScreen .slot{width:22px;height:22px}
+  #draftScreen .lot-card{margin-bottom:10px;clip-path:none;overflow:visible;border-radius:10px}
+  #draftScreen .lot-art{border-radius:10px 10px 0 0;overflow:hidden}
+  #draftScreen .lot-info{border-radius:0 0 10px 10px}
+  #draftScreen .lot-art{aspect-ratio:auto;height:min(30vh,250px);min-height:170px;max-height:none}
+  #draftScreen .lot-info{padding:10px 14px 6px}
+  #draftScreen .lot-name-row{margin:0 0 8px}
+  #draftScreen .lot-name{font-size:24px}
+  #draftScreen .lot-bio{display:none}
+  #draftScreen .gauges4{grid-template-columns:repeat(4,1fr);gap:6px}
+  #draftScreen .g4 small{font-size:9px}
+  #draftScreen .bid-box{position:fixed;left:0;right:0;bottom:calc(var(--botnav) + env(safe-area-inset-bottom));margin:0;z-index:150;
+    padding:8px 12px 10px;background:#0b0e14;border-left:0;border-right:0;box-shadow:0 -8px 24px rgba(0,0,0,.5)}
+  #draftScreen .bid-top{margin-bottom:6px;align-items:center}
+  #draftScreen .bid-price .num{font-size:28px}
+  #draftScreen .bid-price em{font-size:12px}
+  #draftScreen .bid-who{font-size:10px}
+  #draftScreen .btn-bid{padding:11px 8px}
+  #draftScreen .bid-actions .btn-sm{padding:7px 10px}
+  #draftScreen .blind-box{gap:6px;padding-top:2px}
+  #draftScreen .blind-val b{font-size:26px}
+  #draftScreen .blind-box>small{display:none}
+  #draftScreen .blind-step{padding:8px 0}
+}

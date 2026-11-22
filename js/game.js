@@ -708,3 +708,9 @@ setInterval(()=>{
   if(!$('#arenaScreen').classList.contains('active')||!battleState||battleState.championDone)return;
   $('#matchTimer').textContent=fmtTime((Date.now()-ui.matchStart)/1000);
 },1000);
+
+/* telefon: sabit təklif panelinin hündürlüyünə görə səhifənin altına yer ayır */
+(function(){
+  const bb=$('#draftScreen .bid-box');if(!bb||typeof ResizeObserver==='undefined')return;
+  new ResizeObserver(()=>{document.documentElement.style.setProperty('--bidh',(bb.offsetHeight+18)+'px');}).observe(bb);
+})();

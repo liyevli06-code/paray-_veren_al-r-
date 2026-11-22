@@ -149,3 +149,11 @@ ACT.deckWebPick=async url=>{
     renderDraft();$('#deckWeb').style.display='none';SFX.click();
   }catch(e){toast(t('deckImgErr'),'red');SFX.error();}
 };
+
+/* Google-da şəkil axtarışı: yeni tabda açılır, istifadəçi şəkli yadda saxlayıb qalereyadan seçir */
+ACT.deckGoogle=()=>{
+  const q=$('#deckName').value.trim();
+  if(!q){toast(t('deckNameNeed'),'red');SFX.error();return;}
+  window.open('https://www.google.com/search?tbm=isch&q='+encodeURIComponent(q),'_blank','noopener,noreferrer');
+  toast(t('deckGoogleTip'),'cyan');
+};

@@ -40,7 +40,7 @@ tr:{
  errUserEmpty:'Kullanıcı adı boş olamaz.',errPwShort:'Şifre en az 4 karakter olmalı.',errUserExists:'Bu kullanıcı adı zaten var.',errUserNotFound:'Kullanıcı bulunamadı.',errPwWrong:'Şifre yanlış.',
  welcome:'Hoş geldin, {n}! 🎮',loggedOut:'Çıkış yapıldı.',dailyBonus:'🗓️ Günlük bonus: +20 🪙',saved:'Kaydedildi ✓',
  navPlay:'Oyna',navCollection:'Koleksiyon',navShop:'Mağaza',navProfile:'Profil',
- deckGoogleBtn:'Google\\'da ara',deckGoogleTip:'Fotoğrafı kaydet, sonra fotoğraf kutusuna dokunup galeriden seç.',
+ deckGoogleBtn:'Google ile ara',deckGoogleTip:'Fotoğrafı kaydet, sonra fotoğraf kutusuna dokunup galeriden seç.',
  deckWebFound:'Bulundu',
  deckWebBtn:'İnternetten bul',deckWebNone:'Fotoğraf bulunamadı. İsmi tam yaz veya galeriden seç.',
  title_deck:'DESTE',deckTitle:'KENDİ DESTEM',deckIntro:'Galeriden fotoğraf seç, isim yaz, 300 puanı 4 özelliğe dağıt. Kartlar sadece oda oyununda kullanılır, sunucuya yüklenmez.',deckLabel:'Kart destesi',deckStd:'STANDART',deckStdSub:'60 hazır kahraman',deckCustom:'KENDİ DESTEM',deckCustomSub:'Kendi fotoğraf ve isimlerin',deckEdit:'Desteyi düzenle',deckName:'İsim',deckGroup:'Grup (örn. Futbol)',deckPoints:'Kalan puan',deckSave:'KARTI EKLE',deckEmpty:'Henüz kart yok. Yukarıdan ekle.',deckNameNeed:'Kartın ismini yaz.',deckNameDup:'Bu isimde kart zaten var.',deckAdded:'Kart eklendi ✓',deckImgErr:'Fotoğraf açılamadı.',deckFull:'Depolama dolu, birkaç kartı sil.',deckTooFew:'Bu oyun için en az {n} kart gerekli (şu an {c}).',deckHint:'En az {n} kart gerekli (var: {c}).',

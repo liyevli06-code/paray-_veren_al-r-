@@ -97,7 +97,7 @@ function renderAuction(){
   renderTeams('#draftTeams','auction');
   const next=state.price+state.inc;
   const can=p=>!state.resolving&&canBid(p);
-  $('#p1BidBtn').innerHTML=`<span class="emo">🔨</span> ${t('bidBtn')} <span class="num">$${next}</span>`;
+  $('#p1BidBtn').innerHTML=`<span class="ms">gavel</span> ${t('bidBtn')} <span class="num">$${next}</span>`;
   $('#p2BidBtn').innerHTML=$('#p1BidBtn').innerHTML;
   $('#p1BidBtn').disabled=!can(1);$('#p1PassBtn').disabled=state.p1Passed||state.resolving;
   $('#p2BidBtn').disabled=!can(2);$('#p2PassBtn').disabled=state.p2Passed||state.resolving;
@@ -115,7 +115,7 @@ function renderAuction(){
     const who=e.p?`<b class="p${e.p}">${esc(pname(e.p))}</b>`:'';
     const txt=e.k==='bid'?`${who} ${t('logBid')} <b class="g">$${e.price}</b>`:e.k==='pass'?`${who} ${t('logPass')}`:
       e.k==='sold'?`<b class="g">${esc(e.hero)}</b> ${t('logSold')} ${who} — <b class="g">$${e.price}</b>`:`<b class="g">${esc(e.hero)}</b> ${t('logUnsold')}`;
-    return `<div class="feed-row"><span class="t num">[${fmtTime(e.s)}]</span>${e.k==='bid'?'<span class="emo">🔨</span>':`<span class="ms" style="color:${e.k==='sold'?'var(--gold)':e.p===2?'var(--crimson)':'var(--cyan)'}">${bidIcon(e.k)}</span>`}<span>${txt}</span></div>`;
+    return `<div class="feed-row"><span class="t num">[${fmtTime(e.s)}]</span><span class="ms" style="color:${e.k==='sold'?'var(--gold)':e.p===2?'var(--crimson)':'var(--cyan)'}">${bidIcon(e.k)}</span><span>${txt}</span></div>`;
   }).join(''):`<div class="feed-row empty">${t('noBidsYet')}</div>`;
   if(onlineMode&&isHost)syncGuest();
 }
